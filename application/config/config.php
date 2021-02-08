@@ -1,7 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 date_default_timezone_set('Asia/Bangkok');
-$config['base_url']            = "http://" . $_SERVER['HTTP_HOST'] . "/ware";
+$config['base_url']            = "http://165.22.66.252";
 
 $config['index_page']          = '';
 
@@ -28,7 +28,7 @@ $config['log_threshold']        = 0;
 $config['log_path']             = '';
 $config['log_date_format']      = 'Y-m-d H:i:s';
 $config['cache_path']           = '';
-$config['encryption_key']       = 'kalingga19922016';
+$config['encryption_key']       = 'njdnkabdvinbvavijkvnksdbvnasbdvajdabvkasbvkbvakljbvkdvb';
 $config['sess_cookie_name']     = 'ci_session';
 $config['sess_expiration']      = 7200;
 $config['sess_expire_on_close'] = FALSE;
@@ -52,8 +52,8 @@ $config['compress_output']      = FALSE;
 $config['time_reference']       = 'local';
 $config['rewrite_short_tags']   = FALSE;
 $config['proxy_ips']            = '';
-$config['project']              = 'SIAPA';
-$config['nama_pendek']          = 'SIAPA';
+$config['project']              = 'Warehouse';
+$config['nama_pendek']          = 'Warehouse';
 $config['sub_title']            = 'Warehouse';
 $config['title']                = 'Warehouse Alphamax';
 $config['fonts_path']           = 'system/fonts/';
