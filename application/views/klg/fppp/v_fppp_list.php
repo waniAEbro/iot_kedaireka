@@ -74,7 +74,7 @@
                         <th>DEADLINE PENGIRIMAN</th>
 
                         <th>ACC/FA</th>
-                        <th>WH ALUMUNIUM</th>
+                        <th>WH aluminium</th>
                         <th>WH AKSESORIS</th>
                         <th>WH KACA</th>
 

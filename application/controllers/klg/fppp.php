@@ -60,7 +60,7 @@ class Fppp extends CI_Controller
 		$data['metode_pengiriman']  = get_options($this->db->get('master_metode_pengiriman'), 'id', 'metode_pengiriman');
 		$data['penggunaan_peti']    = get_options($this->db->get('master_penggunaan_peti'), 'id', 'penggunaan_peti');
 		$data['penggunaan_sealant'] = get_options($this->db->get('master_penggunaan_sealant'), 'id', 'penggunaan_sealant');
-		$data['warna_alumunium']    = get_options($this->db->get('master_warna_alumunium'), 'id', 'warna_alumunium');
+		$data['warna_aluminium']    = get_options($this->db->get('master_warna_aluminium'), 'id', 'warna_aluminium');
 		$data['warna_lainya']       = get_options($this->db->get('master_warna_lainya'), 'id', 'warna_lainya');
 		$data['kaca']               = get_options($this->db->get('master_kaca'), 'id', 'kaca');
 		$data['brand']              = get_options($this->db->get('master_brand'), 'id', 'brand');
@@ -108,7 +108,7 @@ class Fppp extends CI_Controller
 			'id_metode_pengiriman'   => $this->input->post('id_metode_pengiriman'),
 			'id_penggunaan_peti'     => $this->input->post('id_penggunaan_peti'),
 			'id_penggunaan_sealant'  => $this->input->post('id_penggunaan_sealant'),
-			'id_warna_alumunium'     => $this->input->post('id_warna_alumunium'),
+			'id_warna_aluminium'     => $this->input->post('id_warna_aluminium'),
 			'id_warna_lainya'        => $this->input->post('id_warna_lainya'),
 			'warna_sealant'          => $this->input->post('warna_sealant'),
 			'ditujukan_kepada'       => $this->input->post('ditujukan_kepada'),

@@ -196,8 +196,8 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label>Warna Alumunium</label>
-                        <?= form_dropdown('id_warna_alumunium', $warna_alumunium, '', 'id="id_warna_alumunium" class="form-control"') ?>
+                        <label>Warna aluminium</label>
+                        <?= form_dropdown('id_warna_aluminium', $warna_aluminium, '', 'id="id_warna_aluminium" class="form-control"') ?>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -477,7 +477,7 @@
                     id_metode_pengiriman: $("#id_metode_pengiriman").val(),
                     id_penggunaan_peti: $("#id_penggunaan_peti").val(),
                     id_penggunaan_sealant: $("#id_penggunaan_sealant").val(),
-                    id_warna_alumunium: $("#id_warna_alumunium").val(),
+                    id_warna_aluminium: $("#id_warna_aluminium").val(),
                     id_warna_lainya: $("#id_warna_lainya").val(),
                     warna_sealant: $("#warna_sealant").val(),
                     ditujukan_kepada: $("#ditujukan_kepada").val(),
@@ -543,7 +543,7 @@
                     id_metode_pengiriman: $("#id_metode_pengiriman").val(),
                     id_penggunaan_peti: $("#id_penggunaan_peti").val(),
                     id_penggunaan_sealant: $("#id_penggunaan_sealant").val(),
-                    id_warna_alumunium: $("#id_warna_alumunium").val(),
+                    id_warna_aluminium: $("#id_warna_aluminium").val(),
                     id_warna_lainya: $("#id_warna_lainya").val(),
                     warna_sealant: $("#warna_sealant").val(),
                     ditujukan_kepada: $("#ditujukan_kepada").val(),
