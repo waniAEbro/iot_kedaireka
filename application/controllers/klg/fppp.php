@@ -175,8 +175,10 @@ class Fppp extends CI_Controller
 		$nilai = $this->input->post('nilai');
 		if ($kolom == 1) {
 			$datapost = array('produksi_aluminium' => $nilai,);
-		} else {
+		} elseif ($kolom == 2) {
 			$datapost = array('qc_cek' => $nilai,);
+		} else {
+			$datapost = array('pengiriman' => $nilai,);
 		}
 		$this->m_fppp->updateDetail($id, $datapost);
 		$arr = explode("/", $nilai);

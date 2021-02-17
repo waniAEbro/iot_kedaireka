@@ -220,7 +220,6 @@
                 '<th bgcolor="#bfbfbf">Produksi Aluminium</th>' +
                 '<th bgcolor="#bfbfbf">QC Cek</th>' +
                 '<th bgcolor="#bfbfbf">Pengiriman</th>' +
-                '<th bgcolor="#bfbfbf">Act</th>' +
                 '<th bgcolor="#bfbfbf">Pasang</th>' +
                 '<th bgcolor="#bfbfbf">BST</th>' +
                 '</tr>';
@@ -255,6 +254,12 @@
                             var qc_cek = data.detail[i].qc_cek;
                         }
 
+                        if (data.detail[i].pengiriman == null) {
+                            var pengiriman = '';
+                        } else {
+                            var qc_cek = data.detail[i].pengiriman;
+                        }
+
                         infoTable += '<tr bgcolor="' + color + '">' +
                             '<td><font color="' + fontcolor + '">' + no + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].brand + '</font></td>' +
@@ -264,10 +269,9 @@
                             '<td><font color="' + fontcolor + '">' + data.detail[i].item + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].glass_thick + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].qty + '</font></td>' +
-                            '<td onclick="pa_tdclick(' + data.detail[i].id + ');"><input type="date" style="display:none;" id="pa_input_' + data.detail[i].id + '" value="' + produksi_aluminium + '"><a style="display:none;" id="pa_bt_' + data.detail[i].id + '" onclick="pa_saveclick(' + data.detail[i].id + ');" class="btn btn-xs btn-default">save</a><font id="pa_ft_' + data.detail[i].id + '" color="' + fontcolor + '">' + produksi_aluminium + '</font></td>' +
-                            '<td onclick="qc_tdclick(' + data.detail[i].id + ');"><input type="date" style="display:none;" id="qc_input_' + data.detail[i].id + '" value="' + qc_cek + '"><a style="display:none;" id="qc_bt_' + data.detail[i].id + '" onclick="qc_saveclick(' + data.detail[i].id + ');" class="btn btn-xs btn-default">save</a><font id="qc_ft_' + data.detail[i].id + '" color="' + fontcolor + '">' + qc_cek + '</font></td>' +
-                            '<td><font color="' + fontcolor + '">' + data.detail[i].pengiriman + '</font></td>' +
-                            '<td><font color="' + fontcolor + '"><a class="btn btn-xs btn-primary">edit</a></font></td>' +
+                            '<td style="background-color:#9cc2ff" onclick="pa_tdclick(' + data.detail[i].id + ');"><input type="date" style="display:none;" id="pa_input_' + data.detail[i].id + '" value="' + produksi_aluminium + '"><a style="display:none;" id="pa_bt_' + data.detail[i].id + '" onclick="pa_saveclick(' + data.detail[i].id + ');" class="btn btn-xs btn-default">save</a><font id="pa_ft_' + data.detail[i].id + '" color="' + fontcolor + '">' + produksi_aluminium + '</font></td>' +
+                            '<td style="background-color:#9cc2ff" onclick="qc_tdclick(' + data.detail[i].id + ');"><input type="date" style="display:none;" id="qc_input_' + data.detail[i].id + '" value="' + qc_cek + '"><a style="display:none;" id="qc_bt_' + data.detail[i].id + '" onclick="qc_saveclick(' + data.detail[i].id + ');" class="btn btn-xs btn-default">save</a><font id="qc_ft_' + data.detail[i].id + '" color="' + fontcolor + '">' + qc_cek + '</font></td>' +
+                            '<td style="background-color:#9cc2ff" onclick="p_tdclick(' + data.detail[i].id + ');"><input type="date" style="display:none;" id="p_input_' + data.detail[i].id + '" value="' + pengiriman + '"><a style="display:none;" id="p_bt_' + data.detail[i].id + '" onclick="p_saveclick(' + data.detail[i].id + ');" class="btn btn-xs btn-default">save</a><font id="p_ft_' + data.detail[i].id + '" color="' + fontcolor + '">' + pengiriman + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].pasang + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].bst + '</font></td>' +
                             '</tr>';
@@ -344,6 +348,35 @@
                 $("#qc_bt_" + id + "").hide();
                 $("#qc_ft_" + id + "").show();
                 $("#qc_ft_" + id + "").html(datasaved.nilai);
+            });
+    }
+
+    function p_tdclick(id) {
+        $("#p_input_" + id + "").removeAttr("style");
+        $("#p_bt_" + id + "").removeAttr("style");
+        $("#p_ft_" + id + "").hide();
+    }
+
+    function p_saveclick(id) {
+        $.ajax({
+                type: "POST",
+                url: "<?= site_url('klg/fppp/updateDetail') ?>",
+                dataType: 'json',
+                data: {
+                    'id': id,
+                    'kolom': 3,
+                    'nilai': $("#p_input_" + id + "").val(),
+                }
+            })
+            .success(function(datasaved) {
+                $.growl.notice({
+                    title: 'Sukses',
+                    message: datasaved.msg
+                });
+                $("#p_input_" + id + "").hide();
+                $("#p_bt_" + id + "").hide();
+                $("#p_ft_" + id + "").show();
+                $("#p_ft_" + id + "").html(datasaved.nilai);
             });
     }
 </script>
