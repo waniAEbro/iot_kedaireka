@@ -66,7 +66,7 @@ class Fppp extends CI_Controller
 		$data['brand']              = get_options($this->db->get('master_brand'), 'id', 'brand');
 		$data['item']               = get_options($this->db->get('master_item'), 'id', 'item');
 		$data['no_fppp']            = str_pad($this->m_fppp->getNoFppp(), 3, '0', STR_PAD_LEFT) . '/FPPP' . '/' . date('m') . '/' . date('Y');
-		$data['param']               = $param;
+		$data['param']              = $param;
 		// $this->load->view('klg/fppp/v_fppp_add', $data);
 		if ($param == 1) {
 			$this->load->view('klg/fppp/v_fppp_add_residential', $data);
@@ -177,8 +177,12 @@ class Fppp extends CI_Controller
 			$datapost = array('produksi_aluminium' => $nilai,);
 		} elseif ($kolom == 2) {
 			$datapost = array('qc_cek' => $nilai,);
-		} else {
+		} elseif ($kolom == 3) {
 			$datapost = array('pengiriman' => $nilai,);
+		} elseif ($kolom == 4) {
+			$datapost = array('pasang' => $nilai,);
+		} else {
+			$datapost = array('bst' => $nilai,);
 		}
 		$this->m_fppp->updateDetail($id, $datapost);
 		$arr = explode("/", $nilai);

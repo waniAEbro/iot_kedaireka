@@ -10,7 +10,7 @@
                 <div class="form-group">
                   <label>Jenis Custom</label>
                   <select id="jenis_fppp" name="jenis_fppp" class="form-control" style="width:100%" required>
-                    <option value="">-- Select Jenis Custom --</option>
+                     <option value="">-- Select Jenis Custom --</option>
                     <option value="1">dari Form Permintaan</option>
                     <option value="2">tdk dari Form Permintaan</option>
                   </select>

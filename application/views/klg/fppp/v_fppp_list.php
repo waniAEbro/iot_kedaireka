@@ -257,7 +257,19 @@
                         if (data.detail[i].pengiriman == null) {
                             var pengiriman = '';
                         } else {
-                            var qc_cek = data.detail[i].pengiriman;
+                            var pengiriman = data.detail[i].pengiriman;
+                        }
+
+                        if (data.detail[i].pasang == null) {
+                            var pasang = '';
+                        } else {
+                            var pasang = data.detail[i].pasang;
+                        }
+
+                        if (data.detail[i].bst == null) {
+                            var bst = '';
+                        } else {
+                            var bst = data.detail[i].bst;
                         }
 
                         infoTable += '<tr bgcolor="' + color + '">' +
@@ -272,8 +284,8 @@
                             '<td style="background-color:#9cc2ff" onclick="pa_tdclick(' + data.detail[i].id + ');"><input type="date" style="display:none;" id="pa_input_' + data.detail[i].id + '" value="' + produksi_aluminium + '"><a style="display:none;" id="pa_bt_' + data.detail[i].id + '" onclick="pa_saveclick(' + data.detail[i].id + ');" class="btn btn-xs btn-default">save</a><font id="pa_ft_' + data.detail[i].id + '" color="' + fontcolor + '">' + produksi_aluminium + '</font></td>' +
                             '<td style="background-color:#9cc2ff" onclick="qc_tdclick(' + data.detail[i].id + ');"><input type="date" style="display:none;" id="qc_input_' + data.detail[i].id + '" value="' + qc_cek + '"><a style="display:none;" id="qc_bt_' + data.detail[i].id + '" onclick="qc_saveclick(' + data.detail[i].id + ');" class="btn btn-xs btn-default">save</a><font id="qc_ft_' + data.detail[i].id + '" color="' + fontcolor + '">' + qc_cek + '</font></td>' +
                             '<td style="background-color:#9cc2ff" onclick="p_tdclick(' + data.detail[i].id + ');"><input type="date" style="display:none;" id="p_input_' + data.detail[i].id + '" value="' + pengiriman + '"><a style="display:none;" id="p_bt_' + data.detail[i].id + '" onclick="p_saveclick(' + data.detail[i].id + ');" class="btn btn-xs btn-default">save</a><font id="p_ft_' + data.detail[i].id + '" color="' + fontcolor + '">' + pengiriman + '</font></td>' +
-                            '<td><font color="' + fontcolor + '">' + data.detail[i].pasang + '</font></td>' +
-                            '<td><font color="' + fontcolor + '">' + data.detail[i].bst + '</font></td>' +
+                            '<td style="background-color:#73ff98" onclick="pas_tdclick(' + data.detail[i].id + ');"><input type="date" style="display:none;" id="pas_input_' + data.detail[i].id + '" value="' + pasang + '"><a style="display:none;" id="pas_bt_' + data.detail[i].id + '" onclick="pas_saveclick(' + data.detail[i].id + ');" class="btn btn-xs btn-default">save</a><font id="pas_ft_' + data.detail[i].id + '" color="' + fontcolor + '">' + pasang + '</font></td>' +
+                            '<td style="background-color:#73ff98" onclick="bst_tdclick(' + data.detail[i].id + ');"><input type="date" style="display:none;" id="bst_input_' + data.detail[i].id + '" value="' + bst + '"><a style="display:none;" id="bst_bt_' + data.detail[i].id + '" onclick="bst_saveclick(' + data.detail[i].id + ');" class="btn btn-xs btn-default">save</a><font id="bst_ft_' + data.detail[i].id + '" color="' + fontcolor + '">' + bst + '</font></td>' +
                             '</tr>';
 
                     };
@@ -377,6 +389,64 @@
                 $("#p_bt_" + id + "").hide();
                 $("#p_ft_" + id + "").show();
                 $("#p_ft_" + id + "").html(datasaved.nilai);
+            });
+    }
+
+    function pas_tdclick(id) {
+        $("#pas_input_" + id + "").removeAttr("style");
+        $("#pas_bt_" + id + "").removeAttr("style");
+        $("#pas_ft_" + id + "").hide();
+    }
+
+    function pas_saveclick(id) {
+        $.ajax({
+                type: "POST",
+                url: "<?= site_url('klg/fppp/updateDetail') ?>",
+                dataType: 'json',
+                data: {
+                    'id': id,
+                    'kolom': 4,
+                    'nilai': $("#pas_input_" + id + "").val(),
+                }
+            })
+            .success(function(datasaved) {
+                $.growl.notice({
+                    title: 'Sukses',
+                    message: datasaved.msg
+                });
+                $("#pas_input_" + id + "").hide();
+                $("#pas_bt_" + id + "").hide();
+                $("#pas_ft_" + id + "").show();
+                $("#pas_ft_" + id + "").html(datasaved.nilai);
+            });
+    }
+
+    function bst_tdclick(id) {
+        $("#bst_input_" + id + "").removeAttr("style");
+        $("#bst_bt_" + id + "").removeAttr("style");
+        $("#bst_ft_" + id + "").hide();
+    }
+
+    function bst_saveclick(id) {
+        $.ajax({
+                type: "POST",
+                url: "<?= site_url('klg/fppp/updateDetail') ?>",
+                dataType: 'json',
+                data: {
+                    'id': id,
+                    'kolom': 5,
+                    'nilai': $("#bst_input_" + id + "").val(),
+                }
+            })
+            .success(function(datasaved) {
+                $.growl.notice({
+                    title: 'Sukses',
+                    message: datasaved.msg
+                });
+                $("#bst_input_" + id + "").hide();
+                $("#bst_bt_" + id + "").hide();
+                $("#bst_ft_" + id + "").show();
+                $("#bst_ft_" + id + "").html(datasaved.nilai);
             });
     }
 </script>
