@@ -98,6 +98,7 @@
                     $sesi = from_session('level');
                     if ($sesi < 3 && $row->status == 1) {
                       echo button('load_silent("klg/ncr/feedback/' . $row->id . '","#content")', 'Feedback', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Feedback"');
+                      echo button('load_silent("klg/ncr/delete/' . $row->id . '","#content")', 'Hapus', 'btn btn-xs btn-danger', 'data-toggle="tooltip" title="Hapus"');
                     }
                     ?>
                   </td>

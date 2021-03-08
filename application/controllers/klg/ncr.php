@@ -77,13 +77,13 @@ class ncr extends CI_Controller
 	{
 		$this->fungsi->check_previleges('ncr');
 		$data = array(
-			'row'          => $this->m_ncr->getEdit($value)->row(),
-			'detail'       => $this->m_ncr->getDataDetailTabel($value),
+			'row'      => $this->m_ncr->getEdit($value)->row(),
+			'detail'   => $this->m_ncr->getDataDetailTabel($value),
 			'tipe_ncr' => $this->db->get('master_tipe')->result(),
-			'item'         => $this->db->get('master_item')->result(),
-			'warna'        => $this->db->get('master_warna')->result(),
-			'brand'        => $this->db->get('master_brand')->result(),
-			'store'        => $this->db->get('master_store')->result(),
+			'item'     => $this->db->get('master_item')->result(),
+			'warna'    => $this->db->get('master_warna')->result(),
+			'brand'    => $this->db->get('master_brand')->result(),
+			'store'    => $this->db->get('master_store')->result(),
 		);
 		$this->load->view('klg/ncr/v_ncr_edit', $data);
 	}
@@ -235,6 +235,16 @@ class ncr extends CI_Controller
 			'header' => $this->m_ncr->getHeaderCetak($id),
 		);
 		$this->load->view('klg/ncr/v_cetak', $data);
+	}
+
+	public function delete($id)
+	{
+		$this->fungsi->check_previleges('ncr');
+		$this->m_ncr->deleteNcr($id);
+		$data = array('id' => $id,);
+		$this->fungsi->catat($data, "Menghapus NCR data sbb:", true);
+		$this->fungsi->message_box("NCR dihapus", "success");
+		$this->fungsi->run_js('load_silent("klg/ncr","#content")');
 	}
 }
 
