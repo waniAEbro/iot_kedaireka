@@ -61,7 +61,8 @@ class Fppp extends CI_Controller
 		$data['penggunaan_peti']    = get_options($this->db->get('master_penggunaan_peti'), 'id', 'penggunaan_peti');
 		$data['penggunaan_sealant'] = get_options($this->db->get('master_penggunaan_sealant'), 'id', 'penggunaan_sealant');
 		$data['warna_aluminium']    = get_options($this->db->get('master_warna_aluminium'), 'id', 'warna_aluminium');
-		$data['warna_lainya']       = get_options($this->db->get('master_warna_lainya'), 'id', 'warna_lainya');
+		$data['warna_lainya']       = get_options($this->db->get('master_warna_aluminium'), 'id', 'warna_aluminium');
+		$data['logo_kaca']       = get_options($this->db->get('master_logo_kaca'), 'id', 'logo_kaca');
 		$data['kaca']               = get_options($this->db->get('master_kaca'), 'id', 'kaca');
 		$data['brand']              = get_options($this->db->get('master_brand'), 'id', 'brand');
 		$data['item']               = get_options($this->db->get('master_item'), 'id', 'item');
@@ -120,7 +121,7 @@ class Fppp extends CI_Controller
 			'admin_koordinator'      => $this->input->post('admin_koordinator'),
 			'id_kaca'                => $this->input->post('id_kaca'),
 			'jenis_kaca'             => $this->input->post('jenis_kaca'),
-			'logo_kaca'              => $this->input->post('logo_kaca'),
+			'id_logo_kaca'              => $this->input->post('id_logo_kaca'),
 			'jumlah_gambar'          => $this->input->post('jumlah_gambar'),
 			'lampiran_lain'          => $this->input->post('lampiran_lain'),
 			'attachment'             => $this->input->post('attachment'),
@@ -189,6 +190,74 @@ class Fppp extends CI_Controller
 		$respon['msg'] = "sukses update";
 		$respon['nilai'] = $nilai;
 		echo json_encode($respon);
+	}
+
+	public function uploadbom($id = '')
+	{
+		$data['id'] = $id;
+		$this->load->view('klg/fppp/v_uploadbom', $data);
+	}
+
+	public function upload()
+	{
+		$fileName = time();
+		//      $upload_folder = get_upload_folder('./excel_files/');
+
+		// $config['upload_path']   = $upload_folder;
+
+		$config['upload_path'] = './files/'; //buat folder dengan nama excel_files di root folder
+		$config['file_name'] = $fileName;
+		$config['allowed_types'] = 'xls|xlsx|csv';
+		$config['max_size'] = 20000;
+
+		$this->load->library('upload');
+		$this->upload->initialize($config);
+
+		if (!$this->upload->do_upload('file'))
+			$this->upload->display_errors();
+
+		$media = $this->upload->data('file');
+		$inputFileName = './files/' . $media['file_name'];
+
+		try {
+			$inputFileType = IOFactory::identify($inputFileName);
+			$objReader = IOFactory::createReader($inputFileType);
+			$objPHPExcel = $objReader->load($inputFileName);
+		} catch (Exception $e) {
+			die('Error loading file "' . pathinfo($inputFileName, PATHINFO_BASENAME) . '": ' . $e->getMessage());
+		}
+
+		$sheet = $objPHPExcel->getSheet(0);
+		$highestRow = $sheet->getHighestRow();
+		$highestColumn = $sheet->getHighestColumn();
+
+		for ($row = 2; $row <= $highestRow; $row++) {                  //  Read a row of data into an array
+			$rowData = $sheet->rangeToArray(
+				'A' . $row . ':' . $highestColumn . $row,
+				NULL,
+				TRUE,
+				FALSE
+			);
+
+			//Sesuaikan sama nama kolom tabel di database
+			$data = array(
+				"nim"  => $rowData[0][0],
+				"nama"  => $rowData[0][1],
+				"angkatan"  => $rowData[0][2],
+			);
+
+			$this->db->where('nim', $rowData[0][0]);
+			$hasil = $this->db->get('data_mahasiswa');
+			if ($hasil->num_rows() == 0) {
+				$this->db->insert("data_mahasiswa", $data);
+			}
+			//sesuaikan nama dengan nama tabel
+
+		}
+		// delete_files($media['file_path']);
+		// unlink($media['file_path']);
+		$data['msg'] = "Mahasiswa Baru Disimpan....";
+		echo json_encode($data);
 	}
 
 	// public function index()

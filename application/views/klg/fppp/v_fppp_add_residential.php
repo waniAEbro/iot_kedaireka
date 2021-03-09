@@ -20,7 +20,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Tanggal Pembuatan</label>
-                        <input type="text" id="tgl_pembuatan" data-date-format="yyyy-mm-dd" value="<?= date('Y-m-d') ?>" class="form-control datepicker" autocomplete="off">
+                        <input type="text" id="tgl_pembuatan" value="<?= date('Y-m-d') ?>" class="form-control" autocomplete="off" readonly>
                     </div>
                 </div>
             </div>
@@ -253,7 +253,7 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label>Pict Project</label>
+                        <label>PIC Project</label>
                         <input type="text" id="pic_project" class="form-control">
                     </div>
                 </div>
@@ -281,7 +281,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Logo Kaca</label>
-                        <input type="text" id="logo_kaca" class="form-control">
+                        <?= form_dropdown('id_logo_kaca', $logo_kaca, '', 'id="id_logo_kaca" class="form-control"') ?>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -489,7 +489,7 @@
                     admin_koordinator: $("#admin_koordinator").val(),
                     id_kaca: $("#id_kaca").val(),
                     jenis_kaca: $("#jenis_kaca").val(),
-                    logo_kaca: $("#logo_kaca").val(),
+                    id_logo_kaca: $("#id_logo_kaca").val(),
                     jumlah_gambar: $("#jumlah_gambar").val(),
                     lampiran_lain: $("#lampiran_lain").val(),
                     attachment: $("#attachment").val(),
