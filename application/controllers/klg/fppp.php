@@ -64,8 +64,8 @@ class Fppp extends CI_Controller
 		$data['warna_lainya']       = get_options($this->db->get('master_warna_aluminium'), 'id', 'warna_aluminium');
 		$data['logo_kaca']       = get_options($this->db->get('master_logo_kaca'), 'id', 'logo_kaca');
 		$data['kaca']               = get_options($this->db->get('master_kaca'), 'id', 'kaca');
-		$data['brand']              = get_options($this->db->get('master_brand'), 'id', 'brand');
-		$data['item']               = get_options($this->db->get('master_item'), 'id', 'item');
+		$data['brand']              = get_options($this->db->get('master_brand'), 'id', 'brand', true);
+		$data['item']               = get_options($this->db->get('master_item'), 'id', 'item', true);
 		$data['no_fppp']            = str_pad($this->m_fppp->getNoFppp(), 3, '0', STR_PAD_LEFT) . '/FPPP' . '/' . date('m') . '/' . date('Y');
 		$data['param']              = $param;
 		// $this->load->view('klg/fppp/v_fppp_add', $data);

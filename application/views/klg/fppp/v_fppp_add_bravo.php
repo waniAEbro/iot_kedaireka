@@ -10,27 +10,27 @@
     <div class="box-body">
         <form method="post" class="form-vertical form_faktur" role="form">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="form-group">
                         <label>Divisi</label>
-                        <?= form_dropdown('id_divisi', $divisi, $param, 'id="id_divisi" class="form-control"') ?>
+                        <?= form_dropdown('id_divisi_tampil', $divisi, $param, 'id="id_divisi_tampil" class="form-control" disabled') ?>
                         <input type="hidden" id="id_divisi" value="<?= $param ?>" class="form-control" autocomplete="off">
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="form-group">
                         <label>Tanggal Pembuatan</label>
-                        <input type="text" id="tgl_pembuatan" data-date-format="yyyy-mm-dd" value="<?= date('Y-m-d') ?>" class="form-control datepicker" autocomplete="off">
+                        <input type="text" id="tgl_pembuatan" value="<?= date('Y-m-d') ?>" class="form-control" autocomplete="off" readonly>
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Applicant</label>
                         <input type="text" id="applicant" class="form-control" autocomplete="off">
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Applicant Sector</label>
@@ -43,15 +43,84 @@
                         <input type="text" id="authorized_distributor" class="form-control" autocomplete="off">
                     </div>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>No FPPP</label>
-                        <input type="text" id="no_fppp" class="form-control" autocomplete="off">
+                        <input type="text" id="no_fppp" class="form-control" value="<?= $no_fppp ?>" autocomplete="off" readonly>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Nama Proyek</label>
+                        <input type="text" id="nama_proyek" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Tahap</label>
+                        <input type="text" id="tahap" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Alamat Proyek</label>
+                        <input type="text" id="alamat_proyek" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Status Order</label>
+                        <input type="text" id="status_order" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Note NCR/FPPP</label>
+                        <input type="text" id="note_ncr" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Pengiriman</label>
+                        <?= form_dropdown('id_pengiriman', $pengiriman, '', 'id="id_pengiriman" class="form-control"') ?>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Deadline Pengiriman</label>
+                        <input type="text" id="deadline_pengiriman" data-date-format="yyyy-mm-dd" value="<?= date('Y-m-d') ?>" class="form-control datepicker" autocomplete="off">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Metode Pengiriman</label>
+                        <?= form_dropdown('id_metode_pengiriman', $metode_pengiriman, '', 'id="id_metode_pengiriman" class="form-control"') ?>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Penggunaan Peti</label>
+                        <?= form_dropdown('id_penggunaan_peti', $penggunaan_peti, '', 'id="id_penggunaan_peti" class="form-control"') ?>
                     </div>
                 </div>
             </div>
 
-            <div class="row">
+            <!-- <div class="row">
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Waktu Produksi</label>
+                        <input type="text" id="waktu_produksi" class="form-control">
+                    </div>
+                </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Type FPPP</label>
@@ -64,27 +133,11 @@
                         <input type="text" id="nama_aplikator" class="form-control">
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Nama Proyek</label>
-                        <input type="text" id="nama_proyek" class="form-control">
-                    </div>
-                </div>
             </div>
 
             <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Tahap</label>
-                        <input type="text" id="tahap" class="form-control">
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Alamat Proyek</label>
-                        <input type="text" id="alamat_proyek" class="form-control">
-                    </div>
-                </div>
+
+
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Alamat Pengiriman</label>
@@ -94,12 +147,7 @@
             </div>
 
             <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Status Order</label>
-                        <input type="text" id="status_order" class="form-control">
-                    </div>
-                </div>
+
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>System</label>
@@ -133,49 +181,11 @@
                         <input type="text" id="no_quo" class="form-control">
                     </div>
                 </div>
-            </div>
+            </div> -->
 
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Note NCR</label>
-                        <input type="text" id="note_ncr" class="form-control">
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Pengiriman</label>
-                        <?= form_dropdown('id_pengiriman', $pengiriman, '', 'id="id_pengiriman" class="form-control"') ?>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Waktu Produksi</label>
-                        <input type="text" id="waktu_produksi" class="form-control">
-                    </div>
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Deadline Pengiriman</label>
-                        <input type="text" id="deadline_pengiriman" data-date-format="yyyy-mm-dd" value="<?= date('Y-m-d') ?>" class="form-control datepicker" autocomplete="off">
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Metode Pengiriman</label>
-                        <?= form_dropdown('id_metode_pengiriman', $metode_pengiriman, '', 'id="id_metode_pengiriman" class="form-control"') ?>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Penggunaan Peti</label>
-                        <?= form_dropdown('id_penggunaan_peti', $penggunaan_peti, '', 'id="id_penggunaan_peti" class="form-control"') ?>
-                    </div>
-                </div>
-            </div>
+
+
 
             <div class="row">
                 <div class="col-md-4">
@@ -243,7 +253,7 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label>Pict Project</label>
+                        <label>PIC Project</label>
                         <input type="text" id="pic_project" class="form-control">
                     </div>
                 </div>
@@ -271,9 +281,18 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Logo Kaca</label>
-                        <input type="text" id="logo_kaca" class="form-control">
+                        <?= form_dropdown('id_logo_kaca', $logo_kaca, '', 'id="id_logo_kaca" class="form-control"') ?>
                     </div>
                 </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Jumlah Gambar</label>
+                        <input type="text" id="jumlah_gambar" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Lampiran</label>
@@ -281,16 +300,13 @@
                         <span style="color:red">*) Lampiran File berformat .pdf maks 2MB</span>
                     </div>
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label>Lampiran Lain</label>
                         <input type="text" id="lampiran_lain" class="form-control">
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label>Attachment</label>
                         <input type="text" id="attachment" class="form-control">
@@ -442,21 +458,21 @@
                     applicant_sector: $("#applicant_sector").val(),
                     authorized_distributor: $("#authorized_distributor").val(),
                     no_fppp: $("#no_fppp").val(),
-                    type_fppp: $("#type_fppp").val(),
-                    nama_aplikator: $("#nama_aplikator").val(),
+                    // type_fppp: $("#type_fppp").val(),
+                    // nama_aplikator: $("#nama_aplikator").val(),
                     nama_proyek: $("#nama_proyek").val(),
                     tahap: $("#tahap").val(),
                     alamat_proyek: $("#alamat_proyek").val(),
-                    alamat_pengiriman: $("#alamat_pengiriman").val(),
+                    // alamat_pengiriman: $("#alamat_pengiriman").val(),
                     status_order: $("#status_order").val(),
-                    system: $("#system").val(),
-                    pekerjaan: $("#pekerjaan").val(),
-                    no_sph: $("#no_sph").val(),
-                    no_vo: $("#no_vo").val(),
-                    no_quo: $("#no_quo").val(),
+                    // system: $("#system").val(),
+                    // pekerjaan: $("#pekerjaan").val(),
+                    // no_sph: $("#no_sph").val(),
+                    // no_vo: $("#no_vo").val(),
+                    // no_quo: $("#no_quo").val(),
                     note_ncr: $("#note_ncr").val(),
                     id_pengiriman: $("#id_pengiriman").val(),
-                    waktu_produksi: $("#waktu_produksi").val(),
+                    // waktu_produksi: $("#waktu_produksi").val(),
                     deadline_pengiriman: $("#deadline_pengiriman").val(),
                     id_metode_pengiriman: $("#id_metode_pengiriman").val(),
                     id_penggunaan_peti: $("#id_penggunaan_peti").val(),
@@ -473,7 +489,8 @@
                     admin_koordinator: $("#admin_koordinator").val(),
                     id_kaca: $("#id_kaca").val(),
                     jenis_kaca: $("#jenis_kaca").val(),
-                    logo_kaca: $("#logo_kaca").val(),
+                    id_logo_kaca: $("#id_logo_kaca").val(),
+                    jumlah_gambar: $("#jumlah_gambar").val(),
                     lampiran_lain: $("#lampiran_lain").val(),
                     attachment: $("#attachment").val(),
                     note: CKEDITOR.instances.keterangan.getData(),
