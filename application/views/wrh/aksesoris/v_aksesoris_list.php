@@ -149,15 +149,6 @@
                 </div>
             </div>
 
-            <div class="box-body">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label>Total Item Order</label>
-                        <input type="text" style="text-align: right;" class="form-control" value="<?= $total_order ?>" readonly>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 </div>
