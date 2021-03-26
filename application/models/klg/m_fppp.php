@@ -39,7 +39,7 @@ class M_fppp extends CI_Model
 	}
 	public function getNoFppp($value = '')
 	{
-		$year = date('Y');
+		$year  = date('Y');
 		$month = date('m');
 		$this->db->where('DATE_FORMAT(created,"%Y")', $year);
 		$this->db->where('DATE_FORMAT(created,"%m")', $month);
@@ -49,9 +49,9 @@ class M_fppp extends CI_Model
 		if ($hasil->num_rows() > 0) {
 
 			$string = $hasil->row()->no_fppp;
-			$arr = explode("/", $string, 2);
-			$first = $arr[0];
-			$no = $first + 1;
+			$arr    = explode("/", $string, 2);
+			$first  = $arr[0];
+			$no     = $first + 1;
 			return $no;
 		} else {
 			return '1';
@@ -62,6 +62,47 @@ class M_fppp extends CI_Model
 	{
 		$this->db->where('id', $id);
 		$this->db->update('data_fppp_detail', $data);
+	}
+
+	public function bom_aluminium($id_fppp)
+	{
+		$this->db->join('data_fppp df', 'df.id = db.id_fppp', 'left');
+		$this->db->where('db.id_fppp', $id_fppp);
+		$this->db->select('db.*,df.nama_proyek');
+
+		return $this->db->get('data_fppp_bom_aluminium db');
+	}
+
+	public function bom_aksesoris($id_fppp)
+	{
+		$this->db->join('data_fppp df', 'df.id = db.id_fppp', 'left');
+		$this->db->where('db.id_fppp', $id_fppp);
+		$this->db->select('db.*,df.nama_proyek');
+
+		return $this->db->get('data_fppp_bom_aksesoris db');
+	}
+
+	public function bom_lembaran($id_fppp)
+	{
+		$this->db->join('data_fppp df', 'df.id = db.id_fppp', 'left');
+		$this->db->where('db.id_fppp', $id_fppp);
+		$this->db->select('db.*,df.nama_proyek');
+
+		return $this->db->get('data_fppp_bom_lembaran db');
+	}
+
+	public function simpan_aksesoris($item_code, $deskripsi, $satuan)
+	{
+		$this->db->where('item_code', $item_code);
+		$cek = $this->db->get('master_aksesoris')->num_rows();
+		if ($cek < 1) {
+			$object = array(
+				'item_code' => $item_code,
+				'deskripsi' => $deskripsi,
+				'satuan'    => $satuan,
+			);
+			$this->db->insert('master_aksesoris', $object);
+		}
 	}
 
 	// public function getdata($store = '', $bulan = '', $tahun = '')

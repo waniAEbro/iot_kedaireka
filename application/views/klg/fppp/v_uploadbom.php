@@ -7,7 +7,7 @@
                 <h3 class="box-title">From Upload BOM</h3>
             </div>
             <div class="box-body">
-                <h4>Ketentuan Upload excel :</h4>
+                <h4>Ketentuan Upload excel: </h4>
                 <ul>
                     <li>Upload File dengan format .xls .xlsx .csv</li>
                     <li>Ukuran Maksimal adalah 1000 kb</li>
@@ -16,9 +16,9 @@
                     <li>Data yang tersimpan ada di baris ke 2 dan seterusnya</li>
                     <li>Posisi Kolom harus sama dengan contoh gambar</li>
                     <li>Apabila validasi menunjukan data sudah ada maka tidak tersimpan</li>
-                    <li>lihat contoh pada gambar dibawah</li>
-                    <img src="<?= base_url('files/mayo.JPG') ?>" alt="">
-                    <li>Download file sample ini kemudian disesuaikan dengan contoh di atas <?php echo '<a class="btn btn-xs btn-primary" target="_blank" href="' . base_url('files/iniexcel.xlsx') . '" >Download</a>'; ?></li>
+                    <li>Download format upload untuk <b>BOM ALUMINIUM</b> <?php echo '<a class="btn btn-xs btn-primary" target="_blank" href="' . base_url('files/bom_aluminium.xlsx') . '" >Download</a>'; ?></li>
+                    <li>Download format upload untuk <b>BOM AKSESORIS</b> <?php echo '<a class="btn btn-xs btn-primary" target="_blank" href="' . base_url('files/bom_aksesoris.xlsx') . '" >Download</a>'; ?></li>
+                    <li>Download format upload untuk <b>BOM LEMBARAN</b> <?php echo '<a class="btn btn-xs btn-primary" target="_blank" href="' . base_url('files/bom_lembaran.xlsx') . '" >Download</a>'; ?></li>
                 </ul>
             </div>
             <div class="box-body">
@@ -65,7 +65,6 @@
         $('#tombol').removeAttr('disabled', false);
     });
 
-
     function save() {
         $('#tombol').attr('disabled', 'disabled');
         $('#loading').show(100);
@@ -76,6 +75,7 @@
             dataType: 'json',
             data: {
                 id: $('#id').val(),
+                jenis_bom: $('#jenis_bom').val(),
             },
             success: function(data) {
                 $.growl.notice({
