@@ -38,12 +38,37 @@ class M_aksesoris extends CI_Model
         $this->db->delete('data_aksesoris_detail');
     }
 
-    public function getDataDetailTabel($id = '')
+    public function getDataDetailTabel($item_code = '')
     {
-        $this->db->join('data_aksesoris da', 'da.id = dad.id_aksesoris', 'left');
-        $this->db->where('dad.id_aksesoris', $id);
-        $this->db->select('dad.*');
-        return $this->db->get('data_aksesoris_detail dad')->result();
+        // $this->db->join('data_aksesoris da', 'da.id = dad.id_aksesoris', 'left');
+        // $this->db->where('dad.id_aksesoris', $id);
+        // $this->db->select('dad.*');
+        // return $this->db->get('data_aksesoris_detail dad')->result();
+        $this->db->join('master_divisi md', 'md.id = dai.id_divisi', 'left');
+        $this->db->join('master_gudang mg', 'mg.id = dai.id_gudang', 'left');
+
+        $this->db->join('data_aksesoris da', 'da.item_code = dai.item_code', 'left');
+        $this->db->where('dai.item_code', $item_code);
+        $this->db->select('dai.*,sum(dai.qty) as tot_in,md.divisi,mg.gudang');
+        $this->db->group_by('dai.item_code');
+        return $this->db->get('data_aksesoris_in dai')->result();;
+    }
+
+    public function insertstokin($value = '')
+    {
+        $this->db->insert('data_aksesoris_in', $value);
+    }
+
+    public function insertstokout($value = '')
+    {
+        $this->db->insert('data_aksesoris_out', $value);
+    }
+
+    public function getTotout($item_code)
+    {
+        $this->db->where('item_code', $item_code);
+        $this->db->select('sum(qty) as tot_out');
+        return $this->db->get('data_aksesoris_out')->row()->tot_out;
     }
 }
 

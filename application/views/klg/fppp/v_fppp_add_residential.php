@@ -112,81 +112,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- <div class="row">
-
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Waktu Produksi</label>
-                        <input type="text" id="waktu_produksi" class="form-control">
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Type FPPP</label>
-                        <input type="text" id="type_fppp" class="form-control">
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Nama Aplikator</label>
-                        <input type="text" id="nama_aplikator" class="form-control">
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-
-
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Alamat Pengiriman</label>
-                        <input type="text" id="alamat_pengiriman" class="form-control">
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>System</label>
-                        <input type="text" id="system" class="form-control">
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Pekerjaan</label>
-                        <input type="text" id="pekerjaan" class="form-control">
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>No SPH</label>
-                        <input type="text" id="no_sph" class="form-control">
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>No VO</label>
-                        <input type="text" id="no_vo" class="form-control">
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>No Quo</label>
-                        <input type="text" id="no_quo" class="form-control">
-                    </div>
-                </div>
-            </div> -->
-
-
-
-
-
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
@@ -442,9 +367,6 @@
     });
 
     function save() {
-        // $(this).find("button[type='submit']").prop('disabled', true);
-        // $("#proses").hide(50);
-        // $("#silahkantunggu").show(50);
         var path = $("#lampiran").val().replace('C:\\fakepath\\', '');
         if (path == '') {
             $.ajax({
@@ -458,21 +380,12 @@
                     applicant_sector: $("#applicant_sector").val(),
                     authorized_distributor: $("#authorized_distributor").val(),
                     no_fppp: $("#no_fppp").val(),
-                    // type_fppp: $("#type_fppp").val(),
-                    // nama_aplikator: $("#nama_aplikator").val(),
                     nama_proyek: $("#nama_proyek").val(),
                     tahap: $("#tahap").val(),
                     alamat_proyek: $("#alamat_proyek").val(),
-                    // alamat_pengiriman: $("#alamat_pengiriman").val(),
                     status_order: $("#status_order").val(),
-                    // system: $("#system").val(),
-                    // pekerjaan: $("#pekerjaan").val(),
-                    // no_sph: $("#no_sph").val(),
-                    // no_vo: $("#no_vo").val(),
-                    // no_quo: $("#no_quo").val(),
                     note_ncr: $("#note_ncr").val(),
                     id_pengiriman: $("#id_pengiriman").val(),
-                    // waktu_produksi: $("#waktu_produksi").val(),
                     deadline_pengiriman: $("#deadline_pengiriman").val(),
                     id_metode_pengiriman: $("#id_metode_pengiriman").val(),
                     id_penggunaan_peti: $("#id_penggunaan_peti").val(),
@@ -524,21 +437,12 @@
                     applicant_sector: $("#applicant_sector").val(),
                     authorized_distributor: $("#authorized_distributor").val(),
                     no_fppp: $("#no_fppp").val(),
-                    type_fppp: $("#type_fppp").val(),
-                    nama_aplikator: $("#nama_aplikator").val(),
                     nama_proyek: $("#nama_proyek").val(),
                     tahap: $("#tahap").val(),
                     alamat_proyek: $("#alamat_proyek").val(),
-                    alamat_pengiriman: $("#alamat_pengiriman").val(),
                     status_order: $("#status_order").val(),
-                    system: $("#system").val(),
-                    pekerjaan: $("#pekerjaan").val(),
-                    no_sph: $("#no_sph").val(),
-                    no_vo: $("#no_vo").val(),
-                    no_quo: $("#no_quo").val(),
                     note_ncr: $("#note_ncr").val(),
                     id_pengiriman: $("#id_pengiriman").val(),
-                    waktu_produksi: $("#waktu_produksi").val(),
                     deadline_pengiriman: $("#deadline_pengiriman").val(),
                     id_metode_pengiriman: $("#id_metode_pengiriman").val(),
                     id_penggunaan_peti: $("#id_penggunaan_peti").val(),
@@ -555,26 +459,20 @@
                     admin_koordinator: $("#admin_koordinator").val(),
                     id_kaca: $("#id_kaca").val(),
                     jenis_kaca: $("#jenis_kaca").val(),
-                    logo_kaca: $("#logo_kaca").val(),
+                    id_logo_kaca: $("#id_logo_kaca").val(),
+                    jumlah_gambar: $("#jumlah_gambar").val(),
                     lampiran_lain: $("#lampiran_lain").val(),
                     attachment: $("#attachment").val(),
                     note: CKEDITOR.instances.keterangan.getData(),
                 },
                 success: function(data) {
-                    if (data['id'] == 'x') {
-                        $.growl.error({
-                            title: 'Gagal',
-                            message: data['msg']
-                        });
-                    } else {
-                        $('#id_fppp').val(data['id']);
-                        $.growl.notice({
-                            title: 'Sukses',
-                            message: data['msg']
-                        });
-                        $('#tutup').click();
-                        $('#form_pembelian').show(1000);
-                    }
+                    $('#id_fppp').val(data['id']);
+                    $.growl.notice({
+                        title: 'Sukses',
+                        message: data['msg']
+                    });
+                    $('#tutup').click();
+                    $('#form_pembelian').show(1000);
                 },
                 error: function(data, e) {
                     $("#info").html(e);

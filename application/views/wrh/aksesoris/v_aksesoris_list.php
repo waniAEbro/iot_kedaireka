@@ -124,7 +124,7 @@
                                 $ada = 1;
                             ?>
                                 <tr>
-                                    <td class="details-control" id="<?= $i ?>"><input type="hidden" id="id_<?= $i ?>" value="<?= $row->id ?>"></td>
+                                    <td class="details-control" id="<?= $i ?>"><input type="hidden" id="id_<?= $i ?>" value="<?= $row->item_code ?>"></td>
                                     <td align="center"><?= $i ?></td>
                                     <td><?= $row->item_code ?></td>
                                     <td><?= $row->deskripsi ?></td>
@@ -283,8 +283,8 @@
                 '<tr>' +
                 '<th bgcolor="#bfbfbf">No</th>' +
                 '<th bgcolor="#bfbfbf">Divisi</th>' +
-                '<th bgcolor="#bfbfbf">Area</th>' +
-                '<th bgcolor="#bfbfbf">Rak</th>' +
+                '<th bgcolor="#bfbfbf">Gudang</th>' +
+                '<th bgcolor="#bfbfbf">Keranjang</th>' +
                 '<th bgcolor="#bfbfbf">Stock Awal Bulan</th>' +
                 '<th bgcolor="#bfbfbf">Total In Per Bulan</th>' +
                 '<th bgcolor="#bfbfbf">Total Out Per Bulan</th>' +
@@ -308,12 +308,12 @@
                         infoTable += '<tr bgcolor="' + color + '">' +
                             '<td><font color="' + fontcolor + '">' + no + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].divisi + '</font></td>' +
-                            '<td><font color="' + fontcolor + '">' + data.detail[i].area + '</font></td>' +
-                            '<td><font color="' + fontcolor + '">' + data.detail[i].rak + '</font></td>' +
-                            '<td><font color="' + fontcolor + '">' + data.detail[i].stock_awal_bulan + '</font></td>' +
-                            '<td><font color="' + fontcolor + '">' + data.detail[i].total_in_per_bulan + '</font></td>' +
-                            '<td><font color="' + fontcolor + '">' + data.detail[i].total_out_per_bulan + '</font></td>' +
-                            '<td><font color="' + fontcolor + '">' + data.detail[i].stock_akhir_bulan + '</font></td>' +
+                            '<td><font color="' + fontcolor + '">' + data.detail[i].gudang + '</font></td>' +
+                            '<td><font color="' + fontcolor + '">' + data.detail[i].keranjang + '</font></td>' +
+                            '<td><font color="' + fontcolor + '">' + data.detail[i].stok_awal_bulan + '</font></td>' +
+                            '<td><font color="' + fontcolor + '">' + data.detail[i].tot_in + '</font></td>' +
+                            '<td><font color="' + fontcolor + '">' + data.detail[i].tot_out + '</font></td>' +
+                            '<td><font color="' + fontcolor + '">' + data.detail[i].stok_akhir_bulan + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].rata_pemakaian + '</font></td>' +
                             '</tr>';
 

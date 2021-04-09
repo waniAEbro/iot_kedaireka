@@ -165,8 +165,9 @@
                         title: 'Sukses',
                         message: data['msg']
                     });
-                    $('#tutup').click();
-                    $('#form_pembelian').show(1000);
+                    // $('#tutup').click();
+                    // $('#form_pembelian').show(1000);
+                    load_silent("wrh/aksesoris", "#content");
                 }
 
             }
