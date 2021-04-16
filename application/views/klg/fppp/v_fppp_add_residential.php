@@ -218,23 +218,11 @@
             </div>
 
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-12">
                     <div class="form-group">
                         <label>Lampiran</label>
                         <?php echo form_upload(array('name' => 'lampiran', 'id' => 'lampiran')); ?>
                         <span style="color:red">*) Lampiran File berformat .pdf maks 2MB</span>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Lampiran Lain</label>
-                        <input type="text" id="lampiran_lain" class="form-control">
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Attachment</label>
-                        <input type="text" id="attachment" class="form-control">
                     </div>
                 </div>
             </div>
@@ -297,6 +285,9 @@
                             <label class="control-label">Qty</label>
                             <input type="hidden" id="id_fppp" readonly>
                             <input type="text" id="qty" class="form-control" autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <a onclick="quotation()" class="btn btn-info">Add Item</a>
                         </div>
                     </div>
                 </form>
@@ -550,21 +541,18 @@
                 </tr>';
                     $('tr.odd').remove();
                     $('#dataTbl').append(x);
-                    $('#item').val('').trigger('change');
+                    $('#id_brand').val('').trigger('change');
+                    $('#id_item').val('').trigger('change');
                     $("#gbritem").html('');
-                    $('#jenis_barang').html('');
-                    $('#warna').val('').trigger('change');
-                    $('#bukaan').val('').trigger('change');
-                    $('#status_detail').val('').trigger('change');
-                    $('#lebar').val('');
-                    $('#harga').val('');
-                    $('#tinggi').val('');
-                    $('#qty').val('');
-                    $("#ket_detail").val(''),
-                        $.growl.notice({
-                            title: 'Sukses',
-                            message: "Berhasil menyimpan FPPP"
-                        });
+                    $('#kode_opening').val('');
+                    $('#kode_unit').val('');
+                    $('#glass_thick').val('');
+                    $("#finish_coating").val(''),
+                        $('#qty').val('');
+                    $.growl.notice({
+                        title: 'Sukses',
+                        message: "Berhasil menyimpan FPPP"
+                    });
 
                 })
                 .fail(function(XHR) {

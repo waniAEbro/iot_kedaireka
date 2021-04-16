@@ -3,12 +3,12 @@
     <div class="col-lg-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Master Aksesoris</h3>
+                <h3 class="box-title">Master Aluminium</h3>
                 <div class="box-tools pull-right">
                     <?php
                     $sesi = from_session('level');
                     if ($sesi == '1' || $sesi == '2') {
-                        echo button('load_silent("master/aksesoris/import/","#content")', 'Import Excel', 'btn btn-primary', 'data-toggle="tooltip" title="Import Excel"');
+                        echo button('load_silent("master/aluminium/import/","#content")', 'Import Excel', 'btn btn-primary', 'data-toggle="tooltip" title="Import Excel"');
                     } else {
                         # code...
                     }
@@ -19,31 +19,33 @@
                 <table width="100%" id="tableku" class="table table-striped">
                     <thead>
                         <th width="5%">No</th>
-                        <th>Item code</th>
-                        <th>Deskripsi</th>
+                        <th>Section ATA</th>
+                        <th>Section Allure</th>
+                        <th>Temper</th>
+                        <th>Kode Warna</th>
+                        <th>Deskripsi Warna</th>
+                        <th>Ukuran</th>
                         <th>Satuan</th>
-                        <th>Supplier</th>
-                        <th>Deskripsi Supplier</th>
-                        <th>Divisi</th>
                         <th>Act</th>
                     </thead>
                     <tbody>
                         <?php
                         $i = 1;
-                        foreach ($aksesoris->result() as $row) : ?>
+                        foreach ($aluminium->result() as $row) : ?>
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
-                                <td><?= $row->item_code ?></td>
-                                <td><?= $row->deskripsi ?></td>
+                                <td><?= $row->section_ata ?></td>
+                                <td><?= $row->section_allure ?></td>
+                                <td><?= $row->temper ?></td>
+                                <td><?= $row->kode_warna ?></td>
+                                <td><?= $row->deskripsi_warna ?></td>
+                                <td><?= $row->ukuran ?></td>
                                 <td><?= $row->satuan ?></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
                                 <td align="center">
                                     <?php
                                     $sesi = from_session('level');
                                     if ($sesi == '1' || $sesi == '2') {
-                                        echo button('load_silent("master/aksesoris/form/sub/' . $row->id . '","#modal")', '', 'btn btn-info fa fa-edit', 'data-toggle="tooltip" title="Edit"');
+                                        echo button('load_silent("master/aluminium/form/sub/' . $row->id . '","#modal")', '', 'btn btn-info fa fa-edit', 'data-toggle="tooltip" title="Edit"');
                                     } else {
                                         # code...
                                     }

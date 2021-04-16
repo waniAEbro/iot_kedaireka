@@ -1,45 +1,47 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Aksesoris extends CI_Controller
+class aluminium extends CI_Controller
 {
 
     public function __construct()
     {
         parent::__construct();
         $this->fungsi->restrict();
-        $this->load->model('master/m_aksesoris');
+        $this->load->model('master/m_aluminium');
+        $this->load->model('klg/m_fppp');
+        $this->load->library(array('PHPExcel', 'PHPExcel/IOFactory'));
     }
 
     public function index()
     {
-        $this->fungsi->check_previleges('aksesoris');
-        $data['aksesoris'] = $this->m_aksesoris->getData();
-        $this->load->view('master/aksesoris/v_aksesoris_list', $data);
+        $this->fungsi->check_previleges('aluminium');
+        $data['aluminium'] = $this->m_aluminium->getData();
+        $this->load->view('master/aluminium/v_aluminium_list', $data);
     }
 
     public function form($param = '')
     {
         $content   = "<div id='divsubcontent'></div>";
-        $header    = "Form Master aksesoris";
-        $subheader = "aksesoris";
-        $buttons[] = button('jQuery.facebox.close()', 'Tutup', 'btn btn-default', 'data-dismiss="modal"');
+        $header    = "Form Master aluminium";
+        $subheader = "aluminium";
+        $buttons[]          = button('jQuery.facebox.close()', 'Tutup', 'btn btn-default', 'data-dismiss="modal"');
         echo $this->fungsi->parse_modal($header, $subheader, $content, $buttons, "");
         if ($param == 'base') {
-            $this->fungsi->run_js('load_silent("master/aksesoris/show_addForm/","#divsubcontent")');
+            $this->fungsi->run_js('load_silent("master/aluminium/show_addForm/","#divsubcontent")');
         } else {
             $base_kom = $this->uri->segment(5);
-            $this->fungsi->run_js('load_silent("master/aksesoris/show_editForm/' . $base_kom . '","#divsubcontent")');
+            $this->fungsi->run_js('load_silent("master/aluminium/show_editForm/' . $base_kom . '","#divsubcontent")');
         }
     }
 
     public function show_addForm()
     {
-        $this->fungsi->check_previleges('aksesoris');
+        $this->fungsi->check_previleges('aluminium');
         $this->load->library('form_validation');
         $config = array(
             array(
-                'field'    => 'aksesoris',
+                'field' => 'aluminium',
                 'label' => 'item_code',
                 'rules' => 'required'
             )
@@ -49,29 +51,29 @@ class Aksesoris extends CI_Controller
 
         if ($this->form_validation->run() == FALSE) {
             $data['status'] = '';
-            $this->load->view('master/aksesoris/v_aksesoris_add', $data);
+            $this->load->view('master/aluminium/v_aluminium_add', $data);
         } else {
             $datapost = get_post_data(array('item_code', 'deskripsi'));
-            $this->m_aksesoris->insertData($datapost);
-            $this->fungsi->run_js('load_silent("master/aksesoris","#content")');
-            $this->fungsi->message_box("Data Master aksesoris sukses disimpan...", "success");
-            $this->fungsi->catat($datapost, "Menambah Master aksesoris dengan data sbb:", true);
+            $this->m_aluminium->insertData($datapost);
+            $this->fungsi->run_js('load_silent("master/aluminium","#content")');
+            $this->fungsi->message_box("Data Master aluminium sukses disimpan...", "success");
+            $this->fungsi->catat($datapost, "Menambah Master aluminium dengan data sbb:", true);
         }
     }
 
     public function show_editForm($id = '')
     {
-        $this->fungsi->check_previleges('aksesoris');
+        $this->fungsi->check_previleges('aluminium');
         $this->load->library('form_validation');
         $config = array(
             array(
-                'field'    => 'id',
+                'field' => 'id',
                 'label' => 'wes mbarke',
                 'rules' => ''
             ),
             array(
-                'field'    => 'aksesoris',
-                'label' => 'aksesoris',
+                'field' => 'aluminium',
+                'label' => 'aluminium',
                 'rules' => 'required'
             )
         );
@@ -79,21 +81,21 @@ class Aksesoris extends CI_Controller
         $this->form_validation->set_error_delimiters('<span class="error-span">', '</span>');
 
         if ($this->form_validation->run() == FALSE) {
-            $data['edit'] = $this->db->get_where('master_aksesoris', array('id' => $id));
-            $this->load->view('master/aksesoris/v_aksesoris_edit', $data);
+            $data['edit'] = $this->db->get_where('master_aluminium', array('id' => $id));
+            $this->load->view('master/aluminium/v_aluminium_edit', $data);
         } else {
-            $datapost = get_post_data(array('id', 'aksesoris'));
-            $this->m_aksesoris->updateData($datapost);
-            $this->fungsi->run_js('load_silent("master/aksesoris","#content")');
-            $this->fungsi->message_box("Data Master aksesoris sukses diperbarui...", "success");
-            $this->fungsi->catat($datapost, "Mengedit Master aksesoris dengan data sbb:", true);
+            $datapost = get_post_data(array('id', 'aluminium'));
+            $this->m_aluminium->updateData($datapost);
+            $this->fungsi->run_js('load_silent("master/aluminium","#content")');
+            $this->fungsi->message_box("Data Master aluminium sukses diperbarui...", "success");
+            $this->fungsi->catat($datapost, "Mengedit Master aluminium dengan data sbb:", true);
         }
     }
 
     public function import()
     {
         $data['id'] = '';
-        $this->load->view('master/aksesoris/v_aksesoris_upload', $data);
+        $this->load->view('master/aluminium/v_aluminium_upload', $data);
     }
 
     public function saveimport()
@@ -138,17 +140,18 @@ class Aksesoris extends CI_Controller
             );
 
             $data = array(
-                'id_jenis_item'       => 2,
-                'item_code'       => $rowData[0][0],
-                'deskripsi'    => $rowData[0][1],
-                'divisi'            => $rowData[0][2],
-                'supplier'        => $rowData[0][3],
-                'deskripsi_supplier'   => $rowData[0][4],
-                'satuan'            => $rowData[0][5],
-                'stock_akhir_bulan' => $rowData[0][6],
+                'id_jenis_item'       => 1,
+                'section_ata'       => $rowData[0][0],
+                'section_allure'    => $rowData[0][1],
+                'temper'            => $rowData[0][2],
+                'kode_warna'        => $rowData[0][3],
+                'deskripsi_warna'   => $rowData[0][4],
+                'ukuran'            => $rowData[0][5],
+                'satuan'            => $rowData[0][6],
+                'stock_akhir_bulan' => $rowData[0][7],
                 'created'          => date('Y-m-d H:i:s'),
             );
-            $cek_item = $this->m_fppp->cekMasterAksesoris($data['item_code']);
+            $cek_item = $this->m_fppp->cekMasterAluminium($data['section_ata'], $data['section_allure']);
             if ($cek_item < 1) {
                 $this->m_fppp->simpanItem($data);
             }
@@ -158,5 +161,5 @@ class Aksesoris extends CI_Controller
     }
 }
 
-/* End of file aksesoris.php */
-/* Location: ./application/controllers/master/aksesoris.php */
+/* End of file aluminium.php */
+/* Location: ./application/controllers/master/aluminium.php */

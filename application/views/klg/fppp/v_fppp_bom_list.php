@@ -61,8 +61,6 @@
                         <th>Nama Proyek</th>
                         <th>Item Code</th>
                         <th>Deskripsi</th>
-                        <th>Satuan</th>
-                        <th>Ukuran</th>
                         <th>Qty</th>
                         <th>Keterangan</th>
                         <th>Lampiran</th>
@@ -76,8 +74,6 @@
                                 <td><?= $row->nama_proyek ?></td>
                                 <td><?= $row->item_code ?></td>
                                 <td><?= $row->deskripsi ?></td>
-                                <td><?= $row->satuan ?></td>
-                                <td><?= $row->ukuran ?></td>
                                 <td><?= $row->qty ?></td>
                                 <td><?= $row->keterangan ?></td>
                                 <td><?= $row->lampiran ?></td>
@@ -100,13 +96,13 @@
                     <thead>
                         <th width="5%">No</th>
                         <th>Nama Proyek</th>
-                        <th>Kode Unit</th>
                         <th>Jenis Material</th>
-                        <th>Deskripsi</th>
-                        <th>Qty</th>
-                        <th>Panjang</th>
+                        <th>Nama Barang</th>
                         <th>Lebar</th>
+                        <th>Tinggi</th>
                         <th>Tebal</th>
+                        <th>Warna</th>
+                        <th>Qty</th>
                         <th>Keterangan</th>
                         <th>Lampiran</th>
                     </thead>
@@ -117,13 +113,13 @@
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
                                 <td><?= $row->nama_proyek ?></td>
-                                <td><?= $row->kode_unit ?></td>
                                 <td><?= $row->jenis_material ?></td>
-                                <td><?= $row->deskripsi ?></td>
-                                <td><?= $row->qty ?></td>
-                                <td><?= $row->panjang ?></td>
+                                <td><?= $row->nama_barang ?></td>
                                 <td><?= $row->lebar ?></td>
+                                <td><?= $row->tinggi ?></td>
                                 <td><?= $row->tebal ?></td>
+                                <td><?= $row->warna ?></td>
+                                <td><?= $row->qty ?></td>
                                 <td><?= $row->keterangan ?></td>
                                 <td><?= $row->lampiran ?></td>
                             </tr>

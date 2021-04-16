@@ -17,54 +17,18 @@
     <div class="col-lg-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Monitoring</h3>
+                <h3 class="box-title">Monitoring Aksesoris</h3>
 
                 <div class="box-tools pull-right">
                     <?php
                     $sesi = from_session('level');
                     if ($sesi == '1' || $sesi == '2') {
-                        echo button('load_silent("wrh/aksesoris/formAdd","#content")', 'Input Stock', 'btn btn-success');
+                        //echo button('load_silent("wrh/aksesoris/formAdd","#content")', 'Input Stock', 'btn btn-success');
                     } else {
                         # code...
                     }
                     ?>
                     <input type="button" target="_blank" class="btn btn-default" onclick="printDiv('printableArea')" value="Print Page" />
-                </div>
-            </div>
-            <div class="box-body">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Item Code</label>
-                            <select id="item_code" name="item_code" class="form-control">
-                                <option value="">-- Select --</option>
-                                <?php foreach ($item_code->result() as $valap) : ?>
-                                    <?php $selected = ($valap->item_code == $item_code_f) ? 'selected' : ''; ?>
-                                    <option value="<?= $valap->item_code ?>" <?= $selected ?>><?= $valap->item_code . '-' . $valap->deskripsi ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Supplier</label>
-                            <select id="supplier" name="supplier" class="form-control">
-                                <option value="">-- Select --</option>
-                                <?php foreach ($supplier->result() as $valap) : ?>
-                                    <?php $selected = ($valap->id == $supplier_f) ? 'selected' : ''; ?>
-                                    <option value="<?= $valap->id ?>" <?= $selected ?>><?= $valap->supplier ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="box-tools pull-right">
-                            <a class="btn btn-success" onclick="setFilter()">Set Filter</a>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div class="box-body" id="printableArea">
@@ -102,11 +66,8 @@
                         <thead>
                             <th width="5%"></th>
                             <th width="5%">No</th>
-                            <th>Nama Barang</th>
+                            <th>Item Code</th>
                             <th>Deskripsi Barang</th>
-                            <th>Satuan</th>
-                            <th>Deskripsi Supplier</th>
-                            <th>Kode Bravo</th>
                             <th>Stock Awal Bulan</th>
                             <th>Total In Per Bulan</th>
                             <th>Total Out Per Bulan</th>
@@ -122,24 +83,23 @@
                             $i = 1;
                             foreach ($aksesoris->result() as $row) :
                                 $ada = 1;
+                                $qtyTotalIn = @$total_in[$row->item_code];
+                                $qtyTotalOut = @$total_out[$row->item_code];
                             ?>
                                 <tr>
                                     <td class="details-control" id="<?= $i ?>"><input type="hidden" id="id_<?= $i ?>" value="<?= $row->item_code ?>"></td>
                                     <td align="center"><?= $i ?></td>
                                     <td><?= $row->item_code ?></td>
                                     <td><?= $row->deskripsi ?></td>
-                                    <td><?= $row->satuan ?></td>
-                                    <td><?= $row->supplier ?></td>
-                                    <td><?= $row->kode_bravo ?></td>
-                                    <td><?= $row->stock_awal_bulan ?></td>
-                                    <td><?= $row->total_in_per_bulan ?></td>
-                                    <td><?= $row->total_out_per_bulan ?></td>
-                                    <td><?= $row->stock_akhir_bulan ?></td>
-                                    <td><?= $row->rata_per_bulan ?></td>
-                                    <td><?= $row->min_stock ?></td>
-                                    <td><?= $row->fungsi ?></td>
-                                    <td><?= $row->ots_persiapan ?></td>
-                                    <td><?= $row->ots_persiapan ?></td>
+                                    <td></td>
+                                    <td><?= $qtyTotalIn ?></td>
+                                    <td><?= $qtyTotalOut ?></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
                                 </tr>
 
                             <?php $i++;

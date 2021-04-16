@@ -2,7 +2,7 @@
     <div class="col-lg-3">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Input Stock</h3>
+                <h3 class="box-title">Input Stock Out</h3>
             </div>
             <div class="div-pembelian">
                 <form method="post" class="form-vertical form" role="form" id="formid">
@@ -10,6 +10,16 @@
                         <div class="form-group">
                             <label class="control-label">Tgl Proses:</label>
                             <input type="text" value="<?= date('Y-m-d') ?>" class="form-control" id="tgl_proses" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">No FPPP:</label>
+                            <select id="id_fppp" name="id_fppp" class="form-control" style="width:100%" required>
+                                <option value="">-- Select --</option>
+                                <?php foreach ($no_fppp->result() as $valap) : ?>
+                                    <option value="<?= $valap->id ?>"><?= $valap->no_fppp ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label class="control-label">Item:</label>
@@ -23,20 +33,8 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label class="control-label">Qty Surat Jalan:</label>
+                            <label class="control-label">Qty:</label>
                             <input type="text" style="text-align: right;" class="form-control" id="qty" placeholder="Qty" autocomplete="off">
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Supplier:</label>
-                            <input type="text" class="form-control" id="supplier" placeholder="Supplier">
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">No Surat Jalan:</label>
-                            <input type="text" class="form-control" id="no_surat_jalan" placeholder="No Surat Jalan">
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">No PR:</label>
-                            <input type="text" class="form-control" id="no_pr" placeholder="No PR">
                         </div>
                         <div class="form-group">
                             <label class="control-label">Divisi:</label>
@@ -58,17 +56,9 @@
                                 <?php endforeach; ?>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label class="control-label">Keranjang:</label>
-                            <input type="text" class="form-control" id="keranjang" placeholder="Keranjang">
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Keterangan:</label>
-                            <input type="text" class="form-control" id="keterangan" placeholder="keterangan">
-                        </div>
 
                         <div class="form-group">
-                            <a onclick="quotation()" class="btn btn-info">Add Stock</a>
+                            <a onclick="quotation()" class="btn btn-info">Add Stock Out</a>
                         </div>
                     </div>
                 </form>
@@ -85,14 +75,11 @@
                     <thead>
                         <tr>
                             <th width="5%">Act</th>
+                            <th width="15%">No FPPP</th>
                             <th width="15%">Item</th>
                             <th width="15%">Qty</th>
-                            <th width="15%">Supplier</th>
-                            <th width="15%">No Surat Jalan</th>
                             <th width="15%">Divisi</th>
                             <th width="15%">Gudang</th>
-                            <th width="15%">Keranjang</th>
-                            <th width="15%">Keterangan</th>
                         </tr>
                     </thead>
                     <tbody id="dataTbl">
@@ -139,19 +126,15 @@
 
             $.ajax({
                     type: "POST",
-                    url: "<?= site_url('wrh/aksesoris/savestokin') ?>",
+                    url: "<?= site_url('wrh/aksesoris/savestokout') ?>",
                     dataType: 'json',
                     data: {
                         'tgl_proses': $('#tgl_proses').val(),
+                        'id_fppp': $('#id_fppp').val(),
                         'id_aksesoris': $('#id_aksesoris').val(),
                         'qty': $("#qty").val(),
-                        'supplier': $("#supplier").val(),
-                        'no_surat_jalan': $("#no_surat_jalan").val(),
-                        'no_pr': $("#no_pr").val(),
                         'id_divisi': $("#id_divisi").val(),
                         'id_gudang': $("#id_gudang").val(),
-                        'keranjang': $("#keranjang").val(),
-                        'keterangan': $("#keterangan").val(),
                     },
                 })
                 .success(function(datasaved) {
@@ -166,31 +149,19 @@
                   <i  class = "fa fa-trash"></i></a>\
                   </td>\
                   <td width = "15%">\
+                    ' + $('#id_fppp :selected').text() + '\
+                  </td>\
+                  <td width = "15%">\
                     ' + $('#id_aksesoris :selected').text() + '\
                   </td>\
                   <td width = "15%">\
                     ' + $('#qty').val() + '\
                   </td>\
                   <td width = "15%">\
-                    ' + $('#supplier').val() + '\
-                  </td>\
-                  <td width = "15%">\
-                    ' + $('#no_surat_jalan').val() + '\
-                  </td>\
-                  <td width = "15%">\
-                    ' + $('#no_pr').val() + '\
-                  </td>\
-                  <td width = "15%">\
                     ' + $('#id_divisi :selected').text() + '\
                   </td>\
                   <td width = "15%">\
                     ' + $('#id_gudang :selected').text() + '\
-                  </td>\
-                  <td width = "15%">\
-                    ' + $('#keranjang').val() + '\
-                  </td>\
-                  <td width = "15%">\
-                    ' + $('#keterangan').val() + '\
                   </td>\
                 </tr>';
                     $('tr.odd').remove();
@@ -199,11 +170,6 @@
                     $('#id_divisi').val('').trigger('change');
                     $('#id_gudang').val('').trigger('change');
                     $("#qty").val('');
-                    $("#supplier").val('');
-                    $("#no_surat_jalan").val('');
-                    $("#no_pr").val('');
-                    $("#keranjang").val('');
-                    $("#keterangan").val('');
                     $.growl.notice({
                         title: 'Sukses',
                         message: "Berhasil menyimpan"

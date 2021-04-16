@@ -1,12 +1,12 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class M_aksesoris extends CI_Model
+class M_aluminium extends CI_Model
 {
 
     public function getData($value = '')
     {
-        $this->db->where('id_jenis_item', 2);
+        $this->db->where('id_jenis_item', 1);
         return $this->db->get('master_item ');
     }
 
@@ -29,5 +29,5 @@ class M_aksesoris extends CI_Model
     }
 }
 
-/* End of file m_aksesoris.php */
-/* Location: ./application/models/master/m_aksesoris.php */
+/* End of file m_aluminium.php */
+/* Location: ./application/models/master/m_aluminium.php */
