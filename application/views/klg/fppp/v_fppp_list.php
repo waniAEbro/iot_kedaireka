@@ -122,7 +122,7 @@
                                     <?php } ?>
 
                                     <?php
-                                    if (from_session('id') < 3) {
+                                    if (from_session('id') < 4) {
                                         echo button('load_silent("klg/fppp/formEdit/' . $row->id . '","#content")', 'Edit', 'btn btn-xs btn-info', 'data-toggle="tooltip" title="Edit"');
                                         echo button('load_silent("klg/fppp/uploadbom/' . $row->id . '","#content")', 'Upload BOM', 'btn btn-xs btn-success', 'data-toggle="tooltip" title="Upload"');
                                         echo button('load_silent("klg/fppp/lihatbom/' . $row->id . '","#content")', 'Lihat BOM', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Upload"');
