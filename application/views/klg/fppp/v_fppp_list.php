@@ -117,8 +117,8 @@
                                 <td><?= $row->metode_pengiriman ?></td>
                                 <td><?= $row->metode_pengiriman ?></td>
                                 <td align="center">
-                                    <?php if ($row->attachment != '') { ?>
-                                        <a target="_blank" href="<?= base_url($row->attachment); ?>" class="btn btn-xs btn-danger">Attachment</a>
+                                    <?php if ($row->lampiran != '') { ?>
+                                        <a target="_blank" href="<?= base_url($row->lampiran); ?>" class="btn btn-xs btn-danger">Lampiran</a>
                                     <?php } ?>
 
                                     <?php
