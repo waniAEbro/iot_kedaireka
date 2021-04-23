@@ -94,7 +94,7 @@
                                     <td></td>
                                     <td><?= $qtyTotalIn ?></td>
                                     <td><?= $qtyTotalOut ?></td>
-                                    <td></td>
+                                    <td><?= $qtyTotalIn - $qtyTotalOut ?></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>

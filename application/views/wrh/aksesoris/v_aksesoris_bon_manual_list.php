@@ -20,6 +20,8 @@
                     <thead>
                         <th width="5%">No</th>
                         <th>Tgl Proses</th>
+                        <th>No FPPP</th>
+                        <th>Nama Proyek</th>
                         <th>Item Code</th>
                         <th>Deskripsi</th>
                         <th>Qty BOM</th>
@@ -39,6 +41,8 @@
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
                                 <td><?= $row->tgl_proses ?></td>
+                                <td><?= $row->no_fppp ?></td>
+                                <td><?= $row->nama_proyek ?></td>
                                 <td><?= $row->item_code ?></td>
                                 <td><?= $row->deskripsi ?></td>
                                 <td><?= $row->qty_bom ?></td>

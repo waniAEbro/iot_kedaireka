@@ -155,8 +155,10 @@ class M_aksesoris extends CI_Model
         $this->db->join('master_divisi md', 'md.id = dao.id_divisi', 'left');
         $this->db->join('master_gudang mg', 'mg.id = dao.id_gudang', 'left');
         $this->db->join('master_item mi', 'mi.item_code = dao.item_code', 'left');
+        $this->db->join('data_fppp df', 'df.id = dao.id_fppp', 'left');
+
         $this->db->where('dao.is_manual', 2);
-        $this->db->select('dao.*,mi.deskripsi,md.divisi,mg.gudang');
+        $this->db->select('dao.*,mi.deskripsi,md.divisi,mg.gudang,df.no_fppp,df.nama_proyek');
         return $this->db->get('data_aksesoris_out dao');
     }
 

@@ -71,7 +71,7 @@
                         <th>WARNA ALUMINIUM</th>
                         <th>JUMLAH GAMBAR / OPENING</th>
                         <th>TGL PEMBUATAN</th>
-                        <th>DEADLINE PENGIRIMAN</th>
+                        <th>DEADLINE SALES</th>
 
                         <th>ACC/FA</th>
                         <th>WH aluminium</th>
