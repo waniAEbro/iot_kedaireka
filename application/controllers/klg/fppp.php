@@ -29,6 +29,13 @@ class Fppp extends CI_Controller
 		$this->load->view('klg/fppp/v_fppp_tab', $data);
 	}
 
+	public function hasil_finish($param)
+	{
+		$this->fungsi->check_previleges('fppp');
+		$data['param_tab'] = $param;
+		$this->load->view('klg/fppp/v_fppp_tab', $data);
+	}
+
 	public function list($param = '')
 	{
 		$this->fungsi->check_previleges('fppp');
@@ -351,7 +358,10 @@ class Fppp extends CI_Controller
 					'qty'        => $rowData[0][2],
 					'keterangan' => $rowData[0][3],
 				);
-				$this->db->insert("data_fppp_bom_aksesoris", $data);
+				$cek_item_bom = $this->m_fppp->cekBomAksesoris($id_fppp, $data['item_code']);
+				if ($cek_item_bom < 1) {
+					$this->db->insert("data_fppp_bom_aksesoris", $data);
+				}
 				$obj = array(
 					'id_jenis_item' => 2,
 					'item_code'     => $rowData[0][0],

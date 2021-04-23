@@ -331,7 +331,7 @@
                 title: 'Berhasil',
                 message: "Tambah Permintaan selesai!"
             });
-            load_silent("klg/fppp/finish/" + $("#id_fppp").val() + "", "#content");
+            load_silent("klg/fppp/hasil_finish/" + $("#id_divisi").val() + "", "#content");
         }
     }
     $(document).ready(function() {

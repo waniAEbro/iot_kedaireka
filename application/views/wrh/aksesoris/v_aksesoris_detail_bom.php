@@ -161,6 +161,12 @@
             var edit_id = $(this).data('id');
         }
 
+        if (fieldname == 'produksi') {
+            $('#lapangan').prop('checked', false); // Unchecks it
+        } else {
+            $('#produksi').prop('checked', false); // Checks it
+        }
+
         $.ajax({
             url: "<?= site_url('wrh/aksesoris/saveout/') ?>",
             dataType: "json",

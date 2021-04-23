@@ -42,15 +42,29 @@ class M_aksesoris extends CI_Model
         return $this->db->get('data_aksesoris_in dai')->result();;
     }
 
+    public function getDataStock()
+    {
+        $this->db->join('master_divisi md', 'md.id = dai.id_divisi', 'left');
+        $this->db->join('master_gudang mg', 'mg.id = dai.id_gudang', 'left');
+        $this->db->select('dai.*,md.divisi,mg.gudang');
+        $this->db->order_by('dai.id', 'desc');
+
+        return $this->db->get('data_aksesoris_in_history dai');
+    }
+
     public function insertstokin($value = '')
     {
         $this->db->insert('data_aksesoris_in', $value);
     }
 
-    // public function insertstokout($value = '')
-    // {
-    //     $this->db->insert('data_aksesoris_out', $value);
-    // }
+    public function insertstokinhistory($value = '')
+    {
+        $this->db->insert('data_aksesoris_in_history', $value);
+    }
+    public function insertstokout($value = '')
+    {
+        $this->db->insert('data_aksesoris_out', $value);
+    }
 
     public function getTotout($item_code)
     {
@@ -64,7 +78,7 @@ class M_aksesoris extends CI_Model
         $this->db->where('item_code', $item_code);
         $this->db->where('id_gudang', $gudang);
         $this->db->where('keranjang', $keranjang);
-        return $this->db->get('data_aksesoris_in')->row()->qty;
+        return $this->db->get('data_aksesoris_in');
     }
 
     public function updatestokin($datapost, $qty)
@@ -92,6 +106,7 @@ class M_aksesoris extends CI_Model
     {
         $this->db->join('master_item mi', 'mi.item_code = dao.item_code', 'left');
         $this->db->where('dao.id_fppp', $id);
+        $this->db->where('dao.is_manual', 1);
         $this->db->select('dao.*,mi.deskripsi');
         return $this->db->get('data_aksesoris_out dao');
     }
@@ -133,6 +148,118 @@ class M_aksesoris extends CI_Model
             $data[$key->item_code] = $key->qty + $nilai;
         }
         return $data;
+    }
+
+    public function getBomAksesorisManual()
+    {
+        $this->db->join('master_divisi md', 'md.id = dao.id_divisi', 'left');
+        $this->db->join('master_gudang mg', 'mg.id = dao.id_gudang', 'left');
+        $this->db->join('master_item mi', 'mi.item_code = dao.item_code', 'left');
+        $this->db->where('dao.is_manual', 2);
+        $this->db->select('dao.*,mi.deskripsi,md.divisi,mg.gudang');
+        return $this->db->get('data_aksesoris_out dao');
+    }
+
+    public function getOptionAksesoris($id_fppp = '')
+    {
+        $this->db->where('id_fppp', $id_fppp);
+        // $this->db->group_by(array('kode_item', 'kode_tipe'));
+        $this->db->group_by('item_code');
+        return $this->db->get('data_fppp_bom_aksesoris')->result();
+    }
+
+    public function deleteItemBonManual($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('data_aksesoris_out');
+    }
+
+    public function getMutasi()
+    {
+        $this->db->join('master_divisi md', 'md.id = dao.id_divisi', 'left');
+        $this->db->join('master_gudang mg', 'mg.id = dao.id_gudang', 'left');
+        $this->db->join('master_item mi', 'mi.item_code = dao.item_code', 'left');
+        $this->db->select('dao.*,mi.deskripsi,md.divisi,mg.gudang');
+        $this->db->order_by('dao.id', 'desc');
+
+        return $this->db->get('data_aksesoris_in dao');
+    }
+
+    public function getItemMutasi()
+    {
+        $this->db->group_by('dao.item_code');
+        $this->db->join('master_item mi', 'mi.item_code = dao.item_code', 'left');
+        return $this->db->get('data_aksesoris_in dao');
+    }
+
+    public function getDivisiMutasi($item_code)
+    {
+        $this->db->where('dao.item_code', $item_code);
+        $this->db->join('master_divisi md', 'md.id = dao.id_divisi', 'left');
+        $this->db->select('md.*');
+        $this->db->group_by('dao.id_divisi');
+        return $this->db->get('data_aksesoris_in dao')->result();
+    }
+
+    public function getGudangMutasi($item_code, $divisi)
+    {
+        $this->db->where('dao.item_code', $item_code);
+        $this->db->where('dao.id_divisi', $divisi);
+        $this->db->join('master_gudang mg', 'mg.id = dao.id_gudang', 'left');
+        $this->db->select('mg.*');
+        $this->db->group_by('dao.id_gudang');
+        return $this->db->get('data_aksesoris_in dao')->result();
+    }
+
+    public function getKeranjangMutasi($item_code, $divisi, $gudang)
+    {
+        $this->db->where('dao.item_code', $item_code);
+        $this->db->where('dao.id_divisi', $divisi);
+        $this->db->where('dao.id_gudang', $gudang);
+        $this->db->select('dao.keranjang');
+        return $this->db->get('data_aksesoris_in dao')->result();
+    }
+
+    public function getQtyMutasi($item_code, $divisi, $gudang, $keranjang)
+    {
+        $this->db->where('dao.item_code', $item_code);
+        $this->db->where('dao.id_divisi', $divisi);
+        $this->db->where('dao.id_gudang', $gudang);
+        $this->db->where('dao.keranjang', $keranjang);
+        return $this->db->get('data_aksesoris_in dao')->row()->qty;
+    }
+
+    public function cekMutasiTempatBaru($item_code, $divisi, $gudang, $keranjang)
+    {
+        $this->db->where('dao.item_code', $item_code);
+        $this->db->where('dao.id_divisi', $divisi);
+        $this->db->where('dao.id_gudang', $gudang);
+        $this->db->where('dao.keranjang', $keranjang);
+        return $this->db->get('data_aksesoris_in dao');
+    }
+
+    public function updateQtyTempatLama($item_code, $divisi, $gudang, $keranjang, $obj)
+    {
+        $this->db->where('dao.item_code', $item_code);
+        $this->db->where('dao.id_divisi', $divisi);
+        $this->db->where('dao.id_gudang', $gudang);
+        $this->db->where('dao.keranjang', $keranjang);
+        $this->db->update('data_aksesoris_in dao', $obj);
+    }
+
+    public function getMutasiHistory()
+    {
+        $this->db->join('master_divisi md', 'md.id = dao.id_divisi', 'left');
+        $this->db->join('master_gudang mg', 'mg.id = dao.id_gudang', 'left');
+        $this->db->join('master_item mi', 'mi.item_code = dao.item_code', 'left');
+
+        $this->db->join('master_divisi md2', 'md2.id = dao.id_divisi2', 'left');
+        $this->db->join('master_gudang mg2', 'mg2.id = dao.id_gudang2', 'left');
+
+        $this->db->select('dao.*,mi.deskripsi,md.divisi,mg.gudang,md2.divisi as divisi2,mg2.gudang as gudang2');
+        $this->db->order_by('dao.id', 'desc');
+
+        return $this->db->get('data_aksesoris_mutasi dao');
     }
 }
 

@@ -12,6 +12,7 @@ class M_fppp extends CI_Model
 		$this->db->join('master_metode_pengiriman mpp', 'mpp.id = df.id_metode_pengiriman', 'left');
 		$this->db->join('master_warna_aluminium mwa', 'mwa.id = df.id_warna_aluminium', 'left');
 		$this->db->where('df.id_divisi', $param);
+		$this->db->order_by('df.id', 'desc');
 
 		$this->db->select('df.*,md.divisi,mk.kaca,mp.pengiriman,metode_pengiriman,mwa.warna_aluminium');
 
@@ -96,6 +97,13 @@ class M_fppp extends CI_Model
 		$this->db->where('section_ata', $section_ata);
 		$this->db->where('section_allure', $section_allure);
 		return $this->db->get('master_item')->num_rows();
+	}
+
+	public function cekBomAksesoris($id_fppp = '', $item_code = '')
+	{
+		$this->db->where('id_fppp', $id_fppp);
+		$this->db->where('item_code', $item_code);
+		return $this->db->get('data_fppp_bom_aksesoris')->num_rows();
 	}
 
 	public function cekMasterAksesoris($item_code = '')
