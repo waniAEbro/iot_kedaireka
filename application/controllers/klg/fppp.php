@@ -368,7 +368,6 @@ class Fppp extends CI_Controller
 					'deskripsi'          => $rowData[0][1],
 					'qty'                => $rowData[0][2],
 					'keterangan'         => $rowData[0][3],
-					'id_jenis_aksesoris' => $rowData[0][4],
 				);
 				$cek_item_bom = $this->m_fppp->cekBomAksesoris($id_fppp, $data['item_code']);
 				if ($cek_item_bom < 1) {
@@ -378,7 +377,6 @@ class Fppp extends CI_Controller
 					'id_jenis_item'      => 2,
 					'item_code'          => $rowData[0][0],
 					'deskripsi'          => $rowData[0][1],
-					'id_jenis_aksesoris' => $rowData[0][4],
 					'created'            => date('Y-m-d H:i:s'),
 				);
 				$cek_item = $this->m_fppp->cekMasterAksesoris($obj['item_code']);
