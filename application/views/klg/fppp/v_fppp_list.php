@@ -72,14 +72,15 @@
                         <th>JUMLAH GAMBAR / OPENING</th>
                         <th>TGL PEMBUATAN</th>
                         <th>DEADLINE SALES</th>
+                        <th>DEADLINE WORKSHOP</th>
+                        <th>ALAMAT PROYEK</th>
+                        <th>STATUS ORDER</th>
 
                         <th>ACC/FA</th>
                         <th>WH aluminium</th>
                         <th>WH AKSESORIS</th>
                         <th>WH KACA</th>
-
                         <th>WS UPDATE</th>
-
                         <th>SITE UPDATE</th>
 
                         <th>Act</th>
@@ -89,6 +90,7 @@
                         $i = 1;
                         foreach ($fppp->result() as $row) :
                             $ada = 1;
+                            $dw = ($row->deadline_workshop != '') ? $row->deadline_workshop : 'tentukan tgl';
                         ?>
                             <tr>
                                 <?php if ($ada > 0) { ?>
@@ -107,15 +109,17 @@
                                 <td><?= $row->jumlah_gambar ?></td>
                                 <td><?= $row->tgl_pembuatan ?></td>
                                 <td><?= $row->deadline_pengiriman ?></td>
-
-                                <td><?= $row->tahap ?></td>
+                                <td align="center"><span id="wrk_<?= $row->id ?>" class='edit'><?= $dw ?></span>
+                                    <input type='date' class='txtedit' data-id='<?= $row->id ?>' data-field='deadline_workshop' id='<?= $row->id ?>' value='<?= $row->deadline_workshop ?>'>
+                                </td>
                                 <td><?= $row->alamat_proyek ?></td>
                                 <td><?= $row->status_order ?></td>
-                                <td><?= $row->note ?></td>
-
-
-                                <td><?= $row->metode_pengiriman ?></td>
-                                <td><?= $row->metode_pengiriman ?></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><?= $row->status ?></td>
                                 <td align="center">
                                     <?php if ($row->lampiran != '') { ?>
                                         <a target="_blank" href="<?= base_url($row->lampiran); ?>" class="btn btn-xs btn-danger">Lampiran</a>
@@ -451,4 +455,56 @@
                 $("#bst_ft_" + id + "").html(datasaved.nilai);
             });
     }
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.txtedit').hide();
+        // On text click
+        $('.edit').click(function() {
+            // Hide input element
+            $('.txtedit').hide();
+
+            // Show next input element
+            $(this).next('.txtedit').show().focus();
+
+            // Hide clicked element
+            $(this).hide();
+        });
+
+        // Focus out from a textbox
+        $('.txtedit').focusout(function() {
+            // Get edit id, field name and value
+            var fieldname = $(this).data('field');
+            var value = $(this).val();
+            var edit_id = $(this).data('id');
+            // assign instance to element variable
+            var element = this;
+            // Send AJAX request
+            $.ajax({
+                url: "<?= site_url('klg/fppp/deadlineWorkshop/') ?>",
+                dataType: "json",
+                type: "POST",
+                data: {
+                    field: fieldname,
+                    value: value,
+                    id: edit_id,
+                },
+                success: function(response) {
+
+                    // Hide Input element
+                    $(element).hide();
+
+                    // Update viewing value and display it
+                    $(element).prev('.edit').show();
+                    $(element).prev('.edit').text(value);
+                    $.growl.notice({
+                        title: 'Sukses',
+                        message: "Data Updated!"
+                    });
+                    // load_silent("klg/pendapatan", "#content");
+                }
+            });
+        });
+    });
 </script>

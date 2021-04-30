@@ -33,16 +33,22 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label>Pengiriman</label>
-                        <input type="text" class="form-control" id="alamat_pengiriman" readonly>
+                        <label>Alamat Proyek</label>
+                        <input type="text" class="form-control" id="alamat_proyek" readonly>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <div class="form-group">
-                        <label>Warna</label>
-                        <input type="text" class="form-control" id="warna" readonly>
+                        <label>Nama Sales</label>
+                        <input type="text" class="form-control" id="sales" readonly>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Deadline Pengiriman</label>
+                        <input type="text" class="form-control" id="deadline_pengiriman" readonly>
                     </div>
                 </div>
             </div>
@@ -83,8 +89,9 @@
             },
             success: function(img) {
                 $('#nama_proyek').val(img['nama_proyek']);
-                $('#alamat_pengiriman').val(img['alamat_pengiriman']);
-                $('#warna').val(img['warna']);
+                $('#alamat_proyek').val(img['alamat_proyek']);
+                $('#sales').val(img['sales']);
+                $('#deadline_pengiriman').val(img['deadline_pengiriman']);
             }
         });
 

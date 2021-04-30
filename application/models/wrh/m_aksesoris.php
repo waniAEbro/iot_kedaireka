@@ -96,6 +96,12 @@ class M_aksesoris extends CI_Model
         return $this->db->get('data_fppp')->row();
     }
 
+    public function getRowAksesorisOut($id)
+    {
+        $this->db->where('id', $id);
+        return $this->db->get('data_aksesoris_out')->row();
+    }
+
     public function cek_fppp_out($id)
     {
         $this->db->where('id_fppp', $id);
@@ -105,9 +111,13 @@ class M_aksesoris extends CI_Model
     public function getBomAksesoris($id)
     {
         $this->db->join('master_item mi', 'mi.item_code = dao.item_code', 'left');
+        $this->db->join('master_divisi md', 'md.id = dao.id_divisi', 'left');
+        $this->db->join('master_gudang mg', 'mg.id = dao.id_gudang', 'left');
         $this->db->where('dao.id_fppp', $id);
         $this->db->where('dao.is_manual', 1);
-        $this->db->select('dao.*,mi.deskripsi');
+        $this->db->select('dao.*,mi.deskripsi,md.divisi,mg.gudang');
+        $this->db->order_by('dao.item_code', 'asc');
+
         return $this->db->get('data_aksesoris_out dao');
     }
 
@@ -137,6 +147,26 @@ class M_aksesoris extends CI_Model
     {
         $this->db->where('MONTH(tgl_proses)', date('m'));
         $res = $this->db->get('data_aksesoris_out');
+        $data = array();
+        $nilai = 0;
+        foreach ($res->result() as $key) {
+            if (isset($data[$key->item_code])) {
+                $nilai = $data[$key->item_code];
+            } else {
+                $nilai = 0;
+            }
+            $data[$key->item_code] = $key->qty + $nilai;
+        }
+        return $data;
+    }
+
+    public function getTotalBom()
+    {
+        // $this->db->where('MONTH(tgl_proses)', date('m'));
+        $this->db->join('data_fppp df', 'df.id = dfb.id_fppp', 'left');
+        $this->db->where('df.id_status !=', 3);
+
+        $res = $this->db->get('data_fppp_bom_aksesoris dfb');
         $data = array();
         $nilai = 0;
         foreach ($res->result() as $key) {
@@ -249,7 +279,7 @@ class M_aksesoris extends CI_Model
         $this->db->update('data_aksesoris_in dao', $obj);
     }
 
-    public function getMutasiHistory()
+    public function getMutasiHistory($item_code = '')
     {
         $this->db->join('master_divisi md', 'md.id = dao.id_divisi', 'left');
         $this->db->join('master_gudang mg', 'mg.id = dao.id_gudang', 'left');
@@ -257,11 +287,44 @@ class M_aksesoris extends CI_Model
 
         $this->db->join('master_divisi md2', 'md2.id = dao.id_divisi2', 'left');
         $this->db->join('master_gudang mg2', 'mg2.id = dao.id_gudang2', 'left');
+        $this->db->where('dao.item_code', $item_code);
 
         $this->db->select('dao.*,mi.deskripsi,md.divisi,mg.gudang,md2.divisi as divisi2,mg2.gudang as gudang2');
         $this->db->order_by('dao.id', 'desc');
 
         return $this->db->get('data_aksesoris_mutasi dao');
+    }
+
+    public function getQtyGudang($item_code, $id_divisi, $id_gudang)
+    {
+        $this->db->where('item_code', $item_code);
+        $this->db->where('id_divisi', $id_divisi);
+        $this->db->where('id_gudang', $id_gudang);
+        $this->db->select('sum(qty) as qty_gudang');
+        return $this->db->get('data_aksesoris_in')->row()->qty_gudang;
+    }
+
+    public function kunciStockOut($id)
+    {
+        $object = array('kunci' => 2);
+        $this->db->where('id', $id);
+        $this->db->update('data_aksesoris_out', $object);
+    }
+
+    public function finishStockOut($id)
+    {
+        $object = array('kunci' => 2);
+        $this->db->where('id_fppp', $id);
+        $this->db->where('is_manual', 1);
+        $this->db->update('data_aksesoris_out', $object);
+    }
+
+    public function getfpppaksesoris()
+    {
+        $this->db->join('data_fppp df', 'df.id = dfb.id_fppp', 'left');
+        $this->db->group_by('dfb.id_fppp');
+
+        return $this->db->get('data_fppp_bom_aksesoris dfb');
     }
 }
 

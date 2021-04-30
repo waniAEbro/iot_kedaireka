@@ -279,7 +279,7 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">Finish Coating</label>
-                            <input type="text" id="finish_coating" class="form-control">
+                            <?= form_dropdown('finish_coating', $warna_aluminium, '', 'id="finish_coating" class="form-control"') ?>
                         </div>
                         <div class="form-group">
                             <label class="control-label">Qty</label>
@@ -359,6 +359,8 @@
 
     function save() {
         var path = $("#lampiran").val().replace('C:\\fakepath\\', '');
+        var wa = $('#id_warna_aluminium').val();
+        $('#finish_coating').val(wa).trigger('change');
         if (path == '') {
             $.ajax({
                 type: "POST",
@@ -533,7 +535,7 @@
                     ' + $('#glass_thick').val() + '\
                   </td>\
                   <td id="td_finish_coating_' + i + '" width="10%">\
-                    ' + $('#finish_coating').val() + '\
+                    ' + $('#finish_coating :selected').text() + '\
                   </td>\
                   <td id="td_qty_' + i + '" width="7%">\
                     ' + $('#qty').val() + '\
@@ -547,8 +549,7 @@
                     $('#kode_opening').val('');
                     $('#kode_unit').val('');
                     $('#glass_thick').val('');
-                    $("#finish_coating").val(''),
-                        $('#qty').val('');
+                    $('#qty').val('');
                     $.growl.notice({
                         title: 'Sukses',
                         message: "Berhasil menyimpan FPPP"

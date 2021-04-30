@@ -437,6 +437,8 @@
         // $("#proses").hide(50);
         // $("#silahkantunggu").show(50);
         var path = $("#lampiran").val().replace('C:\\fakepath\\', '');
+        var wa = $('#id_warna_aluminium').val();
+        $('#finish_coating').val(wa).trigger('change');
         if (path == '') {
             $.ajax({
                 type: "POST",
@@ -635,7 +637,7 @@
                     ' + $('#glass_thick').val() + '\
                   </td>\
                   <td id="td_finish_coating_' + i + '" width="10%">\
-                    ' + $('#finish_coating').val() + '\
+                  ' + $('#finish_coating :selected').text() + '\
                   </td>\
                   <td id="td_qty_' + i + '" width="7%">\
                     ' + $('#qty').val() + '\
@@ -649,8 +651,7 @@
                     $('#kode_opening').val('');
                     $('#kode_unit').val('');
                     $('#glass_thick').val('');
-                    $("#finish_coating").val(''),
-                        $('#qty').val('');
+                    $('#qty').val('');
                     $.growl.notice({
                         title: 'Sukses',
                         message: "Berhasil menyimpan FPPP"

@@ -11,12 +11,37 @@ class M_fppp extends CI_Model
 		$this->db->join('master_pengiriman mp', 'mp.id = df.id_pengiriman', 'left');
 		$this->db->join('master_metode_pengiriman mpp', 'mpp.id = df.id_metode_pengiriman', 'left');
 		$this->db->join('master_warna_aluminium mwa', 'mwa.id = df.id_warna_aluminium', 'left');
+		$this->db->join('master_status ms', 'ms.id = df.id_status', 'left');
+
 		$this->db->where('df.id_divisi', $param);
+		$this->db->where('df.is_memo', 1);
 		$this->db->order_by('df.id', 'desc');
 
-		$this->db->select('df.*,md.divisi,mk.kaca,mp.pengiriman,metode_pengiriman,mwa.warna_aluminium');
+		$this->db->select('df.*,md.divisi,mk.kaca,mp.pengiriman,metode_pengiriman,mwa.warna_aluminium,ms.status');
 
 		return $this->db->get('data_fppp df');
+	}
+
+	public function getDataMemo()
+	{
+		$this->db->join('master_divisi md', 'md.id = df.id_divisi', 'left');
+		$this->db->join('master_kaca mk', 'mk.id = df.id_kaca', 'left');
+		$this->db->join('master_pengiriman mp', 'mp.id = df.id_pengiriman', 'left');
+		$this->db->join('master_metode_pengiriman mpp', 'mpp.id = df.id_metode_pengiriman', 'left');
+		$this->db->join('master_warna_aluminium mwa', 'mwa.id = df.id_warna_aluminium', 'left');
+		$this->db->join('master_status ms', 'ms.id = df.id_status', 'left');
+
+		$this->db->where('df.is_memo', 2);
+		$this->db->order_by('df.id', 'desc');
+
+		$this->db->select('df.*,md.divisi,mk.kaca,mp.pengiriman,metode_pengiriman,mwa.warna_aluminium,ms.status');
+
+		return $this->db->get('data_fppp df');
+	}
+
+	public function editDeadlineWorkshop($field = '', $value = '', $editid = '')
+	{
+		$this->db->query("UPDATE data_fppp SET " . $field . "='" . $value . "' WHERE id=" . $editid);
 	}
 
 	public function insertfppp($value = '')
@@ -38,12 +63,13 @@ class M_fppp extends CI_Model
 		$this->db->where('did.id_fppp', $value);
 		return $this->db->get('data_fppp_detail did')->result();
 	}
-	public function getNoFppp($value = '')
+	public function getNoFppp($id_divisi = '')
 	{
 		$year  = date('Y');
 		$month = date('m');
 		$this->db->where('DATE_FORMAT(created,"%Y")', $year);
 		$this->db->where('DATE_FORMAT(created,"%m")', $month);
+		$this->db->where('id_divisi', $id_divisi);
 		$this->db->order_by('id', 'desc');
 		$this->db->limit(1);
 		$hasil = $this->db->get('data_fppp');

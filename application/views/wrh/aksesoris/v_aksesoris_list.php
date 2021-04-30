@@ -72,6 +72,7 @@
                             <th>Total In Per Bulan</th>
                             <th>Total Out Per Bulan</th>
                             <th>Stock Akhir Bulan</th>
+                            <th>Free Stock</th>
                             <th>Rata2 Per Bulan</th>
                             <th>Min Stock</th>
                             <th>Fungsi</th>
@@ -85,6 +86,7 @@
                                 $ada = 1;
                                 $qtyTotalIn = @$total_in[$row->item_code];
                                 $qtyTotalOut = @$total_out[$row->item_code];
+                                $qtyTotalBom = @$total_bom[$row->item_code];
                             ?>
                                 <tr>
                                     <td class="details-control" id="<?= $i ?>"><input type="hidden" id="id_<?= $i ?>" value="<?= $row->item_code ?>"></td>
@@ -95,11 +97,14 @@
                                     <td><?= $qtyTotalIn ?></td>
                                     <td><?= $qtyTotalOut ?></td>
                                     <td><?= $qtyTotalIn - $qtyTotalOut ?></td>
+                                    <td><?= ($qtyTotalIn - $qtyTotalOut) - $qtyTotalBom ?></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td><?= $qtyTotalBom ?></td>
+                                    <td>
+                                        <?= button('load_silent("wrh/aksesoris/mutasi_stock_add/' . $row->item_code . '","#content")', 'mutasi', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Mutasi"'); ?>
+                                        <?= button('load_silent("wrh/aksesoris/mutasi_stock_history/' . $row->item_code . '","#content")', 'history mutasi', 'btn btn-xs btn-default', 'data-toggle="tooltip" title="History Mutasi"'); ?></td>
                                 </tr>
 
                             <?php $i++;
