@@ -61,6 +61,7 @@
                         <th>Item Code</th>
                         <th>Deskripsi</th>
                         <th>Qty BOM</th>
+                        <th>Kekurangan</th>
                         <th>Qty Gudang</th>
                         <th>Qty Aktual</th>
                         <th>Out Dari Divisi</th>
@@ -73,6 +74,8 @@
                         <?php
                         $i = 1;
                         foreach ($bom_aksesoris->result() as $row) :
+                            $qtyTotalOut = @$total_out[$row->item_code][$row->id_fppp];
+                            $kurang = $row->qty_bom - $qtyTotalOut;
                             $cekproduksi = ($row->produksi == 1) ? 'checked' : '';
                             $ceklapangan = ($row->lapangan == 1) ? 'checked' : '';
                             $getqtygdg = $this->m_aksesoris->getQtyGudang($row->item_code, $row->id_divisi, $row->id_gudang);
@@ -86,6 +89,7 @@
                                     <td><?= $row->item_code ?><br><?php echo button_confirm("Anda yakin mengirim parsial item " . $row->item_code . "?", "wrh/aksesoris/kirimparsial/" . $id_fppp . "/" . $row->id, "#content", 'Kirim Parsial', 'btn btn-xs btn-default', 'data-toggle="tooltip" title="Kirim Parsial"'); ?></td>
                                     <td><?= $row->deskripsi ?></td>
                                     <td><?= $row->qty_bom ?></td>
+                                    <td><span id="qty_kurang_<?= $row->id ?>"><?= $kurang ?></span></td>
                                     <td><span id="qty_gudang_<?= $row->id ?>"><?= $qty_gudang ?></span></td>
                                     <td align="center"><span id="qty_bom_<?= $row->id ?>" class='edit'><?= $row->qty ?></span>
                                         <input type='text' class='txtedit' data-id='<?= $row->id ?>' data-field='qty' id='<?= $row->id ?>' value='<?= $row->qty ?>'>
@@ -246,37 +250,45 @@
 
             var qtybom = $('#qty_bom_' + edit_id).html();
             var qty_gudang = $('#qty_gudang_' + edit_id).html();
+            var qty_kurang = $('#qty_kurang_' + edit_id).html();
             if (parseInt(qty_gudang) < parseInt(value)) {
                 alert("Tidak boleh melebihi Qty Gudang!");
                 $(element).hide();
                 $(element).prev('.edit').show();
                 $(element).prev('.edit').text(qtybom);
             } else {
-                // Send AJAX request
-                $.ajax({
-                    url: "<?= site_url('wrh/aksesoris/saveout/') ?>",
-                    dataType: "json",
-                    type: "POST",
-                    data: {
-                        field: fieldname,
-                        value: value,
-                        id: edit_id,
-                    },
-                    success: function(response) {
+                if (parseInt(qty_kurang) < parseInt(value)) {
+                    alert("Qty Terkirim sudah terpenuhi!");
+                    $(element).hide();
+                    $(element).prev('.edit').show();
+                    $(element).prev('.edit').text(qtybom);
+                } else {
+                    // Send AJAX request
+                    $.ajax({
+                        url: "<?= site_url('wrh/aksesoris/saveout/') ?>",
+                        dataType: "json",
+                        type: "POST",
+                        data: {
+                            field: fieldname,
+                            value: value,
+                            id: edit_id,
+                        },
+                        success: function(response) {
 
-                        // Hide Input element
-                        $(element).hide();
+                            // Hide Input element
+                            $(element).hide();
 
-                        // Update viewing value and display it
-                        $(element).prev('.edit').show();
-                        $(element).prev('.edit').text(value);
-                        $.growl.notice({
-                            title: 'Sukses',
-                            message: "Data Updated!"
-                        });
-                        // load_silent("klg/pendapatan", "#content");
-                    }
-                });
+                            // Update viewing value and display it
+                            $(element).prev('.edit').show();
+                            $(element).prev('.edit').text(value);
+                            $.growl.notice({
+                                title: 'Sukses',
+                                message: "Data Updated!"
+                            });
+                            // load_silent("klg/pendapatan", "#content");
+                        }
+                    });
+                }
             }
         });
     });

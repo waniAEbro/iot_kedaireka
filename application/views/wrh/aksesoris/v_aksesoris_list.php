@@ -269,6 +269,11 @@
                         var no = i + 1;
                         var color = "white";
                         var fontcolor = "black";
+                        if (data.detail[i].tot_out == null) {
+                            var qty_out = 0;
+                        } else {
+                            var qty_out = data.detail[i].tot_out;
+                        }
 
                         infoTable += '<tr bgcolor="' + color + '">' +
                             '<td><font color="' + fontcolor + '">' + no + '</font></td>' +
@@ -277,7 +282,7 @@
                             '<td><font color="' + fontcolor + '">' + data.detail[i].keranjang + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].stok_awal_bulan + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].tot_in + '</font></td>' +
-                            '<td><font color="' + fontcolor + '">' + data.detail[i].tot_out + '</font></td>' +
+                            '<td><font color="' + fontcolor + '">' + qty_out + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].stok_akhir_bulan + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].rata_pemakaian + '</font></td>' +
                             '</tr>';

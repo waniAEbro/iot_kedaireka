@@ -28,18 +28,64 @@ class M_aksesoris extends CI_Model
 
     public function getDataDetailTabel($item_code = '')
     {
-        // $this->db->join('data_aksesoris da', 'da.id = dad.id_aksesoris', 'left');
-        // $this->db->where('dad.id_aksesoris', $id);
-        // $this->db->select('dad.*');
-        // return $this->db->get('data_aksesoris_detail dad')->result();
         $this->db->join('master_divisi md', 'md.id = dai.id_divisi', 'left');
         $this->db->join('master_gudang mg', 'mg.id = dai.id_gudang', 'left');
 
         $this->db->join('master_item da', 'da.item_code = dai.item_code', 'left');
         $this->db->where('dai.item_code', $item_code);
         $this->db->select('dai.*,md.divisi,mg.gudang');
-        // $this->db->group_by('dai.item_code');
         return $this->db->get('data_aksesoris_in dai')->result();;
+    }
+
+    public function getTotalDivisiGudangIn()
+    {
+        $this->db->where('MONTH(tgl_proses)', date('m'));
+        $res = $this->db->get('data_aksesoris_in');
+        $data = array();
+        $nilai = 0;
+        foreach ($res->result() as $key) {
+            if (isset($data[$key->item_code][$key->id_divisi][$key->id_gudang])) {
+                $nilai = $data[$key->item_code][$key->id_divisi][$key->id_gudang];
+            } else {
+                $nilai = 0;
+            }
+            $data[$key->item_code][$key->id_divisi][$key->id_gudang] = $key->qty + $nilai;
+        }
+        return $data;
+    }
+
+    public function getTotalDivisiGudangOut()
+    {
+        $this->db->where('MONTH(tgl_proses)', date('m'));
+        $res = $this->db->get('data_aksesoris_out');
+        $data = array();
+        $nilai = 0;
+        foreach ($res->result() as $key) {
+            if (isset($data[$key->item_code][$key->id_divisi][$key->id_gudang])) {
+                $nilai = $data[$key->item_code][$key->id_divisi][$key->id_gudang];
+            } else {
+                $nilai = 0;
+            }
+            $data[$key->item_code][$key->id_divisi][$key->id_gudang] = $key->qty + $nilai;
+        }
+        return $data;
+    }
+
+    public function getTotalItemFpppOut()
+    {
+        $this->db->where('MONTH(tgl_proses)', date('m'));
+        $res = $this->db->get('data_aksesoris_out');
+        $data = array();
+        $nilai = 0;
+        foreach ($res->result() as $key) {
+            if (isset($data[$key->item_code][$key->id_fppp])) {
+                $nilai = $data[$key->item_code][$key->id_fppp];
+            } else {
+                $nilai = 0;
+            }
+            $data[$key->item_code][$key->id_fppp] = $key->qty + $nilai;
+        }
+        return $data;
     }
 
     public function getDataStock()
@@ -64,13 +110,6 @@ class M_aksesoris extends CI_Model
     public function insertstokout($value = '')
     {
         $this->db->insert('data_aksesoris_out', $value);
-    }
-
-    public function getTotout($item_code)
-    {
-        $this->db->where('item_code', $item_code);
-        $this->db->select('sum(qty) as tot_out');
-        return $this->db->get('data_aksesoris_out')->row()->tot_out;
     }
 
     public function cekQtyIn($item_code, $gudang, $keranjang)

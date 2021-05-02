@@ -8,7 +8,7 @@
                     <?php
                     $sesi = from_session('level');
                     if ($sesi == '1' || $sesi == '2') {
-                        echo button('load_silent("wrh/aksesoris/stok_out_add/","#content")', 'Stock OUT', 'btn btn-primary', 'data-toggle="tooltip" title="Stock OUT"');
+                        //echo button('load_silent("wrh/aksesoris/stok_out_add/","#content")', 'Stock OUT', 'btn btn-primary', 'data-toggle="tooltip" title="Stock OUT"');
                     } else {
                         # code...
                     }
@@ -31,7 +31,7 @@
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
                                 <td><?= $row->tgl_pembuatan ?></td>
-                                <td><?= $row->no_fppp ?></td>
+                                <td><?= $row->no_fppp ?><br><?= button('load_silent("wrh/aksesoris/detailbom/' . $row->id . '","#content")', 'Stock Out', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Add Stock Out"'); ?></td>
                                 <td><?= $row->nama_proyek ?></td>
                             </tr>
                         <?php endforeach; ?>

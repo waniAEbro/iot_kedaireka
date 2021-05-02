@@ -22,7 +22,7 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">Item:</label>
-                            <select id="id_aksesoris" name="id_aksesoris" class="form-control" style="width:100%" required>
+                            <select id="item_code" name="item_code" class="form-control" style="width:100%" required>
                                 <option value="">-- Select --</option>
                             </select>
                         </div>
@@ -49,6 +49,10 @@
                                     </option>
                                 <?php endforeach; ?>
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Stock Gudang:</label>
+                            <input type="text" style="text-align: right;" class="form-control" id="stock" placeholder="Stock" readonly>
                         </div>
                         <div class="form-group">
                             <input type="checkbox" id="produksi" data-field='produksi' class="checkbox">
@@ -111,6 +115,7 @@
             autoclose: true
         });
         $("select").select2();
+        $("#stock").val(0);
     });
 
     $(".checkbox").change(function() {
@@ -126,8 +131,24 @@
         }
     });
 
+    $("#id_gudang").change(function() {
+        $.ajax({
+            url: "<?= site_url('wrh/aksesoris/getQtyDivisiGudang') ?>",
+            dataType: "json",
+            type: "POST",
+            data: {
+                'item_code': $("#item_code").val(),
+                'id_divisi': $("#id_divisi").val(),
+                'id_gudang': $("#id_gudang").val(),
+            },
+            success: function(data) {
+                $('#stock').val(data['stock']);
+            }
+        });
+    });
+
     $("select[name=id_fppp]").change(function() {
-        var x = $("select[name=id_aksesoris]");
+        var x = $("select[name=item_code]");
         if ($(this).val() == "") {
             x.html("<option>-- Select --</option>");
         } else {
@@ -163,8 +184,16 @@
     });
 
     function quotation() {
+        if ($('#qty').val() > $('#stock').val()) {
+            alert("melebihi Qty Gudang!");
+        } else {
+            quotation2();
+        }
+    };
 
-        if ($('#id_aksesoris').val() != '' && $('#divisi').val() != '' && $('#area').val() != '' && $('#rak').val() != '') {
+    function quotation2() {
+
+        if ($('#item_code').val() != '' && $('#id_divisi').val() != '' && $('#id_gudang').val() != '' && $('#qty').val() != '') {
 
             $.ajax({
                     type: "POST",
@@ -173,7 +202,7 @@
                     data: {
                         'tgl_proses': $('#tgl_proses').val(),
                         'id_fppp': $('#id_fppp').val(),
-                        'id_aksesoris': $('#id_aksesoris').val(),
+                        'item_code': $('#item_code').val(),
                         'qty': $("#qty").val(),
                         'id_divisi': $("#id_divisi").val(),
                         'id_gudang': $("#id_gudang").val(),
@@ -196,7 +225,7 @@
                     ' + $('#id_fppp :selected').text() + '\
                   </td>\
                   <td width = "15%">\
-                    ' + $('#id_aksesoris :selected').text() + '\
+                    ' + $('#item_code :selected').text() + '\
                   </td>\
                   <td width = "15%">\
                     ' + $('#qty').val() + '\
@@ -216,7 +245,7 @@
                 </tr>';
                     $('tr.odd').remove();
                     $('#dataTbl').append(x);
-                    $('#id_aksesoris').val('').trigger('change');
+                    $('#item_code').val('').trigger('change');
                     $('#id_divisi').val('').trigger('change');
                     $('#id_gudang').val('').trigger('change');
                     $("#qty").val('');
