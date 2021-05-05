@@ -112,6 +112,7 @@
                                     <td><?= $row->item_code ?></td>
                                     <td><?= $row->deskripsi ?></td>
                                     <td><?= $row->qty_bom ?></td>
+                                    <td><?= $kurang ?></td>
                                     <td><?= $qty_gudang ?></td>
                                     <td><?= $row->qty ?></td>
                                     <td><?= $row->divisi ?></td>

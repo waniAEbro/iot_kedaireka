@@ -39,7 +39,7 @@ class M_aksesoris extends CI_Model
 
     public function getTotalDivisiGudangIn()
     {
-        $this->db->where('MONTH(tgl_proses)', date('m'));
+        // $this->db->where('MONTH(tgl_proses)', date('m'));
         $res = $this->db->get('data_aksesoris_in');
         $data = array();
         $nilai = 0;
@@ -56,7 +56,7 @@ class M_aksesoris extends CI_Model
 
     public function getTotalDivisiGudangOut()
     {
-        $this->db->where('MONTH(tgl_proses)', date('m'));
+        // $this->db->where('MONTH(tgl_proses)', date('m'));
         $res = $this->db->get('data_aksesoris_out');
         $data = array();
         $nilai = 0;
@@ -73,7 +73,7 @@ class M_aksesoris extends CI_Model
 
     public function getTotalItemFpppOut()
     {
-        $this->db->where('MONTH(tgl_proses)', date('m'));
+        // $this->db->where('MONTH(tgl_proses)', date('m'));
         $res = $this->db->get('data_aksesoris_out');
         $data = array();
         $nilai = 0;
@@ -167,7 +167,7 @@ class M_aksesoris extends CI_Model
 
     public function getTotalIn()
     {
-        $this->db->where('MONTH(tgl_proses)', date('m'));
+        // $this->db->where('MONTH(tgl_proses)', date('m'));
         $res = $this->db->get('data_aksesoris_in');
         $data = array();
         $nilai = 0;
@@ -184,7 +184,7 @@ class M_aksesoris extends CI_Model
 
     public function getTotalOut()
     {
-        $this->db->where('MONTH(tgl_proses)', date('m'));
+        // $this->db->where('MONTH(tgl_proses)', date('m'));
         $res = $this->db->get('data_aksesoris_out');
         $data = array();
         $nilai = 0;
