@@ -90,7 +90,8 @@
                         $i = 1;
                         foreach ($fppp->result() as $row) :
                             $ada = 1;
-                            $dw = ($row->deadline_workshop != '') ? $row->deadline_workshop : 'tentukan tgl';
+                            $dw = ($row->deadline_workshop != '') ? $row->deadline_workshop : '-';
+                            $acc_fa = ($row->acc_fa != '') ? $row->acc_fa : '-';
                         ?>
                             <tr>
                                 <?php if ($ada > 0) { ?>
@@ -114,7 +115,9 @@
                                 </td>
                                 <td><?= $row->alamat_proyek ?></td>
                                 <td><?= $row->status_order ?></td>
-                                <td></td>
+                                <td><span id="acc_fa_<?= $row->id ?>" class='edit'><?= $acc_fa ?></span>
+                                    <input type='text' class='txtedit' data-id='<?= $row->id ?>' data-field='acc_fa' id='<?= $row->id ?>' value='<?= $row->acc_fa ?>'>
+                                </td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
