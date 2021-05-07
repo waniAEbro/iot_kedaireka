@@ -323,7 +323,7 @@
     </form>
 </div>
 
-<div class="row" id="form_pembelianq">
+<div class="row" id="form_pembelian">
     <div class="col-lg-3">
         <div class="box box-primary">
             <div class="box-header with-border">
@@ -354,7 +354,7 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">Finish Coating</label>
-                            <input type="text" id="finish_coating" class="form-control">
+                            <?= form_dropdown('finish_coating', $warna_aluminium, '', 'id="finish_coating" class="form-control"') ?>
                         </div>
                         <div class="form-group">
                             <label class="control-label">Qty</label>

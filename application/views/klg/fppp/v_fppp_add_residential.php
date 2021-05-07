@@ -248,7 +248,7 @@
     </form>
 </div>
 
-<div class="row" id="form_pembelianq">
+<div class="row" id="form_pembelian">
     <div class="col-lg-3">
         <div class="box box-primary">
             <div class="box-header with-border">
