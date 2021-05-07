@@ -184,7 +184,7 @@
     });
 
     function quotation() {
-        if ($('#qty').val() > $('#stock').val()) {
+        if (parseInt($('#qty').val()) > parseInt($('#stock').val())) {
             alert("melebihi Qty Gudang!");
         } else {
             quotation2();

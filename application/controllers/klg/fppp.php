@@ -253,6 +253,10 @@ class Fppp extends CI_Controller
 	{
 		$this->fungsi->check_previleges('fppp');
 		$id_fppp  = $this->input->post('id_fppp');
+		$jml_tgl_kosong  = $this->m_fppp->getjmltglkosong($id_fppp);
+		$jml_pasang_bst = $this->m_fppp->getjml_pasang_bst($id_fppp);
+		$data['jml_tgl_kosong'] = $jml_tgl_kosong;
+		$data['jml_pasang_bst'] = $jml_pasang_bst;
 		$data['detail'] = $this->m_fppp->getDataDetailTabel($id_fppp);
 		echo json_encode($data);
 	}

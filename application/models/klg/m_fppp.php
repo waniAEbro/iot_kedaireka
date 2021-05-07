@@ -148,6 +148,63 @@ class M_fppp extends CI_Model
 	{
 		$this->db->insert('master_item', $object);
 	}
+
+	public function getjmltglkosong($id_fppp)
+	{
+		$this->db->where('id_fppp', $id_fppp);
+		$res = $this->db->get('data_fppp_detail');
+		$pa = 0;
+		$qc = 0;
+		$p = 0;
+		foreach ($res->result() as $key) {
+			$j_pa = ($key->produksi_aluminium == '') ? 1 : 0;
+			$pa = $pa + $j_pa;
+			$j_qc = ($key->qc_cek == '') ? 1 : 0;
+			$qc = $qc + $j_qc;
+			$j_p = ($key->pengiriman == '') ? 1 : 0;
+			$p = $p + $j_p;
+		}
+
+		$total = $pa + $qc + $p;
+		if ($total == 0) {
+			$obj = array('ws_update' => "LUNAS",);
+			$this->db->where('id', $id_fppp);
+			$this->db->update('data_fppp', $obj);
+		} else {
+			$obj = array('ws_update' => "PARSIAL",);
+			$this->db->where('id', $id_fppp);
+			$this->db->update('data_fppp', $obj);
+		}
+
+		return $total;
+	}
+
+	public function getjml_pasang_bst($id_fppp)
+	{
+		$this->db->where('id_fppp', $id_fppp);
+		$res = $this->db->get('data_fppp_detail');
+		$pa = 0;
+		$qc = 0;
+		foreach ($res->result() as $key) {
+			$j_pa = ($key->pasang == '') ? 1 : 0;
+			$pa = $pa + $j_pa;
+			$j_qc = ($key->bst == '') ? 1 : 0;
+			$qc = $qc + $j_qc;
+		}
+
+		$total = $pa + $qc;
+		if ($total == 0) {
+			$obj = array('id_status' => 3,);
+			$this->db->where('id', $id_fppp);
+			$this->db->update('data_fppp', $obj);
+		} else {
+			$obj = array('id_status' => 2,);
+			$this->db->where('id', $id_fppp);
+			$this->db->update('data_fppp', $obj);
+		}
+
+		return $total;
+	}
 }
 
 /* End of file m_fppp.php */

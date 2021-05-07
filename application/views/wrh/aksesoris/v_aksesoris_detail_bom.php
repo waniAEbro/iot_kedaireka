@@ -119,7 +119,7 @@
                                     <td><?= $row->gudang ?></td>
                                     <td><input type="checkbox" onclick="return false;" class="checkbox" <?= $cekproduksi ?>></td>
                                     <td><input type="checkbox" onclick="return false;" class="checkbox" <?= $ceklapangan ?>></td>
-                                    <td>Terkunci</td>
+                                    <td>Terkunci <?php echo button_confirm("Anda yakin mengunci item " . $row->item_code . "?", "wrh/aksesoris/bukakuncidetailbom/" . $id_fppp . "/" . $row->id, "#content", 'Buka Kunci', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Buka Kunci"'); ?></td>
                                 </tr>
                             <?php }
                             ?>
@@ -259,7 +259,7 @@
                 $(element).prev('.edit').text(qtybom);
             } else {
                 if (parseInt(qty_kurang) < parseInt(value)) {
-                    alert("Qty Terkirim sudah terpenuhi!");
+                    alert("Tidak Boleh melebihi Qty Kurang!");
                     $(element).hide();
                     $(element).prev('.edit').show();
                     $(element).prev('.edit').text(qtybom);

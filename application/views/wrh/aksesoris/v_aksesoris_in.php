@@ -240,7 +240,7 @@
         if (confirm('Lanjutkan Proses Hapus?')) {
             $.ajax({
                     type: "POST",
-                    url: "<?= site_url('wrh/aksesoris/deleteItem') ?>",
+                    url: "<?= site_url('wrh/aksesoris/deleteItemIn') ?>",
                     dataType: 'json',
                     data: {
                         'id': i

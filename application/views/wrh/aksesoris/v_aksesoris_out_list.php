@@ -31,7 +31,17 @@
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
                                 <td><?= $row->tgl_pembuatan ?></td>
-                                <td><?= $row->no_fppp ?><br><?= button('load_silent("wrh/aksesoris/detailbom/' . $row->id . '","#content")', 'Stock Out', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Add Stock Out"'); ?></td>
+                                <td><?= $row->no_fppp ?><br><?= button('load_silent("wrh/aksesoris/detailbom/' . $row->id . '","#content")', 'Stock Out', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Add Stock Out"'); ?>
+                                    <?php
+                                    if ($row->no_sj != '') { ?>
+                                        <a target="_blank" href="<?= base_url('wrh/aksesoris/cetakSj'); ?>/<?= $row->id ?>" onclick="simpantgl(<?= $row->id ?>)" class="btn btn-xs btn-warning">Cetak Surat Jalan</a>
+                                    <?php
+                                    } else {
+                                        echo button('load_silent("wrh/aksesoris/suratjalan/' . $row->id . '","#content")', 'Surat Jalan', 'btn btn-xs btn-danger', 'data-toggle="tooltip" title="Surat Jalan"');
+                                    }
+
+                                    ?>
+                                </td>
                                 <td><?= $row->nama_proyek ?></td>
                             </tr>
                         <?php endforeach; ?>

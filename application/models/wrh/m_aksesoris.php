@@ -34,6 +34,10 @@ class M_aksesoris extends CI_Model
         $this->db->join('master_item da', 'da.item_code = dai.item_code', 'left');
         $this->db->where('dai.item_code', $item_code);
         $this->db->select('dai.*,md.divisi,mg.gudang');
+        $this->db->group_by('dai.item_code');
+        $this->db->group_by('dai.id_divisi');
+        $this->db->group_by('dai.keranjang');
+
         return $this->db->get('data_aksesoris_in dai')->result();;
     }
 
@@ -71,6 +75,8 @@ class M_aksesoris extends CI_Model
         return $data;
     }
 
+
+
     public function getTotalItemFpppOut()
     {
         // $this->db->where('MONTH(tgl_proses)', date('m'));
@@ -95,17 +101,12 @@ class M_aksesoris extends CI_Model
         $this->db->select('dai.*,md.divisi,mg.gudang');
         $this->db->order_by('dai.id', 'desc');
 
-        return $this->db->get('data_aksesoris_in_history dai');
+        return $this->db->get('data_aksesoris_in dai');
     }
 
     public function insertstokin($value = '')
     {
         $this->db->insert('data_aksesoris_in', $value);
-    }
-
-    public function insertstokinhistory($value = '')
-    {
-        $this->db->insert('data_aksesoris_in_history', $value);
     }
     public function insertstokout($value = '')
     {
@@ -350,6 +351,13 @@ class M_aksesoris extends CI_Model
         $this->db->update('data_aksesoris_out', $object);
     }
 
+    public function bukakunciStockOut($id)
+    {
+        $object = array('kunci' => 1);
+        $this->db->where('id', $id);
+        $this->db->update('data_aksesoris_out', $object);
+    }
+
     public function finishStockOut($id)
     {
         $object = array('kunci' => 2);
@@ -361,9 +369,63 @@ class M_aksesoris extends CI_Model
     public function getfpppaksesoris()
     {
         $this->db->join('data_fppp df', 'df.id = dfb.id_fppp', 'left');
+        $this->db->join('data_surat_jalan dsj', 'dsj.id_fppp = dfb.id_fppp', 'left');
         $this->db->group_by('dfb.id_fppp');
+        $this->db->select('df.*,dsj.no_sj');
 
         return $this->db->get('data_fppp_bom_aksesoris dfb');
+    }
+
+    public function getDataFppp($id_fppp)
+    {
+        $this->db->join('master_divisi md', 'md.id = df.id_divisi', 'left');
+        $this->db->where('df.id', $id_fppp);
+        $this->db->select('df.*,md.divisi');
+
+        return $this->db->get('data_fppp df');
+    }
+
+    public function getNomorSj($id_divisi)
+    {
+        $year  = date('Y');
+        $month = date('m');
+        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(created,"%m")', $month);
+        $this->db->where('id_divisi', $id_divisi);
+        $this->db->order_by('id', 'desc');
+        $this->db->limit(1);
+        $hasil = $this->db->get('data_surat_jalan');
+        if ($hasil->num_rows() > 0) {
+
+            $string = $hasil->row()->no_sj;
+            $arr    = explode("/", $string, 2);
+            $first  = $arr[0];
+            $no     = $first + 1;
+            return $no;
+        } else {
+            return '1';
+        }
+    }
+
+    public function getHeaderSendCetak($id)
+    {
+        $this->db->join('data_fppp df', 'df.id = dsj.id_fppp', 'left');
+        $this->db->join('master_divisi md', 'md.id = df.id_divisi', 'left');
+        $this->db->where('dsj.id_fppp', $id);
+        return $this->db->get('data_surat_jalan dsj');
+    }
+
+    public function getDataDetailSendCetak($id)
+    {
+        $this->db->join('data_fppp df', 'df.id = dao.id_fppp', 'left');
+        $this->db->join('master_divisi md', 'md.id = df.id_divisi', 'left');
+        $this->db->join('master_item mi', 'mi.item_code = dao.item_code', 'left');
+
+        $this->db->where('dao.lapangan', 1);
+        $this->db->select('mi.*,dao.qty,df.*,md.divisi');
+        $this->db->where('dao.id_fppp', $id);
+
+        return $this->db->get('data_aksesoris_out dao');
     }
 }
 

@@ -195,6 +195,7 @@
                         z += '<option value=' + data[i].keranjang + '>' + data[i].keranjang + '</option>';
                     }
                     x.html(z);
+                    $('#qty').val(data['qty']);
                 }
             });
 

@@ -118,8 +118,8 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
-                                <td><?= $row->status ?></td>
+                                <td><span id="ws_update_<?= $row->id ?>"><?= $row->ws_update ?></span></td>
+                                <td><span id="status_<?= $row->id ?>"><?= $row->status ?></span></td>
                                 <td align="center">
                                     <?php if ($row->lampiran != '') { ?>
                                         <a target="_blank" href="<?= base_url($row->lampiran); ?>" class="btn btn-xs btn-danger">Lampiran</a>
@@ -242,8 +242,18 @@
                 })
                 .done(function(data) {
                     // console.log(data.detail);
-                    var total_semua = 0;
-                    var total_cbm = 0;
+                    $ws_updt = data['jml_tgl_kosong'];
+                    if ($ws_updt == 0) {
+                        $('#ws_update_' + id_fppp).html('LUNAS');
+                    } else {
+                        $('#ws_update_' + id_fppp).html('PARSIAL');
+                    }
+                    $status = data['jml_pasang_bst'];
+                    if ($status == 0) {
+                        $('#status_' + id_fppp).html('LUNAS');
+                    } else {
+                        $('#status_' + id_fppp).html('PARSIAL');
+                    }
                     for (var i = 0; i < data.detail.length; i++) {
                         var no = i + 1;
                         var color = "white";

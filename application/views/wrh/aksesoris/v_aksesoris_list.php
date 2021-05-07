@@ -87,6 +87,9 @@
                                 $qtyTotalIn = @$total_in[$row->item_code];
                                 $qtyTotalOut = @$total_out[$row->item_code];
                                 $qtyTotalBom = @$total_bom[$row->item_code];
+
+                                $stock_akhir_bulan = $qtyTotalIn - $qtyTotalOut;
+                                $ots = $qtyTotalBom - $qtyTotalOut;
                             ?>
                                 <tr>
                                     <td class="details-control" id="<?= $i ?>"><input type="hidden" id="id_<?= $i ?>" value="<?= $row->item_code ?>"></td>
@@ -96,12 +99,12 @@
                                     <td></td>
                                     <td><?= $qtyTotalIn ?></td>
                                     <td><?= $qtyTotalOut ?></td>
-                                    <td><?= $qtyTotalIn - $qtyTotalOut ?></td>
-                                    <td><?= ($qtyTotalIn - $qtyTotalOut) - $qtyTotalBom ?></td>
+                                    <td><?= $stock_akhir_bulan ?></td>
+                                    <td><?= $stock_akhir_bulan - $ots ?></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td><?= $qtyTotalBom ?></td>
+                                    <td><?= $ots ?></td>
                                     <td>
                                         <?= button('load_silent("wrh/aksesoris/mutasi_stock_add/' . $row->item_code . '","#content")', 'mutasi', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Mutasi"'); ?>
                                         <?= button('load_silent("wrh/aksesoris/mutasi_stock_history/' . $row->item_code . '","#content")', 'history mutasi', 'btn btn-xs btn-default', 'data-toggle="tooltip" title="History Mutasi"'); ?></td>
