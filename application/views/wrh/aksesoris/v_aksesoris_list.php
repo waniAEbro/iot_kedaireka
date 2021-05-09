@@ -87,9 +87,16 @@
                                 $qtyTotalIn = @$total_in[$row->item_code];
                                 $qtyTotalOut = @$total_out[$row->item_code];
                                 $qtyTotalBom = @$total_bom[$row->item_code];
+                                $qtySelisihBomOut = $qtyTotalBom - $qtyTotalOut;
+
+                                if ($qtySelisihBomOut < 1) {
+                                    $qtydikurangi = $qtyTotalBom;
+                                } else {
+                                    $qtydikurangi = $qtyTotalOut;
+                                }
 
                                 $stock_akhir_bulan = $qtyTotalIn - $qtyTotalOut;
-                                $ots = $qtyTotalBom - $qtyTotalOut;
+                                $ots = $qtyTotalBom - $qtydikurangi;
                             ?>
                                 <tr>
                                     <td class="details-control" id="<?= $i ?>"><input type="hidden" id="id_<?= $i ?>" value="<?= $row->item_code ?>"></td>

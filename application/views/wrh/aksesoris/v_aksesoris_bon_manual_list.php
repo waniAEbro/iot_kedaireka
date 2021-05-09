@@ -24,7 +24,6 @@
                         <th>Nama Proyek</th>
                         <th>Item Code</th>
                         <th>Deskripsi</th>
-                        <th>Qty BOM</th>
                         <th>Qty Aktual</th>
                         <th>Out Dari Divisi</th>
                         <th>Area Gudang</th>
@@ -45,12 +44,11 @@
                                 <td><?= $row->nama_proyek ?></td>
                                 <td><?= $row->item_code ?></td>
                                 <td><?= $row->deskripsi ?></td>
-                                <td><?= $row->qty_bom ?></td>
-                                <td><?= $row->qty ?></td>
+                                <td align="center"><?= $row->qty ?></td>
                                 <td><?= $row->divisi ?></td>
                                 <td><?= $row->gudang ?></td>
-                                <td><input type="checkbox" onclick="return false;" class="checkbox" <?= $cekproduksi ?>></td>
-                                <td><input type="checkbox" onclick="return false;" class="checkbox" <?= $ceklapangan ?>></td>
+                                <td align="center"><input type="checkbox" onclick="return false;" class="checkbox" <?= $cekproduksi ?>></td>
+                                <td align="center"><input type="checkbox" onclick="return false;" class="checkbox" <?= $ceklapangan ?>></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

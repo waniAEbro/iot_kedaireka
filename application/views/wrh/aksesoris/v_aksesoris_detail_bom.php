@@ -80,6 +80,7 @@
                             $ceklapangan = ($row->lapangan == 1) ? 'checked' : '';
                             $getqtygdg = $this->m_aksesoris->getQtyGudang($row->item_code, $row->id_divisi, $row->id_gudang);
                             $qty_gudang = ($getqtygdg > 0) ? $getqtygdg : 0;
+                            $totalgudang = $qty_gudang - $qtyTotalOut;
                             if ($row->kunci == 1) {
 
                         ?>
@@ -88,9 +89,9 @@
                                     <td><?= $row->tgl_proses ?></td>
                                     <td><?= $row->item_code ?><br><?php echo button_confirm("Anda yakin mengirim parsial item " . $row->item_code . "?", "wrh/aksesoris/kirimparsial/" . $id_fppp . "/" . $row->id, "#content", 'Kirim Parsial', 'btn btn-xs btn-default', 'data-toggle="tooltip" title="Kirim Parsial"'); ?></td>
                                     <td><?= $row->deskripsi ?></td>
-                                    <td><?= $row->qty_bom ?></td>
-                                    <td><span id="qty_kurang_<?= $row->id ?>"><?= $kurang ?></span></td>
-                                    <td><span id="qty_gudang_<?= $row->id ?>"><?= $qty_gudang ?></span></td>
+                                    <td align="center"><?= $row->qty_bom ?></td>
+                                    <td align="center"><span id="qty_kurang_<?= $row->id ?>"><?= $kurang ?></span></td>
+                                    <td align="center"><span id="qty_gudang_<?= $row->id ?>"><?= $totalgudang ?></span></td>
                                     <td align="center"><span id="qty_bom_<?= $row->id ?>" class='edit'><?= $row->qty ?></span>
                                         <input type='text' class='txtedit' data-id='<?= $row->id ?>' data-field='qty' id='<?= $row->id ?>' value='<?= $row->qty ?>'>
                                     </td>
@@ -100,9 +101,9 @@
                                     <td>
                                         <?= form_dropdown('id_gudang', $gudang,  $row->id_gudang, 'id="id_gudang_' . $row->id . '" onchange="gudang(' . $row->id . ')" data-id="' . $row->id . '" data-field="id_gudang" class="form-control"') ?>
                                     </td>
-                                    <td><input type="checkbox" id="produksi" data-id='<?= $row->id ?>' data-field='produksi' class="checkbox" <?= $cekproduksi ?>></td>
-                                    <td><input type="checkbox" id="lapangan" data-id='<?= $row->id ?>' data-field='lapangan' class="checkbox" <?= $ceklapangan ?>></td>
-                                    <td><?php echo button_confirm("Anda yakin mengunci item " . $row->item_code . "?", "wrh/aksesoris/kuncidetailbom/" . $id_fppp . "/" . $row->id, "#content", 'Kunci', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Kunci"'); ?></td>
+                                    <td align="center"><input type="checkbox" id="produksi" data-id='<?= $row->id ?>' data-field='produksi' class="checkbox" <?= $cekproduksi ?>></td>
+                                    <td align="center"><input type="checkbox" id="lapangan" data-id='<?= $row->id ?>' data-field='lapangan' class="checkbox" <?= $ceklapangan ?>></td>
+                                    <td align="center"><?php echo button_confirm("Anda yakin mengunci item " . $row->item_code . "?", "wrh/aksesoris/kuncidetailbom/" . $id_fppp . "/" . $row->id, "#content", 'Kunci', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Kunci"'); ?></td>
                                 </tr>
                             <?php
                             } else { ?>
@@ -111,15 +112,15 @@
                                     <td><?= $row->tgl_proses ?></td>
                                     <td><?= $row->item_code ?></td>
                                     <td><?= $row->deskripsi ?></td>
-                                    <td><?= $row->qty_bom ?></td>
-                                    <td><?= $kurang ?></td>
-                                    <td><?= $qty_gudang ?></td>
-                                    <td><?= $row->qty ?></td>
-                                    <td><?= $row->divisi ?></td>
-                                    <td><?= $row->gudang ?></td>
-                                    <td><input type="checkbox" onclick="return false;" class="checkbox" <?= $cekproduksi ?>></td>
-                                    <td><input type="checkbox" onclick="return false;" class="checkbox" <?= $ceklapangan ?>></td>
-                                    <td>Terkunci <?php echo button_confirm("Anda yakin mengunci item " . $row->item_code . "?", "wrh/aksesoris/bukakuncidetailbom/" . $id_fppp . "/" . $row->id, "#content", 'Buka Kunci', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Buka Kunci"'); ?></td>
+                                    <td align="center"><?= $row->qty_bom ?></td>
+                                    <td align="center"><?= $kurang ?></td>
+                                    <td align="center"><?= $totalgudang ?></td>
+                                    <td align="center"><?= $row->qty ?></td>
+                                    <td align="center"><?= $row->divisi ?></td>
+                                    <td align="center"><?= $row->gudang ?></td>
+                                    <td align="center"><input type="checkbox" onclick="return false;" class="checkbox" <?= $cekproduksi ?>></td>
+                                    <td align="center"><input type="checkbox" onclick="return false;" class="checkbox" <?= $ceklapangan ?>></td>
+                                    <td align="center">Terkunci <?php echo button_confirm("Anda yakin mengunci item " . $row->item_code . "?", "wrh/aksesoris/bukakuncidetailbom/" . $id_fppp . "/" . $row->id, "#content", 'Buka Kunci', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Buka Kunci"'); ?></td>
                                 </tr>
                             <?php }
                             ?>
@@ -258,38 +259,40 @@
                 $(element).prev('.edit').show();
                 $(element).prev('.edit').text(qtybom);
             } else {
-                if (parseInt(qty_kurang) < parseInt(value)) {
-                    alert("Tidak Boleh melebihi Qty Kurang!");
-                    $(element).hide();
-                    $(element).prev('.edit').show();
-                    $(element).prev('.edit').text(qtybom);
-                } else {
-                    // Send AJAX request
-                    $.ajax({
-                        url: "<?= site_url('wrh/aksesoris/saveout/') ?>",
-                        dataType: "json",
-                        type: "POST",
-                        data: {
-                            field: fieldname,
-                            value: value,
-                            id: edit_id,
-                        },
-                        success: function(response) {
+                // if (parseInt(qty_kurang) < parseInt(value)) {
+                //     alert("Tidak Boleh melebihi Qty Kurang!");
+                //     $(element).hide();
+                //     $(element).prev('.edit').show();
+                //     $(element).prev('.edit').text(qtybom);
+                // } else {
+                // Send AJAX request
 
-                            // Hide Input element
-                            $(element).hide();
+                $.ajax({
+                    url: "<?= site_url('wrh/aksesoris/saveout/') ?>",
+                    dataType: "json",
+                    type: "POST",
+                    data: {
+                        field: fieldname,
+                        value: value,
+                        id: edit_id,
+                    },
+                    success: function(response) {
 
-                            // Update viewing value and display it
-                            $(element).prev('.edit').show();
-                            $(element).prev('.edit').text(value);
-                            $.growl.notice({
-                                title: 'Sukses',
-                                message: "Data Updated!"
-                            });
-                            // load_silent("klg/pendapatan", "#content");
-                        }
-                    });
-                }
+                        // Hide Input element
+                        $(element).hide();
+
+                        // Update viewing value and display it
+                        $(element).prev('.edit').show();
+                        $(element).prev('.edit').text(value);
+                        $.growl.notice({
+                            title: 'Sukses',
+                            message: "Data Updated!"
+                        });
+                        // gudang(edit_id);
+                        load_silent("wrh/aksesoris/detailbom/" + $("#id_fppp").val(), "#content");
+                    }
+                });
+                // }
             }
         });
     });

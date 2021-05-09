@@ -250,6 +250,7 @@ class Aksesoris extends CI_Controller
         $this->fungsi->check_previleges('aksesoris');
         $this->m_aksesoris->finishStockOut($id);
         $data['id_fppp']           = $id;
+        $data['total_out']           = $this->m_aksesoris->getTotalItemFpppOut();
         $data['bom_aksesoris']     = $this->m_aksesoris->getBomAksesoris($id);
         $data['no_fppp']           = $this->m_aksesoris->getRowFppp($id)->no_fppp;
         $data['nama_proyek']       = $this->m_aksesoris->getRowFppp($id)->nama_proyek;
@@ -267,6 +268,7 @@ class Aksesoris extends CI_Controller
         $field  = $this->input->post('field');
         $value  = $this->input->post('value');
         $editid = $this->input->post('id');
+        // $total_out = $this->m_aksesoris->getTotalItemFpppOut();
         if ($field == 'produksi') {
             $this->m_aksesoris->editRowOut($field, $value, $editid);
             $this->m_aksesoris->editRowOut('lapangan', 0, $editid);
@@ -281,6 +283,7 @@ class Aksesoris extends CI_Controller
         $divisi     = $this->m_aksesoris->getRowAksesorisOut($editid)->id_divisi;
         $gudang     = $this->m_aksesoris->getRowAksesorisOut($editid)->id_gudang;
         $qty_gudang = $this->m_aksesoris->getQtyGudang($item_code, $divisi, $gudang);
+        // $qtyTotalOut = @$total_out[$item_code][$id_fppp];
 
         $data['qty_gudang'] = $qty_gudang;
         $data['status']     = "berhasil";
@@ -305,6 +308,15 @@ class Aksesoris extends CI_Controller
         $data['gudang']    = $this->db->get('master_gudang');
 
         $this->load->view('wrh/aksesoris/v_aksesoris_bon_out', $data);
+    }
+
+    public function getNamaProyek()
+    {
+        $this->fungsi->check_previleges('aksesoris');
+        $id_fppp = $this->input->post('id_fppp');
+        $nama_proyek       = $this->m_aksesoris->getRowFppp($id_fppp)->nama_proyek;
+        $respon    = ['nama_proyek' => $nama_proyek];
+        echo json_encode($respon);
     }
 
     public function getQtyDivisiGudang()

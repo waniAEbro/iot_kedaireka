@@ -51,3 +51,4 @@ Thumbs.db
 application/config/config.php
 application/config/database.php
 assets/captcha/
+files/
