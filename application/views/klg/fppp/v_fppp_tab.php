@@ -75,14 +75,13 @@ if ($param_tab == '1') {
 
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
-            <?php
-            $i = 1;
-            foreach ($divisi->result() as $key) { ?>
-                <li class="tab_<?= $i ?>"><a onclick="t<?= $i ?>" href=" javascript:void(0)"><?= $key->divisi ?></a></li>
-            <?php $i++;
-            }
-            ?>
-
+            <li class="<?= $tab_1 ?>"><a data-toggle="tab" onclick='<?php echo $t1; ?>' href="javascript:void(0)">RESIDENTIAL</a></li>
+            <li class="<?= $tab_2 ?>"><a onclick='<?php echo $t2; ?>' data-toggle="tab" href="javascript:void(0)">ASTRAL</a></li>
+            <li class="<?= $tab_3 ?>"><a onclick='<?php echo $t3; ?>' data-toggle="tab" href="javascript:void(0)">ASTRAL BRAVO</a></li>
+            <li class="<?= $tab_4 ?>"><a onclick='<?php echo $t4; ?>' data-toggle="tab" href="javascript:void(0)">ASTRAL BENDING EXTRUTION</a></li>
+            <li class="<?= $tab_5 ?>"><a onclick='<?php echo $t5; ?>' data-toggle="tab" href="javascript:void(0)">VITTO</a></li>
+            <li class="<?= $tab_6 ?>"><a onclick='<?php echo $t6; ?>' data-toggle="tab" href="javascript:void(0)">HRB</a></li>
+            <li class="<?= $tab_7 ?>"><a onclick='<?php echo $t7; ?>' data-toggle="tab" href="javascript:void(0)">MOMO</a></li>
         </ul>
         <div class="tab-content">
 
