@@ -26,6 +26,7 @@ class Fppp extends CI_Controller
 	{
 		$this->fungsi->check_previleges('fppp');
 		$data['param_tab'] = '1';
+		$data['divisi'] = $this->db->get('master_divisi');
 		$this->load->view('klg/fppp/v_fppp_tab', $data);
 	}
 
@@ -33,6 +34,7 @@ class Fppp extends CI_Controller
 	{
 		$this->fungsi->check_previleges('fppp');
 		$data['param_tab'] = $param;
+		$data['divisi'] = $this->db->get('master_divisi');
 		$this->load->view('klg/fppp/v_fppp_tab', $data);
 	}
 
@@ -73,17 +75,18 @@ class Fppp extends CI_Controller
 		// $this->load->view('klg/fppp/v_fppp_add', $data);
 		if ($param == 1) {
 			$data['no_fppp'] = str_pad($this->m_fppp->getNoFppp($param), 3, '0', STR_PAD_LEFT) . '/FPPP/RSD' . '/' . date('m') . '/' . date('Y');
-			$this->load->view('klg/fppp/v_fppp_add_residential', $data);
+			// $this->load->view('klg/fppp/v_fppp_add_residential', $data);
 		} elseif ($param == 2) {
 			$data['no_fppp'] = str_pad($this->m_fppp->getNoFppp($param), 3, '0', STR_PAD_LEFT) . '/FPPP/ASTRAL' . '/' . date('m') . '/' . date('Y');
-			$this->load->view('klg/fppp/v_fppp_add_astral', $data);
+			// $this->load->view('klg/fppp/v_fppp_add_astral', $data);
 		} elseif ($param == 3) {
 			$data['no_fppp'] = str_pad($this->m_fppp->getNoFppp($param), 3, '0', STR_PAD_LEFT) . '/FPPP/BRAVO' . '/' . date('m') . '/' . date('Y');
-			$this->load->view('klg/fppp/v_fppp_add_bravo', $data);
+			// $this->load->view('klg/fppp/v_fppp_add_bravo', $data);
 		} else {
 			$data['no_fppp'] = str_pad($this->m_fppp->getNoFppp($param), 3, '0', STR_PAD_LEFT) . '/FPPP/HRB' . '/' . date('m') . '/' . date('Y');
-			$this->load->view('klg/fppp/v_fppp_add_hrb', $data);
+			// $this->load->view('klg/fppp/v_fppp_add_hrb', $data);
 		}
+		$this->load->view('klg/fppp/v_fppp_add', $data);
 	}
 
 	public function savefppp($value = '')

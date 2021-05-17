@@ -10,26 +10,27 @@
   <div class="box-body">
     <form method="post" class="form-vertical form_faktur" role="form">
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
           <div class="form-group">
             <label>Divisi</label>
-            <?= form_dropdown('id_divisi', $divisi, '', 'id="id_divisi" class="form-control"') ?>
+            <?= form_dropdown('id_divisi_tampil', $divisi, $param, 'id="id_divisi_tampil" class="form-control" disabled') ?>
+            <input type="hidden" id="id_divisi" value="<?= $param ?>" class="form-control" autocomplete="off">
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
           <div class="form-group">
             <label>Tanggal Pembuatan</label>
-            <input type="text" id="tgl_pembuatan" data-date-format="yyyy-mm-dd" value="<?= date('Y-m-d') ?>" class="form-control datepicker" autocomplete="off">
+            <input type="text" id="tgl_pembuatan" value="<?= date('Y-m-d') ?>" class="form-control" autocomplete="off" readonly>
           </div>
         </div>
+      </div>
+      <div class="row">
         <div class="col-md-4">
           <div class="form-group">
             <label>Applicant</label>
             <input type="text" id="applicant" class="form-control" autocomplete="off">
           </div>
         </div>
-      </div>
-      <div class="row">
         <div class="col-md-4">
           <div class="form-group">
             <label>Applicant Sector</label>
@@ -42,25 +43,12 @@
             <input type="text" id="authorized_distributor" class="form-control" autocomplete="off">
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label>No FPPP</label>
-            <input type="text" id="no_fppp" class="form-control" autocomplete="off">
-          </div>
-        </div>
       </div>
-
       <div class="row">
         <div class="col-md-4">
           <div class="form-group">
-            <label>Type FPPP</label>
-            <input type="text" id="type_fppp" class="form-control">
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label>Nama Aplikator</label>
-            <input type="text" id="nama_aplikator" class="form-control">
+            <label>No FPPP</label>
+            <input type="text" id="no_fppp" class="form-control" value="<?= $no_fppp ?>" autocomplete="off" readonly>
           </div>
         </div>
         <div class="col-md-4">
@@ -69,29 +57,21 @@
             <input type="text" id="nama_proyek" class="form-control">
           </div>
         </div>
-      </div>
-
-      <div class="row">
         <div class="col-md-4">
           <div class="form-group">
             <label>Tahap</label>
             <input type="text" id="tahap" class="form-control">
           </div>
         </div>
-        <div class="col-md-4">
+      </div>
+      <div class="row">
+        <div class="col-md-12">
           <div class="form-group">
             <label>Alamat Proyek</label>
             <input type="text" id="alamat_proyek" class="form-control">
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label>Alamat Pengiriman</label>
-            <input type="text" id="alamat_pengiriman" class="form-control">
-          </div>
-        </div>
       </div>
-
       <div class="row">
         <div class="col-md-4">
           <div class="form-group">
@@ -101,43 +81,7 @@
         </div>
         <div class="col-md-4">
           <div class="form-group">
-            <label>System</label>
-            <input type="text" id="system" class="form-control">
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label>Pekerjaan</label>
-            <input type="text" id="pekerjaan" class="form-control">
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-4">
-          <div class="form-group">
-            <label>No SPH</label>
-            <input type="text" id="no_sph" class="form-control">
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label>No VO</label>
-            <input type="text" id="no_vo" class="form-control">
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label>No Quo</label>
-            <input type="text" id="no_quo" class="form-control">
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-4">
-          <div class="form-group">
-            <label>Note NCR</label>
+            <label>Note NCR/FPPP</label>
             <input type="text" id="note_ncr" class="form-control">
           </div>
         </div>
@@ -147,14 +91,7 @@
             <?= form_dropdown('id_pengiriman', $pengiriman, '', 'id="id_pengiriman" class="form-control"') ?>
           </div>
         </div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <label>Waktu Produksi</label>
-            <input type="text" id="waktu_produksi" class="form-control">
-          </div>
-        </div>
       </div>
-
       <div class="row">
         <div class="col-md-4">
           <div class="form-group">
@@ -175,7 +112,6 @@
           </div>
         </div>
       </div>
-
       <div class="row">
         <div class="col-md-4">
           <div class="form-group">
@@ -242,7 +178,7 @@
       <div class="row">
         <div class="col-md-4">
           <div class="form-group">
-            <label>Pict Project</label>
+            <label>PIC Project</label>
             <input type="text" id="pic_project" class="form-control">
           </div>
         </div>
@@ -270,29 +206,23 @@
         <div class="col-md-4">
           <div class="form-group">
             <label>Logo Kaca</label>
-            <input type="text" id="logo_kaca" class="form-control">
+            <?= form_dropdown('id_logo_kaca', $logo_kaca, '', 'id="id_logo_kaca" class="form-control"') ?>
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
-            <label>Lampiran</label>
-            <?php echo form_upload(array('name' => 'lampiran', 'id' => 'lampiran')); ?>
-            <span style="color:red">*) Lampiran File berformat .pdf maks 2MB</span>
+            <label>Jumlah Gambar</label>
+            <input type="text" id="jumlah_gambar" class="form-control">
           </div>
         </div>
       </div>
 
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
           <div class="form-group">
-            <label>Lampiran Lain</label>
-            <input type="text" id="lampiran_lain" class="form-control">
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label>Attachment</label>
-            <input type="text" id="attachment" class="form-control">
+            <label>Lampiran</label>
+            <?php echo form_upload(array('name' => 'lampiran', 'id' => 'lampiran')); ?>
+            <span style="color:red">*) Lampiran File berformat .pdf maks 2MB</span>
           </div>
         </div>
       </div>
@@ -318,7 +248,7 @@
   </form>
 </div>
 
-<div class="row" id="form_pembelianq">
+<div class="row" id="form_pembelian">
   <div class="col-lg-3">
     <div class="box box-primary">
       <div class="box-header with-border">
@@ -349,12 +279,15 @@
             </div>
             <div class="form-group">
               <label class="control-label">Finish Coating</label>
-              <input type="text" id="finish_coating" class="form-control">
+              <?= form_dropdown('finish_coating', $warna_aluminium, '', 'id="finish_coating" class="form-control"') ?>
             </div>
             <div class="form-group">
               <label class="control-label">Qty</label>
               <input type="hidden" id="id_fppp" readonly>
               <input type="text" id="qty" class="form-control" autocomplete="off">
+            </div>
+            <div class="form-group">
+              <a onclick="quotation()" class="btn btn-info">Add Item</a>
             </div>
           </div>
         </form>
@@ -398,7 +331,7 @@
         title: 'Berhasil',
         message: "Tambah Permintaan selesai!"
       });
-      load_silent("klg/fppp/finish/" + $("#id_fppp").val() + "", "#content");
+      load_silent("klg/fppp/hasil_finish/" + $("#id_divisi").val() + "", "#content");
     }
   }
   $(document).ready(function() {
@@ -425,10 +358,9 @@
   });
 
   function save() {
-    // $(this).find("button[type='submit']").prop('disabled', true);
-    // $("#proses").hide(50);
-    // $("#silahkantunggu").show(50);
     var path = $("#lampiran").val().replace('C:\\fakepath\\', '');
+    var wa = $('#id_warna_aluminium').val();
+    $('#finish_coating').val(wa).trigger('change');
     if (path == '') {
       $.ajax({
         type: "POST",
@@ -441,21 +373,12 @@
           applicant_sector: $("#applicant_sector").val(),
           authorized_distributor: $("#authorized_distributor").val(),
           no_fppp: $("#no_fppp").val(),
-          type_fppp: $("#type_fppp").val(),
-          nama_aplikator: $("#nama_aplikator").val(),
           nama_proyek: $("#nama_proyek").val(),
           tahap: $("#tahap").val(),
           alamat_proyek: $("#alamat_proyek").val(),
-          alamat_pengiriman: $("#alamat_pengiriman").val(),
           status_order: $("#status_order").val(),
-          system: $("#system").val(),
-          pekerjaan: $("#pekerjaan").val(),
-          no_sph: $("#no_sph").val(),
-          no_vo: $("#no_vo").val(),
-          no_quo: $("#no_quo").val(),
           note_ncr: $("#note_ncr").val(),
           id_pengiriman: $("#id_pengiriman").val(),
-          waktu_produksi: $("#waktu_produksi").val(),
           deadline_pengiriman: $("#deadline_pengiriman").val(),
           id_metode_pengiriman: $("#id_metode_pengiriman").val(),
           id_penggunaan_peti: $("#id_penggunaan_peti").val(),
@@ -472,7 +395,8 @@
           admin_koordinator: $("#admin_koordinator").val(),
           id_kaca: $("#id_kaca").val(),
           jenis_kaca: $("#jenis_kaca").val(),
-          logo_kaca: $("#logo_kaca").val(),
+          id_logo_kaca: $("#id_logo_kaca").val(),
+          jumlah_gambar: $("#jumlah_gambar").val(),
           lampiran_lain: $("#lampiran_lain").val(),
           attachment: $("#attachment").val(),
           note: CKEDITOR.instances.keterangan.getData(),
@@ -506,21 +430,12 @@
           applicant_sector: $("#applicant_sector").val(),
           authorized_distributor: $("#authorized_distributor").val(),
           no_fppp: $("#no_fppp").val(),
-          type_fppp: $("#type_fppp").val(),
-          nama_aplikator: $("#nama_aplikator").val(),
           nama_proyek: $("#nama_proyek").val(),
           tahap: $("#tahap").val(),
           alamat_proyek: $("#alamat_proyek").val(),
-          alamat_pengiriman: $("#alamat_pengiriman").val(),
           status_order: $("#status_order").val(),
-          system: $("#system").val(),
-          pekerjaan: $("#pekerjaan").val(),
-          no_sph: $("#no_sph").val(),
-          no_vo: $("#no_vo").val(),
-          no_quo: $("#no_quo").val(),
           note_ncr: $("#note_ncr").val(),
           id_pengiriman: $("#id_pengiriman").val(),
-          waktu_produksi: $("#waktu_produksi").val(),
           deadline_pengiriman: $("#deadline_pengiriman").val(),
           id_metode_pengiriman: $("#id_metode_pengiriman").val(),
           id_penggunaan_peti: $("#id_penggunaan_peti").val(),
@@ -537,26 +452,20 @@
           admin_koordinator: $("#admin_koordinator").val(),
           id_kaca: $("#id_kaca").val(),
           jenis_kaca: $("#jenis_kaca").val(),
-          logo_kaca: $("#logo_kaca").val(),
+          id_logo_kaca: $("#id_logo_kaca").val(),
+          jumlah_gambar: $("#jumlah_gambar").val(),
           lampiran_lain: $("#lampiran_lain").val(),
           attachment: $("#attachment").val(),
           note: CKEDITOR.instances.keterangan.getData(),
         },
         success: function(data) {
-          if (data['id'] == 'x') {
-            $.growl.error({
-              title: 'Gagal',
-              message: data['msg']
-            });
-          } else {
-            $('#id_fppp').val(data['id']);
-            $.growl.notice({
-              title: 'Sukses',
-              message: data['msg']
-            });
-            $('#tutup').click();
-            $('#form_pembelian').show(1000);
-          }
+          $('#id_fppp').val(data['id']);
+          $.growl.notice({
+            title: 'Sukses',
+            message: data['msg']
+          });
+          $('#tutup').click();
+          $('#form_pembelian').show(1000);
         },
         error: function(data, e) {
           $("#info").html(e);
@@ -626,7 +535,7 @@
                     ' + $('#glass_thick').val() + '\
                   </td>\
                   <td id="td_finish_coating_' + i + '" width="10%">\
-                    ' + $('#finish_coating').val() + '\
+                    ' + $('#finish_coating :selected').text() + '\
                   </td>\
                   <td id="td_qty_' + i + '" width="7%">\
                     ' + $('#qty').val() + '\
@@ -634,21 +543,17 @@
                 </tr>';
           $('tr.odd').remove();
           $('#dataTbl').append(x);
-          $('#item').val('').trigger('change');
+          $('#id_brand').val('').trigger('change');
+          $('#id_item').val('').trigger('change');
           $("#gbritem").html('');
-          $('#jenis_barang').html('');
-          $('#warna').val('').trigger('change');
-          $('#bukaan').val('').trigger('change');
-          $('#status_detail').val('').trigger('change');
-          $('#lebar').val('');
-          $('#harga').val('');
-          $('#tinggi').val('');
+          $('#kode_opening').val('');
+          $('#kode_unit').val('');
+          $('#glass_thick').val('');
           $('#qty').val('');
-          $("#ket_detail").val(''),
-            $.growl.notice({
-              title: 'Sukses',
-              message: "Berhasil menyimpan FPPP"
-            });
+          $.growl.notice({
+            title: 'Sukses',
+            message: "Berhasil menyimpan FPPP"
+          });
 
         })
         .fail(function(XHR) {
