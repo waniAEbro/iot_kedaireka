@@ -103,13 +103,13 @@
                                     <td align="center"><?= $i ?></td>
                                     <td><?= $row->item_code ?></td>
                                     <td><?= $row->deskripsi ?></td>
-                                    <td></td>
+                                    <td><?= $row->stock_awal_bulan ?></td>
                                     <td><?= $qtyTotalIn ?></td>
                                     <td><?= $qtyTotalOut ?></td>
                                     <td><?= $stock_akhir_bulan ?></td>
                                     <td><?= $stock_akhir_bulan - $ots ?></td>
                                     <td></td>
-                                    <td></td>
+                                    <td><?= $row->min_stock ?></td>
                                     <td></td>
                                     <td><?= $ots ?></td>
                                     <td>
