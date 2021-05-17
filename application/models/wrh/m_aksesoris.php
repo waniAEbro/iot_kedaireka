@@ -28,7 +28,7 @@ class M_aksesoris extends CI_Model
 
     public function getDataDetailTabel($item_code = '')
     {
-        $this->db->join('master_divisi md', 'md.id = dai.id_divisi', 'left');
+        $this->db->join('master_divisi_stock md', 'md.id = dai.id_divisi', 'left');
         $this->db->join('master_gudang mg', 'mg.id = dai.id_gudang', 'left');
 
         $this->db->join('master_item da', 'da.item_code = dai.item_code', 'left');
