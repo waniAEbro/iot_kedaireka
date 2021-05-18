@@ -29,21 +29,28 @@ class Aksesoris extends CI_Controller
         // $data['detail'] = $this->m_aksesoris->getDataDetailTabel($id);
         // echo json_encode($data);
         $data_aksesoris_in = $this->m_aksesoris->getDataDetailTabel($id);
+        $awal_bulan        = $this->m_aksesoris->getTotalDivisiGudangAwalBulan();
+        $rata        = $this->m_aksesoris->getTotalDivisiGudangRata();
+        $min_stock        = $this->m_aksesoris->getTotalDivisiGudangMinStock();
         $in                = $this->m_aksesoris->getTotalDivisiGudangIn();
         $out               = $this->m_aksesoris->getTotalDivisiGudangOut();
         $arr               = array();
         foreach ($data_aksesoris_in as $key) {
             $qtyin  = @$in[$key->item_code][$key->id_divisi][$key->id_gudang];
             $qtyout = @$out[$key->item_code][$key->id_divisi][$key->id_gudang];
+            $stok_awal_bulan = @$awal_bulan[$key->item_code][$key->id_divisi][$key->id_gudang][$key->keranjang];
+            $stok_rata = @$rata[$key->item_code][$key->id_divisi][$key->id_gudang][$key->keranjang];
+            $stok_min_stock = @$min_stock[$key->item_code][$key->id_divisi][$key->id_gudang][$key->keranjang];
             $temp   = array(
                 "divisi"           => $key->divisi,
                 "gudang"           => $key->gudang,
                 "keranjang"        => $key->keranjang,
-                "stok_awal_bulan"  => 0,
+                "stok_awal_bulan"  => $stok_awal_bulan,
                 "tot_in"           => $qtyin,
                 "tot_out"          => $qtyout,
                 "stok_akhir_bulan" => $qtyin - $qtyout,
-                "rata_pemakaian"   => 0,
+                "rata_pemakaian"   => $stok_rata,
+                "min_stock"   => $stok_min_stock,
             );
 
             array_push($arr, $temp);

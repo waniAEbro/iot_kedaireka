@@ -73,8 +73,6 @@
                             <th>Total Out Per Bulan</th>
                             <th>Stock Akhir Bulan</th>
                             <th>Free Stock</th>
-                            <th>Rata2 Per Bulan</th>
-                            <th>Min Stock</th>
                             <th>Fungsi</th>
                             <th>OTS Persiapan</th>
                             <th>Fitur</th>
@@ -108,8 +106,6 @@
                                     <td><?= $qtyTotalOut ?></td>
                                     <td><?= $stock_akhir_bulan ?></td>
                                     <td><?= $stock_akhir_bulan - $ots ?></td>
-                                    <td></td>
-                                    <td><?= $row->min_stock ?></td>
                                     <td></td>
                                     <td><?= $ots ?></td>
                                     <td>
@@ -265,6 +261,7 @@
                 '<th bgcolor="#bfbfbf">Total Out Per Bulan</th>' +
                 '<th bgcolor="#bfbfbf">Stock Akhir Bulan</th>' +
                 '<th bgcolor="#bfbfbf">Rata2 Pemakaian</th>' +
+                '<th bgcolor="#bfbfbf">Min Stock</th>' +
                 '</tr>';
             $.ajax({
                     url: "<?= site_url('wrh/aksesoris/getDetailTabel') ?>",
@@ -295,6 +292,7 @@
                             '<td><font color="' + fontcolor + '">' + qty_out + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].stok_akhir_bulan + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].rata_pemakaian + '</font></td>' +
+                            '<td><font color="' + fontcolor + '">' + data.detail[i].min_stock + '</font></td>' +
                             '</tr>';
 
                     };

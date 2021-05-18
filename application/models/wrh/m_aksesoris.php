@@ -41,6 +41,57 @@ class M_aksesoris extends CI_Model
         return $this->db->get('data_aksesoris_in dai')->result();;
     }
 
+    public function getTotalDivisiGudangAwalBulan()
+    {
+        // $this->db->where('MONTH(tgl_proses)', date('m'));
+        $res = $this->db->get('data_aksesoris_awal_bulan');
+        $data = array();
+        $nilai = 0;
+        foreach ($res->result() as $key) {
+            if (isset($data[$key->item_code][$key->id_divisi][$key->id_gudang][$key->keranjang])) {
+                $nilai = $data[$key->item_code][$key->id_divisi][$key->id_gudang][$key->keranjang];
+            } else {
+                $nilai = 0;
+            }
+            $data[$key->item_code][$key->id_divisi][$key->id_gudang][$key->keranjang] = $key->qty + $nilai;
+        }
+        return $data;
+    }
+
+    public function getTotalDivisiGudangRata()
+    {
+        // $this->db->where('MONTH(tgl_proses)', date('m'));
+        $res = $this->db->get('data_aksesoris_awal_bulan');
+        $data = array();
+        $nilai = 0;
+        foreach ($res->result() as $key) {
+            if (isset($data[$key->item_code][$key->id_divisi][$key->id_gudang][$key->keranjang])) {
+                $nilai = $data[$key->item_code][$key->id_divisi][$key->id_gudang][$key->keranjang];
+            } else {
+                $nilai = 0;
+            }
+            $data[$key->item_code][$key->id_divisi][$key->id_gudang][$key->keranjang] = $key->rata_rata + $nilai;
+        }
+        return $data;
+    }
+
+    public function getTotalDivisiGudangMinStock()
+    {
+        // $this->db->where('MONTH(tgl_proses)', date('m'));
+        $res = $this->db->get('data_aksesoris_awal_bulan');
+        $data = array();
+        $nilai = 0;
+        foreach ($res->result() as $key) {
+            if (isset($data[$key->item_code][$key->id_divisi][$key->id_gudang][$key->keranjang])) {
+                $nilai = $data[$key->item_code][$key->id_divisi][$key->id_gudang][$key->keranjang];
+            } else {
+                $nilai = 0;
+            }
+            $data[$key->item_code][$key->id_divisi][$key->id_gudang][$key->keranjang] = $key->min_stock + $nilai;
+        }
+        return $data;
+    }
+
     public function getTotalDivisiGudangIn()
     {
         // $this->db->where('MONTH(tgl_proses)', date('m'));
