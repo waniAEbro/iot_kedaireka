@@ -39,6 +39,9 @@
                             </td>
                             <td><select id="item_code" name="item_code" class="form-control" style="width:100%" required>
                                     <option value="">-- Select --</option>
+                                    <?php foreach ($item_code->result() as $valap) : ?>
+                                        <option value="<?= $valap->item_code ?>"><?= $valap->item_code ?></option>
+                                    <?php endforeach; ?>
                                 </select></td>
                             <td><input type="text" style="text-align: right;" class="form-control" id="qty" placeholder="Qty" autocomplete="off"></td>
                             <td><select id="id_divisi" name="id_divisi" class="form-control" style="width:100%" required>
@@ -141,7 +144,7 @@
         });
     });
 
-    $("select[name=id_fppp]").change(function() {
+    $("select[name=id_fpppzz]").change(function() {
         var x = $("select[name=item_code]");
         if ($(this).val() == "") {
             x.html("<option>-- Select --</option>");
