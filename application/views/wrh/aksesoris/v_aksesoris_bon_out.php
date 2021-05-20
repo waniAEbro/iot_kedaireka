@@ -14,12 +14,12 @@
                     <thead>
                         <tr>
                             <th width="15%">FPPP</th>
-                            <th width="15%">Item</th>
-                            <th width="10%">Qty</th>
+                            <th width="25%">Item</th>
+                            <th width="7%">Qty</th>
                             <th width="15%">Divisi</th>
                             <th width="15%">Gudang</th>
-                            <th width="10%">Produksi</th>
-                            <th width="10%">Lapangan</th>
+                            <th width="7%">Produksi</th>
+                            <th width="7%">Lapangan</th>
                             <th width="5%">Act</th>
                         </tr>
                     </thead>
@@ -40,7 +40,7 @@
                             <td><select id="item_code" name="item_code" class="form-control" style="width:100%" required>
                                     <option value="">-- Select --</option>
                                     <?php foreach ($item_code->result() as $valap) : ?>
-                                        <option value="<?= $valap->item_code ?>"><?= $valap->item_code ?></option>
+                                        <option value="<?= $valap->item_code ?>"><?= $valap->item_code ?>-<?= $valap->deskripsi ?></option>
                                     <?php endforeach; ?>
                                 </select></td>
                             <td><input type="text" style="text-align: right;" class="form-control" id="qty" placeholder="Qty" autocomplete="off"></td>
@@ -217,10 +217,10 @@
                   <td width = "15%">\
                     ' + $('#id_fppp :selected').text() + '\
                   </td>\
-                  <td width = "15%">\
+                  <td width = "25%">\
                     ' + $('#item_code :selected').text() + '\
                   </td>\
-                  <td align="center" width = "10%">\
+                  <td align="center" width = "7%">\
                     ' + $('#qty').val() + '\
                   </td>\
                   <td width = "15%">\
@@ -229,10 +229,10 @@
                   <td width = "15%">\
                     ' + $('#id_gudang :selected').text() + '\
                   </td>\
-                  <td align="center" width = "10%">\
+                  <td align="center" width = "7%">\
                     ' + $('#produksi').val() + '\
                   </td>\
-                  <td align="center" width = "10%">\
+                  <td align="center" width = "7%">\
                     ' + $('#lapangan').val() + '\
                   </td>\
                   <td width = "15%" align= "center">\
