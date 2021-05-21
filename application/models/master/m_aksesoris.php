@@ -22,10 +22,21 @@ class M_aksesoris extends CI_Model
         $this->db->update('master_item', $data);
     }
 
+    public function updateItemCode($data = '')
+    {
+        $this->db->where('item_code', $data['item_code']);
+        $this->db->update('master_item', $data);
+    }
+
     public function deleteData($id = '')
     {
         $this->db->where('id', $id);
         $this->db->delete('master_item');
+    }
+    public function cekMasterAksesoris($item_code = '')
+    {
+        $this->db->where('item_code', $item_code);
+        return $this->db->get('master_item')->num_rows();
     }
 }
 

@@ -23,7 +23,7 @@ class Aksesoris extends CI_Controller
         $content   = "<div id='divsubcontent'></div>";
         $header    = "Form Master aksesoris";
         $subheader = "aksesoris";
-        $buttons[] = button('jQuery.facebox.close()', 'Tutup', 'btn btn-default', 'data-dismiss="modal"');
+        $buttons[]          = button('jQuery.facebox.close()', 'Tutup', 'btn btn-default', 'data-dismiss="modal"');
         echo $this->fungsi->parse_modal($header, $subheader, $content, $buttons, "");
         if ($param == 'base') {
             $this->fungsi->run_js('load_silent("master/aksesoris/show_addForm/","#divsubcontent")');
@@ -39,7 +39,7 @@ class Aksesoris extends CI_Controller
         $this->load->library('form_validation');
         $config = array(
             array(
-                'field'    => 'aksesoris',
+                'field' => 'aksesoris',
                 'label' => 'item_code',
                 'rules' => 'required'
             )
@@ -65,12 +65,12 @@ class Aksesoris extends CI_Controller
         $this->load->library('form_validation');
         $config = array(
             array(
-                'field'    => 'id',
+                'field' => 'id',
                 'label' => 'wes mbarke',
                 'rules' => ''
             ),
             array(
-                'field'    => 'aksesoris',
+                'field' => 'aksesoris',
                 'label' => 'aksesoris',
                 'rules' => 'required'
             )
@@ -138,19 +138,21 @@ class Aksesoris extends CI_Controller
             );
 
             $data = array(
-                'id_jenis_item'       => 2,
-                'item_code'       => $rowData[0][0],
-                'deskripsi'    => $rowData[0][1],
-                'divisi'            => $rowData[0][2],
-                'supplier'        => $rowData[0][3],
-                'deskripsi_supplier'   => $rowData[0][4],
-                'satuan'            => $rowData[0][5],
-                'stock_akhir_bulan' => $rowData[0][6],
-                'created'          => date('Y-m-d H:i:s'),
+                'id_jenis_item'      => 2,
+                'item_code'          => $rowData[0][0],
+                'deskripsi'          => $rowData[0][1],
+                'divisi'             => $rowData[0][2],
+                'supplier'           => $rowData[0][3],
+                'deskripsi_supplier' => $rowData[0][4],
+                'satuan'             => $rowData[0][5],
+                'stock_akhir_bulan'  => $rowData[0][6],
+                'created'            => date('Y-m-d H:i:s'),
             );
-            $cek_item = $this->m_fppp->cekMasterAksesoris($data['item_code']);
+            $cek_item = $this->m_aksesoris->cekMasterAksesoris($data['item_code']);
             if ($cek_item < 1) {
-                $this->m_fppp->simpanItem($data);
+                $this->m_aksesoris->insertData($data);
+            } else {
+                $this->m_aksesoris->updateItemCode($data);
             }
         }
         $data['msg'] = "Data Disimpan....";
