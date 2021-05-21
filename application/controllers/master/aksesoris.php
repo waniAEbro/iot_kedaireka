@@ -9,6 +9,7 @@ class Aksesoris extends CI_Controller
         parent::__construct();
         $this->fungsi->restrict();
         $this->load->model('master/m_aksesoris');
+        $this->load->library(array('PHPExcel', 'PHPExcel/IOFactory'));
     }
 
     public function index()
