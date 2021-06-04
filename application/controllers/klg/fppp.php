@@ -26,7 +26,7 @@ class Fppp extends CI_Controller
 	{
 		$this->fungsi->check_previleges('fppp');
 		$data['param_tab'] = '1';
-		$data['divisi'] = $this->db->get('master_divisi');
+		$data['divisi']    = $this->db->get('master_divisi');
 		$this->load->view('klg/fppp/v_fppp_tab', $data);
 	}
 
@@ -34,7 +34,7 @@ class Fppp extends CI_Controller
 	{
 		$this->fungsi->check_previleges('fppp');
 		$data['param_tab'] = $param;
-		$data['divisi'] = $this->db->get('master_divisi');
+		$data['divisi']    = $this->db->get('master_divisi');
 		$this->load->view('klg/fppp/v_fppp_tab', $data);
 	}
 
@@ -72,79 +72,56 @@ class Fppp extends CI_Controller
 		$data['brand']              = get_options($this->db->get('master_brand'), 'id', 'brand', true);
 		$data['item']               = get_options($this->db->get('master_barang'), 'id', 'barang', true);
 		$data['param']              = $param;
-		// $this->load->view('klg/fppp/v_fppp_add', $data);
-		if ($param == 1) {
-			$data['no_fppp'] = str_pad($this->m_fppp->getNoFppp($param), 3, '0', STR_PAD_LEFT) . '/FPPP/RSD' . '/' . date('m') . '/' . date('Y');
-			// $this->load->view('klg/fppp/v_fppp_add_residential', $data);
-		} elseif ($param == 2) {
-			$data['no_fppp'] = str_pad($this->m_fppp->getNoFppp($param), 3, '0', STR_PAD_LEFT) . '/FPPP/ASTRAL' . '/' . date('m') . '/' . date('Y');
-			// $this->load->view('klg/fppp/v_fppp_add_astral', $data);
-		} elseif ($param == 3) {
-			$data['no_fppp'] = str_pad($this->m_fppp->getNoFppp($param), 3, '0', STR_PAD_LEFT) . '/FPPP/BRAVO' . '/' . date('m') . '/' . date('Y');
-			// $this->load->view('klg/fppp/v_fppp_add_bravo', $data);
-		} else {
-			$data['no_fppp'] = str_pad($this->m_fppp->getNoFppp($param), 3, '0', STR_PAD_LEFT) . '/FPPP/HRB' . '/' . date('m') . '/' . date('Y');
-			// $this->load->view('klg/fppp/v_fppp_add_hrb', $data);
-		}
+		$nama_divisi          = $this->m_fppp->getRowNamaDivisi($param)->divisi_pendek;
+		$data['no_fppp']            = str_pad($this->m_fppp->getNoFppp($param), 3, '0', STR_PAD_LEFT) . '/FPPP/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
 		$this->load->view('klg/fppp/v_fppp_add', $data);
 	}
 
 	public function savefppp($value = '')
 	{
 		$this->fungsi->check_previleges('fppp');
-		$id_div = $this->input->post('id_divisi');
-		if ($id_div == 1) {
-			$nofppp = str_pad($this->m_fppp->getNoFppp(1), 3, '0', STR_PAD_LEFT) . '/FPPP/RSD' . '/' . date('m') . '/' . date('Y');
-		} elseif ($id_div == 2) {
-			$nofppp = str_pad($this->m_fppp->getNoFppp(2), 3, '0', STR_PAD_LEFT) . '/FPPP/ASTRAL' . '/' . date('m') . '/' . date('Y');
-		} elseif ($id_div == 3) {
-			$nofppp = str_pad($this->m_fppp->getNoFppp(3), 3, '0', STR_PAD_LEFT) . '/FPPP/BRAVO' . '/' . date('m') . '/' . date('Y');
-		} else {
-			$nofppp = str_pad($this->m_fppp->getNoFppp(4), 3, '0', STR_PAD_LEFT) . '/FPPP/HRB' . '/' . date('m') . '/' . date('Y');
-		}
+		$param       = $this->input->post('id_divisi');
+		$nama_divisi = $this->m_fppp->getRowNamaDivisi($param)->divisi_pendek;
+		$nofppp      = str_pad($this->m_fppp->getNoFppp($param), 3, '0', STR_PAD_LEFT) . '/FPPP/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
+
 		$datapost = array(
 			'id_divisi'              => $this->input->post('id_divisi'),
 			'tgl_pembuatan'          => $this->input->post('tgl_pembuatan'),
+			'no_fppp'                => $nofppp,
 			'applicant'              => $this->input->post('applicant'),
 			'applicant_sector'       => $this->input->post('applicant_sector'),
 			'authorized_distributor' => $this->input->post('authorized_distributor'),
-			'no_fppp'                => $nofppp,
-			// 'type_fppp'              => $this->input->post('type_fppp'),
-			// 'nama_aplikator'         => $this->input->post('nama_aplikator'),
-			'nama_proyek'   => $this->input->post('nama_proyek'),
-			'tahap'         => $this->input->post('tahap'),
-			'alamat_proyek' => $this->input->post('alamat_proyek'),
-			// 'alamat_pengiriman'      => $this->input->post('alamat_pengiriman'),
-			'status_order' => $this->input->post('status_order'),
-			// 'system'                 => $this->input->post('system'),
-			// 'pekerjaan'              => $this->input->post('pekerjaan'),
-			// 'no_sph'                 => $this->input->post('no_sph'),
-			// 'no_vo'                  => $this->input->post('no_vo'),
-			// 'no_quo'                 => $this->input->post('no_quo'),
-			'note_ncr'      => $this->input->post('note_ncr'),
-			'id_pengiriman' => $this->input->post('id_pengiriman'),
-			// 'waktu_produksi'         => $this->input->post('waktu_produksi'),
-			'deadline_pengiriman'   => $this->input->post('deadline_pengiriman'),
-			'id_metode_pengiriman'  => $this->input->post('id_metode_pengiriman'),
-			'id_penggunaan_peti'    => $this->input->post('id_penggunaan_peti'),
-			'id_penggunaan_sealant' => $this->input->post('id_penggunaan_sealant'),
-			'id_warna_aluminium'    => $this->input->post('id_warna_aluminium'),
-			'id_warna_lainya'       => $this->input->post('id_warna_lainya'),
-			'warna_sealant'         => $this->input->post('warna_sealant'),
-			'ditujukan_kepada'      => $this->input->post('ditujukan_kepada'),
-			'no_telp_tujuan'        => $this->input->post('no_telp_tujuan'),
-			'pengiriman_ekspedisi'  => $this->input->post('pengiriman_ekspedisi'),
-			'alamat_ekspedisi'      => $this->input->post('alamat_ekspedisi'),
-			'sales'                 => $this->input->post('sales'),
-			'pic_project'           => $this->input->post('pic_project'),
-			'admin_koordinator'     => $this->input->post('admin_koordinator'),
-			'id_kaca'               => $this->input->post('id_kaca'),
-			'jenis_kaca'            => $this->input->post('jenis_kaca'),
-			'id_logo_kaca'          => $this->input->post('id_logo_kaca'),
-			'jumlah_gambar'         => $this->input->post('jumlah_gambar'),
-			'note'                  => $this->input->post('note'),
-			'created'               => date('Y-m-d H:i:s'),
-			'updated'               => date('Y-m-d H:i:s'),
+			'type_fppp'            => $this->input->post('type_fppp'),
+			'tahap_produksi'            => $this->input->post('tahap_produksi'),
+			'nama_aplikator'            => $this->input->post('nama_aplikator'),
+			'nama_proyek'            => $this->input->post('nama_proyek'),
+			'tahap'                  => $this->input->post('tahap'),
+			'alamat_proyek'          => $this->input->post('alamat_proyek'),
+			'status_order'           => $this->input->post('status_order'),
+			'note_ncr'               => $this->input->post('note_ncr'),
+			'id_pengiriman'          => $this->input->post('id_pengiriman'),
+			'deadline_pengiriman'    => $this->input->post('deadline_pengiriman'),
+			'id_metode_pengiriman'   => $this->input->post('id_metode_pengiriman'),
+			'id_penggunaan_peti'     => $this->input->post('id_penggunaan_peti'),
+			'id_penggunaan_sealant'  => $this->input->post('id_penggunaan_sealant'),
+			'id_warna_aluminium'     => $this->input->post('id_warna_aluminium'),
+			'id_warna_lainya'        => $this->input->post('id_warna_lainya'),
+			'warna_sealant'          => $this->input->post('warna_sealant'),
+			'ditujukan_kepada'       => $this->input->post('ditujukan_kepada'),
+			'no_telp_tujuan'         => $this->input->post('no_telp_tujuan'),
+			'pengiriman_ekspedisi'   => $this->input->post('pengiriman_ekspedisi'),
+			'alamat_ekspedisi'       => $this->input->post('alamat_ekspedisi'),
+			'sales'                  => $this->input->post('sales'),
+			'pic_project'            => $this->input->post('pic_project'),
+			'admin_koordinator'      => $this->input->post('admin_koordinator'),
+			'id_kaca'                => $this->input->post('id_kaca'),
+			'jenis_kaca'             => $this->input->post('jenis_kaca'),
+			'id_logo_kaca'           => $this->input->post('id_logo_kaca'),
+			'jumlah_gambar'          => $this->input->post('jumlah_gambar'),
+			'jumlah_unit'            => $this->input->post('jumlah_unit'),
+			'note'                   => $this->input->post('note'),
+			'created'                => date('Y-m-d H:i:s'),
+			'updated'                => date('Y-m-d H:i:s'),
 		);
 		$this->m_fppp->insertfppp($datapost);
 		$data['id'] = $this->db->insert_id();
@@ -171,7 +148,10 @@ class Fppp extends CI_Controller
 		if (!$this->upload->do_upload('lampiran')) {
 			$err = $this->upload->display_errors('<span class="error_string">', '</span>');
 		} else {
-			$data = $this->upload->data();
+			$data        = $this->upload->data();
+			$param       = $this->input->post('id_divisi');
+			$nama_divisi = $this->m_fppp->getRowNamaDivisi($param)->divisi_pendek;
+			$nofppp      = str_pad($this->m_fppp->getNoFppp($param), 3, '0', STR_PAD_LEFT) . '/FPPP/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
 
 			$datapost = array(
 				'id_divisi'              => $this->input->post('id_divisi'),
@@ -179,46 +159,36 @@ class Fppp extends CI_Controller
 				'applicant'              => $this->input->post('applicant'),
 				'applicant_sector'       => $this->input->post('applicant_sector'),
 				'authorized_distributor' => $this->input->post('authorized_distributor'),
-				'no_fppp'                => $this->input->post('no_fppp'),
-				// 'type_fppp'              => $this->input->post('type_fppp'),
-				// 'nama_aplikator'         => $this->input->post('nama_aplikator'),
-				'nama_proyek'   => $this->input->post('nama_proyek'),
-				'tahap'         => $this->input->post('tahap'),
-				'alamat_proyek' => $this->input->post('alamat_proyek'),
-				// 'alamat_pengiriman'      => $this->input->post('alamat_pengiriman'),
-				'status_order' => $this->input->post('status_order'),
-				// 'system'                 => $this->input->post('system'),
-				// 'pekerjaan'              => $this->input->post('pekerjaan'),
-				// 'no_sph'                 => $this->input->post('no_sph'),
-				// 'no_vo'                  => $this->input->post('no_vo'),
-				// 'no_quo'                 => $this->input->post('no_quo'),
-				'note_ncr'      => $this->input->post('note_ncr'),
-				'id_pengiriman' => $this->input->post('id_pengiriman'),
-				// 'waktu_produksi'         => $this->input->post('waktu_produksi'),
-				'deadline_pengiriman'   => $this->input->post('deadline_pengiriman'),
-				'id_metode_pengiriman'  => $this->input->post('id_metode_pengiriman'),
-				'id_penggunaan_peti'    => $this->input->post('id_penggunaan_peti'),
-				'id_penggunaan_sealant' => $this->input->post('id_penggunaan_sealant'),
-				'id_warna_aluminium'    => $this->input->post('id_warna_aluminium'),
-				'id_warna_lainya'       => $this->input->post('id_warna_lainya'),
-				'warna_sealant'         => $this->input->post('warna_sealant'),
-				'ditujukan_kepada'      => $this->input->post('ditujukan_kepada'),
-				'no_telp_tujuan'        => $this->input->post('no_telp_tujuan'),
-				'pengiriman_ekspedisi'  => $this->input->post('pengiriman_ekspedisi'),
-				'alamat_ekspedisi'      => $this->input->post('alamat_ekspedisi'),
-				'sales'                 => $this->input->post('sales'),
-				'pic_project'           => $this->input->post('pic_project'),
-				'admin_koordinator'     => $this->input->post('admin_koordinator'),
-				'id_kaca'               => $this->input->post('id_kaca'),
-				'jenis_kaca'            => $this->input->post('jenis_kaca'),
-				'id_logo_kaca'          => $this->input->post('id_logo_kaca'),
-				'jumlah_gambar'         => $this->input->post('jumlah_gambar'),
-				'lampiran'              => substr($upload_folder, 2) . $data['file_name'],
-				'lampiran_lain'         => $this->input->post('lampiran_lain'),
-				'attachment'            => $this->input->post('attachment'),
-				'note'                  => $this->input->post('note'),
-				'created'               => date('Y-m-d H:i:s'),
-				'updated'               => date('Y-m-d H:i:s'),
+				'no_fppp'                => $nofppp,
+				'nama_proyek'            => $this->input->post('nama_proyek'),
+				'tahap'                  => $this->input->post('tahap'),
+				'alamat_proyek'          => $this->input->post('alamat_proyek'),
+				'status_order'           => $this->input->post('status_order'),
+				'note_ncr'               => $this->input->post('note_ncr'),
+				'id_pengiriman'          => $this->input->post('id_pengiriman'),
+				'deadline_pengiriman'    => $this->input->post('deadline_pengiriman'),
+				'id_metode_pengiriman'   => $this->input->post('id_metode_pengiriman'),
+				'id_penggunaan_peti'     => $this->input->post('id_penggunaan_peti'),
+				'id_penggunaan_sealant'  => $this->input->post('id_penggunaan_sealant'),
+				'id_warna_aluminium'     => $this->input->post('id_warna_aluminium'),
+				'id_warna_lainya'        => $this->input->post('id_warna_lainya'),
+				'warna_sealant'          => $this->input->post('warna_sealant'),
+				'ditujukan_kepada'       => $this->input->post('ditujukan_kepada'),
+				'no_telp_tujuan'         => $this->input->post('no_telp_tujuan'),
+				'pengiriman_ekspedisi'   => $this->input->post('pengiriman_ekspedisi'),
+				'alamat_ekspedisi'       => $this->input->post('alamat_ekspedisi'),
+				'sales'                  => $this->input->post('sales'),
+				'pic_project'            => $this->input->post('pic_project'),
+				'admin_koordinator'      => $this->input->post('admin_koordinator'),
+				'id_kaca'                => $this->input->post('id_kaca'),
+				'jenis_kaca'             => $this->input->post('jenis_kaca'),
+				'id_logo_kaca'           => $this->input->post('id_logo_kaca'),
+				'jumlah_gambar'          => $this->input->post('jumlah_gambar'),
+				'jumlah_unit'            => $this->input->post('jumlah_unit'),
+				'lampiran'               => substr($upload_folder, 2) . $data['file_name'],
+				'note'                   => $this->input->post('note'),
+				'created'                => date('Y-m-d H:i:s'),
+				'updated'                => date('Y-m-d H:i:s'),
 			);
 			$this->m_fppp->insertfppp($datapost);
 			$data['id'] = $this->db->insert_id();
@@ -255,12 +225,12 @@ class Fppp extends CI_Controller
 	public function getDetailTabel($value = '')
 	{
 		$this->fungsi->check_previleges('fppp');
-		$id_fppp  = $this->input->post('id_fppp');
-		$jml_tgl_kosong  = $this->m_fppp->getjmltglkosong($id_fppp);
-		$jml_pasang_bst = $this->m_fppp->getjml_pasang_bst($id_fppp);
+		$id_fppp          = $this->input->post('id_fppp');
+		$jml_tgl_kosong   = $this->m_fppp->getjmltglkosong($id_fppp);
+		$jml_pasang_bst   = $this->m_fppp->getjml_pasang_bst($id_fppp);
 		$data['jml_tgl_kosong'] = $jml_tgl_kosong;
 		$data['jml_pasang_bst'] = $jml_pasang_bst;
-		$data['detail'] = $this->m_fppp->getDataDetailTabel($id_fppp);
+		$data['detail']         = $this->m_fppp->getDataDetailTabel($id_fppp);
 		echo json_encode($data);
 	}
 
@@ -370,21 +340,21 @@ class Fppp extends CI_Controller
 				}
 			} else if ($jenis_bom == 2) {
 				$data = array(
-					'id_fppp'            => $id_fppp,
-					'item_code'          => $rowData[0][0],
-					'deskripsi'          => $rowData[0][1],
-					'qty'                => $rowData[0][2],
-					'keterangan'         => $rowData[0][3],
+					'id_fppp'    => $id_fppp,
+					'item_code'  => $rowData[0][0],
+					'deskripsi'  => $rowData[0][1],
+					'qty'        => $rowData[0][2],
+					'keterangan' => $rowData[0][3],
 				);
 				$cek_item_bom = $this->m_fppp->cekBomAksesoris($id_fppp, $data['item_code']);
 				if ($cek_item_bom < 1) {
 					$this->db->insert("data_fppp_bom_aksesoris", $data);
 				}
 				$obj = array(
-					'id_jenis_item'      => 2,
-					'item_code'          => $rowData[0][0],
-					'deskripsi'          => $rowData[0][1],
-					'created'            => date('Y-m-d H:i:s'),
+					'id_jenis_item' => 2,
+					'item_code'     => $rowData[0][0],
+					'deskripsi'     => $rowData[0][1],
+					'created'       => date('Y-m-d H:i:s'),
 				);
 				$cek_item = $this->m_fppp->cekMasterAksesoris($obj['item_code']);
 				if ($cek_item < 1) {
@@ -587,7 +557,7 @@ class Fppp extends CI_Controller
 				'id_logo_kaca'          => $this->input->post('id_logo_kaca'),
 				'jumlah_gambar'         => $this->input->post('jumlah_gambar'),
 				'lampiran'              => substr($upload_folder, 2) . $data['file_name'],
-				'lampiran_lain'         => $this->input->post('lampiran_lain'),
+				'jumlah_unit'           => $this->input->post('jumlah_unit'),
 				'attachment'            => $this->input->post('attachment'),
 				'note'                  => $this->input->post('note'),
 				'created'               => date('Y-m-d H:i:s'),

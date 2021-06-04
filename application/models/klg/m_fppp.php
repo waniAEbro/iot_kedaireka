@@ -205,6 +205,12 @@ class M_fppp extends CI_Model
 
 		return $total;
 	}
+
+	public function getRowNamaDivisi($id)
+	{
+		$this->db->where('id', $id);
+		return $this->db->get('master_divisi')->row();
+	}
 }
 
 /* End of file m_fppp.php */

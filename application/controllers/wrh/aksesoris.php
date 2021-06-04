@@ -181,7 +181,7 @@ class Aksesoris extends CI_Controller
         $data['alamat_proyek']       = $this->m_aksesoris->getRowFppp($id)->alamat_proyek;
         $data['sales']               = $this->m_aksesoris->getRowFppp($id)->sales;
         $data['deadline_pengiriman'] = $this->m_aksesoris->getRowFppp($id)->deadline_pengiriman;
-        $data['divisi']              = get_options($this->db->get('master_divisi'), 'id', 'divisi', true);
+        $data['divisi']              = get_options($this->db->get('master_divisi_stock'), 'id', 'divisi', true);
         $data['gudang']              = get_options($this->db->get('master_gudang'), 'id', 'gudang', true);
         $this->load->view('wrh/aksesoris/v_aksesoris_detail_bom', $data);
     }

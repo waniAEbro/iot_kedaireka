@@ -10,20 +10,52 @@
   <div class="box-body">
     <form method="post" class="form-vertical form_faktur" role="form">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
           <div class="form-group">
             <label>Divisi</label>
             <?= form_dropdown('id_divisi_tampil', $divisi, $param, 'id="id_divisi_tampil" class="form-control" disabled') ?>
             <input type="hidden" id="id_divisi" value="<?= $param ?>" class="form-control" autocomplete="off">
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>No FPPP</label>
+            <input type="text" id="no_fppp" class="form-control" value="<?= $no_fppp ?>" autocomplete="off" readonly>
+          </div>
+        </div>
+        <div class="col-md-4">
           <div class="form-group">
             <label>Tanggal Pembuatan</label>
             <input type="text" id="tgl_pembuatan" value="<?= date('Y-m-d') ?>" class="form-control" autocomplete="off" readonly>
           </div>
         </div>
       </div>
+      <?php
+      if ($param == 2) {
+      ?>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Type FPPP</label>
+              <input type="text" id="type_fppp" class="form-control" autocomplete="off">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Tahap Produksi</label>
+              <input type="text" id="tahap_produksi" class="form-control" autocomplete="off">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Nama Aplikator</label>
+              <input type="text" id="nama_aplikator" class="form-control" autocomplete="off">
+            </div>
+          </div>
+        </div>
+      <?php
+      }
+      ?>
       <div class="row">
         <div class="col-md-4">
           <div class="form-group">
@@ -44,20 +76,15 @@
           </div>
         </div>
       </div>
+
       <div class="row">
-        <div class="col-md-4">
-          <div class="form-group">
-            <label>No FPPP</label>
-            <input type="text" id="no_fppp" class="form-control" value="<?= $no_fppp ?>" autocomplete="off" readonly>
-          </div>
-        </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
           <div class="form-group">
             <label>Nama Proyek</label>
             <input type="text" id="nama_proyek" class="form-control">
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
           <div class="form-group">
             <label>Tahap</label>
             <input type="text" id="tahap" class="form-control">
@@ -72,6 +99,7 @@
           </div>
         </div>
       </div>
+
       <div class="row">
         <div class="col-md-4">
           <div class="form-group">
@@ -92,6 +120,7 @@
           </div>
         </div>
       </div>
+
       <div class="row">
         <div class="col-md-4">
           <div class="form-group">
@@ -112,6 +141,7 @@
           </div>
         </div>
       </div>
+
       <div class="row">
         <div class="col-md-4">
           <div class="form-group">
@@ -157,7 +187,7 @@
       <div class="row">
         <div class="col-md-4">
           <div class="form-group">
-            <label>Pengiriman Ekspedisi</label>
+            <label>Nama Ekspedisi</label>
             <input type="text" id="pengiriman_ekspedisi" class="form-control">
           </div>
         </div>
@@ -169,7 +199,7 @@
         </div>
         <div class="col-md-4">
           <div class="form-group">
-            <label>Sales</label>
+            <label>Nama Sales Marketing</label>
             <input type="text" id="sales" class="form-control">
           </div>
         </div>
@@ -178,7 +208,7 @@
       <div class="row">
         <div class="col-md-4">
           <div class="form-group">
-            <label>PIC Project</label>
+            <label>Nama PIC Project</label>
             <input type="text" id="pic_project" class="form-control">
           </div>
         </div>
@@ -197,22 +227,28 @@
       </div>
 
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-3">
           <div class="form-group">
             <label>Jenis Kaca</label>
             <input type="text" id="jenis_kaca" class="form-control">
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
           <div class="form-group">
             <label>Logo Kaca</label>
             <?= form_dropdown('id_logo_kaca', $logo_kaca, '', 'id="id_logo_kaca" class="form-control"') ?>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
           <div class="form-group">
-            <label>Jumlah Gambar</label>
+            <label>Jumlah Opening</label>
             <input type="text" id="jumlah_gambar" class="form-control">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label>Jumlah Unit</label>
+            <input type="text" id="jumlah_unit" class="form-control">
           </div>
         </div>
       </div>
@@ -369,10 +405,13 @@
         data: {
           id_divisi: $("#id_divisi").val(),
           tgl_pembuatan: $("#tgl_pembuatan").val(),
+          no_fppp: $("#no_fppp").val(),
           applicant: $("#applicant").val(),
           applicant_sector: $("#applicant_sector").val(),
           authorized_distributor: $("#authorized_distributor").val(),
-          no_fppp: $("#no_fppp").val(),
+          type_fppp: $("#type_fppp").val(),
+          tahap_produksi: $("#tahap_produksi").val(),
+          nama_aplikator: $("#nama_aplikator").val(),
           nama_proyek: $("#nama_proyek").val(),
           tahap: $("#tahap").val(),
           alamat_proyek: $("#alamat_proyek").val(),
@@ -397,8 +436,7 @@
           jenis_kaca: $("#jenis_kaca").val(),
           id_logo_kaca: $("#id_logo_kaca").val(),
           jumlah_gambar: $("#jumlah_gambar").val(),
-          lampiran_lain: $("#lampiran_lain").val(),
-          attachment: $("#attachment").val(),
+          jumlah_unit: $("#jumlah_unit").val(),
           note: CKEDITOR.instances.keterangan.getData(),
 
         },
@@ -426,10 +464,13 @@
         data: {
           id_divisi: $("#id_divisi").val(),
           tgl_pembuatan: $("#tgl_pembuatan").val(),
+          no_fppp: $("#no_fppp").val(),
           applicant: $("#applicant").val(),
           applicant_sector: $("#applicant_sector").val(),
           authorized_distributor: $("#authorized_distributor").val(),
-          no_fppp: $("#no_fppp").val(),
+          type_fppp: $("#type_fppp").val(),
+          tahap_produksi: $("#tahap_produksi").val(),
+          nama_aplikator: $("#nama_aplikator").val(),
           nama_proyek: $("#nama_proyek").val(),
           tahap: $("#tahap").val(),
           alamat_proyek: $("#alamat_proyek").val(),
@@ -454,8 +495,7 @@
           jenis_kaca: $("#jenis_kaca").val(),
           id_logo_kaca: $("#id_logo_kaca").val(),
           jumlah_gambar: $("#jumlah_gambar").val(),
-          lampiran_lain: $("#lampiran_lain").val(),
-          attachment: $("#attachment").val(),
+          jumlah_unit: $("#jumlah_unit").val(),
           note: CKEDITOR.instances.keterangan.getData(),
         },
         success: function(data) {
