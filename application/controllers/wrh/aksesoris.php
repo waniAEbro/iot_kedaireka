@@ -311,7 +311,7 @@ class Aksesoris extends CI_Controller
         $data['item_code'] = $this->m_aksesoris->getData();
         $data['fppp']      = $this->db->get('data_fppp');
         $data['supplier']  = $this->db->get('master_supplier');
-        $data['divisi']    = $this->db->get('master_divisi');
+        $data['divisi']    = $this->db->get('master_divisi_stock');
         $data['gudang']    = $this->db->get('master_gudang');
 
         $this->load->view('wrh/aksesoris/v_aksesoris_bon_out', $data);
