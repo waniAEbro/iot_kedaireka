@@ -6,7 +6,7 @@
                 <h3 class="box-title">Saved BON Manual</h3>
                 <div class="form-group">
                     <label class="control-label">Tgl Proses:</label>
-                    <input type="text" value="<?= date('Y-m-d') ?>" class="form-control" id="tgl_proses" readonly>
+                    <input type="text" id="tgl_proses" data-date-format="yyyy-mm-dd" value="<?= date('Y-m-d') ?>" class="form-control datepicker" autocomplete="off">
                 </div>
             </div>
             <div class="box-body">
