@@ -283,12 +283,17 @@ class M_aksesoris extends CI_Model
         return $this->db->get('data_aksesoris_out dao');
     }
 
-    public function getOptionAksesoris($id_fppp = '')
+    public function optionGetNamaProyek($id_fppp = '')
     {
-        $this->db->where('id_fppp', $id_fppp);
-        // $this->db->group_by(array('kode_item', 'kode_tipe'));
-        $this->db->group_by('item_code');
-        return $this->db->get('data_fppp_bom_aksesoris')->result();
+        $this->db->where('id', $id_fppp);
+        $this->db->group_by('nama_proyek');
+        return $this->db->get('data_fppp')->result();
+    }
+
+    public function optionGetNoFppp($nama_proyek = '')
+    {
+        $this->db->where('nama_proyek', $nama_proyek);
+        return $this->db->get('data_fppp')->result();
     }
 
     public function deleteItemBonManual($id)
@@ -400,6 +405,9 @@ class M_aksesoris extends CI_Model
         $object = array('kunci' => 2);
         $this->db->where('id', $id);
         $this->db->update('data_aksesoris_out', $object);
+        $obj = array('wh_aksesoris' => 2);
+        $this->db->where('id', $id);
+        $this->db->update('data_fppp', $obj);
     }
 
     public function bukakunciStockOut($id)
@@ -415,6 +423,9 @@ class M_aksesoris extends CI_Model
         $this->db->where('id_fppp', $id);
         $this->db->where('is_manual', 1);
         $this->db->update('data_aksesoris_out', $object);
+        $obj = array('wh_aksesoris' => 3);
+        $this->db->where('id', $id);
+        $this->db->update('data_fppp', $obj);
     }
 
     public function getfpppaksesoris()
@@ -477,6 +488,16 @@ class M_aksesoris extends CI_Model
         $this->db->where('dao.id_fppp', $id);
 
         return $this->db->get('data_aksesoris_out dao');
+    }
+    public function updateAlamatProyek($id_fppp, $data)
+    {
+        $this->db->where('id', $id_fppp);
+        $this->db->update('data_fppp', $data);
+    }
+    public function getNamaProyekList()
+    {
+        $this->db->group_by('nama_proyek');
+        return $this->db->get('data_fppp');
     }
 }
 

@@ -22,15 +22,25 @@
                         <th>Tgl Pembuatan</th>
                         <th>No FPPP</th>
                         <th>Nama Proyek</th>
+                        <th>Deadline Sales</th>
+                        <th>Deadline Workshop</th>
+                        <th>Keterangan</th>
                     </thead>
                     <tbody>
                         <?php
                         $i = 1;
                         foreach ($fppp->result() as $row) :
+                            if ($row->wh_aksesoris == 1) {
+                                $wh_aksesoris = "PROSES";
+                            } else if ($row->wh_aksesoris == 2) {
+                                $wh_aksesoris = "PARSIAL";
+                            } else {
+                                $wh_aksesoris = "LUNAS";
+                            }
                         ?>
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
-                                <td><?= $row->tgl_pembuatan ?></td>
+                                <td align="center"><?= $row->tgl_pembuatan ?></td>
                                 <td><?= $row->no_fppp ?><br><?= button('load_silent("wrh/aksesoris/detailbom/' . $row->id . '","#content")', 'Stock Out', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Add Stock Out"'); ?>
                                     <?php
                                     if ($row->no_sj != '') { ?>
@@ -44,6 +54,9 @@
                                     ?>
                                 </td>
                                 <td><?= $row->nama_proyek ?></td>
+                                <td align="center"><?= $row->deadline_pengiriman ?></td>
+                                <td align="center"><?= $row->deadline_workshop ?></td>
+                                <td align="center"><?= $wh_aksesoris ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

@@ -211,6 +211,54 @@ class M_fppp extends CI_Model
 		$this->db->where('id', $id);
 		return $this->db->get('master_divisi')->row();
 	}
+
+	public function tot_order($value = '')
+	{
+		$res = $this->db->get('data_fppp_bom_aksesoris');
+		$data = array();
+		$nilai = 0;
+		foreach ($res->result() as $key) {
+			if (isset($data[$key->id_fppp])) {
+				$nilai = $data[$key->id_fppp];
+			} else {
+				$nilai = 0;
+			}
+			$data[$key->id_fppp] = $key->qty + $nilai;
+		}
+		return $data;
+	}
+
+	public function tot_out($value = '')
+	{
+		$res = $this->db->get('data_aksesoris_out');
+		$data = array();
+		$nilai = 0;
+		foreach ($res->result() as $key) {
+			if (isset($data[$key->id_fppp])) {
+				$nilai = $data[$key->id_fppp];
+			} else {
+				$nilai = 0;
+			}
+			$data[$key->id_fppp] = $key->qty + $nilai;
+		}
+		return $data;
+	}
+
+	public function tot_kunci($value = '')
+	{
+		$res = $this->db->get('data_aksesoris_out');
+		$data = array();
+		$nilai = 0;
+		foreach ($res->result() as $key) {
+			if (isset($data[$key->id_fppp])) {
+				$nilai = $data[$key->id_fppp];
+			} else {
+				$nilai = 0;
+			}
+			$data[$key->id_fppp] = $key->qty + $nilai;
+		}
+		return $data;
+	}
 }
 
 /* End of file m_fppp.php */

@@ -92,17 +92,17 @@
                                     <td align="center"><?= $row->qty_bom ?></td>
                                     <td align="center"><span id="qty_kurang_<?= $row->id ?>"><?= $kurang ?></span></td>
                                     <td align="center"><span id="qty_gudang_<?= $row->id ?>"><?= $totalgudang ?></span></td>
-                                    <td align="center"><span id="qty_bom_<?= $row->id ?>" class='edit'><?= $row->qty ?></span>
+                                    <td style="background-color:#ffd45e" align="center"><span id="qty_bom_<?= $row->id ?>" class='edit'><?= $row->qty ?></span>
                                         <input type='text' class='txtedit' data-id='<?= $row->id ?>' data-field='qty' id='<?= $row->id ?>' value='<?= $row->qty ?>'>
                                     </td>
-                                    <td>
+                                    <td style="background-color:#ffd45e">
                                         <?= form_dropdown('id_divisi', $divisi,  $row->id_divisi, 'id="id_divisi_' . $row->id . '" onchange="divisi(' . $row->id . ')" data-id="' . $row->id . '" data-field="id_divisi" class="form-control"') ?>
                                     </td>
-                                    <td>
+                                    <td style="background-color:#ffd45e">
                                         <?= form_dropdown('id_gudang', $gudang,  $row->id_gudang, 'id="id_gudang_' . $row->id . '" onchange="gudang(' . $row->id . ')" data-id="' . $row->id . '" data-field="id_gudang" class="form-control"') ?>
                                     </td>
-                                    <td align="center"><input type="checkbox" id="produksi" data-id='<?= $row->id ?>' data-field='produksi' class="checkbox" <?= $cekproduksi ?>></td>
-                                    <td align="center"><input type="checkbox" id="lapangan" data-id='<?= $row->id ?>' data-field='lapangan' class="checkbox" <?= $ceklapangan ?>></td>
+                                    <td style="background-color:#ffd45e" align="center"><input type="checkbox" id="produksi" data-id='<?= $row->id ?>' data-field='produksi' class="checkbox" <?= $cekproduksi ?>></td>
+                                    <td style="background-color:#ffd45e" align="center"><input type="checkbox" id="lapangan" data-id='<?= $row->id ?>' data-field='lapangan' class="checkbox" <?= $ceklapangan ?>></td>
                                     <td align="center"><?php echo button_confirm("Anda yakin mengunci item " . $row->item_code . "?", "wrh/aksesoris/kuncidetailbom/" . $id_fppp . "/" . $row->id, "#content", 'Kunci', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Kunci"'); ?></td>
                                 </tr>
                             <?php

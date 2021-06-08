@@ -45,7 +45,7 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>Alamat Proyek</label>
-                        <input type="text" class="form-control" id="alamat_proyek" value="<?= $fppp->alamat_proyek ?>" readonly>
+                        <input type="text" class="form-control" id="alamat_proyek" value="<?= $fppp->alamat_proyek ?>">
                     </div>
                 </div>
             </div>
@@ -107,6 +107,7 @@
                     'no_sj': $('#no_sj').val(),
                     'id_fppp': $('#id_fppp').val(),
                     'id_divisi': $('#id_divisi').val(),
+                    'alamat_proyek': $('#alamat_proyek').val(),
                     'tgl_kirim': $('#tgl_kirim').val(),
                     'sopir': $('#sopir').val(),
                     'no_polisi': $('#no_polisi').val(),

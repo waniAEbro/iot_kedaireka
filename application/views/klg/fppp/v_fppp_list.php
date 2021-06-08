@@ -70,6 +70,7 @@
                         <th>PENGIRIMAN</th>
                         <th>WARNA ALUMINIUM</th>
                         <th>JUMLAH GAMBAR / OPENING</th>
+                        <th>JUMLAH UNIT</th>
                         <th>TGL PEMBUATAN</th>
                         <th>DEADLINE SALES</th>
                         <th>DEADLINE WORKSHOP</th>
@@ -77,7 +78,7 @@
                         <th>STATUS ORDER</th>
 
                         <th>ACC/FA</th>
-                        <th>WH aluminium</th>
+                        <th>WH ALUMINIUM</th>
                         <th>WH AKSESORIS</th>
                         <th>WH KACA</th>
                         <th>WS UPDATE</th>
@@ -92,6 +93,29 @@
                             $ada = 1;
                             $dw = ($row->deadline_workshop != '') ? $row->deadline_workshop : '-';
                             $acc_fa = ($row->acc_fa != '') ? $row->acc_fa : '-';
+                            if ($row->wh_aluminium == 1) {
+                                $wh_aluminium = "PROSES";
+                            } else if ($row->wh_aluminium == 2) {
+                                $wh_aluminium = "PARSIAL";
+                            } else {
+                                $wh_aluminium = "LUNAS";
+                            }
+                            if ($row->wh_aksesoris == 1) {
+                                $wh_aksesoris = "PROSES";
+                            } else if ($row->wh_aksesoris == 2) {
+                                $wh_aksesoris = "PARSIAL";
+                            } else {
+                                $wh_aksesoris = "LUNAS";
+                            }
+                            if ($row->wh_kaca == 1) {
+                                $wh_kaca = "PROSES";
+                            } else if ($row->wh_kaca == 2) {
+                                $wh_kaca = "PARSIAL";
+                            } else {
+                                $wh_kaca = "LUNAS";
+                            }
+
+
                         ?>
                             <tr>
                                 <?php if ($ada > 0) { ?>
@@ -108,19 +132,21 @@
                                 <td><?= $row->pengiriman ?></td>
                                 <td><?= $row->warna_aluminium ?></td>
                                 <td><?= $row->jumlah_gambar ?></td>
-                                <td><?= $row->tgl_pembuatan ?></td>
-                                <td><?= $row->deadline_pengiriman ?></td>
-                                <td align="center"><span id="wrk_<?= $row->id ?>" class='edit'><?= $dw ?></span>
+                                <td><?= $row->jumlah_unit ?></td>
+                                <td align="center"><?= $row->tgl_pembuatan ?></td>
+                                <td align="center"><?= $row->deadline_pengiriman ?></td>
+                                <td style="background-color:#ffd45e" align="center"><span id="wrk_<?= $row->id ?>" class='edit'><?= $dw ?></span>
                                     <input type='date' class='txtedit' data-id='<?= $row->id ?>' data-field='deadline_workshop' id='<?= $row->id ?>' value='<?= $row->deadline_workshop ?>'>
                                 </td>
                                 <td><?= $row->alamat_proyek ?></td>
                                 <td><?= $row->status_order ?></td>
-                                <td><span id="acc_fa_<?= $row->id ?>" class='edit'><?= $acc_fa ?></span>
+                                <td style="background-color:#ffd45e"><span id="acc_fa_<?= $row->id ?>" class='edit'><?= $acc_fa ?></span>
                                     <input type='text' class='txtedit' data-id='<?= $row->id ?>' data-field='acc_fa' id='<?= $row->id ?>' value='<?= $row->acc_fa ?>'>
+
                                 </td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td><?= $wh_aluminium ?></td>
+                                <td><?= $wh_aksesoris ?></td>
+                                <td><?= $wh_kaca ?></td>
                                 <td><span id="ws_update_<?= $row->id ?>"><?= $row->ws_update ?></span></td>
                                 <td><span id="status_<?= $row->id ?>"><?= $row->status ?></span></td>
                                 <td align="center">
@@ -245,18 +271,18 @@
                 })
                 .done(function(data) {
                     // console.log(data.detail);
-                    $ws_updt = data['jml_tgl_kosong'];
-                    if ($ws_updt == 0) {
-                        $('#ws_update_' + id_fppp).html('LUNAS');
-                    } else {
-                        $('#ws_update_' + id_fppp).html('PARSIAL');
-                    }
-                    $status = data['jml_pasang_bst'];
-                    if ($status == 0) {
-                        $('#status_' + id_fppp).html('LUNAS');
-                    } else {
-                        $('#status_' + id_fppp).html('PARSIAL');
-                    }
+                    // $ws_updt = data['jml_tgl_kosong'];
+                    // if ($ws_updt == 0) {
+                    //     $('#ws_update_' + id_fppp).html('LUNAS');
+                    // } else {
+                    //     $('#ws_update_' + id_fppp).html('PARSIAL');
+                    // }
+                    // $status = data['jml_pasang_bst'];
+                    // if ($status == 0) {
+                    //     $('#status_' + id_fppp).html('LUNAS');
+                    // } else {
+                    //     $('#status_' + id_fppp).html('PARSIAL');
+                    // }
                     for (var i = 0; i < data.detail.length; i++) {
                         var no = i + 1;
                         var color = "white";
@@ -510,7 +536,11 @@
 
                     // Update viewing value and display it
                     $(element).prev('.edit').show();
-                    $(element).prev('.edit').text(value);
+                    if (value == '') {
+                        $(element).prev('.edit').text('-');
+                    } else {
+                        $(element).prev('.edit').text(value);
+                    }
                     $.growl.notice({
                         title: 'Sukses',
                         message: "Data Updated!"

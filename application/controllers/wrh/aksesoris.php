@@ -256,15 +256,17 @@ class Aksesoris extends CI_Controller
     {
         $this->fungsi->check_previleges('aksesoris');
         $this->m_aksesoris->finishStockOut($id);
-        $data['id_fppp']           = $id;
+        $data['id_fppp']             = $id;
         $data['total_out']           = $this->m_aksesoris->getTotalItemFpppOut();
-        $data['bom_aksesoris']     = $this->m_aksesoris->getBomAksesoris($id);
-        $data['no_fppp']           = $this->m_aksesoris->getRowFppp($id)->no_fppp;
-        $data['nama_proyek']       = $this->m_aksesoris->getRowFppp($id)->nama_proyek;
-        $data['alamat_pengiriman'] = $this->m_aksesoris->getRowFppp($id)->alamat_pengiriman;
-        $data['warna']             = $this->m_aksesoris->getRowFppp($id)->warna_sealant;
-        $data['divisi']            = get_options($this->db->get('master_divisi'), 'id', 'divisi', true);
-        $data['gudang']            = get_options($this->db->get('master_gudang'), 'id', 'gudang', true);
+        $data['bom_aksesoris']       = $this->m_aksesoris->getBomAksesoris($id);
+        $data['no_fppp']             = $this->m_aksesoris->getRowFppp($id)->no_fppp;
+        $data['nama_proyek']         = $this->m_aksesoris->getRowFppp($id)->nama_proyek;
+        $data['alamat_proyek']       = $this->m_aksesoris->getRowFppp($id)->alamat_proyek;
+        $data['sales']               = $this->m_aksesoris->getRowFppp($id)->sales;
+        $data['deadline_pengiriman'] = $this->m_aksesoris->getRowFppp($id)->deadline_pengiriman;
+        $data['divisi']              = get_options($this->db->get('master_divisi_stock'), 'id', 'divisi', true);
+        $data['gudang']              = get_options($this->db->get('master_gudang'), 'id', 'gudang', true);
+
         $this->fungsi->message_box("finish Berhasil", "success");
         $this->load->view('wrh/aksesoris/v_aksesoris_detail_bom', $data);
     }
@@ -310,6 +312,7 @@ class Aksesoris extends CI_Controller
         $this->fungsi->check_previleges('aksesoris');
         $data['item_code'] = $this->m_aksesoris->getData();
         $data['fppp']      = $this->db->get('data_fppp');
+        $data['nama_proyek']      = $this->m_aksesoris->getNamaProyekList();
         $data['supplier']  = $this->db->get('master_supplier');
         $data['divisi']    = $this->db->get('master_divisi_stock');
         $data['gudang']    = $this->db->get('master_gudang');
@@ -341,11 +344,22 @@ class Aksesoris extends CI_Controller
         echo json_encode($respon);
     }
 
-    public function optionAksesoris()
+    public function optionGetNamaProyek()
     {
         $this->fungsi->check_previleges('aksesoris');
         $id_fppp  = $this->input->post('fppp');
-        $get_data = $this->m_aksesoris->getOptionAksesoris($id_fppp);
+        $get_data = $this->m_aksesoris->optionGetNamaProyek($id_fppp);
+        $data     = array();
+        foreach ($get_data as $val) {
+            $data[] = $val;
+        }
+        echo json_encode($data, JSON_PRETTY_PRINT);
+    }
+    public function optionGetNoFppp()
+    {
+        $this->fungsi->check_previleges('aksesoris');
+        $nama_proyek  = $this->input->post('nama_proyek');
+        $get_data = $this->m_aksesoris->optionGetNoFppp($nama_proyek);
         $data     = array();
         foreach ($get_data as $val) {
             $data[] = $val;
@@ -553,13 +567,15 @@ class Aksesoris extends CI_Controller
     public function simpanSj()
     {
         $no_sj     = $this->input->post('no_sj');
-        $id_fppp   = $this->input->post('id_fppp$id_fppp');
+        $id_fppp   = $this->input->post('id_fppp');
         $id_divisi = $this->input->post('id_divisi');
+        $alamat_proyek = $this->input->post('alamat_proyek');
         $tgl_kirim = $this->input->post('tgl_kirim');
         $sopir     = $this->input->post('sopir');
         $no_polisi = $this->input->post('no_polisi');
         $si        = $this->input->post('si');
-
+        $objt = array('alamat_proyek'     => $alamat_proyek,);
+        $this->m_aksesoris->updateAlamatProyek($id_fppp, $objt);
         $obj = array(
             'no_sj'     => $no_sj,
             'id_fppp'   => $id_fppp,

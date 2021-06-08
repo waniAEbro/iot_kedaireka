@@ -14,6 +14,7 @@
                     <thead>
                         <tr>
                             <th width="15%">FPPP</th>
+                            <th width="15%">Nama Proyek</th>
                             <th width="25%">Item</th>
                             <th width="7%">Qty</th>
                             <th width="15%">Divisi</th>
@@ -36,6 +37,13 @@
                                 </select>
                                 <br>
                                 Nama Proyek: <span id="txt_nama_proyek"></span>
+                            </td>
+                            <td><select id="nama_proyek" name="nama_proyek" class="form-control" style="width:100%" required>
+                                    <option value="">-- Select --</option>
+                                    <?php foreach ($nama_proyek->result() as $valap) : ?>
+                                        <option value="<?= $valap->nama_proyek ?>"><?= $valap->nama_proyek ?></option>
+                                    <?php endforeach; ?>
+                                </select>
                             </td>
                             <td><select id="item_code" name="item_code" class="form-control" style="width:100%" required>
                                     <option value="">-- Select --</option>
@@ -144,14 +152,15 @@
         });
     });
 
-    $("select[name=id_fpppzz]").change(function() {
-        var x = $("select[name=item_code]");
+    $("select[name=id_fppp]").change(function() {
+        // $('#nama_proyek').val('').trigger('change');
+        var x = $("select[name=nama_proyek]");
         if ($(this).val() == "") {
             x.html("<option>-- Select --</option>");
         } else {
             z = "<option>-- Select --</option>";
             $.ajax({
-                url: "<?= site_url('wrh/aksesoris/optionAksesoris') ?>",
+                url: "<?= site_url('wrh/aksesoris/optionGetNamaProyek') ?>",
                 dataType: "json",
                 type: "POST",
                 data: {
@@ -161,10 +170,36 @@
 
                     var z = "<option value=''>-- Select --</option>";
                     for (var i = 0; i < data.length; i++) {
-                        z += '<option value=' + data[i].item_code + '>' + data[i].item_code + ' - ' + data[i].deskripsi + '</option>';
+                        z += '<option value=' + data[i].nama_proyek + '>' + data[i].nama_proyek + '</option>';
                     }
                     x.html(z);
-                    // $('#tipe').val('').trigger('change');
+                }
+            });
+
+        }
+    });
+
+    $("select[name=nama_proyek]").change(function() {
+        // $('#id_fppp').val('').trigger('change');
+        var x = $("select[name=id_fppp]");
+        if ($(this).val() == "") {
+            x.html("<option>-- Select --</option>");
+        } else {
+            z = "<option>-- Select --</option>";
+            $.ajax({
+                url: "<?= site_url('wrh/aksesoris/optionGetNoFppp') ?>",
+                dataType: "json",
+                type: "POST",
+                data: {
+                    "nama_proyek": $(this).val()
+                },
+                success: function(data) {
+
+                    var z = "<option value=''>-- Select --</option>";
+                    for (var i = 0; i < data.length; i++) {
+                        z += '<option value=' + data[i].id + '>' + data[i].no_fppp + '</option>';
+                    }
+                    x.html(z);
                 }
             });
 
