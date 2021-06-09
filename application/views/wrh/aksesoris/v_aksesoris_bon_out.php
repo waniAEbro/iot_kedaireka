@@ -5,6 +5,10 @@
             <div class="box-header with-border">
                 <h3 class="box-title">Saved BON Manual</h3>
                 <div class="form-group">
+                    <label class="control-label">No FORM:</label>
+                    <input type="text" id="no_form" value="<?= $no_form ?>" class="form-control" autocomplete="off" readonly>
+                </div>
+                <div class="form-group">
                     <label class="control-label">Tgl Proses:</label>
                     <input type="text" id="tgl_proses" data-date-format="yyyy-mm-dd" value="<?= date('Y-m-d') ?>" class="form-control datepicker" autocomplete="off">
                 </div>
@@ -232,6 +236,7 @@
                     url: "<?= site_url('wrh/aksesoris/savebonmanual') ?>",
                     dataType: 'json',
                     data: {
+                        'no_form': $('#no_form').val(),
                         'tgl_proses': $('#tgl_proses').val(),
                         'id_fppp': $('#id_fppp').val(),
                         'item_code': $('#item_code').val(),

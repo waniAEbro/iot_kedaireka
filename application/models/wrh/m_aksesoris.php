@@ -271,7 +271,15 @@ class M_aksesoris extends CI_Model
         return $data;
     }
 
-    public function getBomAksesorisManual()
+    public function getBonManual()
+    {
+        $this->db->join('data_fppp df', 'df.id = dbo.id_fppp', 'left');
+        $this->db->select('dbo.*,df.no_fppp,df.nama_proyek');
+
+        return $this->db->get('data_bon_out dbo');
+    }
+
+    public function getBomAksesorisManual($id_bon)
     {
         $this->db->join('master_divisi md', 'md.id = dao.id_divisi', 'left');
         $this->db->join('master_gudang mg', 'mg.id = dao.id_gudang', 'left');
@@ -279,6 +287,8 @@ class M_aksesoris extends CI_Model
         $this->db->join('data_fppp df', 'df.id = dao.id_fppp', 'left');
 
         $this->db->where('dao.is_manual', 2);
+        $this->db->where('id_bon', $id_bon);
+
         $this->db->select('dao.*,mi.deskripsi,md.divisi,mg.gudang,df.no_fppp,df.nama_proyek');
         return $this->db->get('data_aksesoris_out dao');
     }
@@ -498,6 +508,39 @@ class M_aksesoris extends CI_Model
     {
         $this->db->group_by('nama_proyek');
         return $this->db->get('data_fppp');
+    }
+
+    public function getNoFormBon()
+    {
+        $year  = date('Y');
+        $month = date('m');
+        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(created,"%m")', $month);
+        $this->db->order_by('id', 'desc');
+        $this->db->limit(1);
+        $hasil = $this->db->get('data_bon_out');
+        if ($hasil->num_rows() > 0) {
+
+            $string = $hasil->row()->no_form;
+            $arr    = explode("/", $string, 2);
+            $first  = $arr[0];
+            $no     = $first + 1;
+            return $no;
+        } else {
+            return '1';
+        }
+    }
+
+    public function getIdBon($id_fppp, $tgl_proses)
+    {
+        $this->db->where('id_fppp', $id_fppp);
+        $this->db->where('tgl_proses', $tgl_proses);
+        return $this->db->get('data_bon_out');
+    }
+
+    public function saveDataBon($object)
+    {
+        $this->db->insert('data_bon_out', $object);
     }
 }
 

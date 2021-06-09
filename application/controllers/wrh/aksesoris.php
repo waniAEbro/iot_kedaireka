@@ -302,9 +302,16 @@ class Aksesoris extends CI_Controller
     public function bon_manual()
     {
         $this->fungsi->check_previleges('aksesoris');
-        $data['bom_aksesoris'] = $this->m_aksesoris->getBomAksesorisManual();
+        $data['bom_aksesoris'] = $this->m_aksesoris->getBonManual();
 
         $this->load->view('wrh/aksesoris/v_aksesoris_bon_manual_list', $data);
+    }
+    public function getBonDetailTabel($value = '')
+    {
+        $this->fungsi->check_previleges('aksesoris');
+        $id_bon          = $this->input->post('id_bon');
+        $data['detail']         = $this->m_fppp->getBomAksesorisManual($id_bon);
+        echo json_encode($data);
     }
 
     public function bon_manual_add()
@@ -316,6 +323,7 @@ class Aksesoris extends CI_Controller
         $data['supplier']  = $this->db->get('master_supplier');
         $data['divisi']    = $this->db->get('master_divisi_stock');
         $data['gudang']    = $this->db->get('master_gudang');
+        $data['no_form']    = str_pad($this->m_aksesoris->getNoFormBon(), 3, '0', STR_PAD_LEFT) . '/FORM/' . date('m') . '/' . date('Y');
 
         $this->load->view('wrh/aksesoris/v_aksesoris_bon_out', $data);
     }
@@ -367,9 +375,22 @@ class Aksesoris extends CI_Controller
         echo json_encode($data, JSON_PRETTY_PRINT);
     }
 
-    public function savebonmanual($value = '')
+    public function savebonmanual()
     {
         $this->fungsi->check_previleges('aksesoris');
+        $obj = array(
+            'tgl_proses' => $this->input->post('tgl_proses'),
+            'id_fppp'    => $this->input->post('id_fppp'),
+            'no_form'  => $this->input->post('no_form'),
+            'created'    => date('Y-m-d H:i:s'),
+        );
+        $cek_ada = $this->m_aksesoris->getIdBon()->num_rows();
+        if ($cek_ada > 0) {
+            $id = $this->m_aksesoris->getIdBon()->row()->id;
+        } else {
+            $this->m_aksesoris->saveDataBon($obj);
+            $id = $this->db->insert_id($obj);
+        }
 
         $datapost = array(
             'tgl_proses' => $this->input->post('tgl_proses'),
@@ -382,8 +403,11 @@ class Aksesoris extends CI_Controller
             'lapangan'   => $this->input->post('lapangan'),
             'created'    => date('Y-m-d H:i:s'),
             'is_manual'  => 2,
+            'id_bon'  => $id,
         );
         $this->m_aksesoris->insertstokout($datapost);
+
+
 
         $this->fungsi->catat($datapost, "Menyimpan detail stock-in sbb:", true);
         $data['msg'] = "stock Disimpan";
