@@ -202,7 +202,7 @@ class M_aksesoris extends CI_Model
     public function getBomAksesoris($id)
     {
         $this->db->join('master_item mi', 'mi.item_code = dao.item_code', 'left');
-        $this->db->join('master_divisi md', 'md.id = dao.id_divisi', 'left');
+        $this->db->join('master_divisi_stock md', 'md.id = dao.id_divisi', 'left');
         $this->db->join('master_gudang mg', 'mg.id = dao.id_gudang', 'left');
         $this->db->where('dao.id_fppp', $id);
         $this->db->where('dao.is_manual', 1);
@@ -290,7 +290,7 @@ class M_aksesoris extends CI_Model
         $this->db->where('id_bon', $id_bon);
 
         $this->db->select('dao.*,mi.deskripsi,md.divisi,mg.gudang,df.no_fppp,df.nama_proyek');
-        return $this->db->get('data_aksesoris_out dao');
+        return $this->db->get('data_aksesoris_out dao')->result();
     }
 
     public function optionGetNamaProyek($id_fppp = '')
@@ -496,6 +496,28 @@ class M_aksesoris extends CI_Model
         $this->db->where('dao.lapangan', 1);
         $this->db->select('mi.*,dao.qty,df.*,md.divisi');
         $this->db->where('dao.id_fppp', $id);
+
+        return $this->db->get('data_aksesoris_out dao');
+    }
+    public function getHeaderSendCetakBon($id, $id_bon)
+    {
+        $this->db->join('data_fppp df', 'df.id = dbo.id_fppp', 'left');
+        $this->db->join('master_divisi md', 'md.id = df.id_divisi', 'left');
+        $this->db->where('dbo.id_fppp', $id);
+        $this->db->where('dbo.id', $id_bon);
+        return $this->db->get('data_bon_out dbo');
+    }
+
+    public function getDataDetailSendCetakBon($id, $id_bon)
+    {
+        $this->db->join('data_fppp df', 'df.id = dao.id_fppp', 'left');
+        $this->db->join('master_divisi md', 'md.id = df.id_divisi', 'left');
+        $this->db->join('master_item mi', 'mi.item_code = dao.item_code', 'left');
+
+        $this->db->where('dao.lapangan', 1);
+        $this->db->select('mi.*,dao.qty,df.*,md.divisi');
+        $this->db->where('dao.id_fppp', $id);
+        $this->db->where('dao.id_bon', $id_bon);
 
         return $this->db->get('data_aksesoris_out dao');
     }

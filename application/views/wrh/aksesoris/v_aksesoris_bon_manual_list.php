@@ -52,7 +52,7 @@
                                 <td><?= $row->no_fppp ?></td>
                                 <td><?= $row->nama_proyek ?></td>
                                 <td><?= $row->no_form ?></td>
-                                <td></td>
+                                <td><a target="_blank" href="<?= base_url('wrh/aksesoris/cetakSjBon'); ?>/<?= $row->id_fppp ?>/<?= $row->id ?>" class="btn btn-xs btn-warning">Cetak Surat Jalan</a></td>
                             </tr>
                         <?php $i++;
                         endforeach; ?>

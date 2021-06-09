@@ -44,7 +44,7 @@
                                 <td><?= $row->no_fppp ?><br><?= button('load_silent("wrh/aksesoris/detailbom/' . $row->id . '","#content")', 'Stock Out', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Add Stock Out"'); ?>
                                     <?php
                                     if ($row->no_sj != '') { ?>
-                                        <a target="_blank" href="<?= base_url('wrh/aksesoris/cetakSj'); ?>/<?= $row->id ?>" onclick="simpantgl(<?= $row->id ?>)" class="btn btn-xs btn-warning">Cetak Surat Jalan</a>
+                                        <a target="_blank" href="<?= base_url('wrh/aksesoris/cetakSj'); ?>/<?= $row->id ?>" class="btn btn-xs btn-warning">Cetak Surat Jalan</a>
                                     <?php
                                     } else {
 

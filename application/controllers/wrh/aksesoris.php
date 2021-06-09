@@ -310,7 +310,7 @@ class Aksesoris extends CI_Controller
     {
         $this->fungsi->check_previleges('aksesoris');
         $id_bon          = $this->input->post('id_bon');
-        $data['detail']         = $this->m_fppp->getBomAksesorisManual($id_bon);
+        $data['detail']         = $this->m_aksesoris->getBomAksesorisManual($id_bon);
         echo json_encode($data);
     }
 
@@ -384,9 +384,9 @@ class Aksesoris extends CI_Controller
             'no_form'  => $this->input->post('no_form'),
             'created'    => date('Y-m-d H:i:s'),
         );
-        $cek_ada = $this->m_aksesoris->getIdBon()->num_rows();
+        $cek_ada = $this->m_aksesoris->getIdBon($this->input->post('id_fppp'), $this->input->post('tgl_proses'))->num_rows();
         if ($cek_ada > 0) {
-            $id = $this->m_aksesoris->getIdBon()->row()->id;
+            $id = $this->m_aksesoris->getIdBon($this->input->post('id_fppp'), $this->input->post('tgl_proses'))->row()->id;
         } else {
             $this->m_aksesoris->saveDataBon($obj);
             $id = $this->db->insert_id($obj);
@@ -624,6 +624,16 @@ class Aksesoris extends CI_Controller
             'detail' => $this->m_aksesoris->getDataDetailSendCetak($id)->result(),
         );
         $this->load->view('wrh/aksesoris/v_aksesoris_cetak_sj', $data);
+    }
+
+    public function cetakSjBon($id_fppp, $id_bon)
+    {
+        $data = array(
+            'id'     => $id_fppp,
+            'header' => $this->m_aksesoris->getHeaderSendCetakBon($id_fppp, $id_bon)->row(),
+            'detail' => $this->m_aksesoris->getDataDetailSendCetakBon($id_fppp, $id_bon)->result(),
+        );
+        $this->load->view('wrh/aksesoris/v_aksesoris_cetak_sj_bon', $data);
     }
 
 
