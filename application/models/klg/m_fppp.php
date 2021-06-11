@@ -103,6 +103,30 @@ class M_fppp extends CI_Model
 		$this->db->update('data_fppp_detail', $data);
 	}
 
+	public function get_ket_ws_update($id_fppp)
+	{
+		$this->db->where('pengiriman', '');
+		$this->db->where('id_fppp', $id_fppp);
+		$cek = $this->db->get('data_fppp_detail')->num_rows();
+		if ($cek == 0) {
+			return 'LUNAS';
+		} else {
+			return 'PARSIAL';
+		}
+	}
+
+	public function get_ket_site_update($id_fppp)
+	{
+		$this->db->where('pasang', '');
+		$this->db->where('id_fppp', $id_fppp);
+		$cek = $this->db->get('data_fppp_detail')->num_rows();
+		if ($cek == 0) {
+			return 'LUNAS';
+		} else {
+			return 'PARSIAL';
+		}
+	}
+
 	public function bom_aluminium($id_fppp)
 	{
 		$this->db->join('data_fppp df', 'df.id = db.id_fppp', 'left');

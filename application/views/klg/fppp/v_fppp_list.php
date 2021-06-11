@@ -303,31 +303,31 @@
                         var no = i + 1;
                         var color = "white";
                         var fontcolor = "black";
-                        if (data.detail[i].produksi_aluminium == null || data.detail[i].bst == '0000-00-00') {
+                        if (data.detail[i].produksi_aluminium == null) {
                             var produksi_aluminium = '';
                         } else {
                             var produksi_aluminium = data.detail[i].produksi_aluminium;
                         }
 
-                        if (data.detail[i].qc_cek == null || data.detail[i].bst == '0000-00-00') {
+                        if (data.detail[i].qc_cek == null) {
                             var qc_cek = '';
                         } else {
                             var qc_cek = data.detail[i].qc_cek;
                         }
 
-                        if (data.detail[i].pengiriman == null || data.detail[i].bst == '0000-00-00') {
+                        if (data.detail[i].pengiriman == null) {
                             var pengiriman = '';
                         } else {
                             var pengiriman = data.detail[i].pengiriman;
                         }
 
-                        if (data.detail[i].pasang == null || data.detail[i].bst == '0000-00-00') {
+                        if (data.detail[i].pasang == null) {
                             var pasang = '';
                         } else {
                             var pasang = data.detail[i].pasang;
                         }
 
-                        if (data.detail[i].bst == null || data.detail[i].bst == '0000-00-00') {
+                        if (data.detail[i].bst == null) {
                             var bst = '';
                         } else {
                             var bst = data.detail[i].bst;

@@ -250,7 +250,8 @@ class Fppp extends CI_Controller
 			if ($nilai != '' || $nilai != '0000-00-00') {
 				$obj = array('ws_update' => 2);
 				$this->m_fppp->updateFppp($id_fppp, $obj);
-				$respon['txt_ws_update'] = 'PARSIAL';
+				$ket_ws_update = $this->m_fppp->get_ket_ws_update($id_fppp);
+				$respon['txt_ws_update'] = $ket_ws_update;
 			} else {
 				$respon['txt_ws_update'] = '-';
 			}
@@ -259,7 +260,8 @@ class Fppp extends CI_Controller
 			if ($nilai != '' || $nilai != '0000-00-00') {
 				$obj = array('site_update' => 2);
 				$this->m_fppp->updateFppp($id_fppp, $obj);
-				$respon['txt_site_update'] = 'PARSIAL';
+				$ket_site_update = $this->m_fppp->get_ket_site_update($id_fppp);
+				$respon['txt_site_update'] = $ket_site_update;
 			} else {
 				$respon['txt_site_update'] = '-';
 			}
