@@ -100,19 +100,35 @@
                             } else {
                                 $wh_aluminium = "LUNAS";
                             }
-                            if ($row->wh_aksesoris == 1) {
-                                $wh_aksesoris = "PROSES";
+                            if ($row->wh_aksesoris == 3) {
+                                $wh_aksesoris = "LUNAS";
                             } else if ($row->wh_aksesoris == 2) {
                                 $wh_aksesoris = "PARSIAL";
                             } else {
-                                $wh_aksesoris = "LUNAS";
+                                $wh_aksesoris = "PROSES";
                             }
-                            if ($row->wh_kaca == 1) {
-                                $wh_kaca = "PROSES";
+                            if ($row->wh_kaca == 3) {
+                                $wh_kaca = "LUNAS";
                             } else if ($row->wh_kaca == 2) {
                                 $wh_kaca = "PARSIAL";
                             } else {
-                                $wh_kaca = "LUNAS";
+                                $wh_kaca = "PROSES";
+                            }
+
+                            if ($row->ws_update == 3) {
+                                $ws_update = "LUNAS";
+                            } else if ($row->ws_update == 2) {
+                                $ws_update = "PARSIAL";
+                            } else {
+                                $ws_update = "PROSES";
+                            }
+
+                            if ($row->site_update == 3) {
+                                $site_update = "LUNAS";
+                            } else if ($row->site_update == 2) {
+                                $site_update = "PARSIAL";
+                            } else {
+                                $site_update = "PROSES";
                             }
 
 
@@ -147,8 +163,8 @@
                                 <td><?= $wh_aluminium ?></td>
                                 <td><?= $wh_aksesoris ?></td>
                                 <td><?= $wh_kaca ?></td>
-                                <td><span id="ws_update_<?= $row->id ?>"><?= $row->ws_update ?></span></td>
-                                <td><span id="status_<?= $row->id ?>"><?= $row->status ?></span></td>
+                                <td><span id="ws_update_<?= $row->id ?>"><?= $ws_update ?></span></td>
+                                <td><span id="site_update_<?= $row->id ?>"><?= $site_update ?></span></td>
                                 <td align="center">
                                     <?php if ($row->lampiran != '') { ?>
                                         <a target="_blank" href="<?= base_url($row->lampiran); ?>" class="btn btn-xs btn-danger">Lampiran</a>
@@ -287,31 +303,31 @@
                         var no = i + 1;
                         var color = "white";
                         var fontcolor = "black";
-                        if (data.detail[i].produksi_aluminium == null) {
+                        if (data.detail[i].produksi_aluminium == null || data.detail[i].bst == '0000-00-00') {
                             var produksi_aluminium = '';
                         } else {
                             var produksi_aluminium = data.detail[i].produksi_aluminium;
                         }
 
-                        if (data.detail[i].qc_cek == null) {
+                        if (data.detail[i].qc_cek == null || data.detail[i].bst == '0000-00-00') {
                             var qc_cek = '';
                         } else {
                             var qc_cek = data.detail[i].qc_cek;
                         }
 
-                        if (data.detail[i].pengiriman == null) {
+                        if (data.detail[i].pengiriman == null || data.detail[i].bst == '0000-00-00') {
                             var pengiriman = '';
                         } else {
                             var pengiriman = data.detail[i].pengiriman;
                         }
 
-                        if (data.detail[i].pasang == null) {
+                        if (data.detail[i].pasang == null || data.detail[i].bst == '0000-00-00') {
                             var pasang = '';
                         } else {
                             var pasang = data.detail[i].pasang;
                         }
 
-                        if (data.detail[i].bst == null) {
+                        if (data.detail[i].bst == null || data.detail[i].bst == '0000-00-00') {
                             var bst = '';
                         } else {
                             var bst = data.detail[i].bst;
@@ -338,6 +354,7 @@
                     infoTable += '</table>';
                     row.child(infoTable).show();
                     tr.addClass('shown');
+
                 })
                 .fail(function() {
                     console.log("error");
@@ -434,6 +451,9 @@
                 $("#p_bt_" + id + "").hide();
                 $("#p_ft_" + id + "").show();
                 $("#p_ft_" + id + "").html(datasaved.nilai);
+                if (datasaved.txt_ws_update != '-') {
+                    $("#ws_update_" + datasaved.id_fppp + "").html(datasaved.txt_ws_update);
+                }
             });
     }
 
@@ -463,6 +483,9 @@
                 $("#pas_bt_" + id + "").hide();
                 $("#pas_ft_" + id + "").show();
                 $("#pas_ft_" + id + "").html(datasaved.nilai);
+                if (datasaved.txt_site_update != '-') {
+                    $("#site_update_" + datasaved.id_fppp + "").html(datasaved.txt_site_update);
+                }
             });
     }
 

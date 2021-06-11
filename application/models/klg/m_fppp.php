@@ -85,6 +85,18 @@ class M_fppp extends CI_Model
 		}
 	}
 
+	public function getIdFppp($id)
+	{
+		$this->db->where('id', $id);
+		return $this->db->get('data_fppp_detail')->row()->id_fppp;
+	}
+
+	public function updateFppp($id, $data)
+	{
+		$this->db->where('id', $id);
+		$this->db->update('data_fppp', $data);
+	}
+
 	public function updateDetail($id, $data)
 	{
 		$this->db->where('id', $id);

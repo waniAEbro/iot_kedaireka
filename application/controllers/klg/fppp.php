@@ -240,21 +240,37 @@ class Fppp extends CI_Controller
 		$id    = $this->input->post('id');
 		$kolom = $this->input->post('kolom');
 		$nilai = $this->input->post('nilai');
+		$id_fppp = $this->m_fppp->getIdFppp($id);
 		if ($kolom == 1) {
 			$datapost = array('produksi_aluminium' => $nilai,);
 		} elseif ($kolom == 2) {
 			$datapost = array('qc_cek' => $nilai,);
 		} elseif ($kolom == 3) {
 			$datapost = array('pengiriman' => $nilai,);
+			if ($nilai != '' || $nilai != '0000-00-00') {
+				$obj = array('ws_update' => 2);
+				$this->m_fppp->updateFppp($id_fppp, $obj);
+				$respon['txt_ws_update'] = 'PARSIAL';
+			} else {
+				$respon['txt_ws_update'] = '-';
+			}
 		} elseif ($kolom == 4) {
 			$datapost = array('pasang' => $nilai,);
+			if ($nilai != '' || $nilai != '0000-00-00') {
+				$obj = array('site_update' => 2);
+				$this->m_fppp->updateFppp($id_fppp, $obj);
+				$respon['txt_site_update'] = 'PARSIAL';
+			} else {
+				$respon['txt_site_update'] = '-';
+			}
 		} else {
 			$datapost = array('bst' => $nilai,);
 		}
 		$this->m_fppp->updateDetail($id, $datapost);
-		$arr     = explode("/", $nilai);
+
 		$respon['msg']   = "sukses update";
 		$respon['nilai'] = $nilai;
+		$respon['id_fppp'] = $id_fppp;
 		echo json_encode($respon);
 	}
 
