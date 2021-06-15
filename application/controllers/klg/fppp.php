@@ -247,23 +247,27 @@ class Fppp extends CI_Controller
 			$datapost = array('qc_cek' => $nilai,);
 		} elseif ($kolom == 3) {
 			$datapost = array('pengiriman' => $nilai,);
-			if ($nilai != '' || $nilai != '0000-00-00') {
-				$obj = array('ws_update' => 2);
-				$this->m_fppp->updateFppp($id_fppp, $obj);
-				$ket_ws_update = $this->m_fppp->get_ket_ws_update($id_fppp);
-				$respon['txt_ws_update'] = $ket_ws_update;
-			} else {
+			if ($nilai == '' || $nilai == '0000-00-00') {
 				$respon['txt_ws_update'] = '-';
+			} else {
+
+				$ket_ws_update = $this->m_fppp->get_ket_ws_update($id_fppp);
+				$ket_ws_update_sts = $this->m_fppp->get_ket_ws_update_sts($id_fppp);
+				$respon['txt_ws_update'] = $ket_ws_update;
+				$obj = array('ws_update' => $ket_ws_update_sts);
+				$this->m_fppp->updateFppp($id_fppp, $obj);
 			}
 		} elseif ($kolom == 4) {
 			$datapost = array('pasang' => $nilai,);
-			if ($nilai != '' || $nilai != '0000-00-00') {
-				$obj = array('site_update' => 2);
-				$this->m_fppp->updateFppp($id_fppp, $obj);
-				$ket_site_update = $this->m_fppp->get_ket_site_update($id_fppp);
-				$respon['txt_site_update'] = $ket_site_update;
-			} else {
+			if ($nilai == '' || $nilai == '0000-00-00') {
 				$respon['txt_site_update'] = '-';
+			} else {
+
+				$ket_site_update = $this->m_fppp->get_ket_site_update($id_fppp);
+				$ket_site_update_sts = $this->m_fppp->get_ket_site_update_sts($id_fppp);
+				$respon['txt_site_update'] = $ket_site_update;
+				$obj = array('site_update' => $ket_site_update_sts);
+				$this->m_fppp->updateFppp($id_fppp, $obj);
 			}
 		} else {
 			$datapost = array('bst' => $nilai,);

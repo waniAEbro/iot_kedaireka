@@ -115,6 +115,18 @@ class M_fppp extends CI_Model
 		}
 	}
 
+	public function get_ket_ws_update_sts($id_fppp)
+	{
+		$this->db->where('pengiriman', '');
+		$this->db->where('id_fppp', $id_fppp);
+		$cek = $this->db->get('data_fppp_detail')->num_rows();
+		if ($cek == 0) {
+			return 3;
+		} else {
+			return 2;
+		}
+	}
+
 	public function get_ket_site_update($id_fppp)
 	{
 		$this->db->where('pasang', '');
@@ -124,6 +136,18 @@ class M_fppp extends CI_Model
 			return 'LUNAS';
 		} else {
 			return 'PARSIAL';
+		}
+	}
+
+	public function get_ket_site_update_sts($id_fppp)
+	{
+		$this->db->where('pasang', '');
+		$this->db->where('id_fppp', $id_fppp);
+		$cek = $this->db->get('data_fppp_detail')->num_rows();
+		if ($cek == 0) {
+			return 3;
+		} else {
+			return 2;
 		}
 	}
 
