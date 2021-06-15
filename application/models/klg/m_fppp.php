@@ -105,49 +105,66 @@ class M_fppp extends CI_Model
 
 	public function get_ket_ws_update($id_fppp)
 	{
+
+		$this->db->where('id_fppp', $id_fppp);
+		$jml_semua = $this->db->get('data_fppp_detail')->num_rows();
 		$this->db->where('pengiriman', '');
 		$this->db->where('id_fppp', $id_fppp);
 		$cek = $this->db->get('data_fppp_detail')->num_rows();
 		if ($cek == 0) {
 			return 'LUNAS';
-		} else {
+		} else if ($jml_semua > $cek) {
 			return 'PARSIAL';
+		} else {
+			return 'PROSES';
 		}
 	}
 
 	public function get_ket_ws_update_sts($id_fppp)
 	{
+		$this->db->where('id_fppp', $id_fppp);
+		$jml_semua = $this->db->get('data_fppp_detail')->num_rows();
 		$this->db->where('pengiriman', '');
 		$this->db->where('id_fppp', $id_fppp);
 		$cek = $this->db->get('data_fppp_detail')->num_rows();
 		if ($cek == 0) {
 			return 3;
-		} else {
+		} else if ($jml_semua > $cek) {
 			return 2;
+		} else {
+			return 1;
 		}
 	}
 
 	public function get_ket_site_update($id_fppp)
 	{
+		$this->db->where('id_fppp', $id_fppp);
+		$jml_semua = $this->db->get('data_fppp_detail')->num_rows();
 		$this->db->where('pasang', '');
 		$this->db->where('id_fppp', $id_fppp);
 		$cek = $this->db->get('data_fppp_detail')->num_rows();
 		if ($cek == 0) {
 			return 'LUNAS';
-		} else {
+		} else if ($jml_semua > $cek) {
 			return 'PARSIAL';
+		} else {
+			return 'PROSES';
 		}
 	}
 
 	public function get_ket_site_update_sts($id_fppp)
 	{
+		$this->db->where('id_fppp', $id_fppp);
+		$jml_semua = $this->db->get('data_fppp_detail')->num_rows();
 		$this->db->where('pasang', '');
 		$this->db->where('id_fppp', $id_fppp);
 		$cek = $this->db->get('data_fppp_detail')->num_rows();
 		if ($cek == 0) {
 			return 3;
-		} else {
+		} else if ($jml_semua > $cek) {
 			return 2;
+		} else {
+			return 1;
 		}
 	}
 
