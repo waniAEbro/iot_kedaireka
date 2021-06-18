@@ -81,7 +81,7 @@
                             $kurang = $row->qty_bom - $qtyTotalOut;
                             $cekproduksi = ($row->produksi == 1) ? 'checked' : '';
                             $ceklapangan = ($row->lapangan == 1) ? 'checked' : '';
-                            $getqtygdg = $this->m_aksesoris->getQtyGudang($row->section_ata, $row->id_divisi, $row->id_gudang);
+                            $getqtygdg = $this->m_aluminium->getQtyGudang($row->section_ata, $row->id_divisi, $row->id_gudang);
                             $qty_gudang = ($getqtygdg > 0) ? $getqtygdg : 0;
                             $totalgudang = $qty_gudang - $qtyTotalOut;
                             if ($row->kunci == 1) {
