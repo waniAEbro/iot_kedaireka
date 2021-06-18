@@ -13,7 +13,7 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>Item</label>
-                        <input type="text" class="form-control" id="item_code" value="<?= $item_code ?>" readonly>
+                        <input type="text" class="form-control" id="section_ata" value="<?= $section_ata ?>" readonly>
                     </div>
                 </div>
             </div>
@@ -112,11 +112,11 @@
 <script language="javascript">
     function mutasi() {
         $.ajax({
-            url: "<?= site_url('wrh/aksesoris/simpanMutasi') ?>",
+            url: "<?= site_url('wrh/aluminium/simpanMutasi') ?>",
             dataType: "json",
             type: "POST",
             data: {
-                "item_code": $('#item_code').val(),
+                "section_ata": $('#section_ata').val(),
                 "divisi": $('#id_divisi').val(),
                 "gudang": $('#id_gudang').val(),
                 "keranjang": $('#keranjang').val(),
@@ -132,7 +132,7 @@
                     title: 'Sukses',
                     message: "Berhasil mutasi"
                 });
-                load_silent("wrh/aksesoris/mutasi_stock/", "#content");
+                load_silent("wrh/aluminium/mutasi_stock/", "#content");
             }
         });
 
@@ -153,11 +153,11 @@
         } else {
             z = "<option>-- Select --</option>";
             $.ajax({
-                url: "<?= site_url('wrh/aksesoris/optionGudangMutasi') ?>",
+                url: "<?= site_url('wrh/aluminium/optionGudangMutasi') ?>",
                 dataType: "json",
                 type: "POST",
                 data: {
-                    "item_code": $('#item_code').val(),
+                    "section_ata": $('#section_ata').val(),
                     "divisi": $(this).val()
                 },
                 success: function(data) {
@@ -180,11 +180,11 @@
         } else {
             z = "<option>-- Select --</option>";
             $.ajax({
-                url: "<?= site_url('wrh/aksesoris/optionKeranjangMutasi') ?>",
+                url: "<?= site_url('wrh/aluminium/optionKeranjangMutasi') ?>",
                 dataType: "json",
                 type: "POST",
                 data: {
-                    "item_code": $('#item_code').val(),
+                    "section_ata": $('#section_ata').val(),
                     "divisi": $('#id_divisi').val(),
                     "gudang": $(this).val()
                 },
@@ -204,11 +204,11 @@
 
     $("select[name=keranjang]").change(function() {
         $.ajax({
-            url: "<?= site_url('wrh/aksesoris/optionQtyMutasi') ?>",
+            url: "<?= site_url('wrh/aluminium/optionQtyMutasi') ?>",
             dataType: "json",
             type: "POST",
             data: {
-                "item_code": $('#item_code').val(),
+                "section_ata": $('#section_ata').val(),
                 "divisi": $('#id_divisi').val(),
                 "gudang": $('#id_gudang').val(),
                 "keranjang": $(this).val()

@@ -12,14 +12,43 @@
                             <input type="text" value="<?= date('Y-m-d') ?>" class="form-control" id="tgl_proses" readonly>
                         </div>
                         <div class="form-group">
-                            <label class="control-label">Item:</label>
-                            <select id="item_code" name="item_code" class="form-control" style="width:100%" required>
+                            <label class="control-label">Section ATA:</label>
+                            <select id="section_ata" name="section_ata" class="form-control" style="width:100%" required>
                                 <option value="">-- Select --</option>
-                                <?php foreach ($item_code->result() as $valap) : ?>
-                                    <option value="<?= $valap->item_code ?>">[<?= $valap->item_code ?>] -
-                                        <?= $valap->deskripsi ?>
+                                <?php foreach ($section_ata->result() as $valap) : ?>
+                                    <option value="<?= $valap->section_ata ?>">[<?= $valap->section_ata ?>] -
+                                        <?= $valap->section_allure ?>
                                     </option>
                                 <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Section Allure:</label>
+                            <select id="section_allure" name="section_allure" class="form-control" style="width:100%" required>
+                                <option value="">-- Select --</option>
+                                <?php foreach ($section_ata->result() as $valap) : ?>
+                                    <option value="<?= $valap->section_allure ?>">[<?= $valap->section_allure ?>] -
+                                        <?= $valap->section_allure ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Temper:</label>
+                            <select id="temper" name="temper" class="form-control" style="width:100%" required>
+                                <option value="">-- Select --</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Kode Warna:</label>
+                            <select id="kode_warna" name="kode_warna" class="form-control" style="width:100%" required>
+                                <option value="">-- Select --</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Ukuran:</label>
+                            <select id="ukuran" name="ukuran" class="form-control" style="width:100%" required>
+                                <option value="">-- Select --</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -85,7 +114,11 @@
                     <thead>
                         <tr>
                             <th width="5%">Act</th>
-                            <th width="15%">Item</th>
+                            <th width="15%">Section ATA</th>
+                            <th width="15%">Section Allure</th>
+                            <th width="15%">Temper</th>
+                            <th width="15%">Kode Warna</th>
+                            <th width="15%">Ukuran</th>
                             <th width="15%">Qty</th>
                             <th width="15%">Supplier</th>
                             <th width="15%">No Surat Jalan</th>
@@ -113,7 +146,7 @@
                 title: 'Berhasil',
                 message: "Tambah Stock selesai!"
             });
-            load_silent("wrh/aksesoris", "#content");
+            load_silent("wrh/aluminium", "#content");
         }
     }
     $(document).ready(function() {
@@ -133,17 +166,157 @@
         }
     });
 
+    $("select[name=section_ata]").change(function() {
+        var x = $("select[name=section_allure]");
+        if ($(this).val() == "") {
+            x.html("<option>-- Select --</option>");
+        } else {
+            z = "<option>-- Select --</option>";
+            $.ajax({
+                url: "<?= site_url('wrh/aluminium/optionGetSectionAllure') ?>",
+                dataType: "json",
+                type: "POST",
+                data: {
+                    "section_ata": $(this).val()
+                },
+                success: function(data) {
+
+                    var z = "<option value=''>-- Select --</option>";
+                    for (var i = 0; i < data.length; i++) {
+                        z += '<option value=' + data[i].section_allure + '>' + data[i].section_allure + '</option>';
+                    }
+                    x.html(z);
+                }
+            });
+
+        }
+    });
+
+    $("select[name=section_allure]").change(function() {
+        var x = $("select[name=section_ata]");
+        if ($(this).val() == "") {
+            x.html("<option>-- Select --</option>");
+        } else {
+            z = "<option>-- Select --</option>";
+            $.ajax({
+                url: "<?= site_url('wrh/aluminium/optionGetSectionAta') ?>",
+                dataType: "json",
+                type: "POST",
+                data: {
+                    "section_allure": $(this).val()
+                },
+                success: function(data) {
+
+                    var z = "<option value=''>-- Select --</option>";
+                    for (var i = 0; i < data.length; i++) {
+                        z += '<option value=' + data[i].section_ata + '>' + data[i].section_ata + '</option>';
+                    }
+                    x.html(z);
+                }
+            });
+
+        }
+    });
+
+    $("#section_allure").change(function() {
+        var x = $("select[name=temper]");
+        if ($(this).val() == "") {
+            x.html("<option>-- Select --</option>");
+        } else {
+            z = "<option>-- Select --</option>";
+            $.ajax({
+                url: "<?= site_url('wrh/aluminium/optionGetTemper') ?>",
+                dataType: "json",
+                type: "POST",
+                data: {
+                    "section_ata": $('#section_ata').val(),
+                    "section_allure": $(this).val()
+                },
+                success: function(data) {
+
+                    var z = "<option value=''>-- Select --</option>";
+                    for (var i = 0; i < data.length; i++) {
+                        z += '<option value=' + data[i].temper + '>' + data[i].temper + '</option>';
+                    }
+                    x.html(z);
+                }
+            });
+
+        }
+    });
+
+    $("#temper").change(function() {
+        var x = $("select[name=kode_warna]");
+        if ($(this).val() == "") {
+            x.html("<option>-- Select --</option>");
+        } else {
+            z = "<option>-- Select --</option>";
+            $.ajax({
+                url: "<?= site_url('wrh/aluminium/optionGetKodeWarna') ?>",
+                dataType: "json",
+                type: "POST",
+                data: {
+                    "section_ata": $('#section_ata').val(),
+                    "section_allure": $('#section_allure').val(),
+                    "temper": $(this).val()
+                },
+                success: function(data) {
+
+                    var z = "<option value=''>-- Select --</option>";
+                    for (var i = 0; i < data.length; i++) {
+                        z += '<option value=' + data[i].kode_warna + '>' + data[i].kode_warna + '</option>';
+                    }
+                    x.html(z);
+                }
+            });
+
+        }
+    });
+
+    $("#kode_warna").change(function() {
+        var x = $("select[name=ukuran]");
+        if ($(this).val() == "") {
+            x.html("<option>-- Select --</option>");
+        } else {
+            z = "<option>-- Select --</option>";
+            $.ajax({
+                url: "<?= site_url('wrh/aluminium/optionGetUkuran') ?>",
+                dataType: "json",
+                type: "POST",
+                data: {
+                    "section_ata": $('#section_ata').val(),
+                    "section_allure": $('#section_allure').val(),
+                    "temper": $('#temper').val(),
+                    "ukuran": $(this).val()
+                },
+                success: function(data) {
+
+                    var z = "<option value=''>-- Select --</option>";
+                    for (var i = 0; i < data.length; i++) {
+                        z += '<option value=' + data[i].ukuran + '>' + data[i].ukuran + '</option>';
+                    }
+                    x.html(z);
+                }
+            });
+
+        }
+    });
+
     function quotation() {
 
-        if ($('#item_code').val() != '' && $('#divisi').val() != '' && $('#area').val() != '' && $('#rak').val() != '') {
+        if ($('#section_ata').val() != '' && $('#divisi').val() != '' && $('#area').val() != '' && $('#rak').val() != '') {
 
             $.ajax({
                     type: "POST",
-                    url: "<?= site_url('wrh/aksesoris/savestokin') ?>",
+                    url: "<?= site_url('wrh/aluminium/savestokin') ?>",
                     dataType: 'json',
                     data: {
                         'tgl_proses': $('#tgl_proses').val(),
-                        'item_code': $('#item_code').val(),
+                        'section_ata': $('#section_ata').val(),
+                        'section_allure': $('#section_allure').val(),
+                        'temper': $('#temper').val(),
+                        'kode_warna': $('#kode_warna').val(),
+                        'ukuran': $('#ukuran').val(),
                         'qty': $("#qty").val(),
                         'supplier': $("#supplier").val(),
                         'no_surat_jalan': $("#no_surat_jalan").val(),
@@ -166,7 +339,19 @@
                   <i  class = "fa fa-trash"></i></a>\
                   </td>\
                   <td width = "15%">\
-                    ' + $('#item_code :selected').text() + '\
+                    ' + $('#section_ata :selected').text() + '\
+                  </td>\
+                  <td width = "15%">\
+                    ' + $('#section_allure :selected').text() + '\
+                  </td>\
+                  <td width = "15%">\
+                    ' + $('#temper :selected').text() + '\
+                  </td>\
+                  <td width = "15%">\
+                    ' + $('#kode_warna :selected').text() + '\
+                  </td>\
+                  <td width = "15%">\
+                    ' + $('#ukuran :selected').text() + '\
                   </td>\
                   <td width = "15%">\
                     ' + $('#qty').val() + '\
@@ -195,7 +380,7 @@
                 </tr>';
                     $('tr.odd').remove();
                     $('#dataTbl').append(x);
-                    $('#item_code').val('').trigger('change');
+                    $('#section_ata').val('').trigger('change');
                     $('#id_divisi').val('').trigger('change');
                     $('#id_gudang').val('').trigger('change');
                     $("#qty").val('');
@@ -240,7 +425,7 @@
         if (confirm('Lanjutkan Proses Hapus?')) {
             $.ajax({
                     type: "POST",
-                    url: "<?= site_url('wrh/aksesoris/deleteItemIn') ?>",
+                    url: "<?= site_url('wrh/aluminium/deleteItemIn') ?>",
                     dataType: 'json',
                     data: {
                         'id': i

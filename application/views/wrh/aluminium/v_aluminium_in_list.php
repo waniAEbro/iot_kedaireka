@@ -3,12 +3,12 @@
     <div class="col-lg-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">BON Manual </h3>
+                <h3 class="box-title">Stok IN </h3>
                 <div class="box-tools pull-right">
                     <?php
                     $sesi = from_session('level');
                     if ($sesi == '1' || $sesi == '2') {
-                        echo button('load_silent("wrh/aksesoris/bon_manual_add/","#content")', 'Tambah BON Manual', 'btn btn-primary', 'data-toggle="tooltip" title="Tambah BON Manual"');
+                        echo button('load_silent("wrh/aluminium/stok_in_add/","#content")', 'Tambah Stock', 'btn btn-primary', 'data-toggle="tooltip" title="Tambah Stock"');
                     } else {
                         # code...
                     }
@@ -20,36 +20,40 @@
                     <thead>
                         <th width="5%">No</th>
                         <th>Tgl Proses</th>
-                        <th>No FPPP</th>
-                        <th>Nama Proyek</th>
-                        <th>Item Code</th>
-                        <th>Deskripsi</th>
-                        <th>Qty Aktual</th>
-                        <th>Out Dari Divisi</th>
-                        <th>Area Gudang</th>
-                        <th>Produksi</th>
-                        <th>Lapangan</th>
+                        <th>Section ATA</th>
+                        <th>Section Allure</th>
+                        <th>Temper</th>
+                        <th>Kode Warna</th>
+                        <th>Ukuran</th>
+                        <th>Qty</th>
+                        <th>Supplier</th>
+                        <th>No Surat Jalan</th>
+                        <th>No PR</th>
+                        <th>Divisi</th>
+                        <th>Gudang</th>
+                        <th>Keranjang</th>
                     </thead>
                     <tbody>
                         <?php
                         $i = 1;
-                        foreach ($bom_aksesoris->result() as $row) :
-                            $cekproduksi = ($row->produksi == 1) ? 'checked' : '';
-                            $ceklapangan = ($row->lapangan == 1) ? 'checked' : '';
-                        ?>
+                        foreach ($aluminium->result() as $row) : ?>
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
                                 <td><?= $row->tgl_proses ?></td>
-                                <td><?= $row->no_fppp ?></td>
-                                <td><?= $row->nama_proyek ?></td>
-                                <td><?= $row->item_code ?></td>
-                                <td><?= $row->deskripsi ?></td>
-                                <td align="center"><?= $row->qty ?></td>
+                                <td><?= $row->section_ata ?></td>
+                                <td><?= $row->section_allure ?></td>
+                                <td><?= $row->temper ?></td>
+                                <td><?= $row->kode_warna ?></td>
+                                <td><?= $row->ukuran ?></td>
+                                <td><?= $row->qty ?></td>
+                                <td><?= $row->supplier ?></td>
+                                <td><?= $row->no_surat_jalan ?></td>
+                                <td><?= $row->no_pr ?></td>
                                 <td><?= $row->divisi ?></td>
                                 <td><?= $row->gudang ?></td>
-                                <td align="center"><input type="checkbox" onclick="return false;" class="checkbox" <?= $cekproduksi ?>></td>
-                                <td align="center"><input type="checkbox" onclick="return false;" class="checkbox" <?= $ceklapangan ?>></td>
+                                <td><?= $row->keranjang ?></td>
                             </tr>
+
                         <?php endforeach; ?>
                     </tbody>
                 </table>
