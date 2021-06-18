@@ -76,7 +76,7 @@
                     <tbody>
                         <?php
                         $i = 1;
-                        foreach ($bom_aksesoris->result() as $row) :
+                        foreach ($bom_aluminium->result() as $row) :
                             $qtyTotalOut = @$total_out[$row->section_ata][$row->id_fppp];
                             $kurang = $row->qty_bom - $qtyTotalOut;
                             $cekproduksi = ($row->produksi == 1) ? 'checked' : '';
