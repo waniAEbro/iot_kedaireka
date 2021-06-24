@@ -360,6 +360,58 @@
   </div>
 </div>
 
+
+<div class="modal fade" id="myModalEdit" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Edit</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="control-label">Brand</label>
+          <?= form_dropdown('id_brand_edit', $brand, '', 'id="id_brand_edit" class="form-control"') ?>
+        </div>
+        <div class="form-group">
+          <label class="control-label">Kode Opening</label>
+          <input type="text" id="kode_opening_edit" class="form-control">
+        </div>
+        <div class="form-group">
+          <label class="control-label">Kode Unit</label>
+          <input type="text" id="kode_unit_edit" class="form-control">
+        </div>
+        <div class="form-group">
+          <label class="control-label">Item</label>
+          <?= form_dropdown('id_item_edit', $item, '', 'id="id_item_edit" class="form-control"') ?>
+        </div>
+        <div class="form-group">
+          <label class="control-label">Glass Thick</label>
+          <input type="text" id="glass_thick_edit" class="form-control">
+        </div>
+        <div class="form-group">
+          <label class="control-label">Finish Coating</label>
+          <?= form_dropdown('finish_coating_edit', $warna_aluminium, '', 'id="finish_coating_edit" class="form-control"') ?>
+        </div>
+        <div class="form-group">
+          <label class="control-label">Qty</label>
+          <input type="hidden" class="form-control" id="id_edit" name="id_edit" autocomplete="off">
+          <input type="hidden" class="form-control" id="id_fppp_edit" name="id_fppp_edit" autocomplete="off">
+          <input type="text" id="qty_edit" class="form-control" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <a onclick="saveEditItem()" class="btn btn-info">Save</a>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnEditQuo" class="btn btn-default tmyModalTambahan" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <script language="javascript">
   function finish() {
     if (confirm('Anda yakin ingin menyelesaikan?')) {
@@ -643,86 +695,6 @@
     }
   }
 
-  // $("#store").change(function() {
-  //   $.ajax({
-  //     url: "<?= site_url('klg/fppp/getDetailStore/') ?>",
-  //     dataType: "json",
-  //     type: "POST",
-  //     data: {
-  //       "store": $(this).val(),
-  //     },
-  //     success: function(img) {
-  //       $('#no_telp').val(img['no_telp']);
-  //       $('#alamat').val(img['alamat']);
-  //     }
-  //   });
-
-
-  // });
-
-  // $("#tipe_fppp").change(function() {
-  //   $('#item').val('').trigger('change');
-  //   $("#gbritem").html('');
-  //   $('#jenis_barang').html('');
-  //   if ($(this).val() == 2) {
-  //     $('#lebar').attr('readonly', false);
-  //     $('#tinggi').attr('readonly', false);
-  //     $('#harga').attr('readonly', false);
-  //     $('.harga').show(50);
-  //     $('#lebar').val(0);
-  //     $('#tinggi').val(0);
-  //     $('#harga').val(0);
-  //   } else {
-  //     $('#lebar').attr('readonly', true);
-  //     $('#tinggi').attr('readonly', true);
-  //     $('#harga').val('0');
-  //     $('#harga').attr('readonly', true);
-  //   }
-  // });
-
-
-
-  // $("#item").change(function() {
-  //   $('#bukaan').val('').trigger('change');
-  //   $.ajax({
-  //     url: "<?= site_url('klg/fppp/getDetailItem/') ?>",
-  //     dataType: "json",
-  //     type: "POST",
-  //     data: {
-  //       "item": $(this).val(),
-  //     },
-  //     success: function(img) {
-  //       $("#gbritem").html('<div class="form-group"> <label class="control-label">Picture : </label> <img style="padding:10px;" src="<?php echo base_url() . "'+img['gambar']+'"; ?>" class="file-preview-image"></div>');
-  //       if ($("#tipe_fppp").val() == 1) {
-  //         $('#lebar').val(img['lebar']);
-  //         $('#tinggi').val(img['tinggi']);
-  //         $('#harga').val(img['harga']);
-  //       }
-  //       $('#jenis_barang').html('Jenis Barang : ' + img['jenis_barang']);
-
-  //     }
-  //   });
-
-
-  // });
-
-  // $("#warna").change(function() {
-  //   if ($("#tipe_fppp").val() == 1) {
-  //     $.ajax({
-  //       url: "<?= site_url('klg/fppp/getHarga/') ?>",
-  //       dataType: "json",
-  //       type: "POST",
-  //       data: {
-  //         "store": $("#store").val(),
-  //         "item": $("#item").val(),
-  //         "warna": $(this).val(),
-  //       },
-  //       success: function(img) {
-  //         $('#harga').val(img['harga']);
-  //       }
-  //     });
-  //   }
-  // });
 
   function editItem(id) {
 
@@ -738,31 +710,33 @@
         $('#myModalEdit').modal('show');
 
         $("#id_edit").val(id);
-        $("#item_edit").val(datasaved['item']).change();
-        $("#warna_edit").val(datasaved['warna']).change();
-        $("#bukaan_edit").val(datasaved['bukaan']).change();
-        $("#lebar_edit").val(datasaved['lebar']);
-        $("#tinggi_edit").val(datasaved['tinggi']);
+        $("#id_fppp_edit").val(datasaved['id_fppp']);
+        $("#id_brand_edit").val(datasaved['id_brand']).change();
+        $("#kode_opening_edit").val(datasaved['kode_opening']);
+        $("#kode_unit_edit").val(datasaved['kode_unit']);
+        $("#id_item_edit").val(datasaved['id_item']).change();
+        $("#glass_thick_edit").val(datasaved['glass_thick']);
+        $("#finish_coating_edit").val(datasaved['finish_coating']).change();
         $("#qty_edit").val(datasaved['qty']);
-        $("#keterangan_edit").val(datasaved['keterangan']);
       });
   }
 
   function saveEditItem() {
-    if ($('#item_edit').val() != '' && $('#warna_edit').val() != '' && $('#bukaan_edit').val() != '' && $('#lebar_edit').val() != '' && $('#tinggi_edit').val() != '' && $('#qty_edit').val() != '') {
+    if ($('#id_fppp_edit').val() != '' && $('#id_item_edit').val() != '' && $('#qty_edit').val() != '') {
       $.ajax({
           type: "POST",
           url: "<?= site_url('klg/fppp/updateItemDetail') ?>",
           dataType: 'json',
           data: {
             'id': $('#id_edit').val(),
-            'item': $('#item_edit').val(),
-            'warna': $('#warna_edit').val(),
-            'bukaan': $('#bukaan_edit').val(),
-            'lebar': $('#lebar_edit').val(),
-            'tinggi': $('#tinggi_edit').val(),
+            'id_fppp': $('#id_fppp_edit').val(),
+            'id_brand': $('#id_brand_edit').val(),
+            'kode_opening': $('#kode_opening_edit').val(),
+            'kode_unit': $('#kode_unit_edit').val(),
+            'id_item': $('#id_item_edit').val(),
+            'glass_thick': $('#glass_thick_edit').val(),
+            'finish_coating': $('#finish_coating_edit').val(),
             'qty': $("#qty_edit").val(),
-            'keterangan': $("#keterangan_edit").val(),
           }
         })
         .success(function(datasaved) {
@@ -811,69 +785,3 @@
     };
   }
 </script>
-
-<div class="modal fade" id="myModalEdit" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Edit</h4>
-      </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <label>Item</label>
-          <select id="item_edit" name="item_edit" class="form-control" style="width:100%" required>
-            <option value="">-- Select Item --</option>
-            <?php foreach ($item as $val) : ?>
-              <option value="<?= $val->id ?>"><?= $val->item ?></option>
-            <?php endforeach; ?>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>Warna</label>
-          <select id="warna_edit" name="warna_edit" class="form-control" style="width:100%" required>
-            <option value="">-- Select Warna --</option>
-            <?php foreach ($warna as $val) : ?>
-              <option value="<?= $val->id ?>"><?= $val->warna ?></option>
-            <?php endforeach; ?>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Bukaan</label>
-          <select id="bukaan_edit" name="bukaan_edit" class="form-control" style="width:100%" required>
-            <option value="">-- Select Bukaan --</option>
-            <?php foreach ($bukaan as $val) : ?>
-              <option value="<?= $val->bukaan ?>"><?= $val->nama_bukaan ?></option>
-            <?php endforeach; ?>
-          </select>
-        </div>
-        <div class="form-group fortipe">
-          <label class="control-label" for="merk">Lebar:</label>
-          <input type="text" style="text-align: right;" class="form-control" id="lebar_edit" name="lebar_edit" placeholder="Lebar" autocomplete="off">
-        </div>
-        <div class="form-group fortipe">
-          <label class="control-label" for="merk">Tinggi:</label>
-          <input type="text" style="text-align: right;" class="form-control" id="tinggi_edit" name="tinggi_edit" placeholder="Tinggi" autocomplete="off">
-        </div>
-
-        <div class="form-group">
-          <label class="control-label" for="merk">Quantity:</label>
-          <input type="hidden" class="form-control" id="id_edit" name="id_edit" autocomplete="off">
-          <input type="text" style="text-align: right;" class="form-control" id="qty_edit" name="qty_edit" placeholder="Quantity" autocomplete="off">
-        </div>
-        <div class="form-group">
-          <label class="control-label" for="merk">Keterangan:</label>
-          <input type="text" style="text-align: right;" class="form-control" id="keterangan_edit" name="keterangan_edit" placeholder="Keterangan" autocomplete="off">
-        </div>
-        <div class="form-group">
-          <a onclick="saveEditItem()" class="btn btn-info">Save</a>
-        </div>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" id="btnEditQuo" class="btn btn-default tmyModalTambahan" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>

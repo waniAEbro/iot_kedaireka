@@ -336,6 +336,47 @@ class M_fppp extends CI_Model
 		}
 		return $data;
 	}
+
+	public function deleteDetailItem($id)
+	{
+		$this->db->where('id', $id);
+		$this->db->delete('data_fppp_detail');
+	}
+
+	public function getDetailFppp($value = '')
+	{
+		$this->db->where('id', $value);
+		return $this->db->get('data_fppp_detail')->row();
+	}
+
+	public function updateInvoiceFppp($data = '', $id = '')
+	{
+		$this->db->where('id', $id);
+		$this->db->update('data_fppp_detail', $data);
+	}
+
+	public function getRowFppp($id)
+	{
+		$this->db->where('id', $id);
+		return $this->db->get('data_fppp')->row();
+	}
+
+	public function getRowFpppDetail($id)
+	{
+		$this->db->join('master_brand mb', 'mb.id = dfd.id_brand', 'left');
+		$this->db->join('master_barang mbr', 'mbr.id = dfd.id_item', 'left');
+
+		$this->db->where('dfd.id_fppp', $id);
+		$this->db->select('dfd.*,mb.brand,mbr.barang');
+
+		return $this->db->get('data_fppp_detail dfd')->result();
+	}
+
+	public function updateFpppDetail($datapost, $id)
+	{
+		$this->db->where('id', $id);
+		$this->db->update('data_fppp_detail', $datapost);
+	}
 }
 
 /* End of file m_fppp.php */

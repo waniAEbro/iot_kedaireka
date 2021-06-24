@@ -6,7 +6,7 @@
             <div class="box-header with-border">
                 <h3 class="box-title">List BOM Aluminium</h3>
                 <div class="box-tools pull-right">
-                    <?php echo button('load_silent("klg/fppp","#content")', 'Kembali', 'btn btn-success'); ?>
+                    <?php echo button('load_silent("klg/fppp/hasil_finish/' . $param . '","#content")', 'Kembali', 'btn btn-success'); ?>
                 </div>
             </div>
             <div class="box-body">
@@ -51,7 +51,7 @@
             <div class="box-header with-border">
                 <h3 class="box-title">List BOM Aksesoris</h3>
                 <div class="box-tools pull-right">
-                    <?php echo button('load_silent("klg/fppp","#content")', 'Kembali', 'btn btn-success'); ?>
+                    <?php echo button('load_silent("klg/fppp/hasil_finish/' . $param . '","#content")', 'Kembali', 'btn btn-success'); ?>
                 </div>
             </div>
             <div class="box-body">
@@ -88,7 +88,7 @@
             <div class="box-header with-border">
                 <h3 class="box-title">List BOM Lembaran</h3>
                 <div class="box-tools pull-right">
-                    <?php echo button('load_silent("klg/fppp","#content")', 'Kembali', 'btn btn-success'); ?>
+                    <?php echo button('load_silent("klg/fppp/hasil_finish/' . $param . '","#content")', 'Kembali', 'btn btn-success'); ?>
                 </div>
             </div>
             <div class="box-body">
