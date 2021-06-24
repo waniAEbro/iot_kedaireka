@@ -359,9 +359,10 @@ class M_fppp extends CI_Model
 	{
 		$this->db->join('master_brand mb', 'mb.id = dfd.id_brand', 'left');
 		$this->db->join('master_barang mbr', 'mbr.id = dfd.id_item', 'left');
+		$this->db->join('master_warna_aluminium mwa', 'mwa.id = dfd.finish_coating', 'left');
 
 		$this->db->where('dfd.id_fppp', $id);
-		$this->db->select('dfd.*,mb.brand,mbr.barang');
+		$this->db->select('dfd.*,mb.brand,mbr.barang,mwa.warna_aluminium');
 
 		return $this->db->get('data_fppp_detail dfd')->result();
 	}

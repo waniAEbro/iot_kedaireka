@@ -362,7 +362,7 @@
                   <a class="btn btn-xs btn-warning" onClick="editItem(<?= $val->id ?>)"><i class="fa fa-edit"></i></a>
                 </td>
                 <td id="td_id_brand_<?= $val->id ?>"><?= $val->brand ?></td>
-                <td id="td_finish_coating_<?= $val->id ?>"><?= $val->finish_coating ?></td>
+                <td id="td_finish_coating_<?= $val->id ?>"><?= $val->warna_aluminium ?></td>
                 <td id="td_kode_opening_<?= $val->id ?>"><?= $val->kode_opening ?></td>
                 <td id="td_kode_unit_<?= $val->id ?>"><?= $val->kode_unit ?></td>
                 <td id="td_id_item_<?= $val->id ?>"><?= $val->barang ?></td>
