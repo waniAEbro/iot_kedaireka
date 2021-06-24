@@ -763,20 +763,23 @@
           }
         })
         .success(function(datasaved) {
-          $('#td_item_' + datasaved['id']).html($('#item_edit :selected').text());
-          $('#td_warna_' + datasaved['id']).html($('#warna_edit :selected').text());
-          $('#td_bukaan_' + datasaved['id']).html($('#bukaan_edit :selected').text());
-          $('#td_ukuran_' + datasaved['id']).html($('#lebar_edit').val() + 'x' + $('#tinggi_edit').val());
+          $('#td_id_brand_' + datasaved['id']).html($('#id_brand_edit :selected').text());
+          $('#td_kode_opening_' + datasaved['id']).html($('#kode_opening_edit').val());
+          $('#td_kode_unit_' + datasaved['id']).html($('#kode_unit_edit').val());
+          $('#td_id_item_' + datasaved['id']).html($('#id_item_edit :selected').text());
+          $('#td_glass_thick_' + datasaved['id']).html($('#glass_thick_edit').val());
+          $('#td_finish_coating_' + datasaved['id']).html($('#finish_coating_edit :selected').text());
           $('#td_qty_' + datasaved['id']).html($('#qty_edit').val());
 
           $('#id_edit').val('');
-          $('#item_edit').val('').trigger('change');
-          $('#warna_edit').val('').trigger('change');
-          $('#bukaan_edit').val('').trigger('change');
-          $('#lebar_edit').val('');
-          $('#tinggi_edit').val('');
+          $('#id_fppp_edit').val('');
+          $('#id_brand_edit').val('').trigger('change');
+          $('#kode_opening_edit').val('');
+          $('#kode_unit_edit').val('');
+          $('#id_item_edit').val('').trigger('change');
+          $('#glass_thick_edit').val('');
+          $('#finish_coating_edit').val('').trigger('change');
           $('#qty_edit').val('');
-          $('#keterangan_edit').val('');
           $.growl.notice({
             title: 'Sukses',
             message: "Order Detail Updated!"
