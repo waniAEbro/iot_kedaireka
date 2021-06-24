@@ -298,6 +298,10 @@
               <?= form_dropdown('id_brand', $brand, '', 'id="id_brand" class="form-control"') ?>
             </div>
             <div class="form-group">
+              <label class="control-label">Finish Coating</label>
+              <?= form_dropdown('finish_coating', $warna_aluminium, '', 'id="finish_coating" class="form-control"') ?>
+            </div>
+            <div class="form-group">
               <label class="control-label">Kode Opening</label>
               <input type="text" id="kode_opening" class="form-control">
             </div>
@@ -313,10 +317,7 @@
               <label class="control-label">Glass Thick</label>
               <input type="text" id="glass_thick" class="form-control">
             </div>
-            <div class="form-group">
-              <label class="control-label">Finish Coating</label>
-              <?= form_dropdown('finish_coating', $warna_aluminium, '', 'id="finish_coating" class="form-control"') ?>
-            </div>
+
             <div class="form-group">
               <label class="control-label">Qty</label>
               <input type="hidden" id="id_fppp" readonly>
@@ -341,11 +342,11 @@
             <tr>
               <th width="5%">Act</th>
               <th width="15%">Brand</th>
+              <th width="10%">Finish Coating</th>
               <th width="10%">Kode Opening</th>
               <th width="10%">Kode Unit</th>
               <th width="25%">Item</th>
               <th width="10%">Glass Thick</th>
-              <th width="10%">Finish Coating</th>
               <th width="7%">Qty</th>
             </tr>
           </thead>
@@ -374,6 +375,10 @@
           <?= form_dropdown('id_brand_edit', $brand, '', 'id="id_brand_edit" class="form-control"') ?>
         </div>
         <div class="form-group">
+          <label class="control-label">Finish Coating</label>
+          <?= form_dropdown('finish_coating_edit', $warna_aluminium, '', 'id="finish_coating_edit" class="form-control"') ?>
+        </div>
+        <div class="form-group">
           <label class="control-label">Kode Opening</label>
           <input type="text" id="kode_opening_edit" class="form-control">
         </div>
@@ -389,10 +394,7 @@
           <label class="control-label">Glass Thick</label>
           <input type="text" id="glass_thick_edit" class="form-control">
         </div>
-        <div class="form-group">
-          <label class="control-label">Finish Coating</label>
-          <?= form_dropdown('finish_coating_edit', $warna_aluminium, '', 'id="finish_coating_edit" class="form-control"') ?>
-        </div>
+
         <div class="form-group">
           <label class="control-label">Qty</label>
           <input type="hidden" class="form-control" id="id_edit" name="id_edit" autocomplete="off">
@@ -614,6 +616,9 @@
                   <td id="td_id_brand_' + i + '" width="15%">\
                     ' + $('#id_brand :selected').text() + '\
                   </td>\
+                  <td id="td_finish_coating_' + i + '" width="10%">\
+                    ' + $('#finish_coating :selected').text() + '\
+                  </td>\
                   <td id="td_kode_opening_' + i + '" width="10%">\
                     ' + $('#kode_opening').val() + '\
                   </td>\
@@ -625,9 +630,6 @@
                   </td>\
                   <td id="td_glass_thick_' + i + '" width="10%">\
                     ' + $('#glass_thick').val() + '\
-                  </td>\
-                  <td id="td_finish_coating_' + i + '" width="10%">\
-                    ' + $('#finish_coating :selected').text() + '\
                   </td>\
                   <td id="td_qty_' + i + '" width="7%">\
                     ' + $('#qty').val() + '\
