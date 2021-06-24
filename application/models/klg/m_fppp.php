@@ -104,69 +104,62 @@ class M_fppp extends CI_Model
 		$this->db->update('data_fppp_detail', $data);
 	}
 
-	public function get_ket_ws_update($id_fppp)
+	public function getJmlBaris($id_fppp)
 	{
-
 		$this->db->where('id_fppp', $id_fppp);
-		$jml_semua = $this->db->get('data_fppp_detail')->num_rows();
-		$this->db->where('pengiriman', '');
-		$this->db->where('id_fppp', $id_fppp);
-		$cek = $this->db->get('data_fppp_detail')->num_rows();
-		if ($cek == 0) {
-			return 'LUNAS';
-		} else if ($jml_semua > $cek) {
-			return 'PARSIAL';
-		} else {
-			return 'PROSES';
-		}
+		return $this->db->get('data_fppp_detail')->num_rows();
 	}
 
-	public function get_ket_ws_update_sts($id_fppp)
+	public function getJmlStsPengiriman($id_fppp)
 	{
 		$this->db->where('id_fppp', $id_fppp);
-		$jml_semua = $this->db->get('data_fppp_detail')->num_rows();
-		$this->db->where('pengiriman', '');
-		$this->db->where('id_fppp', $id_fppp);
-		$cek = $this->db->get('data_fppp_detail')->num_rows();
-		if ($cek == 0) {
-			return 3;
-		} else if ($jml_semua > $cek) {
-			return 2;
-		} else {
-			return 1;
-		}
+		$this->db->where('pengiriman_sts', 1);
+
+		return $this->db->get('data_fppp_detail')->num_rows();
 	}
 
-	public function get_ket_site_update($id_fppp)
+	public function getJmlStsPasang($id_fppp)
 	{
 		$this->db->where('id_fppp', $id_fppp);
-		$jml_semua = $this->db->get('data_fppp_detail')->num_rows();
-		$this->db->where('pasang', '');
-		$this->db->where('id_fppp', $id_fppp);
-		$cek = $this->db->get('data_fppp_detail')->num_rows();
-		if ($cek == 0) {
-			return 'LUNAS';
-		} else if ($jml_semua > $cek) {
-			return 'PARSIAL';
-		} else {
-			return 'PROSES';
-		}
+		$this->db->where('pasang_sts', 1);
+
+		return $this->db->get('data_fppp_detail')->num_rows();
 	}
 
-	public function get_ket_site_update_sts($id_fppp)
+	public function updatews($id, $jml_baris, $jml_pengiriman, $id_fppp)
 	{
-		$this->db->where('id_fppp', $id_fppp);
-		$jml_semua = $this->db->get('data_fppp_detail')->num_rows();
-		$this->db->where('pasang', '');
-		$this->db->where('id_fppp', $id_fppp);
-		$cek = $this->db->get('data_fppp_detail')->num_rows();
-		if ($cek == 0) {
-			return 3;
-		} else if ($jml_semua > $cek) {
-			return 2;
+		if ($jml_pengiriman == 0) {
+			$sts = 1;
+			$sts_txt = 'PROSES';
+		} else if ($jml_pengiriman == $jml_baris) {
+			$sts = 3;
+			$sts_txt = 'LUNAS';
 		} else {
-			return 1;
+			$sts = 2;
+			$sts_txt = 'PARSIAL';
 		}
+		$obj = array('ws_update' => $sts,);
+		$this->db->where('id', $id_fppp);
+		$this->db->update('data_fppp', $obj);
+		return $sts_txt;
+	}
+
+	public function updatesite($id, $jml_baris, $jml_pengiriman, $id_fppp)
+	{
+		if ($jml_pengiriman == 0) {
+			$sts = 1;
+			$sts_txt = 'PROSES';
+		} else if ($jml_pengiriman == $jml_baris) {
+			$sts = 3;
+			$sts_txt = 'LUNAS';
+		} else {
+			$sts = 2;
+			$sts_txt = 'PARSIAL';
+		}
+		$obj = array('site_update' => $sts,);
+		$this->db->where('id', $id_fppp);
+		$this->db->update('data_fppp', $obj);
+		return $sts_txt;
 	}
 
 	public function bom_aluminium($id_fppp)

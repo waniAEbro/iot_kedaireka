@@ -384,34 +384,37 @@ class Fppp extends CI_Controller
 		$id      = $this->input->post('id');
 		$kolom   = $this->input->post('kolom');
 		$nilai   = $this->input->post('nilai');
+		if ($nilai != '') {
+			$sts = 1;
+		} else {
+			$sts = 0;
+		}
+
 		$id_fppp = $this->m_fppp->getIdFppp($id);
 		if ($kolom == 1) {
 			$datapost = array('produksi_aluminium' => $nilai,);
 		} elseif ($kolom == 2) {
 			$datapost = array('qc_cek' => $nilai,);
 		} elseif ($kolom == 3) {
-			$datapost = array('pengiriman' => $nilai,);
+			$datapost = array('pengiriman' => $nilai, 'pengiriman_sts' => $sts,);
 		} elseif ($kolom == 4) {
-			$datapost = array('pasang' => $nilai,);
+			$datapost = array('pasang' => $nilai, 'pasang_sts' => $sts,);
 		} else {
 			$datapost = array('bst' => $nilai,);
 		}
 		$this->m_fppp->updateDetail($id, $datapost);
 
+		$jml_baris = $this->m_fppp->getJmlBaris($id_fppp);
 		if ($kolom == 3) {
-			$ket_ws_update     = $this->m_fppp->get_ket_ws_update($id_fppp);
-			$ket_ws_update_sts = $this->m_fppp->get_ket_ws_update_sts($id_fppp);
-			$respon['txt_ws_update']   = $ket_ws_update;
-			$obj               = array('ws_update' => $ket_ws_update_sts);
-			$this->m_fppp->updateFppp($id_fppp, $obj);
+			$jml_sts_pengiriman = $this->m_fppp->getJmlStsPengiriman($id_fppp);
+			$txt_ws = $this->m_fppp->updatews($id, $jml_baris, $jml_sts_pengiriman, $id_fppp);
+			$respon['txt_ws_update']   = $txt_ws;
 		}
 
 		if ($kolom == 4) {
-			$ket_site_update     = $this->m_fppp->get_ket_site_update($id_fppp);
-			$ket_site_update_sts = $this->m_fppp->get_ket_site_update_sts($id_fppp);
-			$respon['txt_site_update']   = $ket_site_update;
-			$obj                 = array('site_update' => $ket_site_update_sts);
-			$this->m_fppp->updateFppp($id_fppp, $obj);
+			$jml_sts_pasang = $this->m_fppp->getJmlStsPasang($id_fppp);
+			$txt_site = $this->m_fppp->updatesite($id, $jml_baris, $jml_sts_pasang, $id_fppp);
+			$respon['txt_site_update']   = $txt_site;
 		}
 
 
