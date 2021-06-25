@@ -6,7 +6,7 @@
                 <h3 class="box-title">History Mutasi : <?= $item_code ?> </h3>
                 <div class="box-tools pull-right">
                     <?php
-                    echo button('load_silent("wrh/aksesoris/mutasi_stock/","#content")', 'Kembali', 'btn btn-warning', 'data-toggle="tooltip" title="Mutasi"');
+                    echo button('load_silent("wrh/aksesoris/","#content")', 'Kembali', 'btn btn-warning', 'data-toggle="tooltip" title="Mutasi"');
                     ?>
                 </div>
             </div>

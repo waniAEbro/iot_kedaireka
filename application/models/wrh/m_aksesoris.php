@@ -386,6 +386,14 @@ class M_aksesoris extends CI_Model
         return $this->db->get('data_aksesoris_in')->row()->qty_gudang;
     }
 
+    public function getQtyOutFppp($item_code, $id_fppp)
+    {
+        $this->db->where('item_code', $item_code);
+        $this->db->where('id_fppp', $id_fppp);
+        $this->db->select('sum(qty) as qty_out');
+        return $this->db->get('data_aksesoris_out')->row()->qty_out;
+    }
+
     public function kunciStockOut($id)
     {
         $object = array('kunci' => 2);

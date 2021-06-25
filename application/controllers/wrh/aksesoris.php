@@ -187,7 +187,7 @@ class Aksesoris extends CI_Controller
         $data['alamat_proyek']       = $this->m_aksesoris->getRowFppp($id)->alamat_proyek;
         $data['sales']               = $this->m_aksesoris->getRowFppp($id)->sales;
         $data['deadline_pengiriman'] = $this->m_aksesoris->getRowFppp($id)->deadline_pengiriman;
-        $data['divisi']              = get_options($this->db->get('master_divisi'), 'id', 'divisi', true);
+        $data['divisi']              = get_options($this->db->get('master_divisi_stock'), 'id', 'divisi', true);
         $data['gudang']              = get_options($this->db->get('master_gudang'), 'id', 'gudang', true);
         $this->fungsi->message_box("Kunci Berhasil", "success");
         $this->load->view('wrh/aksesoris/v_aksesoris_detail_bom', $data);
@@ -205,7 +205,7 @@ class Aksesoris extends CI_Controller
         $data['alamat_proyek']       = $this->m_aksesoris->getRowFppp($id)->alamat_proyek;
         $data['sales']               = $this->m_aksesoris->getRowFppp($id)->sales;
         $data['deadline_pengiriman'] = $this->m_aksesoris->getRowFppp($id)->deadline_pengiriman;
-        $data['divisi']              = get_options($this->db->get('master_divisi'), 'id', 'divisi', true);
+        $data['divisi']              = get_options($this->db->get('master_divisi_stock'), 'id', 'divisi', true);
         $data['gudang']              = get_options($this->db->get('master_gudang'), 'id', 'gudang', true);
         $this->fungsi->message_box("Buka Kunci Berhasil", "success");
         $this->load->view('wrh/aksesoris/v_aksesoris_detail_bom', $data);
@@ -235,7 +235,7 @@ class Aksesoris extends CI_Controller
         $data['alamat_proyek']       = $this->m_aksesoris->getRowFppp($id)->alamat_proyek;
         $data['sales']               = $this->m_aksesoris->getRowFppp($id)->sales;
         $data['deadline_pengiriman'] = $this->m_aksesoris->getRowFppp($id)->deadline_pengiriman;
-        $data['divisi']              = get_options($this->db->get('master_divisi'), 'id', 'divisi', true);
+        $data['divisi']              = get_options($this->db->get('master_divisi_stock'), 'id', 'divisi', true);
         $data['gudang']              = get_options($this->db->get('master_gudang'), 'id', 'gudang', true);
         $this->fungsi->message_box("Parsial Berhasil", "success");
         $this->load->view('wrh/aksesoris/v_aksesoris_detail_bom', $data);
@@ -267,6 +267,7 @@ class Aksesoris extends CI_Controller
         $field  = $this->input->post('field');
         $value  = $this->input->post('value');
         $editid = $this->input->post('id');
+        $id_fppp = $this->input->post('id_fppp');
         // $total_out = $this->m_aksesoris->getTotalItemFpppOut();
         if ($field == 'produksi') {
             $this->m_aksesoris->editRowOut($field, $value, $editid);
@@ -282,8 +283,9 @@ class Aksesoris extends CI_Controller
         $divisi     = $this->m_aksesoris->getRowAksesorisOut($editid)->id_divisi;
         $gudang     = $this->m_aksesoris->getRowAksesorisOut($editid)->id_gudang;
         $qty_gudang = $this->m_aksesoris->getQtyGudang($item_code, $divisi, $gudang);
+        $qty_out = $this->m_aksesoris->getQtyOutFppp($item_code, $id_fppp);
 
-        $data['qty_gudang'] = $qty_gudang;
+        $data['qty_gudang'] = $qty_gudang - $qty_out;
         $data['status']     = "berhasil";
         echo json_encode($data);
     }
@@ -422,7 +424,7 @@ class Aksesoris extends CI_Controller
     public function mutasi_stock_add($item_code = '')
     {
         $this->fungsi->check_previleges('aksesoris');
-        $data['divisi']    = $this->db->get('master_divisi');
+        $data['divisi']    = $this->db->get('master_divisi_stock');
         $data['gudang']    = $this->db->get('master_gudang');
         $data['item_code'] = $item_code;
         $this->load->view('wrh/aksesoris/v_aksesoris_mutasi_stock_add', $data);

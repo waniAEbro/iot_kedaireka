@@ -144,6 +144,7 @@
         var fieldname = 'id_divisi';
         var value = $('#id_divisi_' + $id).val();
         var edit_id = $id;
+        var id_fppp = "<?= $id_fppp ?>";
         // Send AJAX request
         $.ajax({
             url: "<?= site_url('wrh/aksesoris/saveout/') ?>",
@@ -153,6 +154,7 @@
                 field: fieldname,
                 value: value,
                 id: edit_id,
+                id_fppp: id_fppp,
             },
             success: function(response) {
                 console.log("divisi sukses!");
@@ -162,6 +164,7 @@
                     var qtygdg = response['qty_gudang'];
                 }
                 $('#qty_gudang_' + $id).html(qtygdg);
+                // load_silent("wrh/aksesoris/detailbom/" + $("#id_fppp").val(), "#content");
             }
         })
     }
@@ -170,6 +173,7 @@
         var fieldname = 'id_gudang';
         var value = $('#id_gudang_' + $id).val();
         var edit_id = $id;
+        var id_fppp = "<?= $id_fppp ?>";
         // Send AJAX request
         $.ajax({
             url: "<?= site_url('wrh/aksesoris/saveout/') ?>",
@@ -179,6 +183,7 @@
                 field: fieldname,
                 value: value,
                 id: edit_id,
+                id_fppp: id_fppp,
             },
             success: function(response) {
                 console.log("gudang sukses!");
@@ -188,6 +193,7 @@
                     var qtygdg = response['qty_gudang'];
                 }
                 $('#qty_gudang_' + $id).html(qtygdg);
+                // load_silent("wrh/aksesoris/detailbom/" + $("#id_fppp").val(), "#content");
             }
         })
     }
