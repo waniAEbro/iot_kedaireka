@@ -3,7 +3,7 @@
     <div class="col-lg-12">
         <div class="box box-info">
             <div class="box-header with-border">
-                <h3 class="box-title">Saved BON Manual</h3>
+                <h3 class="box-title">Saved BON Manual Aksesoris</h3>
                 <div class="form-group">
                     <label class="control-label">No FORM:</label>
                     <input type="text" id="no_form" value="<?= $no_form ?>" class="form-control" autocomplete="off" readonly>
@@ -18,7 +18,6 @@
                     <thead>
                         <tr>
                             <th width="15%">FPPP</th>
-                            <th width="15%">Nama Proyek</th>
                             <th width="25%">Item</th>
                             <th width="7%">Qty</th>
                             <th width="15%">Divisi</th>
@@ -33,21 +32,27 @@
                     <hr>
                     <tbody>
                         <tr>
-                            <td><select id="id_fppp" name="id_fppp" class="form-control" style="width:100%" required>
+                            <td>
+                                <a class="btn btn-xs btn-primary" id="pilihnmproyek" onclick="pilihNamaProyek()">Pilih Nama Proyek</a><br>
+                                <span id="span_nama_proyek">
+                                    Pilih Nama Proyek Dulu :<br>
+                                    <select id="nama_proyek" name="nama_proyek" class="form-control" style="width:100%" required>
+                                        <option value="">-- Select --</option>
+                                        <?php foreach ($nama_proyek->result() as $valap) : ?>
+                                            <option value="<?= $valap->nama_proyek ?>"><?= $valap->nama_proyek ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    <br>
+                                </span>
+                                Pilih No FPPP :<br>
+                                <select id="id_fppp" name="id_fppp" class="form-control" style="width:100%" required>
                                     <option value="">-- Select --</option>
                                     <?php foreach ($fppp->result() as $valap) : ?>
                                         <option value="<?= $valap->id ?>"><?= $valap->no_fppp ?></option>
                                     <?php endforeach; ?>
                                 </select>
                                 <br>
-                                Nama Proyek: <span id="txt_nama_proyek"></span>
-                            </td>
-                            <td><select id="nama_proyek" name="nama_proyek" class="form-control" style="width:100%" required>
-                                    <option value="">-- Select --</option>
-                                    <?php foreach ($nama_proyek->result() as $valap) : ?>
-                                        <option value="<?= $valap->nama_proyek ?>"><?= $valap->nama_proyek ?></option>
-                                    <?php endforeach; ?>
-                                </select>
+
                             </td>
                             <td><select id="item_code" name="item_code" class="form-control" style="width:100%" required>
                                     <option value="">-- Select --</option>
@@ -96,7 +101,7 @@
                 title: 'Berhasil',
                 message: "Tambah Stock selesai!"
             });
-            load_silent("wrh/aksesoris", "#content");
+            load_silent("wrh/aksesoris/bon_manual", "#content");
         }
     }
     $(document).ready(function() {
@@ -106,6 +111,7 @@
         });
         $("select").select2();
         $("#stock").val(0);
+        $("#span_nama_proyek").hide();
     });
 
     $(".checkbox").change(function() {
@@ -156,35 +162,8 @@
         });
     });
 
-    $("select[name=id_fppp]").change(function() {
-        // $('#nama_proyek').val('').trigger('change');
-        var x = $("select[name=nama_proyek]");
-        if ($(this).val() == "") {
-            x.html("<option>-- Select --</option>");
-        } else {
-            z = "<option>-- Select --</option>";
-            $.ajax({
-                url: "<?= site_url('wrh/aksesoris/optionGetNamaProyek') ?>",
-                dataType: "json",
-                type: "POST",
-                data: {
-                    "fppp": $(this).val()
-                },
-                success: function(data) {
-
-                    var z = "<option value=''>-- Select --</option>";
-                    for (var i = 0; i < data.length; i++) {
-                        z += '<option value=' + data[i].nama_proyek + '>' + data[i].nama_proyek + '</option>';
-                    }
-                    x.html(z);
-                }
-            });
-
-        }
-    });
-
     $("select[name=nama_proyek]").change(function() {
-        // $('#id_fppp').val('').trigger('change');
+        $('#id_fppp').val('').trigger('change');
         var x = $("select[name=id_fppp]");
         if ($(this).val() == "") {
             x.html("<option>-- Select --</option>");
@@ -206,9 +185,13 @@
                     x.html(z);
                 }
             });
-
         }
     });
+
+    function pilihNamaProyek() {
+        $("#pilihnmproyek").hide(50);
+        $("#span_nama_proyek").show(50);
+    }
 
     var xi = 0;
     $('#formid').on('keypress', function(e) {
@@ -229,7 +212,7 @@
 
     function quotation2() {
 
-        if ($('#item_code').val() != '' && $('#id_divisi').val() != '' && $('#id_gudang').val() != '' && $('#qty').val() != '') {
+        if ($('#id_fppp').val() != '' && $('#item_code').val() != '' && $('#id_divisi').val() != '' && $('#id_gudang').val() != '' && $('#qty').val() != '') {
 
             $.ajax({
                     type: "POST",
@@ -251,8 +234,6 @@
                     //code here
                     xi++;
                     var i = datasaved['id'];
-
-
                     var x = '<tr id="output_data_' + i + '" class="output_data">\
                   <td width = "15%">\
                     ' + $('#id_fppp :selected').text() + '\
@@ -282,7 +263,7 @@
                 </tr>';
                     $('tr.odd').remove();
                     $('#dataTbl').append(x);
-                    $('#item_code').prop('selected', true);
+                    //$('#item_code').prop('selected', true);
                     $('#item_code').val('').trigger('change');
                     $('#id_divisi').val('').trigger('change');
                     $('#id_gudang').val('').trigger('change');

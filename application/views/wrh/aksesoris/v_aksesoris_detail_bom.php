@@ -81,6 +81,7 @@
                             $getqtygdg = $this->m_aksesoris->getQtyGudang($row->item_code, $row->id_divisi, $row->id_gudang);
                             $qty_gudang = ($getqtygdg > 0) ? $getqtygdg : 0;
                             $totalgudang = $qty_gudang - $qtyTotalOut;
+                            $qty_input = ($row->qty == 0) ? '-' : $row->qty;
                             if ($row->kunci == 1) {
 
                         ?>
@@ -92,7 +93,7 @@
                                     <td align="center"><?= $row->qty_bom ?></td>
                                     <td align="center"><span id="qty_kurang_<?= $row->id ?>"><?= $kurang ?></span></td>
                                     <td align="center"><span id="qty_gudang_<?= $row->id ?>"><?= $totalgudang ?></span></td>
-                                    <td style="background-color:#ffd45e" align="center"><span id="qty_bom_<?= $row->id ?>" class='edit'><?= $row->qty ?></span>
+                                    <td style="background-color:#ffd45e" align="center"><span id="qty_bom_<?= $row->id ?>" class='edit'><?= $qty_input ?></span>
                                         <input type='text' class='txtedit' data-id='<?= $row->id ?>' data-field='qty' id='<?= $row->id ?>' value='<?= $row->qty ?>'>
                                     </td>
                                     <td style="background-color:#ffd45e">
@@ -115,7 +116,7 @@
                                     <td align="center"><?= $row->qty_bom ?></td>
                                     <td align="center"><?= $kurang ?></td>
                                     <td align="center"><?= $totalgudang ?></td>
-                                    <td align="center"><?= $row->qty ?></td>
+                                    <td align="center"><?= $qty_input ?></td>
                                     <td align="center"><?= $row->divisi ?></td>
                                     <td align="center"><?= $row->gudang ?></td>
                                     <td align="center"><input type="checkbox" onclick="return false;" class="checkbox" <?= $cekproduksi ?>></td>
