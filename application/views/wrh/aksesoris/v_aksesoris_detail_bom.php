@@ -38,6 +38,14 @@
                         </div>
                     </div>
                     <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Penggunaan Sealant</label>
+                                <input type="text" class="form-control" id="penggunaan_sealant" value="<?= $penggunaan_sealant ?>" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Sales</label>
@@ -102,8 +110,8 @@
                                     <td style="background-color:#ffd45e">
                                         <?= form_dropdown('id_gudang', $gudang,  $row->id_gudang, 'id="id_gudang_' . $row->id . '" onchange="gudang(' . $row->id . ')" data-id="' . $row->id . '" data-field="id_gudang" class="form-control"') ?>
                                     </td>
-                                    <td style="background-color:#ffd45e" align="center"><input type="checkbox" id="produksi" data-id='<?= $row->id ?>' data-field='produksi' class="checkbox" <?= $cekproduksi ?>></td>
-                                    <td style="background-color:#ffd45e" align="center"><input type="checkbox" id="lapangan" data-id='<?= $row->id ?>' data-field='lapangan' class="checkbox" <?= $ceklapangan ?>></td>
+                                    <td style="background-color:#ffd45e" align="center"><input type="checkbox" id="produksi_<?= $row->id ?>" data-id='<?= $row->id ?>' data-field='produksi_<?= $row->id ?>' class="checkbox" <?= $cekproduksi ?>></td>
+                                    <td style="background-color:#ffd45e" align="center"><input type="checkbox" id="lapangan_<?= $row->id ?>" data-id='<?= $row->id ?>' data-field='lapangan_<?= $row->id ?>' class="checkbox" <?= $ceklapangan ?>></td>
                                     <td align="center"><?php echo button_confirm("Anda yakin mengunci item " . $row->item_code . "?", "wrh/aksesoris/kuncidetailbom/" . $id_fppp . "/" . $row->id, "#content", 'Kunci', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Kunci"'); ?></td>
                                 </tr>
                             <?php
@@ -211,10 +219,10 @@
             var edit_id = $(this).data('id');
         }
 
-        if (fieldname == 'produksi') {
-            $('#lapangan').prop('checked', false); // Unchecks it
+        if (fieldname == 'produksi_' + edit_id) {
+            $('#lapangan_' + edit_id).prop('checked', false); // Unchecks it
         } else {
-            $('#produksi').prop('checked', false); // Checks it
+            $('#produksi_' + edit_id).prop('checked', false); // Checks it
         }
 
         $.ajax({

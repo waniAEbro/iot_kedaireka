@@ -167,8 +167,11 @@ class M_aksesoris extends CI_Model
 
     public function getRowFppp($id)
     {
-        $this->db->where('id', $id);
-        return $this->db->get('data_fppp')->row();
+        $this->db->where('df.id', $id);
+        $this->db->join('master_penggunaan_sealant mps', 'mps.id = df.id_penggunaan_sealant', 'left');
+        $this->db->select('df.*,mps.penggunaan_sealant');
+
+        return $this->db->get('data_fppp df')->row();
     }
 
     public function getRowAksesorisOut($id)

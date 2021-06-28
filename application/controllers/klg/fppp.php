@@ -790,6 +790,16 @@ class Fppp extends CI_Controller
 		];
 		echo json_encode($respon);
 	}
+
+	public function cetak($id)
+	{
+		$data = array(
+			'id'     => $id,
+			'header' => $this->m_fppp->getRowFppp($id),
+			'detail' => $this->m_fppp->getDataDetailTabel($id),
+		);
+		$this->load->view('klg/fppp/v_cetak', $data);
+	}
 }
 
 /* End of file fppp.php */

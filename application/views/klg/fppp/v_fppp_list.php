@@ -166,6 +166,7 @@
                                 <td><span id="ws_update_<?= $row->id ?>"><?= $ws_update ?></span></td>
                                 <td><span id="site_update_<?= $row->id ?>"><?= $site_update ?></span></td>
                                 <td align="center">
+                                    <a target="_blank" href="<?= base_url('klg/fppp/cetak'); ?>/<?= $row->id ?>" class="btn btn-xs btn-warning">Cetak</a>
                                     <?php if ($row->lampiran != '') { ?>
                                         <a target="_blank" href="<?= base_url($row->lampiran); ?>" class="btn btn-xs btn-danger">Lampiran</a>
                                     <?php } ?>

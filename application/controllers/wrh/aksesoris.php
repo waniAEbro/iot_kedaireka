@@ -168,6 +168,7 @@ class Aksesoris extends CI_Controller
         $data['no_fppp']             = $this->m_aksesoris->getRowFppp($id)->no_fppp;
         $data['nama_proyek']         = $this->m_aksesoris->getRowFppp($id)->nama_proyek;
         $data['alamat_proyek']       = $this->m_aksesoris->getRowFppp($id)->alamat_proyek;
+        $data['penggunaan_sealant']               = $this->m_aksesoris->getRowFppp($id)->penggunaan_sealant;
         $data['sales']               = $this->m_aksesoris->getRowFppp($id)->sales;
         $data['deadline_pengiriman'] = $this->m_aksesoris->getRowFppp($id)->deadline_pengiriman;
         $data['divisi']              = get_options($this->db->get('master_divisi_stock'), 'id', 'divisi', true);
@@ -185,6 +186,7 @@ class Aksesoris extends CI_Controller
         $data['no_fppp']             = $this->m_aksesoris->getRowFppp($id)->no_fppp;
         $data['nama_proyek']         = $this->m_aksesoris->getRowFppp($id)->nama_proyek;
         $data['alamat_proyek']       = $this->m_aksesoris->getRowFppp($id)->alamat_proyek;
+        $data['penggunaan_sealant']               = $this->m_aksesoris->getRowFppp($id)->penggunaan_sealant;
         $data['sales']               = $this->m_aksesoris->getRowFppp($id)->sales;
         $data['deadline_pengiriman'] = $this->m_aksesoris->getRowFppp($id)->deadline_pengiriman;
         $data['divisi']              = get_options($this->db->get('master_divisi_stock'), 'id', 'divisi', true);
@@ -203,6 +205,7 @@ class Aksesoris extends CI_Controller
         $data['no_fppp']             = $this->m_aksesoris->getRowFppp($id)->no_fppp;
         $data['nama_proyek']         = $this->m_aksesoris->getRowFppp($id)->nama_proyek;
         $data['alamat_proyek']       = $this->m_aksesoris->getRowFppp($id)->alamat_proyek;
+        $data['penggunaan_sealant']               = $this->m_aksesoris->getRowFppp($id)->penggunaan_sealant;
         $data['sales']               = $this->m_aksesoris->getRowFppp($id)->sales;
         $data['deadline_pengiriman'] = $this->m_aksesoris->getRowFppp($id)->deadline_pengiriman;
         $data['divisi']              = get_options($this->db->get('master_divisi_stock'), 'id', 'divisi', true);
@@ -233,6 +236,7 @@ class Aksesoris extends CI_Controller
         $data['no_fppp']             = $this->m_aksesoris->getRowFppp($id)->no_fppp;
         $data['nama_proyek']         = $this->m_aksesoris->getRowFppp($id)->nama_proyek;
         $data['alamat_proyek']       = $this->m_aksesoris->getRowFppp($id)->alamat_proyek;
+        $data['penggunaan_sealant']               = $this->m_aksesoris->getRowFppp($id)->penggunaan_sealant;
         $data['sales']               = $this->m_aksesoris->getRowFppp($id)->sales;
         $data['deadline_pengiriman'] = $this->m_aksesoris->getRowFppp($id)->deadline_pengiriman;
         $data['divisi']              = get_options($this->db->get('master_divisi_stock'), 'id', 'divisi', true);
@@ -251,6 +255,7 @@ class Aksesoris extends CI_Controller
         $data['no_fppp']             = $this->m_aksesoris->getRowFppp($id)->no_fppp;
         $data['nama_proyek']         = $this->m_aksesoris->getRowFppp($id)->nama_proyek;
         $data['alamat_proyek']       = $this->m_aksesoris->getRowFppp($id)->alamat_proyek;
+        $data['penggunaan_sealant']               = $this->m_aksesoris->getRowFppp($id)->penggunaan_sealant;
         $data['sales']               = $this->m_aksesoris->getRowFppp($id)->sales;
         $data['deadline_pengiriman'] = $this->m_aksesoris->getRowFppp($id)->deadline_pengiriman;
         $data['divisi']              = get_options($this->db->get('master_divisi_stock'), 'id', 'divisi', true);
@@ -269,11 +274,11 @@ class Aksesoris extends CI_Controller
         $editid = $this->input->post('id');
         $id_fppp = $this->input->post('id_fppp');
         // $total_out = $this->m_aksesoris->getTotalItemFpppOut();
-        if ($field == 'produksi') {
-            $this->m_aksesoris->editRowOut($field, $value, $editid);
+        if ($field == 'produksi_' . $editid) {
+            $this->m_aksesoris->editRowOut('produksi', $value, $editid);
             $this->m_aksesoris->editRowOut('lapangan', 0, $editid);
-        } else if ($field == 'lapangan') {
-            $this->m_aksesoris->editRowOut($field, $value, $editid);
+        } else if ($field == 'lapangan_' . $editid) {
+            $this->m_aksesoris->editRowOut('lapangan', $value, $editid);
             $this->m_aksesoris->editRowOut('produksi', 0, $editid);
         } else {
             $this->m_aksesoris->editRowOut($field, $value, $editid);

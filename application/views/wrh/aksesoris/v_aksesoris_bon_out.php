@@ -33,22 +33,10 @@
                     <tbody>
                         <tr>
                             <td>
-                                <a class="btn btn-xs btn-primary" id="pilihnmproyek" onclick="pilihNamaProyek()">Pilih Nama Proyek</a><br>
-                                <span id="span_nama_proyek">
-                                    Pilih Nama Proyek Dulu :<br>
-                                    <select id="nama_proyek" name="nama_proyek" class="form-control" style="width:100%" required>
-                                        <option value="">-- Select --</option>
-                                        <?php foreach ($nama_proyek->result() as $valap) : ?>
-                                            <option value="<?= $valap->nama_proyek ?>"><?= $valap->nama_proyek ?></option>
-                                        <?php endforeach; ?>
-                                    </select>
-                                    <br>
-                                </span>
-                                Pilih No FPPP :<br>
                                 <select id="id_fppp" name="id_fppp" class="form-control" style="width:100%" required>
                                     <option value="">-- Select --</option>
                                     <?php foreach ($fppp->result() as $valap) : ?>
-                                        <option value="<?= $valap->id ?>"><?= $valap->no_fppp ?></option>
+                                        <option value="<?= $valap->id ?>"><?= $valap->no_fppp ?> - <?= $valap->nama_proyek ?></option>
                                     <?php endforeach; ?>
                                 </select>
                                 <br>
