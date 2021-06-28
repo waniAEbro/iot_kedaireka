@@ -627,6 +627,43 @@ class Aksesoris extends CI_Controller
         );
         $this->load->view('wrh/aksesoris/v_aksesoris_cetak_sj_bon', $data);
     }
+
+    public function stock_point($tgl_param = "")
+    {
+        $tgl = ($tgl_param != '') ? $tgl_param : date('Y-m-d');
+
+
+        $data['tgl'] = $tgl;
+        $data['stock_point'] = $this->m_aksesoris->getStockPoint($tgl);
+        $this->load->view('wrh/aksesoris/v_aksesoris_stock_point', $data);
+    }
+
+    public function saveStockPoint($tgl_param = "")
+    {
+        $tgl = ($tgl_param != '') ? $tgl_param : date('Y-m-d');
+
+        $aksesoris = $this->m_aksesoris->getAksesoris();
+        $in = $this->m_aksesoris->getAksesorisStokIn();
+        $out = $this->m_aksesoris->getAksesorisStokOut();
+        $cek = $this->m_aksesoris->cekStockPoint($tgl);
+        if ($cek == 1) {
+            foreach ($aksesoris->result() as $key) {
+                $stock_in = @$in[$key->item_code];
+                $stock_out = @$out[$key->item_code];
+                $real_stock = $stock_in - $stock_out;
+                $data = array(
+                    'tgl' => $tgl,
+                    'item_code' => $key->item_code,
+                    'qty' => $real_stock,
+                );
+                $this->m_aksesoris->saveStockPointAksesoris($data);
+            }
+        }
+
+        $data['tgl'] = $tgl;
+        $data['stock_point'] = $this->m_aksesoris->getStockPoint($tgl);
+        $this->load->view('wrh/aksesoris/v_aksesoris_stock_point', $data);
+    }
 }
 
 /* End of file aksesoris.php */

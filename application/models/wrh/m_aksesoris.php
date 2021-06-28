@@ -551,6 +551,67 @@ class M_aksesoris extends CI_Model
     {
         $this->db->insert('data_aksesoris_bon_out', $object);
     }
+
+    public function getAksesoris()
+    {
+        $this->db->where('id_jenis_item', 2);
+        return $this->db->get('master_item');
+    }
+
+    public function getAksesorisStokIn()
+    {
+        $res = $this->db->get('data_aksesoris_in');
+        $data = array();
+        $nilai = 0;
+        foreach ($res->result() as $key) {
+            if (isset($data[$key->item_code])) {
+                $nilai = $data[$key->item_code];
+            } else {
+                $nilai = 0;
+            }
+            $data[$key->item_code] = $key->qty + $nilai;
+        }
+        return $data;
+    }
+
+    public function getAksesorisStokOut()
+    {
+        $res = $this->db->get('data_aksesoris_out');
+        $data = array();
+        $nilai = 0;
+        foreach ($res->result() as $key) {
+            if (isset($data[$key->item_code])) {
+                $nilai = $data[$key->item_code];
+            } else {
+                $nilai = 0;
+            }
+            $data[$key->item_code] = $key->qty + $nilai;
+        }
+        return $data;
+    }
+
+    public function saveStockPointAksesoris($data)
+    {
+        $this->db->insert('data_aksesoris_stock_point', $data);
+    }
+
+    public function cekStockPoint($tgl)
+    {
+        $this->db->where('tgl', $tgl);
+        $hasil = $this->db->get('data_aksesoris_stock_point')->num_rows();
+        if ($hasil < 1) {
+            return 1;
+        } else {
+            return 2;
+        }
+    }
+
+    public function getStockPoint($tgl)
+    {
+        $this->db->where('tgl', $tgl);
+
+        return $this->db->get('data_aksesoris_stock_point');
+    }
 }
 
 /* End of file m_aksesoris.php */
