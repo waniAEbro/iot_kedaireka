@@ -276,10 +276,28 @@
                         var no = i + 1;
                         var color = "white";
                         var fontcolor = "black";
+                        if (data.detail[i].stok_awal_bulan == null) {
+                            var qty_stok_awal_bulan = 0;
+                        } else {
+                            var qty_stok_awal_bulan = data.detail[i].stok_awal_bulan;
+                        }
+
                         if (data.detail[i].tot_out == null) {
                             var qty_out = 0;
                         } else {
                             var qty_out = data.detail[i].tot_out;
+                        }
+
+                        if (data.detail[i].rata_pemakaian == null) {
+                            var qty_rata_pemakaian = 0;
+                        } else {
+                            var qty_rata_pemakaian = data.detail[i].rata_pemakaian;
+                        }
+
+                        if (data.detail[i].min_stock == null) {
+                            var qty_min_stock = 0;
+                        } else {
+                            var qty_min_stock = data.detail[i].min_stock;
                         }
 
                         infoTable += '<tr bgcolor="' + color + '">' +
@@ -287,12 +305,12 @@
                             '<td><font color="' + fontcolor + '">' + data.detail[i].divisi + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].gudang + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].keranjang + '</font></td>' +
-                            '<td><font color="' + fontcolor + '">' + data.detail[i].stok_awal_bulan + '</font></td>' +
-                            '<td><font color="' + fontcolor + '">' + data.detail[i].tot_in + '</font></td>' +
-                            '<td><font color="' + fontcolor + '">' + qty_out + '</font></td>' +
-                            '<td><font color="' + fontcolor + '">' + data.detail[i].stok_akhir_bulan + '</font></td>' +
-                            '<td><font color="' + fontcolor + '">' + data.detail[i].rata_pemakaian + '</font></td>' +
-                            '<td><font color="' + fontcolor + '">' + data.detail[i].min_stock + '</font></td>' +
+                            '<td align="center"><font color="' + fontcolor + '">' + qty_stok_awal_bulan + '</font></td>' +
+                            '<td align="center"><font color="' + fontcolor + '">' + data.detail[i].tot_in + '</font></td>' +
+                            '<td align="center"><font color="' + fontcolor + '">' + qty_out + '</font></td>' +
+                            '<td align="center"><font color="' + fontcolor + '">' + data.detail[i].stok_akhir_bulan + '</font></td>' +
+                            '<td align="center"><font color="' + fontcolor + '">' + qty_rata_pemakaian + '</font></td>' +
+                            '<td align="center"><font color="' + fontcolor + '">' + qty_min_stock + '</font></td>' +
                             '</tr>';
 
                     };
