@@ -42,7 +42,6 @@ class StockPointAksesoris extends CI_Controller
 
         $data['tgl'] = $tgl;
         $data['stock_point'] = $this->m_aksesoris->getStockPoint($tgl);
-        $this->load->view('wrh/aksesoris/v_aksesoris_stock_point', $data);
     }
 }
 
