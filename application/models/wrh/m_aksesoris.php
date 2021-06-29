@@ -18,9 +18,8 @@ class M_aksesoris extends CI_Model
         $this->db->join('master_item da', 'da.item_code = dai.item_code', 'left');
         $this->db->where('dai.item_code', $item_code);
         $this->db->select('dai.*,md.divisi,mg.gudang');
-        $this->db->group_by('dai.item_code');
-        $this->db->group_by('dai.id_divisi');
-        $this->db->group_by('dai.keranjang');
+        // $this->db->group_by('dai.item_code');
+        // $this->db->group_by('dai.id_divisi');
 
         return $this->db->get('data_aksesoris_in dai')->result();;
     }
