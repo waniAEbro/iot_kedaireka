@@ -18,11 +18,12 @@ class M_aksesoris extends CI_Model
         $this->db->join('master_item da', 'da.item_code = dai.item_code', 'left');
         $this->db->where('dai.item_code', $item_code);
         $this->db->select('dai.*,md.divisi,mg.gudang');
+        // $this->db->group_by('dai.item_code');
         $this->db->group_by('dai.id_divisi');
         $this->db->group_by('dai.id_gudang');
         $this->db->group_by('dai.keranjang');
 
-        return $this->db->get('data_aksesoris_in dai')->result();;
+        return $this->db->get('data_aksesoris_in dai')->result();
     }
 
     public function getTotalDivisiGudangAwalBulan()
@@ -554,8 +555,20 @@ class M_aksesoris extends CI_Model
 
     public function getAksesoris()
     {
-        $this->db->where('id_jenis_item', 2);
-        return $this->db->get('master_item');
+        // $this->db->where('id_jenis_item', 2);
+        // return $this->db->get('master_item');
+        $this->db->join('master_divisi_stock md', 'md.id = dai.id_divisi', 'left');
+        $this->db->join('master_gudang mg', 'mg.id = dai.id_gudang', 'left');
+
+        $this->db->join('master_item da', 'da.item_code = dai.item_code', 'left');
+        // $this->db->where('dai.item_code', $item_code);
+        // $this->db->select('dai.*,md.divisi,mg.gudang');
+        $this->db->group_by('dai.item_code');
+        $this->db->group_by('dai.id_divisi');
+        $this->db->group_by('dai.id_gudang');
+        $this->db->group_by('dai.keranjang');
+
+        return $this->db->get('data_aksesoris_in dai');
     }
 
     public function getAksesorisStokIn()
@@ -564,12 +577,12 @@ class M_aksesoris extends CI_Model
         $data = array();
         $nilai = 0;
         foreach ($res->result() as $key) {
-            if (isset($data[$key->item_code])) {
-                $nilai = $data[$key->item_code];
+            if (isset($data[$key->item_code][$key->id_divisi][$key->id_gudang])) {
+                $nilai = $data[$key->item_code][$key->id_divisi][$key->id_gudang];
             } else {
                 $nilai = 0;
             }
-            $data[$key->item_code] = $key->qty + $nilai;
+            $data[$key->item_code][$key->id_divisi][$key->id_gudang] = $key->qty + $nilai;
         }
         return $data;
     }
@@ -580,12 +593,12 @@ class M_aksesoris extends CI_Model
         $data = array();
         $nilai = 0;
         foreach ($res->result() as $key) {
-            if (isset($data[$key->item_code])) {
-                $nilai = $data[$key->item_code];
+            if (isset($data[$key->item_code][$key->id_divisi][$key->id_gudang])) {
+                $nilai = $data[$key->item_code][$key->id_divisi][$key->id_gudang];
             } else {
                 $nilai = 0;
             }
-            $data[$key->item_code] = $key->qty + $nilai;
+            $data[$key->item_code][$key->id_divisi][$key->id_gudang] = $key->qty + $nilai;
         }
         return $data;
     }
@@ -609,8 +622,10 @@ class M_aksesoris extends CI_Model
     public function getStockPoint($tgl)
     {
         $this->db->where('tgl', $tgl);
-
-        return $this->db->get('data_aksesoris_stock_point');
+        $this->db->join('master_divisi_stock md', 'md.id = dai.id_divisi', 'left');
+        $this->db->join('master_gudang mg', 'mg.id = dai.id_gudang', 'left');
+        $this->db->select('dai.*,md.divisi,mg.gudang');
+        return $this->db->get('data_aksesoris_stock_point dai');
     }
 }
 

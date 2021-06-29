@@ -648,12 +648,14 @@ class Aksesoris extends CI_Controller
         $cek = $this->m_aksesoris->cekStockPoint($tgl);
         if ($cek == 1) {
             foreach ($aksesoris->result() as $key) {
-                $stock_in = @$in[$key->item_code];
-                $stock_out = @$out[$key->item_code];
+                $stock_in = @$in[$key->item_code][$key->id_divisi][$key->id_gudang];
+                $stock_out = @$out[$key->item_code][$key->id_divisi][$key->id_gudang];
                 $real_stock = $stock_in - $stock_out;
                 $data = array(
                     'tgl' => $tgl,
                     'item_code' => $key->item_code,
+                    'id_divisi' => $key->id_divisi,
+                    'id_gudang' => $key->id_gudang,
                     'qty' => $real_stock,
                 );
                 $this->m_aksesoris->saveStockPointAksesoris($data);

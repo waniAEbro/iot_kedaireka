@@ -22,7 +22,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <a class="btn btn-primary" onclick="setAplikator()">Tampilkan</a>
-                            <!-- <a class="btn btn-default" onclick="saveStockPoint()">Simpan</a> -->
+                            <a class="btn btn-default" onclick="saveStockPoint()">Simpan</a>
                         </div>
                     </div>
                 </div>
@@ -73,12 +73,10 @@
                             ?>
                                 <tr>
                                     <td><?= $i++ ?></td>
+                                    <td><?= $row->item_code ?></td>
                                     <td><?= $row->divisi ?></td>
                                     <td><?= $row->gudang ?></td>
-                                    <td><?= $row->item_code ?></td>
                                     <td align="center"><?= $row->qty ?></td>
-
-
                                 </tr>
 
                             <?php
