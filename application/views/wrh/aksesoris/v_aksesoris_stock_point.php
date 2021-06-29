@@ -22,7 +22,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <a class="btn btn-primary" onclick="setAplikator()">Tampilkan</a>
-                            <a class="btn btn-default" onclick="saveStockPoint()">Simpan</a>
+                            <!-- <a class="btn btn-default" onclick="saveStockPoint()">Simpan</a> -->
                         </div>
                     </div>
                 </div>
