@@ -7,9 +7,9 @@ class MYPDF extends TCPDF
     {
 
         $image = base_url('assets/img/logo.png');
-        $this->Image($image, 13, 5, 20, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
-        $this->Cell(0, 2, '  FPPP', 0, true, 'L', 0, '', 0, false, 'T', 'M');
-        $this->Line(15, 20, 190, 20);
+        $this->Image($image, 90, 5, 20, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+        // $this->Cell(0, 0, 'FPPP', 0, true, 'C', 0, '', 0, false, 'T', 'M');
+        $this->Line(15, 15, 190, 15);
     }
 
 
@@ -58,12 +58,12 @@ table.first {
         width:100%;
     }
 </style>
-<table border="1" class="first" cellpadding="1">
-    <tbody>
+<h2 align="center">FPPP</h2>
+<table border="0.5" class="first" cellpadding="2">
         <tr>
-            <td width="20%">Application Date</td>
+            <td width="30%">Application Date</td>
             <td width="3%">:</td>
-            <td width="77%">' . $header->tgl_pembuatan . '</td>
+            <td width="67%">' . $header->tgl_pembuatan . '</td>
         </tr>
         <tr>
             <td>Applicant</td>
@@ -161,7 +161,6 @@ table.first {
             <td>' . $header->no_telp_tujuan . '</td>
         </tr>
         <tr>
-        </tr>
             <td>Nama Ekspedisi</td>
             <td>:</td>
             <td>' . $header->pengiriman_ekspedisi . '</td>
@@ -216,17 +215,7 @@ table.first {
             <td>:</td>
             <td>' . $header->note . '</td>
         </tr>
-
-        
-    </tbody>
-</table><br>
-';
-$html .= '<table border="1" cellpadding="2">
-    <tr>
-        <td style="height:30px;">Special Instruction : ' . $header->note . '</td>
-    </tr>
-
-</table><br><br>
+</table>
 ';
 
 // output the HTML content

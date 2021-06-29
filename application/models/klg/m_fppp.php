@@ -363,7 +363,7 @@ class M_fppp extends CI_Model
 
 		$this->db->select('df.*,mps.penggunaan_sealant,mpp.penggunaan_peti,mpe.pengiriman,mp.metode_pengiriman,mlk.logo_kaca,mk.kaca,mwa.warna_aluminium,mwal.warna_aluminium as warna_lainya');
 
-		return $this->db->get('data_fppp df')->row();
+		return $this->db->get('data_fppp df');
 	}
 
 	public function getRowFpppDetail($id)

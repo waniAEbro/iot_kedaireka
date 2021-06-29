@@ -795,9 +795,10 @@ class Fppp extends CI_Controller
 	{
 		$data = array(
 			'id'     => $id,
-			'header' => $this->m_fppp->getRowFppp($id),
-			'detail' => $this->m_fppp->getDataDetailTabel($id),
+			'header' => $this->m_fppp->getRowFppp($id)->row(),
 		);
+		// print_r($data['header']);
+		// die();
 		$this->load->view('klg/fppp/v_cetak', $data);
 	}
 }
