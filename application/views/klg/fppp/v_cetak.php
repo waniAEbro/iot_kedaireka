@@ -8,7 +8,7 @@ class MYPDF extends TCPDF
 
         $image = base_url('assets/img/logo.png');
         $this->Image($image, 13, 5, 20, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
-        $this->Cell(0, 2, ' FORM FPPP', 0, true, 'L', 0, '', 0, false, 'T', 'M');
+        $this->Cell(0, 2, '  FPPP', 0, true, 'L', 0, '', 0, false, 'T', 'M');
         $this->Line(15, 20, 190, 20);
     }
 
@@ -58,37 +58,165 @@ table.first {
         width:100%;
     }
 </style>
-<table border="0" class="first" cellpadding="1">
+<table border="1" class="first" cellpadding="1">
     <tbody>
         <tr>
-            <td width="15%">Date</td>
+            <td width="20%">Application Date</td>
             <td width="3%">:</td>
-            <td width="40%">' . $header->created . '</td>
-            <td width="15%">No FPPP</td>
-            <td width="3%">:</td>
-            <td width="20%">' . $header->no_fppp . '</td>
+            <td width="77%">' . $header->tgl_pembuatan . '</td>
         </tr>
         <tr>
-            <td>Nama Proyek</td>
+            <td>Applicant</td>
+            <td>:</td>
+            <td>' . $header->applicant . '</td>
+        </tr>
+        <tr>
+            <td>Applicant Sector</td>
+            <td>:</td>
+            <td>' . $header->applicant_sector . '</td>
+        </tr>
+        <tr>
+            <td>Authorized Distributor</td>
+            <td>:</td>
+            <td>' . $header->authorized_distributor . '</td>
+        </tr>
+        <tr>
+            <td>No FPPP</td>
+            <td>:</td>
+            <td>' . $header->no_fppp . '</td>
+        </tr>
+        <tr>
+            <td>Nama Project</td>
             <td>:</td>
             <td>' . $header->nama_proyek . '</td>
-            <td>Sales</td>
-            <td>:</td>
-            <td>' . $header->sales . '</td>            
         </tr>
         <tr>
-            <td>Alamat Proyek</td>
+            <td>Tahap</td>
+            <td>:</td>
+            <td>' . $header->tahap . '</td>
+        </tr>
+        <tr>
+            <td>Alamat Project</td>
             <td>:</td>
             <td>' . $header->alamat_proyek . '</td>
+        </tr>
+        <tr>
+            <td>Status Order</td>
+            <td>:</td>
+            <td>' . $header->status_order . '</td>
+        </tr>
+        <tr>
+            <td>Note NCR/FPPP</td>
+            <td>:</td>
+            <td>' . $header->note_ncr . '</td>
+        </tr>
+        <tr>
+            <td>Pengiriman</td>
+            <td>:</td>
+            <td>' . $header->pengiriman . '</td>
+        </tr>
+        <tr>
             <td>Deadline Pengiriman</td>
             <td>:</td>
-            <td>' . $header->deadline_pengiriman . '</td>            
+            <td>' . $header->deadline_pengiriman . '</td>
+        </tr>
+        <tr>
+            <td>Metode Pengiriman</td>
+            <td>:</td>
+            <td>' . $header->metode_pengiriman . '</td>
+        </tr>
+        <tr>
+            <td>Penggunaan Peti </td>
+            <td>:</td>
+            <td>' . $header->penggunaan_peti . '</td>
         </tr>
         <tr>
             <td>Penggunaan Sealant</td>
             <td>:</td>
-            <td colspan="4">' . $header->penggunaan_sealant . '</td>
+            <td>' . $header->penggunaan_sealant . '</td>
         </tr>
+        <tr>
+            <td>Warna Aluminium</td>
+            <td>:</td>
+            <td>' . $header->warna_aluminium . '</td>
+        </tr>
+        <tr>
+            <td>Warna Lainya</td>
+            <td>:</td>
+            <td>' . $header->warna_lainya . '</td>
+        </tr>
+        <tr>
+            <td>Warna Sealant</td>
+            <td>:</td>
+            <td>' . $header->warna_sealant . '</td>
+        </tr>
+        <tr>
+            <td>Ditujukan Kepada</td>
+            <td>:</td>
+            <td>' . $header->ditujukan_kepada . '</td>
+        </tr>
+        <tr>
+            <td>No Telp Tujuan</td>
+            <td>:</td>
+            <td>' . $header->no_telp_tujuan . '</td>
+        </tr>
+        <tr>
+        </tr>
+            <td>Nama Ekspedisi</td>
+            <td>:</td>
+            <td>' . $header->pengiriman_ekspedisi . '</td>
+        </tr>
+        <tr>
+            <td>Alamat Ekspedisi</td>
+            <td>:</td>
+            <td>' . $header->alamat_ekspedisi . '</td>
+        </tr>
+        <tr>
+            <td>Nama Sales Marketing</td>
+            <td>:</td>
+            <td>' . $header->sales . '</td>
+        </tr>
+        <tr>
+            <td>Nama PIC Project</td>
+            <td>:</td>
+            <td>' . $header->pic_project . '</td>
+        </tr>
+        <tr>
+            <td>Admin Koordinator</td>
+            <td>:</td>
+            <td>' . $header->admin_koordinator . '</td>
+        </tr>
+        <tr>
+            <td>Kaca</td>
+            <td>:</td>
+            <td>' . $header->kaca . '</td>
+        </tr>
+        <tr>
+            <td>Jenis Kaca</td>
+            <td>:</td>
+            <td>' . $header->jenis_kaca . '</td>
+        </tr>
+        <tr>
+            <td>Logo Kaca</td>
+            <td>:</td>
+            <td>' . $header->logo_kaca . '</td>
+        </tr>
+        <tr>
+            <td>Jumlah Opening</td>
+            <td>:</td>
+            <td>' . $header->jumlah_gambar . '</td>
+        </tr>
+        <tr>
+            <td>Jumlah Unit</td>
+            <td>:</td>
+            <td>' . $header->jumlah_unit . '</td>
+        </tr>
+        <tr>
+            <td>Note</td>
+            <td>:</td>
+            <td>' . $header->note . '</td>
+        </tr>
+
         
     </tbody>
 </table><br>
@@ -100,74 +228,7 @@ $html .= '<table border="1" cellpadding="2">
 
 </table><br><br>
 ';
-$html .= '
-<table border="0.2" cellpadding="1">
-        <tr>
-            <td width="5%" align="center">No</td>
-            <td width="20%" align="center">Brand</td>
-            <td width="10%" align="center">FInish Coating</td>
-            <td width="15%" align="center">Kode Opening</td>
-            <td width="8%" align="center">Kode Unit</td>
-            <td width="25%" align="center">Item</td>
-            <td width="8%" align="center">Glass Thick</td>
-            <td width="9%" align="center">Qty</td>
-        </tr>';
-$i = 1;
-$total = 0;
-foreach ($detail as $key) {
-    $total = $total + $key->qty;
-    $html .= '<tr>
-            <td align="center">' . $i++ . '</td>
-            <td> ' . $key->brand . '</td>
-            <td align="center">' . $key->warna_aluminium . '</td>
-            <td align="center">' . $key->kode_opening . '</td>
-            <td align="center">' . $key->kode_unit . '</td>
-            <td>' . $key->item . '</td>
-            <td>' . $key->glass_thick . '</td>
-            <td align="center">' . $key->qty . '</td>
-        </tr>';
-}
-$html .= '<tr>
-            <td align="center" colspan="7"><b> Total Item</b></td>
-            <td align="center"><b> ' . $total . '</b></td>
-        </tr>
-        </table><br><br>';
 
-$html .= '
-<style>
-
-table.ttd {
-        font-size: 7pt;
-        width:100%;
-    }
-</style>
-<table border="0.2" class="ttd"cellpadding="1">
-        <tr>
-            <td width="15%" align="center">F&A APPROVAL</td>
-            <td width="15%" align="center">PROPOSED BY</td>
-            <td width="25%" align="center">CHECKED BY</td>
-            <td width="15%" align="center">ACKNOWLEDGED BY</td>
-            <td width="15%" align="center">ACKNOWLEDGED BY</td>
-            <td width="15%" align="center">APPROVED BY</td>
-        </tr>
-        <tr>
-            <td style="height:30px;" width="15%" align="center"></td>
-            <td width="15%" align="center"></td>
-            <td width="25%" align="center"></td>
-            <td width="15%" align="center"></td>
-            <td width="15%" align="center"></td>
-            <td width="15%" align="center"></td>
-        </tr>
-        <tr>
-            <td width="15%" align="center">F&A</td>
-            <td width="15%" align="center">Admin ALPHAMAX</td>
-            <td width="25%" align="center">Manager ALPHAMAX</td>
-            <td width="15%" align="center">Production</td>
-            <td width="15%" align="center">Logistic</td>
-            <td width="15%" align="center">Director</td>
-        </tr>
-        ';
-$html .= '</table>';
 // output the HTML content
 $pdf->writeHTML($html, true, false, true, false, '');
 
