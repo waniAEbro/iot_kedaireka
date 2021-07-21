@@ -324,7 +324,7 @@
               <input type="text" id="qty" class="form-control" autocomplete="off">
             </div>
             <div class="form-group">
-              <a onclick="quotation()" class="btn btn-info">Add Item</a>
+              <a onclick="quotation()" id="add_item" class="btn btn-info">Add Item</a>
             </div>
           </div>
         </form>
@@ -362,56 +362,7 @@
 </div>
 
 
-<div class="modal fade" id="myModalEdit" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Edit</h4>
-      </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <label class="control-label">Brand</label>
-          <?= form_dropdown('id_brand_edit', $brand, '', 'id="id_brand_edit" class="form-control"') ?>
-        </div>
-        <div class="form-group">
-          <label class="control-label">Finish Coating</label>
-          <?= form_dropdown('finish_coating_edit', $warna_aluminium, '', 'id="finish_coating_edit" class="form-control"') ?>
-        </div>
-        <div class="form-group">
-          <label class="control-label">Kode Opening</label>
-          <input type="text" id="kode_opening_edit" class="form-control">
-        </div>
-        <div class="form-group">
-          <label class="control-label">Kode Unit</label>
-          <input type="text" id="kode_unit_edit" class="form-control">
-        </div>
-        <div class="form-group">
-          <label class="control-label">Item</label>
-          <?= form_dropdown('id_item_edit', $item, '', 'id="id_item_edit" class="form-control"') ?>
-        </div>
-        <div class="form-group">
-          <label class="control-label">Glass Thick</label>
-          <input type="text" id="glass_thick_edit" class="form-control">
-        </div>
 
-        <div class="form-group">
-          <label class="control-label">Qty</label>
-          <input type="hidden" class="form-control" id="id_edit" name="id_edit" autocomplete="off">
-          <input type="hidden" class="form-control" id="id_fppp_edit" name="id_fppp_edit" autocomplete="off">
-          <input type="text" id="qty_edit" class="form-control" autocomplete="off">
-        </div>
-        <div class="form-group">
-          <a onclick="saveEditItem()" class="btn btn-info">Save</a>
-        </div>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" id="btnEditQuo" class="btn btn-default tmyModalTambahan" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 
 <script language="javascript">
@@ -582,6 +533,7 @@
   });
 
   function quotation() {
+    $('#add_item').hide();
 
     if ($('#id_fppp').val() != '' && $('#item').val() != '' && $('#bukaan').val() != '' && $('#warna').val() != '' && $('#lebar').val() != '' && $('#tinggi').val() != '' && $('#qty').val() != '' && $("#tipe_custom").val() != '') {
 
@@ -648,7 +600,7 @@
             title: 'Sukses',
             message: "Berhasil menyimpan FPPP"
           });
-
+          $('#add_item').show();
         })
         .fail(function(XHR) {
           if (XHR.readyState == 0) {
@@ -790,3 +742,69 @@
     };
   }
 </script>
+
+<div class="modal fade" id="myModalEdit" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Edit</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Brand</label>
+          <select id="id_brand_edit" name="id_brand_edit" class="form-control" style="width:100%" required>
+            <option value="">-- Select Brand --</option>
+            <?php foreach ($brand_edit->result() as $val) : ?>
+              <option value="<?= $val->id ?>"><?= $val->brand ?></option>
+            <?php endforeach; ?>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Finish Coating</label>
+          <select id="finish_coating_edit" name="finish_coating_edit" class="form-control" style="width:100%" required>
+            <option value="">-- Select Finish Coating --</option>
+            <?php foreach ($warna_aluminium_edit->result() as $val) : ?>
+              <option value="<?= $val->id ?>"><?= $val->warna_aluminium ?></option>
+            <?php endforeach; ?>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Kode Opening</label>
+          <input type="text" id="kode_opening_edit" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>Kode Unit</label>
+          <input type="text" id="kode_unit_edit" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>Item</label>
+          <select id="id_item_edit" name="id_item_edit" class="form-control" style="width:100%" required>
+            <option value="">-- Select Item --</option>
+            <?php foreach ($item_edit->result() as $val) : ?>
+              <option value="<?= $val->id ?>"><?= $val->barang ?></option>
+            <?php endforeach; ?>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="control-label">Glass Thick</label>
+          <input type="text" id="glass_thick_edit" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label class="control-label">Qty</label>
+          <input type="hidden" class="form-control" id="id_edit" name="id_edit" autocomplete="off">
+          <input type="hidden" class="form-control" id="id_fppp_edit" name="id_fppp_edit" autocomplete="off">
+          <input type="text" id="qty_edit" class="form-control" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <a onclick="saveEditItem()" class="btn btn-info">Save</a>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btnEditQuo" class="btn btn-default tmyModalTambahan" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -60,43 +60,50 @@ class Fppp extends CI_Controller
 	public function formAdd($param = '')
 	{
 		$this->fungsi->check_previleges('fppp');
-		$data['divisi']             = get_options($this->db->get('master_divisi'), 'id', 'divisi');
-		$data['pengiriman']         = get_options($this->db->get('master_pengiriman'), 'id', 'pengiriman');
-		$data['metode_pengiriman']  = get_options($this->db->get('master_metode_pengiriman'), 'id', 'metode_pengiriman');
-		$data['penggunaan_peti']    = get_options($this->db->get('master_penggunaan_peti'), 'id', 'penggunaan_peti');
-		$data['penggunaan_sealant'] = get_options($this->db->get('master_penggunaan_sealant'), 'id', 'penggunaan_sealant');
-		$data['warna_aluminium']    = get_options($this->db->get('master_warna_aluminium'), 'id', 'warna_aluminium');
-		$data['warna_lainya']       = get_options($this->db->get('master_warna_aluminium'), 'id', 'warna_aluminium');
-		$data['logo_kaca']          = get_options($this->db->get('master_logo_kaca'), 'id', 'logo_kaca');
-		$data['kaca']               = get_options($this->db->get('master_kaca'), 'id', 'kaca');
-		$data['brand']              = get_options($this->db->get('master_brand'), 'id', 'brand', true);
-		$data['item']               = get_options($this->db->get('master_barang'), 'id', 'barang', true);
-		$data['param']              = $param;
-		$nama_divisi          = $this->m_fppp->getRowNamaDivisi($param)->divisi_pendek;
-		$data['no_fppp']            = str_pad($this->m_fppp->getNoFppp($param), 3, '0', STR_PAD_LEFT) . '/FPPP/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
+		$data['divisi']               = get_options($this->db->get('master_divisi'), 'id', 'divisi');
+		$data['pengiriman']           = get_options($this->db->get('master_pengiriman'), 'id', 'pengiriman');
+		$data['metode_pengiriman']    = get_options($this->db->get('master_metode_pengiriman'), 'id', 'metode_pengiriman');
+		$data['penggunaan_peti']      = get_options($this->db->get('master_penggunaan_peti'), 'id', 'penggunaan_peti');
+		$data['penggunaan_sealant']   = get_options($this->db->get('master_penggunaan_sealant'), 'id', 'penggunaan_sealant');
+		$data['warna_aluminium']      = get_options($this->db->get('master_warna_aluminium'), 'id', 'warna_aluminium');
+		$data['warna_lainya']         = get_options($this->db->get('master_warna_aluminium'), 'id', 'warna_aluminium');
+		$data['logo_kaca']            = get_options($this->db->get('master_logo_kaca'), 'id', 'logo_kaca');
+		$data['kaca']                 = get_options($this->db->get('master_kaca'), 'id', 'kaca');
+		$data['brand']                = get_options($this->db->get('master_brand'), 'id', 'brand', true);
+		$data['item']                 = get_options($this->db->get('master_barang'), 'id', 'barang', true);
+		$data['brand_edit']           = $this->db->get('master_brand');
+		$data['warna_aluminium_edit'] = $this->db->get('master_warna_aluminium');
+		$data['item_edit']            = $this->db->get('master_barang');
+		$data['param']                = $param;
+		$nama_divisi            = $this->m_fppp->getRowNamaDivisi($param)->divisi_pendek;
+		$data['no_fppp']              = str_pad($this->m_fppp->getNoFppp($param), 3, '0', STR_PAD_LEFT) . '/FPPP/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
 		$this->load->view('klg/fppp/v_fppp_add', $data);
 	}
 
 	public function formEdit($id = '')
 	{
 		$this->fungsi->check_previleges('fppp');
-		$param                = $this->m_fppp->getRowFppp($id)->id_divisi;
-		$data['divisi']             = get_options($this->db->get('master_divisi'), 'id', 'divisi');
-		$data['pengiriman']         = get_options($this->db->get('master_pengiriman'), 'id', 'pengiriman');
-		$data['metode_pengiriman']  = get_options($this->db->get('master_metode_pengiriman'), 'id', 'metode_pengiriman');
-		$data['penggunaan_peti']    = get_options($this->db->get('master_penggunaan_peti'), 'id', 'penggunaan_peti');
-		$data['penggunaan_sealant'] = get_options($this->db->get('master_penggunaan_sealant'), 'id', 'penggunaan_sealant');
-		$data['warna_aluminium']    = get_options($this->db->get('master_warna_aluminium'), 'id', 'warna_aluminium');
-		$data['warna_lainya']       = get_options($this->db->get('master_warna_aluminium'), 'id', 'warna_aluminium');
-		$data['logo_kaca']          = get_options($this->db->get('master_logo_kaca'), 'id', 'logo_kaca');
-		$data['kaca']               = get_options($this->db->get('master_kaca'), 'id', 'kaca');
-		$data['brand']              = get_options($this->db->get('master_brand'), 'id', 'brand', true);
-		$data['item']               = get_options($this->db->get('master_barang'), 'id', 'barang', true);
-		$data['param']              = $param;
-		$data['row']                = $this->m_fppp->getRowFppp($id);
-		$data['detail']             = $this->m_fppp->getRowFpppDetail($id);
-		$nama_divisi          = $this->m_fppp->getRowNamaDivisi($param)->divisi_pendek;
-		$data['no_fppp']            = str_pad($this->m_fppp->getNoFppp($param), 3, '0', STR_PAD_LEFT) . '/FPPP/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
+		$param                  = $this->m_fppp->getRowFppp($id)->row()->id_divisi;
+		$data['divisi']               = get_options($this->db->get('master_divisi'), 'id', 'divisi');
+		$data['pengiriman']           = get_options($this->db->get('master_pengiriman'), 'id', 'pengiriman');
+		$data['metode_pengiriman']    = get_options($this->db->get('master_metode_pengiriman'), 'id', 'metode_pengiriman');
+		$data['penggunaan_peti']      = get_options($this->db->get('master_penggunaan_peti'), 'id', 'penggunaan_peti');
+		$data['penggunaan_sealant']   = get_options($this->db->get('master_penggunaan_sealant'), 'id', 'penggunaan_sealant');
+		$data['warna_aluminium']      = get_options($this->db->get('master_warna_aluminium'), 'id', 'warna_aluminium');
+		$data['warna_lainya']         = get_options($this->db->get('master_warna_aluminium'), 'id', 'warna_aluminium');
+		$data['logo_kaca']            = get_options($this->db->get('master_logo_kaca'), 'id', 'logo_kaca');
+		$data['kaca']                 = get_options($this->db->get('master_kaca'), 'id', 'kaca');
+		$data['brand']                = get_options($this->db->get('master_brand'), 'id', 'brand', true);
+		$data['item']                 = get_options($this->db->get('master_barang'), 'id', 'barang', true);
+		$data['brand_edit']           = $this->db->get('master_brand');
+		$data['warna_aluminium_edit'] = $this->db->get('master_warna_aluminium');
+		$data['item_edit']            = $this->db->get('master_barang');
+		// $this->db->get_where('mytable', array('id' => $id), $limit, $offset);
+		$data['param']     = $param;
+		$data['row']       = $this->m_fppp->getRowFppp($id)->row();
+		$data['detail']    = $this->m_fppp->getRowFpppDetail($id);
+		$nama_divisi = $this->m_fppp->getRowNamaDivisi($param)->divisi_pendek;
+		$data['no_fppp']   = str_pad($this->m_fppp->getNoFppp($param), 3, '0', STR_PAD_LEFT) . '/FPPP/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
 		$this->load->view('klg/fppp/v_fppp_edit', $data);
 	}
 
@@ -381,9 +388,9 @@ class Fppp extends CI_Controller
 	public function updateDetail()
 	{
 		$this->fungsi->check_previleges('fppp');
-		$id      = $this->input->post('id');
-		$kolom   = $this->input->post('kolom');
-		$nilai   = $this->input->post('nilai');
+		$id    = $this->input->post('id');
+		$kolom = $this->input->post('kolom');
+		$nilai = $this->input->post('nilai');
 		if ($nilai != '') {
 			$sts = 1;
 		} else {
@@ -407,14 +414,14 @@ class Fppp extends CI_Controller
 		$jml_baris = $this->m_fppp->getJmlBaris($id_fppp);
 		if ($kolom == 3) {
 			$jml_sts_pengiriman = $this->m_fppp->getJmlStsPengiriman($id_fppp);
-			$txt_ws = $this->m_fppp->updatews($id, $jml_baris, $jml_sts_pengiriman, $id_fppp);
-			$respon['txt_ws_update']   = $txt_ws;
+			$txt_ws             = $this->m_fppp->updatews($id, $jml_baris, $jml_sts_pengiriman, $id_fppp);
+			$respon['txt_ws_update']    = $txt_ws;
 		}
 
 		if ($kolom == 4) {
-			$jml_sts_pasang = $this->m_fppp->getJmlStsPasang($id_fppp);
-			$txt_site = $this->m_fppp->updatesite($id, $jml_baris, $jml_sts_pasang, $id_fppp);
-			$respon['txt_site_update']   = $txt_site;
+			$jml_sts_pasang    = $this->m_fppp->getJmlStsPasang($id_fppp);
+			$txt_site          = $this->m_fppp->updatesite($id, $jml_baris, $jml_sts_pasang, $id_fppp);
+			$respon['txt_site_update'] = $txt_site;
 		}
 
 
@@ -567,7 +574,7 @@ class Fppp extends CI_Controller
 		$data['bom_aluminium'] = $this->m_fppp->bom_aluminium($id_fppp);
 		$data['bom_aksesoris'] = $this->m_fppp->bom_aksesoris($id_fppp);
 		$data['bom_lembaran']  = $this->m_fppp->bom_lembaran($id_fppp);
-		$data['param']  = $param;
+		$data['param']         = $param;
 		$this->load->view('klg/fppp/v_fppp_bom_list', $data);
 	}
 
