@@ -258,7 +258,7 @@
           <div class="form-group">
             <label>Lampiran</label>
             <?php echo form_upload(array('name' => 'lampiran', 'id' => 'lampiran')); ?>
-            <span style="color:red">*) Lampiran File berformat .pdf maks 2MB</span>
+            <span style="color:red">*) Lampiran File berformat .pdf maks 5MB</span>
           </div>
         </div>
       </div>
@@ -321,7 +321,7 @@
             <div class="form-group">
               <label class="control-label">Qty</label>
               <input type="hidden" id="id_fppp" readonly>
-              <input type="text" id="qty" class="form-control" autocomplete="off">
+              <input type="text" id="qty" class="form-control" autocomplete="off" value="1" readonly>
             </div>
             <div class="form-group">
               <a onclick="quotation()" id="add_item" class="btn btn-info">Add Item</a>
@@ -595,7 +595,6 @@
           $('#kode_opening').val('');
           $('#kode_unit').val('');
           $('#glass_thick').val('');
-          $('#qty').val('');
           $.growl.notice({
             title: 'Sukses',
             message: "Berhasil menyimpan FPPP"
@@ -795,7 +794,7 @@
           <label class="control-label">Qty</label>
           <input type="hidden" class="form-control" id="id_edit" name="id_edit" autocomplete="off">
           <input type="hidden" class="form-control" id="id_fppp_edit" name="id_fppp_edit" autocomplete="off">
-          <input type="text" id="qty_edit" class="form-control" autocomplete="off">
+          <input type="text" id="qty_edit" class="form-control" autocomplete="off" readonly>
         </div>
         <div class="form-group">
           <a onclick="saveEditItem()" class="btn btn-info">Save</a>

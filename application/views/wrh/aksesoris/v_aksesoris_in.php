@@ -8,16 +8,12 @@
                 <form method="post" class="form-vertical form" role="form" id="formid">
                     <div class="box-body">
                         <div class="form-group">
-                            <label class="control-label">Tgl Proses:</label>
-                            <input type="text" value="<?= date('Y-m-d') ?>" class="form-control" id="tgl_proses" readonly>
-                        </div>
-                        <div class="form-group">
                             <label class="control-label">Item:</label>
-                            <select id="item_code" name="item_code" class="form-control" style="width:100%" required>
+                            <select id="item" name="item" class="form-control" style="width:100%" required>
                                 <option value="">-- Select --</option>
-                                <?php foreach ($item_code->result() as $valap) : ?>
-                                    <option value="<?= $valap->item_code ?>">[<?= $valap->item_code ?>] -
-                                        <?= $valap->deskripsi ?>
+                                <?php foreach ($item->result() as $valap) : ?>
+                                    <option value="<?= $valap->id ?>">
+                                        <?= $valap->item_code ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>
@@ -85,10 +81,11 @@
                     <thead>
                         <tr>
                             <th width="5%">Act</th>
-                            <th width="15%">Item</th>
+                            <th width="30%">Item</th>
                             <th width="15%">Qty</th>
                             <th width="15%">Supplier</th>
                             <th width="15%">No Surat Jalan</th>
+                            <th width="15%">No PR</th>
                             <th width="15%">Divisi</th>
                             <th width="15%">Gudang</th>
                             <th width="15%">Keranjang</th>
@@ -135,15 +132,14 @@
 
     function quotation() {
 
-        if ($('#item_code').val() != '' && $('#divisi').val() != '' && $('#area').val() != '' && $('#rak').val() != '') {
+        if ($('#item').val() != '' && $('#divisi').val() != '' && $('#area').val() != '' && $('#rak').val() != '') {
 
             $.ajax({
                     type: "POST",
                     url: "<?= site_url('wrh/aksesoris/savestokin') ?>",
                     dataType: 'json',
                     data: {
-                        'tgl_proses': $('#tgl_proses').val(),
-                        'item_code': $('#item_code').val(),
+                        'item': $('#item').val(),
                         'qty': $("#qty").val(),
                         'supplier': $("#supplier").val(),
                         'no_surat_jalan': $("#no_surat_jalan").val(),
@@ -165,8 +161,8 @@
                   <a  class = "btn btn-xs btn-danger" href = "javascript:void(0)" onClick = "hapus(' + i + ')">\
                   <i  class = "fa fa-trash"></i></a>\
                   </td>\
-                  <td width = "15%">\
-                    ' + $('#item_code :selected').text() + '\
+                  <td width = "30%">\
+                    ' + $('#item :selected').text() + '\
                   </td>\
                   <td width = "15%">\
                     ' + $('#qty').val() + '\
@@ -195,7 +191,7 @@
                 </tr>';
                     $('tr.odd').remove();
                     $('#dataTbl').append(x);
-                    $('#item_code').val('').trigger('change');
+                    $('#item').val('').trigger('change');
                     $('#id_divisi').val('').trigger('change');
                     $('#id_gudang').val('').trigger('change');
                     $("#qty").val('');

@@ -3,7 +3,7 @@
     <div class="col-lg-12">
         <div class="box box-info">
             <div class="box-header with-border">
-                <h3 class="box-title">Saved BON Manual Aksesoris</h3>
+                <h3 class="box-title">Saved BON Manual</h3>
                 <div class="form-group">
                     <label class="control-label">No FORM:</label>
                     <input type="text" id="no_form" value="<?= $no_form ?>" class="form-control" autocomplete="off" readonly>
@@ -18,7 +18,12 @@
                     <thead>
                         <tr>
                             <th width="15%">FPPP</th>
-                            <th width="25%">Item</th>
+                            <th width="15%">Nama Proyek</th>
+                            <th width="15%">Section ATA</th>
+                            <th width="15%">Section Allure</th>
+                            <th width="15%">Temper</th>
+                            <th width="15%">Kode Warna</th>
+                            <th width="15%">Ukuran</th>
                             <th width="7%">Qty</th>
                             <th width="15%">Divisi</th>
                             <th width="15%">Gudang</th>
@@ -32,21 +37,42 @@
                     <hr>
                     <tbody>
                         <tr>
-                            <td>
-                                <select id="id_fppp" name="id_fppp" class="form-control" style="width:100%" required>
+                            <td><select id="id_fppp" name="id_fppp" class="form-control" style="width:100%" required>
                                     <option value="">-- Select --</option>
                                     <?php foreach ($fppp->result() as $valap) : ?>
-                                        <option value="<?= $valap->id ?>"><?= $valap->no_fppp ?> - <?= $valap->nama_proyek ?></option>
+                                        <option value="<?= $valap->id ?>"><?= $valap->no_fppp ?></option>
                                     <?php endforeach; ?>
                                 </select>
                                 <br>
-
+                                Nama Proyek: <span id="txt_nama_proyek"></span>
                             </td>
-                            <td><select id="item_code" name="item_code" class="form-control" style="width:100%" required>
+                            <td><select id="nama_proyek" name="nama_proyek" class="form-control" style="width:100%" required>
                                     <option value="">-- Select --</option>
-                                    <?php foreach ($item_code->result() as $valap) : ?>
-                                        <option value="<?= $valap->item_code ?>"><?= $valap->item_code ?>-<?= $valap->deskripsi ?></option>
+                                    <?php foreach ($nama_proyek->result() as $valap) : ?>
+                                        <option value="<?= $valap->nama_proyek ?>"><?= $valap->nama_proyek ?></option>
                                     <?php endforeach; ?>
+                                </select>
+                            </td>
+                            <td><select id="section_ata" name="section_ata" class="form-control" style="width:100%" required>
+                                    <option value="">-- Select --</option>
+                                    <?php foreach ($section_ata->result() as $valap) : ?>
+                                        <option value="<?= $valap->section_ata ?>"><?= $valap->section_ata ?>-<?= $valap->section_allure ?></option>
+                                    <?php endforeach; ?>
+                                </select></td>
+                            <td><select id="section_allure" name="section_allure" class="form-control" style="width:100%" required>
+                                    <option value="">-- Select --</option>
+                                    <?php foreach ($section_ata->result() as $valap) : ?>
+                                        <option value="<?= $valap->section_allure ?>"><?= $valap->section_allure ?>-<?= $valap->section_allure ?></option>
+                                    <?php endforeach; ?>
+                                </select></td>
+                            <td><select id="temper" name="temper" class="form-control" style="width:100%" required>
+                                    <option value="">-- Select --</option>
+                                </select></td>
+                            <td><select id="kode_warna" name="kode_warna" class="form-control" style="width:100%" required>
+                                    <option value="">-- Select --</option>
+                                </select></td>
+                            <td><select id="ukuran" name="ukuran" class="form-control" style="width:100%" required>
+                                    <option value="">-- Select --</option>
                                 </select></td>
                             <td><input type="text" style="text-align: right;" class="form-control" id="qty" placeholder="Qty" autocomplete="off"></td>
                             <td><select id="id_divisi" name="id_divisi" class="form-control" style="width:100%" required>
@@ -89,7 +115,7 @@
                 title: 'Berhasil',
                 message: "Tambah Stock selesai!"
             });
-            load_silent("wrh/aksesoris/bon_manual", "#content");
+            load_silent("wrh/aksesoris", "#content");
         }
     }
     $(document).ready(function() {
@@ -99,7 +125,6 @@
         });
         $("select").select2();
         $("#stock").val(0);
-        $("#span_nama_proyek").hide();
     });
 
     $(".checkbox").change(function() {
@@ -139,7 +164,7 @@
             dataType: "json",
             type: "POST",
             data: {
-                'item_code': $("#item_code").val(),
+                'section_ata': $("#section_ata").val(),
                 'id_divisi': $("#id_divisi").val(),
                 'id_gudang': $("#id_gudang").val(),
             },
@@ -150,8 +175,35 @@
         });
     });
 
+    $("select[name=id_fppp]").change(function() {
+        // $('#nama_proyek').val('').trigger('change');
+        var x = $("select[name=nama_proyek]");
+        if ($(this).val() == "") {
+            x.html("<option>-- Select --</option>");
+        } else {
+            z = "<option>-- Select --</option>";
+            $.ajax({
+                url: "<?= site_url('wrh/aksesoris/optionGetNamaProyek') ?>",
+                dataType: "json",
+                type: "POST",
+                data: {
+                    "fppp": $(this).val()
+                },
+                success: function(data) {
+
+                    var z = "<option value=''>-- Select --</option>";
+                    for (var i = 0; i < data.length; i++) {
+                        z += '<option value=' + data[i].nama_proyek + '>' + data[i].nama_proyek + '</option>';
+                    }
+                    x.html(z);
+                }
+            });
+
+        }
+    });
+
     $("select[name=nama_proyek]").change(function() {
-        $('#id_fppp').val('').trigger('change');
+        // $('#id_fppp').val('').trigger('change');
         var x = $("select[name=id_fppp]");
         if ($(this).val() == "") {
             x.html("<option>-- Select --</option>");
@@ -173,13 +225,145 @@
                     x.html(z);
                 }
             });
+
         }
     });
 
-    function pilihNamaProyek() {
-        $("#pilihnmproyek").hide(50);
-        $("#span_nama_proyek").show(50);
-    }
+    $("select[name=section_ata]").change(function() {
+        var x = $("select[name=section_allure]");
+        if ($(this).val() == "") {
+            x.html("<option>-- Select --</option>");
+        } else {
+            z = "<option>-- Select --</option>";
+            $.ajax({
+                url: "<?= site_url('wrh/aksesoris/optionGetSectionAllure') ?>",
+                dataType: "json",
+                type: "POST",
+                data: {
+                    "section_ata": $(this).val()
+                },
+                success: function(data) {
+
+                    var z = "<option value=''>-- Select --</option>";
+                    for (var i = 0; i < data.length; i++) {
+                        z += '<option value=' + data[i].section_allure + '>' + data[i].section_allure + '</option>';
+                    }
+                    x.html(z);
+                }
+            });
+
+        }
+    });
+
+    $("select[name=section_allure]").change(function() {
+        var x = $("select[name=section_ata]");
+        if ($(this).val() == "") {
+            x.html("<option>-- Select --</option>");
+        } else {
+            z = "<option>-- Select --</option>";
+            $.ajax({
+                url: "<?= site_url('wrh/aksesoris/optionGetSectionAta') ?>",
+                dataType: "json",
+                type: "POST",
+                data: {
+                    "section_allure": $(this).val()
+                },
+                success: function(data) {
+
+                    var z = "<option value=''>-- Select --</option>";
+                    for (var i = 0; i < data.length; i++) {
+                        z += '<option value=' + data[i].section_ata + '>' + data[i].section_ata + '</option>';
+                    }
+                    x.html(z);
+                }
+            });
+
+        }
+    });
+
+    $("#section_allure").change(function() {
+        var x = $("select[name=temper]");
+        if ($(this).val() == "") {
+            x.html("<option>-- Select --</option>");
+        } else {
+            z = "<option>-- Select --</option>";
+            $.ajax({
+                url: "<?= site_url('wrh/aksesoris/optionGetTemper') ?>",
+                dataType: "json",
+                type: "POST",
+                data: {
+                    "section_ata": $('#section_ata').val(),
+                    "section_allure": $(this).val()
+                },
+                success: function(data) {
+
+                    var z = "<option value=''>-- Select --</option>";
+                    for (var i = 0; i < data.length; i++) {
+                        z += '<option value=' + data[i].temper + '>' + data[i].temper + '</option>';
+                    }
+                    x.html(z);
+                }
+            });
+
+        }
+    });
+
+    $("#temper").change(function() {
+        var x = $("select[name=kode_warna]");
+        if ($(this).val() == "") {
+            x.html("<option>-- Select --</option>");
+        } else {
+            z = "<option>-- Select --</option>";
+            $.ajax({
+                url: "<?= site_url('wrh/aksesoris/optionGetKodeWarna') ?>",
+                dataType: "json",
+                type: "POST",
+                data: {
+                    "section_ata": $('#section_ata').val(),
+                    "section_allure": $('#section_allure').val(),
+                    "temper": $(this).val()
+                },
+                success: function(data) {
+
+                    var z = "<option value=''>-- Select --</option>";
+                    for (var i = 0; i < data.length; i++) {
+                        z += '<option value=' + data[i].kode_warna + '>' + data[i].kode_warna + '</option>';
+                    }
+                    x.html(z);
+                }
+            });
+
+        }
+    });
+
+    $("#kode_warna").change(function() {
+        var x = $("select[name=ukuran]");
+        if ($(this).val() == "") {
+            x.html("<option>-- Select --</option>");
+        } else {
+            z = "<option>-- Select --</option>";
+            $.ajax({
+                url: "<?= site_url('wrh/aksesoris/optionGetUkuran') ?>",
+                dataType: "json",
+                type: "POST",
+                data: {
+                    "section_ata": $('#section_ata').val(),
+                    "section_allure": $('#section_allure').val(),
+                    "temper": $('#temper').val(),
+                    "ukuran": $(this).val()
+                },
+                success: function(data) {
+
+                    var z = "<option value=''>-- Select --</option>";
+                    for (var i = 0; i < data.length; i++) {
+                        z += '<option value=' + data[i].ukuran + '>' + data[i].ukuran + '</option>';
+                    }
+                    x.html(z);
+                }
+            });
+
+        }
+    });
 
     var xi = 0;
     $('#formid').on('keypress', function(e) {
@@ -200,7 +384,7 @@
 
     function quotation2() {
 
-        if ($('#id_fppp').val() != '' && $('#item_code').val() != '' && $('#id_divisi').val() != '' && $('#id_gudang').val() != '' && $('#qty').val() != '') {
+        if ($('#section_ata').val() != '' && $('#id_divisi').val() != '' && $('#id_gudang').val() != '' && $('#qty').val() != '') {
 
             $.ajax({
                     type: "POST",
@@ -210,7 +394,11 @@
                         'no_form': $('#no_form').val(),
                         'tgl_proses': $('#tgl_proses').val(),
                         'id_fppp': $('#id_fppp').val(),
-                        'item_code': $('#item_code').val(),
+                        'section_ata': $('#section_ata').val(),
+                        'section_allure': $('#section_allure').val(),
+                        'temper': $('#temper').val(),
+                        'kode_warna': $('#kode_warna').val(),
+                        'ukuran': $('#ukuran').val(),
                         'qty': $("#qty").val(),
                         'id_divisi': $("#id_divisi").val(),
                         'id_gudang': $("#id_gudang").val(),
@@ -222,12 +410,26 @@
                     //code here
                     xi++;
                     var i = datasaved['id'];
+
+
                     var x = '<tr id="output_data_' + i + '" class="output_data">\
                   <td width = "15%">\
                     ' + $('#id_fppp :selected').text() + '\
                   </td>\
                   <td width = "25%">\
-                    ' + $('#item_code :selected').text() + '\
+                    ' + $('#section_ata :selected').text() + '\
+                  </td>\
+                  <td width = "15%">\
+                    ' + $('#section_allure :selected').text() + '\
+                  </td>\
+                  <td width = "15%">\
+                    ' + $('#temper :selected').text() + '\
+                  </td>\
+                  <td width = "15%">\
+                    ' + $('#kode_warna :selected').text() + '\
+                  </td>\
+                  <td width = "15%">\
+                    ' + $('#ukuran :selected').text() + '\
                   </td>\
                   <td align="center" width = "7%">\
                     ' + $('#qty').val() + '\
@@ -251,8 +453,8 @@
                 </tr>';
                     $('tr.odd').remove();
                     $('#dataTbl').append(x);
-                    //$('#item_code').prop('selected', true);
-                    $('#item_code').val('').trigger('change');
+                    $('#section_ata').prop('selected', true);
+                    $('#section_ata').val('').trigger('change');
                     $('#id_divisi').val('').trigger('change');
                     $('#id_gudang').val('').trigger('change');
                     $("#qty").val('');

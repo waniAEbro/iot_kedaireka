@@ -8,7 +8,7 @@
                     <?php
                     $sesi = from_session('level');
                     if ($sesi == '1' || $sesi == '2') {
-                        //echo button('load_silent("wrh/aluminium/stok_out_add/","#content")', 'Stock OUT', 'btn btn-primary', 'data-toggle="tooltip" title="Stock OUT"');
+                        echo button('load_silent("wrh/aluminium/stok_out_add/","#content")', 'Add Stock OUT', 'btn btn-primary', 'data-toggle="tooltip" title="Stock OUT"');
                     } else {
                         # code...
                     }
@@ -19,44 +19,39 @@
                 <table width="100%" id="tableku" class="table table-striped">
                     <thead>
                         <th width="5%">No</th>
-                        <th>Tgl Pembuatan</th>
+                        <th>Tgl</th>
+                        <th>No Surat Jalan</th>
                         <th>No FPPP</th>
                         <th>Nama Proyek</th>
                         <th>Deadline Sales</th>
                         <th>Deadline Workshop</th>
-                        <th>Keterangan</th>
+                        <th>Penerima</th>
+                        <th>Alamat Pengiriman</th>
+                        <th>Sopir</th>
+                        <th>No Kendaraan</th>
+                        <th></th>
                     </thead>
                     <tbody>
                         <?php
                         $i = 1;
-                        foreach ($fppp->result() as $row) :
-                            if ($row->wh_aksesoris == 1) {
-                                $wh_aksesoris = "PROSES";
-                            } else if ($row->wh_aksesoris == 2) {
-                                $wh_aksesoris = "PARSIAL";
-                            } else {
-                                $wh_aksesoris = "LUNAS";
-                            }
+                        foreach ($surat_jalan->result() as $row) :
                         ?>
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
-                                <td align="center"><?= $row->tgl_pembuatan ?></td>
-                                <td><?= $row->no_fppp ?><br><?= button('load_silent("wrh/aluminium/detailbom/' . $row->id . '","#content")', 'Stock Out', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Add Stock Out"'); ?>
-                                    <?php
-                                    if ($row->no_sj != '') { ?>
-                                        <a target="_blank" href="<?= base_url('wrh/aluminium/cetakSj'); ?>/<?= $row->id ?>" class="btn btn-xs btn-warning">Cetak Surat Jalan</a>
-                                    <?php
-                                    } else {
-
-                                        echo button('load_silent("wrh/aluminium/suratjalan/' . $row->id . '","#content")', 'Surat Jalan', 'btn btn-xs btn-danger', 'data-toggle="tooltip" title="Surat Jalan"');
-                                    }
-
-                                    ?>
-                                </td>
+                                <td align="center"><?= $row->created ?></td>
+                                <td><?= $row->no_surat_jalan ?></td>
+                                <td><?= $row->no_fppp ?></td>
                                 <td><?= $row->nama_proyek ?></td>
                                 <td align="center"><?= $row->deadline_pengiriman ?></td>
                                 <td align="center"><?= $row->deadline_workshop ?></td>
-                                <td align="center"><?= $wh_aksesoris ?></td>
+                                <td><?= $row->penerima ?></td>
+                                <td><?= $row->alamat_pengiriman ?></td>
+                                <td><?= $row->sopir ?></td>
+                                <td><?= $row->no_kendaraan ?></td>
+                                <td>
+                                    <?php echo button('load_silent("wrh/aluminium/detailbom/' . $row->id . '","#content")', 'Edit', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Stock OUT"'); ?>
+                                    <a target="_blank" href="<?= base_url('wrh/aluminium/cetakSj'); ?>/<?= $row->id ?>" class="btn btn-xs btn-warning">Cetak Surat Jalan</a>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

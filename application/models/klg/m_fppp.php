@@ -165,54 +165,52 @@ class M_fppp extends CI_Model
 	public function bom_aluminium($id_fppp)
 	{
 		$this->db->join('data_fppp df', 'df.id = db.id_fppp', 'left');
-		$this->db->where('db.id_fppp', $id_fppp);
-		$this->db->select('db.*,df.nama_proyek');
+		$this->db->join('master_item mi', 'mi.id = db.id_item', 'left');
+		$this->db->join('master_warna_aluminium mwa', 'mwa.kode = mi.kode_warna', 'left');
+		$this->db->where('db.id_jenis_item', 1);
 
-		return $this->db->get('data_fppp_bom_aluminium db');
+		$this->db->where('db.id_fppp', $id_fppp);
+		return $this->db->get('data_fppp_bom db');
 	}
 
 	public function bom_aksesoris($id_fppp)
 	{
 		$this->db->join('data_fppp df', 'df.id = db.id_fppp', 'left');
+		$this->db->join('master_item mi', 'mi.id = db.id_item', 'left');
+		$this->db->where('db.id_jenis_item', 2);
 		$this->db->where('db.id_fppp', $id_fppp);
-		$this->db->select('db.*,df.nama_proyek');
-
-		return $this->db->get('data_fppp_bom_aksesoris db');
+		return $this->db->get('data_fppp_bom db');
 	}
 
 	public function bom_lembaran($id_fppp)
 	{
 		$this->db->join('data_fppp df', 'df.id = db.id_fppp', 'left');
-		$this->db->where('db.id_fppp', $id_fppp);
-		$this->db->select('db.*,df.nama_proyek');
+		$this->db->join('master_item mi', 'mi.id = db.id_item', 'left');
 
-		return $this->db->get('data_fppp_bom_lembaran db');
+		$this->db->where('db.id_fppp', $id_fppp);
+		return $this->db->get('data_fppp_bom db');
 	}
 
-	public function cekMasterAluminium($section_ata = '', $section_allure = '')
+	public function getMasterAluminium($section_ata = '', $section_allure = '', $temper = '', $kode_warna = '', $ukuran = '')
 	{
 		$this->db->where('section_ata', $section_ata);
 		$this->db->where('section_allure', $section_allure);
-		return $this->db->get('master_item')->num_rows();
+		$this->db->where('temper', $temper);
+		$this->db->where('kode_warna', $kode_warna);
+		$this->db->where('ukuran', $ukuran);
+		return $this->db->get('master_item');
 	}
 
-	public function cekBomAksesoris($id_fppp = '', $item_code = '')
-	{
-		$this->db->where('id_fppp', $id_fppp);
-		$this->db->where('item_code', $item_code);
-		return $this->db->get('data_fppp_bom_aksesoris')->num_rows();
-	}
-
-	public function cekMasterAksesoris($item_code = '')
+	public function getMasterAksesoris($item_code = '')
 	{
 		$this->db->where('item_code', $item_code);
-		return $this->db->get('master_item')->num_rows();
+		return $this->db->get('master_item');
 	}
 
-	public function cekMasterLembaran($nama_barang = '')
+	public function getMasterLembaran($nama_barang = '')
 	{
 		$this->db->where('nama_barang', $nama_barang);
-		return $this->db->get('master_item')->num_rows();
+		return $this->db->get('master_item');
 	}
 
 	public function simpanItem($object)

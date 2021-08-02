@@ -3,7 +3,7 @@
     <div class="col-lg-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">History Mutasi : <?= $item_code ?> </h3>
+                <h3 class="box-title">History Mutasi Alumunium : <?= $item->item_code ?></h3>
                 <div class="box-tools pull-right">
                     <?php
                     echo button('load_silent("wrh/aksesoris/","#content")', 'Kembali', 'btn btn-warning', 'data-toggle="tooltip" title="Mutasi"');
@@ -45,16 +45,12 @@
                         <thead>
                             <th width="5%">No</th>
                             <th>Waktu</th>
-                            <th>Item Code</th>
-                            <th>Deskripsi</th>
                             <th>Divisi</th>
                             <th>Gudang</th>
                             <th>Keranjang</th>
-                            <th>Qty</th>
-                            <th>Divisi Baru</th>
-                            <th>Gudang Baru</th>
-                            <th>Keranjang Baru</th>
-                            <th>Qty Baru</th>
+                            <th>Qty In</th>
+                            <th>Qty OUT</th>
+                            <th>Keterangan</th>
                         </thead>
                         <tbody>
                             <?php
@@ -64,16 +60,12 @@
                                 <tr>
                                     <td align="center"><?= $i++ ?></td>
                                     <td><?= $row->created ?></td>
-                                    <td><?= $row->item_code ?></td>
-                                    <td><?= $row->deskripsi ?></td>
                                     <td><?= $row->divisi ?></td>
                                     <td><?= $row->gudang ?></td>
                                     <td><?= $row->keranjang ?></td>
-                                    <td><?= $row->qty ?></td>
-                                    <td><?= $row->divisi2 ?></td>
-                                    <td><?= $row->gudang2 ?></td>
-                                    <td><?= $row->keranjang2 ?></td>
-                                    <td><?= $row->qty2 ?></td>
+                                    <td><?= $row->qty_in ?></td>
+                                    <td><?= $row->qty_out ?></td>
+                                    <td><?= $row->keterangan ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

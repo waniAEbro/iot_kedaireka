@@ -3,7 +3,7 @@
     <div class="col-lg-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Stok In Aksesoris</h3>
+                <h3 class="box-title">Stok IN </h3>
                 <div class="box-tools pull-right">
                     <?php
                     $sesi = from_session('level');
@@ -19,31 +19,35 @@
                 <table width="100%" id="tableku" class="table table-striped">
                     <thead>
                         <th width="5%">No</th>
-                        <th>Tgl Proses</th>
+                        <th>Tgl</th>
                         <th>Item Code</th>
+                        <th>Divisi</th>
+                        <th>Gudang</th>
+                        <th>Keranjang</th>
                         <th>Qty</th>
                         <th>Supplier</th>
                         <th>No Surat Jalan</th>
                         <th>No PR</th>
-                        <th>Divisi</th>
-                        <th>Gudang</th>
-                        <th>Keranjang</th>
+
                     </thead>
                     <tbody>
                         <?php
                         $i = 1;
-                        foreach ($aksesoris->result() as $row) : ?>
+                        foreach ($aksesoris->result() as $row) :
+                            $qty = ($row->inout == 1) ? $row->qty_in : $row->qty_out;
+                        ?>
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
-                                <td><?= $row->tgl_proses ?></td>
+                                <td><?= $row->created ?></td>
                                 <td><?= $row->item_code ?></td>
-                                <td><?= $row->qty ?></td>
-                                <td><?= $row->supplier ?></td>
-                                <td><?= $row->no_surat_jalan ?></td>
-                                <td><?= $row->no_pr ?></td>
                                 <td><?= $row->divisi ?></td>
                                 <td><?= $row->gudang ?></td>
                                 <td><?= $row->keranjang ?></td>
+                                <td><?= $qty ?></td>
+                                <td><?= $row->supplier ?></td>
+                                <td><?= $row->no_surat_jalan ?></td>
+                                <td><?= $row->no_pr ?></td>
+
                             </tr>
 
                         <?php endforeach; ?>

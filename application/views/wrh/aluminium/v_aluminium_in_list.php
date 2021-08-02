@@ -19,39 +19,43 @@
                 <table width="100%" id="tableku" class="table table-striped">
                     <thead>
                         <th width="5%">No</th>
-                        <th>Tgl Proses</th>
+                        <th>Tgl</th>
                         <th>Section ATA</th>
                         <th>Section Allure</th>
                         <th>Temper</th>
                         <th>Kode Warna</th>
                         <th>Ukuran</th>
+                        <th>Divisi</th>
+                        <th>Gudang</th>
+                        <th>Keranjang</th>
                         <th>Qty</th>
                         <th>Supplier</th>
                         <th>No Surat Jalan</th>
                         <th>No PR</th>
-                        <th>Divisi</th>
-                        <th>Gudang</th>
-                        <th>Keranjang</th>
+
                     </thead>
                     <tbody>
                         <?php
                         $i = 1;
-                        foreach ($aluminium->result() as $row) : ?>
+                        foreach ($aluminium->result() as $row) :
+                            $qty = ($row->inout == 1) ? $row->qty_in : $row->qty_out;
+                        ?>
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
-                                <td><?= $row->tgl_proses ?></td>
+                                <td><?= $row->created ?></td>
                                 <td><?= $row->section_ata ?></td>
                                 <td><?= $row->section_allure ?></td>
                                 <td><?= $row->temper ?></td>
-                                <td><?= $row->kode_warna ?></td>
+                                <td><?= $row->warna_aluminium ?></td>
                                 <td><?= $row->ukuran ?></td>
-                                <td><?= $row->qty ?></td>
-                                <td><?= $row->supplier ?></td>
-                                <td><?= $row->no_surat_jalan ?></td>
-                                <td><?= $row->no_pr ?></td>
                                 <td><?= $row->divisi ?></td>
                                 <td><?= $row->gudang ?></td>
                                 <td><?= $row->keranjang ?></td>
+                                <td><?= $qty ?></td>
+                                <td><?= $row->supplier ?></td>
+                                <td><?= $row->no_surat_jalan ?></td>
+                                <td><?= $row->no_pr ?></td>
+
                             </tr>
 
                         <?php endforeach; ?>

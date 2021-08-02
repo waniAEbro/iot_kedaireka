@@ -3,12 +3,12 @@
     <div class="col-lg-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Stock Out List </h3>
+                <h3 class="box-title">BON Manual List </h3>
                 <div class="box-tools pull-right">
                     <?php
                     $sesi = from_session('level');
                     if ($sesi == '1' || $sesi == '2') {
-                        echo button('load_silent("wrh/aksesoris/stok_out_add/","#content")', 'Add Stock OUT', 'btn btn-primary', 'data-toggle="tooltip" title="Stock OUT"');
+                        echo button('load_silent("wrh/aluminium/bon_manual_add/","#content")', 'Add BON Manual', 'btn btn-primary', 'data-toggle="tooltip" title="BON Manual"');
                     } else {
                         # code...
                     }
@@ -21,10 +21,6 @@
                         <th width="5%">No</th>
                         <th>Tgl</th>
                         <th>No Surat Jalan</th>
-                        <th>No FPPP</th>
-                        <th>Nama Proyek</th>
-                        <th>Deadline Sales</th>
-                        <th>Deadline Workshop</th>
                         <th>Penerima</th>
                         <th>Alamat Pengiriman</th>
                         <th>Sopir</th>
@@ -40,17 +36,13 @@
                                 <td align="center"><?= $i++ ?></td>
                                 <td align="center"><?= $row->created ?></td>
                                 <td><?= $row->no_surat_jalan ?></td>
-                                <td><?= $row->no_fppp ?></td>
-                                <td><?= $row->nama_proyek ?></td>
-                                <td align="center"><?= $row->deadline_pengiriman ?></td>
-                                <td align="center"><?= $row->deadline_workshop ?></td>
                                 <td><?= $row->penerima ?></td>
                                 <td><?= $row->alamat_pengiriman ?></td>
                                 <td><?= $row->sopir ?></td>
                                 <td><?= $row->no_kendaraan ?></td>
                                 <td>
-                                    <?php echo button('load_silent("wrh/aksesoris/detailbom/' . $row->id . '","#content")', 'Edit', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Stock OUT"'); ?>
-                                    <a target="_blank" href="<?= base_url('wrh/aksesoris/cetakSj'); ?>/<?= $row->id ?>" class="btn btn-xs btn-warning">Cetak Surat Jalan</a>
+                                    <?php echo button('load_silent("wrh/aluminium/edit_bon_manual/' . $row->id . '","#content")', 'Edit', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Stock OUT"'); ?>
+                                    <a target="_blank" href="<?= base_url('wrh/aluminium/cetakSj'); ?>/<?= $row->id ?>" class="btn btn-xs btn-warning">Cetak Surat Jalan</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

@@ -13,7 +13,17 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>Item</label>
-                        <input type="text" class="form-control" id="item_code" value="<?= $item_code ?>" readonly>
+                        <input type="hidden" class="form-control" id="item" value="<?= $id_item ?>" readonly>
+                        <select id="itemx" name="itemx" class="form-control" style="width:100%" disabled>
+                            <option value="">-- Select --</option>
+                            <?php foreach ($item->result() as $valap) :
+                                $selected = ($valap->id == $id_item) ? "selected" : "";
+                            ?>
+                                <option value="<?= $valap->id ?>" <?= $selected ?>>
+                                    <?= $valap->item_code ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -63,7 +73,7 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>Divisi</label>
-                        <select id="divisi" name="divisi" class="form-control" style="width:100%" required>
+                        <select id="id_divisi2" name="id_divisi2" class="form-control" style="width:100%" required>
                             <option value="">-- Select --</option>
                             <?php foreach ($divisi->result() as $valap) : ?>
                                 <option value="<?= $valap->id ?>"><?= $valap->divisi ?></option>
@@ -76,7 +86,7 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>Gudang</label>
-                        <select id="gudang" name="gudang" class="form-control" style="width:100%" required>
+                        <select id="id_gudang2" name="id_gudang2" class="form-control" style="width:100%" required>
                             <option value="">-- Select --</option>
                             <?php foreach ($gudang->result() as $valap) : ?>
                                 <option value="<?= $valap->id ?>"><?= $valap->gudang ?></option>
@@ -111,30 +121,38 @@
 
 <script language="javascript">
     function mutasi() {
-        $.ajax({
-            url: "<?= site_url('wrh/aksesoris/simpanMutasi') ?>",
-            dataType: "json",
-            type: "POST",
-            data: {
-                "item_code": $('#item_code').val(),
-                "divisi": $('#id_divisi').val(),
-                "gudang": $('#id_gudang').val(),
-                "keranjang": $('#keranjang').val(),
-                "qty": $('#qty').val(),
+        var qty1 = parseInt($('#qty').val());
+        var qty2 = parseInt($('#qty2').val());
+        if (qty1 > qty2) {
+            $.ajax({
+                url: "<?= site_url('wrh/aksesoris/simpanMutasi') ?>",
+                dataType: "json",
+                type: "POST",
+                data: {
+                    "id_item": $('#item').val(),
+                    "id_divisi": $('#id_divisi').val(),
+                    "id_gudang": $('#id_gudang').val(),
+                    "keranjang": $('#keranjang').val(),
+                    "qty": $('#qty').val(),
 
-                "divisi2": $('#divisi').val(),
-                "gudang2": $('#gudang').val(),
-                "keranjang2": $('#keranjang2').val(),
-                "qty2": $('#qty2').val(),
-            },
-            success: function(data) {
-                $.growl.notice({
-                    title: 'Sukses',
-                    message: "Berhasil mutasi"
-                });
-                load_silent("wrh/aksesoris/", "#content");
-            }
-        });
+                    "id_divisi2": $('#id_divisi2').val(),
+                    "id_gudang2": $('#id_gudang2').val(),
+                    "keranjang2": $('#keranjang2').val(),
+                    "qty2": $('#qty2').val(),
+                },
+                success: function(data) {
+                    $.growl.notice({
+                        title: 'Sukses',
+                        message: "Berhasil mutasi"
+                    });
+                    load_silent("wrh/aksesoris/", "#content");
+                }
+            });
+
+        } else {
+            alert("Jangan melebihi qty awal!");
+        }
+
 
     }
     $(document).ready(function() {
@@ -153,11 +171,11 @@
         } else {
             z = "<option>-- Select --</option>";
             $.ajax({
-                url: "<?= site_url('wrh/aksesoris/optionGudangMutasi') ?>",
+                url: "<?= site_url('wrh/aksesoris/optionGetGudangDivisi') ?>",
                 dataType: "json",
                 type: "POST",
                 data: {
-                    "item_code": $('#item_code').val(),
+                    "item": $('#item').val(),
                     "divisi": $(this).val()
                 },
                 success: function(data) {
@@ -180,11 +198,11 @@
         } else {
             z = "<option>-- Select --</option>";
             $.ajax({
-                url: "<?= site_url('wrh/aksesoris/optionKeranjangMutasi') ?>",
+                url: "<?= site_url('wrh/aksesoris/optionGetKeranjangGudang') ?>",
                 dataType: "json",
                 type: "POST",
                 data: {
-                    "item_code": $('#item_code').val(),
+                    "item": $('#item').val(),
                     "divisi": $('#id_divisi').val(),
                     "gudang": $(this).val()
                 },
@@ -204,11 +222,11 @@
 
     $("select[name=keranjang]").change(function() {
         $.ajax({
-            url: "<?= site_url('wrh/aksesoris/optionQtyMutasi') ?>",
+            url: "<?= site_url('wrh/aksesoris/optionGetQtyKeranjang') ?>",
             dataType: "json",
             type: "POST",
             data: {
-                "item_code": $('#item_code').val(),
+                "item": $('#item').val(),
                 "divisi": $('#id_divisi').val(),
                 "gudang": $('#id_gudang').val(),
                 "keranjang": $(this).val()

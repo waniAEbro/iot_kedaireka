@@ -22,7 +22,6 @@
                         <th>Ukuran</th>
                         <th>Qty</th>
                         <th>Keterangan</th>
-                        <th>Lampiran</th>
                     </thead>
                     <tbody>
                         <?php
@@ -35,11 +34,10 @@
                                 <td><?= $row->section_allure ?></td>
                                 <td><?= $row->temper ?></td>
                                 <td><?= $row->kode_warna ?></td>
-                                <td><?= $row->deskripsi_warna ?></td>
+                                <td><?= $row->warna_aluminium ?></td>
                                 <td><?= $row->ukuran ?></td>
                                 <td><?= $row->qty ?></td>
                                 <td><?= $row->keterangan ?></td>
-                                <td><?= $row->lampiran ?></td>
                             </tr>
 
                         <?php endforeach; ?>
@@ -63,7 +61,6 @@
                         <th>Deskripsi</th>
                         <th>Qty</th>
                         <th>Keterangan</th>
-                        <th>Lampiran</th>
                     </thead>
                     <tbody>
                         <?php
@@ -76,7 +73,6 @@
                                 <td><?= $row->deskripsi ?></td>
                                 <td><?= $row->qty ?></td>
                                 <td><?= $row->keterangan ?></td>
-                                <td><?= $row->lampiran ?></td>
                             </tr>
 
                         <?php endforeach; ?>
@@ -104,7 +100,6 @@
                         <th>Warna</th>
                         <th>Qty</th>
                         <th>Keterangan</th>
-                        <th>Lampiran</th>
                     </thead>
                     <tbody>
                         <?php
@@ -121,7 +116,6 @@
                                 <td><?= $row->warna ?></td>
                                 <td><?= $row->qty ?></td>
                                 <td><?= $row->keterangan ?></td>
-                                <td><?= $row->lampiran ?></td>
                             </tr>
 
                         <?php endforeach; ?>

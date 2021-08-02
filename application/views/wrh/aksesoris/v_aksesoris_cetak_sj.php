@@ -1,6 +1,18 @@
 <?php
+
+
 class MYPDF extends TCPDF
 {
+    //    public function Header() {
+
+    //    // $image = base_url('assets/img/logo.png');
+    //    //  $this->Image($image, 13, 5, 20, '', 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+    //    //  $this->Cell(0, 2, 'SURAT JALAN', 0, true, 'C', 0, '', 0, false, 'T', 'M');
+
+
+    // }
+
+
     public function Footer()
     {
 
@@ -39,7 +51,7 @@ $tgl_skrg = date('d') . ' ' . $this->fungsi->bulan(date('m')) . ' ' . date('Y');
 $hed = '
 <table>
         <tr>
-            <td width="35%"><img src="' . base_url('assets/img/logo.png') . '" width="50"></td>
+            <td width="35%"><img src="' . base_url('assets/img/logo.png') . '" width="70"></td>
             <td  width="50%"><h1>SURAT JALAN</h1></td>
         </tr>
         ';
@@ -57,85 +69,58 @@ table.first {
     }
 </style>
 <table border="0" class="first" cellpadding="1">
-    <tbody>
         <tr>
-            <td width="15%">Tgl Pengiriman</td>
+            <td width="15%"><b>Kepada</b></td>
             <td width="5%">:</td>
-            <td width="40%">' . $header->tgl_kirim . '</td>
+            <td width="40%"></td>
             <td width="15%">No Surat Jalan</td>
             <td width="5%">:</td>
-            <td width="20%">' . $header->no_sj . '</td>
+            <td width="20%">' . $header->no_surat_jalan . '</td>
         </tr>
         <tr>
-            <td>No FPPP</td>
+            <td colspan="3">' . $header->nama_proyek . '</td>
+            <td>Tanggal</td>
             <td>:</td>
-            <td>' . $header->no_fppp . '</td>
+            <td>' . date('Y-m-d', strtotime($header->created)) . '</td>
+        </tr>
+        <tr>
+            <td colspan="3">' . $header->penerima . '</td>
             <td>Sopir</td>
             <td>:</td>
             <td>' . $header->sopir . '</td>
         </tr>
-
         <tr>
-            <td>Divisi</td>
-            <td>:</td>
-            <td>' . $header->divisi . '</td>
+            <td colspan="3">' . $header->alamat_pengiriman . '</td>
             <td>No Polisi</td>
             <td>:</td>
-            <td>' . $header->no_polisi . '</td>
+            <td>' . $header->no_kendaraan . '</td>
         </tr>
-
-        <tr>
-            <td>Nama Project</td>
-            <td>:</td>
-            <td colspan="4">' . $header->nama_proyek . '</td>
-        </tr>
-        <tr>
-            <td>Alamat</td>
-            <td>:</td>
-            <td colspan="4">' . $header->alamat_proyek . '</td>
-        </tr>
-
-    </tbody>
 </table><br>
-';
-$html .= '<table border="1" cellpadding="2">
-    <tr>
-        <td style="height:30px;">Special Intruction : ' . $header->si . '</td>
-    </tr>
-
-</table><br><br>
 ';
 $html .= '
 <table border="0.2" cellpadding="1">
         <tr>
-            <td width="5%" align="center">No</td>
-            <td width="15%" align="center">Item COde</td>
-            <td width="30%" align="center">Deskripsi</td>
-            <td width="20%" align="center">Ukuran</td>
-            <td width="10%" align="center">Satuan</td>
-            <td width="5%" align="center">Qty</td>
-            <td width="15%" align="center">Warna</td>
+            <td width="5%" align="center"><b>No</b></td>
+            <td width="30%" align="center"><b>Nama Barang</b></td>
+            <td width="10%" align="center"><b>Jumlah</b></td>
+            <td width="15%" align="center"><b>Jumlah Packing</b></td>
+            <td width="10%" align="center"><b>Satuan</b></td>
+            <td width="30%" align="center"><b>Warna</b></td>
         </tr>';
 $i = 1;
 $total = 0;
 foreach ($detail as $key) {
-    $total = $total + $key->qty;
+    $total = $total + $key->qty_out;
     $html .= '<tr>
-            <td align="center">' . $i++ . '</td>
-            <td> ' . $key->item_code . '</td>
-            <td align="center">' . $key->deskripsi . '</td>
-            <td align="center">' . $key->ukuran . '</td>
-            <td align="center">' . $key->satuan . '</td>
-            <td align="center">' . $key->qty . '</td>
-            <td align="center">' . $key->warna . '</td>
-        </tr>';
+                    <td align="center">' . $i++ . '</td>
+                    <td> ' . $key->item_code . '</td>
+                    <td align="center">' . $key->qty_out . '</td>
+                    <td align="center">1</td>
+                    <td align="center">' . $key->satuan . '</td>
+                    <td align="center">' . $key->warna_aksesoris . '</td>
+                </tr>';
 }
-$html .= '<tr>
-            <td align="center" colspan="5"><b> Total Item</b></td>
-            <td align="center"><b> ' . $total . '</b></td>
-            <td></td>
-        </tr>
-        </table><br><br>';
+$html .= '</table><br><br>';
 $html .= '
 <style>
 table.ttd {
@@ -186,7 +171,7 @@ $pdf->lastPage();
 // ob_end_clean();
 //Close and output PDF document
 
-$pdf->Output($header->nama_proyek . '_send.pdf', 'I');
+$pdf->Output($header->nama_proyek . '_SJ_BOM.pdf', 'I');
 // ob_end_clean();
 
 //============================================================+
