@@ -168,9 +168,10 @@ class M_fppp extends CI_Model
 		$this->db->join('master_item mi', 'mi.id = db.id_item', 'left');
 		$this->db->join('master_warna_aluminium mwa', 'mwa.kode = mi.kode_warna', 'left');
 		$this->db->where('db.id_jenis_item', 1);
+		$this->db->where('db.is_bom', 1);
 
 		$this->db->where('db.id_fppp', $id_fppp);
-		return $this->db->get('data_fppp_bom db');
+		return $this->db->get('data_stock db');
 	}
 
 	public function bom_aksesoris($id_fppp)
@@ -178,17 +179,21 @@ class M_fppp extends CI_Model
 		$this->db->join('data_fppp df', 'df.id = db.id_fppp', 'left');
 		$this->db->join('master_item mi', 'mi.id = db.id_item', 'left');
 		$this->db->where('db.id_jenis_item', 2);
+		$this->db->where('db.is_bom', 1);
+
 		$this->db->where('db.id_fppp', $id_fppp);
-		return $this->db->get('data_fppp_bom db');
+		return $this->db->get('data_stock db');
 	}
 
 	public function bom_lembaran($id_fppp)
 	{
 		$this->db->join('data_fppp df', 'df.id = db.id_fppp', 'left');
 		$this->db->join('master_item mi', 'mi.id = db.id_item', 'left');
+		$this->db->where('db.id_jenis_item', 3);
+		$this->db->where('db.is_bom', 1);
 
 		$this->db->where('db.id_fppp', $id_fppp);
-		return $this->db->get('data_fppp_bom db');
+		return $this->db->get('data_stock db');
 	}
 
 	public function getMasterAluminium($section_ata = '', $section_allure = '', $temper = '', $kode_warna = '', $ukuran = '')
@@ -279,54 +284,6 @@ class M_fppp extends CI_Model
 	{
 		$this->db->where('id', $id);
 		return $this->db->get('master_divisi')->row();
-	}
-
-	public function tot_order($value = '')
-	{
-		$res = $this->db->get('data_fppp_bom_aksesoris');
-		$data = array();
-		$nilai = 0;
-		foreach ($res->result() as $key) {
-			if (isset($data[$key->id_fppp])) {
-				$nilai = $data[$key->id_fppp];
-			} else {
-				$nilai = 0;
-			}
-			$data[$key->id_fppp] = $key->qty + $nilai;
-		}
-		return $data;
-	}
-
-	public function tot_out($value = '')
-	{
-		$res = $this->db->get('data_aksesoris_out');
-		$data = array();
-		$nilai = 0;
-		foreach ($res->result() as $key) {
-			if (isset($data[$key->id_fppp])) {
-				$nilai = $data[$key->id_fppp];
-			} else {
-				$nilai = 0;
-			}
-			$data[$key->id_fppp] = $key->qty + $nilai;
-		}
-		return $data;
-	}
-
-	public function tot_kunci($value = '')
-	{
-		$res = $this->db->get('data_aksesoris_out');
-		$data = array();
-		$nilai = 0;
-		foreach ($res->result() as $key) {
-			if (isset($data[$key->id_fppp])) {
-				$nilai = $data[$key->id_fppp];
-			} else {
-				$nilai = 0;
-			}
-			$data[$key->id_fppp] = $key->qty + $nilai;
-		}
-		return $data;
 	}
 
 	public function deleteDetailItem($id)

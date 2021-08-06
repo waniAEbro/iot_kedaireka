@@ -76,7 +76,7 @@
 
                             <tr id="output_data_<?= $row->id_stock ?>" class="output_data">
                                 <td align="center"><?= $row->no_fppp ?>-<?= $row->nama_proyek ?></td>
-                                <td><?= $row->section_ata ?>-<?= $row->section_allure ?>-<?= $row->temper ?>-<?= $row->kode_warna ?>-<?= $row->ukuran ?></td>
+                                <td><?= $row->section_ata ?>-<?= $row->section_allure ?>-<?= $row->temper ?>-<?= $row->warna_aluminium ?>-<?= $row->ukuran ?></td>
                                 <td align="center"><?= $row->divisi_stock ?></td>
                                 <td align="center"><?= $row->gudang ?></td>
                                 <td align="center"><?= $row->keranjang ?></td>

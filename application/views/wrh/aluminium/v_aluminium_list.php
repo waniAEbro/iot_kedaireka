@@ -6,7 +6,7 @@
     }
 
     tr.shown {
-        background: #FCFF43;
+        background: #edffb3;
     }
 
     tr.shown td.details-control {
@@ -17,7 +17,7 @@
     <div class="col-lg-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Monitoring aluminium</h3>
+                <h3 class="box-title">Monitoring Aluminium <?= $warna ?></h3>
 
                 <div class="box-tools pull-right">
                     <?php
@@ -62,7 +62,7 @@
                     <div>&nbsp;</div>
                 </div>
                 <div class="large-table-container-3">
-                    <table width="100%" id="tableku" class="table table-striped">
+                    <table width="100%" id="tableku" class="table">
                         <thead>
                             <th width="5%"></th>
                             <th width="5%">No</th>
@@ -83,14 +83,14 @@
                             <?php
                             $i = 1;
                             foreach ($aluminium->result() as $row) :
-                                $ada = 1;
+                                $ada                        = 1;
                                 $stock_awal_bulan           = @$stock_awal_bulan[$row->id];
                                 $tampil_stock_awal_bulan    = ($stock_awal_bulan != '') ? $stock_awal_bulan : 0;
-                                $total_in_per_bulan         = @$total_in_per_bulan[$row->id];
-                                $tampil_total_in_per_bulan  = ($total_in_per_bulan != '') ? $total_in_per_bulan : 0;
-                                $total_out_per_bulan        = @$total_out_per_bulan[$row->id];
-                                $tampil_total_out_per_bulan = ($total_out_per_bulan != '') ? $total_out_per_bulan : 0;
-                                $stock_akhir_bulan          = $total_in_per_bulan - $total_out_per_bulan;
+                                $tot_in                     = @$total_in_per_bulan[$row->id];
+                                $tampil_total_in_per_bulan  = ($tot_in != '') ? $tot_in : 0;
+                                $tot_out                    = @$total_out_per_bulan[$row->id];
+                                $tampil_total_out_per_bulan = ($tot_out != '') ? $tot_out : 0;
+                                $stock_akhir_bulan          = $tot_in - $tot_out;
                                 $total_bom                  = @$total_bom[$row->id];
                                 $ots_persiapan              = $total_bom;
                                 $free_stock                 = $stock_akhir_bulan - $ots_persiapan;

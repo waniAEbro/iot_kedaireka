@@ -36,7 +36,7 @@
                                 <td><?= $row->kode_warna ?></td>
                                 <td><?= $row->warna_aluminium ?></td>
                                 <td><?= $row->ukuran ?></td>
-                                <td><?= $row->qty ?></td>
+                                <td><?= $row->qty_bom ?></td>
                                 <td><?= $row->keterangan ?></td>
                             </tr>
 
@@ -71,7 +71,7 @@
                                 <td><?= $row->nama_proyek ?></td>
                                 <td><?= $row->item_code ?></td>
                                 <td><?= $row->deskripsi ?></td>
-                                <td><?= $row->qty ?></td>
+                                <td><?= $row->qty_bom ?></td>
                                 <td><?= $row->keterangan ?></td>
                             </tr>
 
@@ -114,7 +114,7 @@
                                 <td><?= $row->tinggi ?></td>
                                 <td><?= $row->tebal ?></td>
                                 <td><?= $row->warna ?></td>
-                                <td><?= $row->qty ?></td>
+                                <td><?= $row->qty_bom ?></td>
                                 <td><?= $row->keterangan ?></td>
                             </tr>
 

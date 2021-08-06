@@ -77,10 +77,10 @@
                         $i = 1;
                         foreach ($list_bom->result() as $row) :
                             $qtyTotalOut = $this->m_aluminium->getQtyOutFppp($row->id_fppp, $row->id_item);
-                            $id_divisi_stock = $this->m_aluminium->getQtyTerbanyakStockDivisi($row->id_item);
-                            $id_gudang_stock = $this->m_aluminium->getQtyTerbanyakStockGudang($row->id_item);
-                            $keranjang_stock = $this->m_aluminium->getQtyTerbanyakStockKeranjang($row->id_item);
-                            $qty_stock = $this->m_aluminium->getQtyTerbanyakStockQty($row->id_item);
+                            $id_divisi_stock = $this->m_aluminium->getQtyTerbanyakStockDivisiMf($row->id_item);
+                            $id_gudang_stock = $this->m_aluminium->getQtyTerbanyakStockGudangMf($row->id_item);
+                            $keranjang_stock = $this->m_aluminium->getQtyTerbanyakStockKeranjangMf($row->id_item);
+                            $qty_stock = $this->m_aluminium->getQtyTerbanyakStockQtyMf($row->id_item);
 
                             $qtyBOM = $row->qty_bom;
                             $kurang = $qtyBOM - $qtyTotalOut;
@@ -186,7 +186,6 @@
             </div>
             <div class="box-footer">
                 <?= button_confirm("Anda yakin menyelesaikan stock out?", "wrh/aluminium/buat_surat_jalan/" . $id_fppp, "#content", 'Buat Surat Jalan', 'btn btn-success', 'data-toggle="tooltip" title="Buat Surat Jalan"'); ?>
-                <?= button_confirm("Anda yakin lanjut ke gudang MF?", "wrh/aluminium/stok_out_make_mf/" . $id_fppp, "#content", 'ke Gudang MF', 'btn btn-primary', 'data-toggle="tooltip" title="ke Gudang MF"'); ?>
             </div>
             <div class="box-footer">
                 <table width="100%" id="tb1" class="table table-stripped">
