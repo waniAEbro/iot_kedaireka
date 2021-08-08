@@ -7,7 +7,10 @@ class M_aluminium extends CI_Model
     public function getData($value = '')
     {
         $this->db->where('id_jenis_item', 1);
-        return $this->db->get('master_item ');
+        $this->db->join('master_warna_aluminium mwa', 'mwa.kode = mi.kode_warna', 'left');
+        $this->db->select('mi.*,mwa.warna_aluminium');
+
+        return $this->db->get('master_item mi');
     }
 
     public function insertData($data = '')

@@ -24,8 +24,7 @@
                         <th>Nama Proyek</th>
                         <th>Deadline Sales</th>
                         <th>Deadline Workshop</th>
-                        <th>Total Qty BOM</th>
-                        <th>Total Qty Out</th>
+                        <th>Status</th>
                         <th></th>
                     </thead>
                     <tbody>
@@ -34,6 +33,14 @@
                         foreach ($dataFpppOut->result() as $row) :
                             $qtybom           = @$qty_bom[$row->id];
                             $qtyout           = @$qty_out[$row->id];
+                            if ($qtyout == 0) {
+                                $status = "PROSES";
+                            } else if ($qtybom > $qtyout) {
+                                $status = "PARSIAL";
+                            } else {
+                                $status = "LUNAS";
+                            }
+
                         ?>
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
@@ -42,8 +49,7 @@
                                 <td><?= $row->nama_proyek ?></td>
                                 <td align="center"><?= $row->deadline_pengiriman ?></td>
                                 <td align="center"><?= $row->deadline_workshop ?></td>
-                                <td><?= $qtybom ?></td>
-                                <td><?= $qtyout ?></td>
+                                <td><?= $status ?></td>
                                 <td>
                                     <?php echo button('load_silent("wrh/aluminium/stok_out_make/' . $row->id . '","#content")', 'Stock OUT', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Stock OUT"'); ?>
                                 </td>

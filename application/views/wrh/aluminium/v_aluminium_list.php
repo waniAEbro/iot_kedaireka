@@ -91,8 +91,8 @@
                                 $tot_out                    = @$total_out_per_bulan[$row->id];
                                 $tampil_total_out_per_bulan = ($tot_out != '') ? $tot_out : 0;
                                 $stock_akhir_bulan          = $tot_in - $tot_out;
-                                $total_bom                  = @$total_bom[$row->id];
-                                $ots_persiapan              = $total_bom;
+                                $tot_bom                  = @$total_bom[$row->id] - $tampil_total_out_per_bulan;
+                                $ots_persiapan              = $tot_bom;
                                 $free_stock                 = $stock_akhir_bulan - $ots_persiapan;
                             ?>
                                 <tr>

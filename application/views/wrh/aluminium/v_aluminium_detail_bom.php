@@ -4,7 +4,7 @@
     <div class="col-lg-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">List BOM aluminium</h3>
+                <h3 class="box-title">List BOM aluminium warna</h3>
                 <div class="box-tools pull-right">
                     <?php //echo button('load_silent("klg/fppp","#content")', 'Kembali', 'btn btn-success'); 
                     ?>
@@ -53,7 +53,7 @@
                 <!-- <button type="submit" id="update" onclick="update()" id="proses" class="btn btn-success">Update</button> -->
             </div>
             <div class="box-footer">
-                <table width="100%" id="tableku" class="table table-striped">
+                <table width="100%" id="tableku" class="table">
                     <thead>
                         <th width="5%">No</th>
                         <th>Section ATA</th>
@@ -70,7 +70,6 @@
                         <th>Qty Aktual</th>
                         <th>Produksi</th>
                         <th>Lapangan</th>
-                        <th>Act</th>
                     </thead>
                     <tbody>
                         <?php
@@ -86,9 +85,6 @@
                             $kurang = $qtyBOM - $qtyTotalOut;
                             $cekproduksi = ($row->produksi == 1) ? 'checked' : '';
                             $ceklapangan = ($row->lapangan == 1) ? 'checked' : '';
-                            // $qtyin           = $this->m_aluminium->getQtyInDetailTabel($row->id_item, $row->id_divisi, $row->id_gudang, $row->keranjang);
-                            // $qtyout          = $this->m_aluminium->getQtyOutDetailTabel($row->id_item, $row->id_divisi, $row->id_gudang, $row->keranjang);
-                            // $qty_gudang = ($getqtygdg > 0) ? $getqtygdg : 0;
                             $qty_gudang = $qty_stock;
                             $totalgudang = $qty_gudang;
                             if ($row->qty_out != 0) {
@@ -97,89 +93,63 @@
                                 $qty_aktual = $qtyBOM;
                             }
 
+                            $bgrow = ($qty_gudang == 0) ? "#ffb6a3" : "";
+                            if ($qty_gudang < $qtyBOM) {
+                                $this->m_aluminium->updatekeMf($row->id_stock, $id_fppp);
+                            }
 
-                            if ($row->kunci == 1) {
 
                         ?>
-                                <tr>
-                                    <td align="center"><?= $i++ ?></td>
-                                    <td><?= $row->section_ata ?>
-                                        <br><?php echo button_confirm("Anda yakin mengirim parsial item " . $row->section_ata . "-" . $row->section_allure . "?", "wrh/aluminium/kirim_parsial/" . $id_fppp . "/" . $row->id_stock, "#content", 'Kirim Parsial', 'btn btn-xs btn-default', 'data-toggle="tooltip" title="Kirim Parsial"');
-                                            ?>
-                                    </td>
-                                    <td><?= $row->section_allure ?></td>
-                                    <td><?= $row->temper ?></td>
-                                    <td><?= $row->warna_aluminium ?></td>
-                                    <td><?= $row->ukuran ?></td>
-                                    <td align="center"><span id="qty_bom_<?= $row->id_stock ?>" class='edit'><?= $qtyBOM ?></span></td>
-                                    <td align="center"><span id="qty_kurang_<?= $row->id_stock ?>"><?= $kurang ?></span></td>
-                                    <td align="center"><span id="qty_gudang_<?= $row->id_stock ?>"><?= $totalgudang ?></span></td>
-                                    <td style="background-color:#ffd45e">
-                                        <select id="id_divisi_<?= $row->id_stock ?>" onchange="divisi(<?= $row->id_stock ?>)" data-id="<?= $row->id_stock ?>" data-field="id_divisi" class="form-control">
-                                            <option id="">Pilih</option>
-                                            <?php foreach ($divisi->result() as $key) {
-                                                $selected1 = ($key->id == $id_divisi_stock) ? "selected" : "";
-                                            ?>
-                                                <option value="<?= $key->id ?>" <?= $selected1 ?>><?= $key->divisi ?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </td>
-                                    <td style="background-color:#ffd45e">
-                                        <select id="id_gudang_<?= $row->id_stock ?>" onchange="gudang(<?= $row->id_stock ?>)" data-id="<?= $row->id_stock ?>" data-field="id_gudang" class="form-control">
-                                            <option id="">Pilih</option>
-                                            <?php foreach ($gudang->result() as $key) {
-                                                $selected2 = ($key->id == $id_gudang_stock) ? "selected" : "";
-                                            ?>
-                                                <option value="<?= $key->id ?>" <?= $selected2 ?>><?= $key->gudang ?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </td>
-                                    <td style="background-color:#ffd45e">
-                                        <select id="keranjang_<?= $row->id_stock ?>" onchange="keranjang(<?= $row->id_stock ?>)" data-id="<?= $row->id_stock ?>" data-field="keranjang" class="form-control">
-                                            <option id="">Pilih</option>
-                                            <?php foreach ($keranjang->result() as $key) {
-                                                $selected2 = ($key->keranjang == $keranjang_stock) ? "selected" : "";
-                                            ?>
-                                                <option value="<?= $key->keranjang ?>" <?= $selected2 ?>><?= $key->keranjang ?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </td>
-                                    <td style="background-color:#ffd45e" align="center"><span id="qty_aktual_<?= $row->id_stock ?>" class='edit'><?= $qty_aktual ?></span>
-                                        <input type='text' class='txtedit' data-id='<?= $row->id_stock ?>' data-field='qty_out' id='txt_<?= $row->id_stock ?>' value='<?= $qty_aktual ?>'>
-                                    </td>
-                                    <td style="background-color:#ffd45e" align="center"><input type="checkbox" id="produksi_<?= $row->id_stock ?>" data-id='<?= $row->id_stock ?>' data-field='produksi_<?= $row->id_stock ?>' class="checkbox" <?= $cekproduksi ?>></td>
-                                    <td style="background-color:#ffd45e" align="center"><input type="checkbox" id="lapangan_<?= $row->id_stock ?>" data-id='<?= $row->id_stock ?>' data-field='lapangan_<?= $row->id_stock ?>' class="checkbox" <?= $ceklapangan ?>></td>
-                                    <?php if (from_session('level') == 99) { ?>
-                                        <td align="center"><?php echo button_confirm("Anda yakin mengunci item " . $row->section_ata . "?", "wrh/aluminium/kuncidetailbom/" . $row->id_stock, "#content", 'Kunci', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Kunci"'); ?></td>
-                                    <?php } else { ?>
-                                        <td align="center"></td>
-                                    <?php } ?>
-                                </tr>
-                            <?php
-                            } else { ?>
-                                <tr>
-                                    <td align="center"><?= $i++ ?></td>
-                                    <td><?= $row->section_ata ?></td>
-                                    <td><?= $row->section_allure ?></td>
-                                    <td><?= $row->temper ?></td>
-                                    <td><?= $row->kode_warna ?></td>
-                                    <td><?= $row->ukuran ?></td>
-                                    <td align="center"><?= $qtyBOM ?></td>
-                                    <td align="center"><?= $kurang ?></td>
-                                    <td align="center"><?= $totalgudang ?></td>
-                                    <td align="center"><?= $row->divisi ?></td>
-                                    <td align="center"><?= $row->gudang ?></td>
-                                    <td align="center"><?= $row->qty_out ?></td>
-                                    <td align="center"><input type="checkbox" onclick="return false;" class="checkbox" <?= $cekproduksi ?>></td>
-                                    <td align="center"><input type="checkbox" onclick="return false;" class="checkbox" <?= $ceklapangan ?>></td>
-                                    <?php if (from_session('level') == 99) { ?>
-                                        <td align="center">Terkunci <?php echo button_confirm("Anda yakin mengunci item " . $row->section_ata . "?", "wrh/aluminium/bukakuncidetailbom/" . $row->id_stock, "#content", 'Buka Kunci', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Buka Kunci"'); ?></td>
-                                    <?php } else { ?>
-                                        <td align="center"></td>
-                                    <?php } ?>
-                                </tr>
-                            <?php }
-                            ?>
+                            <tr bgcolor="<?= $bgrow ?>">
+                                <td align="center"><?= $i++ ?></td>
+                                <td><?= $row->section_ata ?>
+                                    <br><?php echo button_confirm("Anda yakin mengirim parsial item " . $row->section_ata . "-" . $row->section_allure . "?", "wrh/aluminium/kirim_parsial/" . $id_fppp . "/" . $row->id_stock, "#content", 'Kirim Parsial', 'btn btn-xs btn-default', 'data-toggle="tooltip" title="Kirim Parsial"'); ?>
+                                    <br><?php //echo button_confirm("Anda yakin membuat di MF item " . $row->section_ata . "-" . $row->section_allure . "?", "wrh/aluminium/buat_mf/" . $id_fppp . "/" . $row->id_stock, "#content", 'Buat di MF', 'btn btn-xs btn-info', 'data-toggle="tooltip" title="Buat di MF"'); 
+                                        ?>
+                                </td>
+                                <td><?= $row->section_allure ?></td>
+                                <td><?= $row->temper ?></td>
+                                <td><?= $row->warna_aluminium ?></td>
+                                <td><?= $row->ukuran ?></td>
+                                <td align="center"><span id="qty_bom_<?= $row->id_stock ?>" class='edit'><?= $qtyBOM ?></span></td>
+                                <td align="center"><span id="qty_kurang_<?= $row->id_stock ?>"><?= $kurang ?></span></td>
+                                <td align="center"><span id="qty_gudang_<?= $row->id_stock ?>"><?= $totalgudang ?></span></td>
+                                <td style="background-color:#ffd45e">
+                                    <select id="id_divisi_<?= $row->id_stock ?>" onchange="divisi(<?= $row->id_stock ?>)" data-id="<?= $row->id_stock ?>" data-field="id_divisi" class="form-control">
+                                        <option id="">Pilih</option>
+                                        <?php foreach ($divisi->result() as $key) {
+                                            $selected1 = ($key->id == $id_divisi_stock) ? "selected" : "";
+                                        ?>
+                                            <option value="<?= $key->id ?>" <?= $selected1 ?>><?= $key->divisi ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </td>
+                                <td style="background-color:#ffd45e">
+                                    <select id="id_gudang_<?= $row->id_stock ?>" onchange="gudang(<?= $row->id_stock ?>)" data-id="<?= $row->id_stock ?>" data-field="id_gudang" class="form-control">
+                                        <option id="">Pilih</option>
+                                        <?php foreach ($gudang->result() as $key) {
+                                            $selected2 = ($key->id == $id_gudang_stock) ? "selected" : "";
+                                        ?>
+                                            <option value="<?= $key->id ?>" <?= $selected2 ?>><?= $key->gudang ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </td>
+                                <td style="background-color:#ffd45e">
+                                    <select id="keranjang_<?= $row->id_stock ?>" onchange="keranjang(<?= $row->id_stock ?>)" data-id="<?= $row->id_stock ?>" data-field="keranjang" class="form-control">
+                                        <option id="">Pilih</option>
+                                        <?php foreach ($keranjang->result() as $key) {
+                                            $selected2 = ($key->keranjang == $keranjang_stock) ? "selected" : "";
+                                        ?>
+                                            <option value="<?= $key->keranjang ?>" <?= $selected2 ?>><?= $key->keranjang ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </td>
+                                <td style="background-color:#ffd45e" align="center"><span id="qty_aktual_<?= $row->id_stock ?>" class='edit'><?= $qty_aktual ?></span>
+                                    <input type='text' class='txtedit' data-id='<?= $row->id_stock ?>' data-field='qty_out' id='txt_<?= $row->id_stock ?>' value='<?= $qty_aktual ?>'>
+                                </td>
+                                <td style="background-color:#ffd45e" align="center"><input type="checkbox" id="produksi_<?= $row->id_stock ?>" data-id='<?= $row->id_stock ?>' data-field='produksi_<?= $row->id_stock ?>' class="checkbox" <?= $cekproduksi ?>></td>
+                                <td style="background-color:#ffd45e" align="center"><input type="checkbox" id="lapangan_<?= $row->id_stock ?>" data-id='<?= $row->id_stock ?>' data-field='lapangan_<?= $row->id_stock ?>' class="checkbox" <?= $ceklapangan ?>></td>
+                            </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
@@ -219,7 +189,6 @@
                                 <td><?= $row->keranjang ?></td>
                                 <td><?= $row->qty ?></td>
                             </tr>
-
                         <?php $i++;
                         endforeach; ?>
                     </tbody>

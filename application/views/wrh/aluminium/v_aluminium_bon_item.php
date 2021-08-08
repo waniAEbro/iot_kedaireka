@@ -104,7 +104,7 @@
                                             <?= $valap->section_ata ?> -
                                             <?= $valap->section_allure ?> -
                                             <?= $valap->temper ?> -
-                                            <?= $valap->kode_warna ?> -
+                                            <?= $valap->warna_aluminium ?> -
                                             <?= $valap->ukuran ?>
                                         </option>
                                     <?php endforeach; ?>
@@ -302,7 +302,7 @@
                 })
                 .success(function(datasaved) {
                     //code here
-                    xi++;
+                    x++;
                     var i = datasaved['id'];
 
 

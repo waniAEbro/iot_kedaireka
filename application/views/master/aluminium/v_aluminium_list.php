@@ -9,8 +9,7 @@
                     $sesi = from_session('level');
                     if ($sesi == '1' || $sesi == '2') {
                         echo button('load_silent("master/aluminium/import/","#content")', 'Import Excel', 'btn btn-primary', 'data-toggle="tooltip" title="Import Excel"');
-                    } else {
-                        # code...
+                        echo button('load_silent("master/aluminium/form/base","#modal")', 'Add', 'btn btn-info', 'data-toggle="tooltip" title="Add"');
                     }
                     ?>
                 </div>
@@ -22,8 +21,8 @@
                         <th>Section ATA</th>
                         <th>Section Allure</th>
                         <th>Temper</th>
-                        <th>Kode Warna</th>
-                        <th>Deskripsi Warna</th>
+                        <th>Warna</th>
+                        <th width="25%">Deskripsi Warna</th>
                         <th>Ukuran</th>
                         <th>Satuan</th>
                         <th>Act</th>
@@ -38,7 +37,7 @@
                                 <td><?= $row->section_allure ?></td>
                                 <td><?= $row->temper ?></td>
                                 <td><?= $row->kode_warna ?></td>
-                                <td><?= $row->deskripsi_warna ?></td>
+                                <td><?= $row->warna_aluminium ?></td>
                                 <td><?= $row->ukuran ?></td>
                                 <td><?= $row->satuan ?></td>
                                 <td align="center">

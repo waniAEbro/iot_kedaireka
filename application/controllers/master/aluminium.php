@@ -41,8 +41,8 @@ class aluminium extends CI_Controller
         $this->load->library('form_validation');
         $config = array(
             array(
-                'field' => 'aluminium',
-                'label' => 'item_code',
+                'field' => 'section_ata',
+                'label' => 'section_ata',
                 'rules' => 'required'
             )
         );
@@ -50,10 +50,10 @@ class aluminium extends CI_Controller
         $this->form_validation->set_error_delimiters('<span class="error-span">', '</span>');
 
         if ($this->form_validation->run() == FALSE) {
-            $data['status'] = '';
+            $data['warna'] = $this->db->get('master_warna_aluminium');
             $this->load->view('master/aluminium/v_aluminium_add', $data);
         } else {
-            $datapost = get_post_data(array('item_code', 'deskripsi'));
+            $datapost = get_post_data(array('id_jenis_item', 'section_ata', 'section_allure', 'temper', 'kode_warna', 'ukuran', 'satuan'));
             $this->m_aluminium->insertData($datapost);
             $this->fungsi->run_js('load_silent("master/aluminium","#content")');
             $this->fungsi->message_box("Data Master aluminium sukses disimpan...", "success");
@@ -72,8 +72,8 @@ class aluminium extends CI_Controller
                 'rules' => ''
             ),
             array(
-                'field' => 'aluminium',
-                'label' => 'aluminium',
+                'field' => 'section_ata',
+                'label' => 'section_ata',
                 'rules' => 'required'
             )
         );
@@ -81,10 +81,11 @@ class aluminium extends CI_Controller
         $this->form_validation->set_error_delimiters('<span class="error-span">', '</span>');
 
         if ($this->form_validation->run() == FALSE) {
-            $data['edit'] = $this->db->get_where('master_aluminium', array('id' => $id));
+            $data['warna'] = $this->db->get('master_warna_aluminium');
+            $data['edit'] = $this->db->get_where('master_item', array('id' => $id));
             $this->load->view('master/aluminium/v_aluminium_edit', $data);
         } else {
-            $datapost = get_post_data(array('id', 'aluminium'));
+            $datapost = get_post_data(array('id', 'id_jenis_item', 'section_ata', 'section_allure', 'temper', 'kode_warna', 'ukuran', 'satuan'));
             $this->m_aluminium->updateData($datapost);
             $this->fungsi->run_js('load_silent("master/aluminium","#content")');
             $this->fungsi->message_box("Data Master aluminium sukses diperbarui...", "success");

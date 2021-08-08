@@ -181,9 +181,10 @@ class M_aluminium extends CI_Model
         $this->db->where('da.inout', 1);
         $this->db->where('da.id_item', $id_item);
         $this->db->where('da.id_surat_jalan', 0);
-        // $this->db->group_by('da.id_divisi');
-        // $this->db->group_by('da.id_gudang');
-        // $this->db->group_by('da.keranjang');
+        $this->db->where('da.awal_bulan', 0);
+        $this->db->group_by('da.id_divisi');
+        $this->db->group_by('da.id_gudang');
+        $this->db->group_by('da.keranjang');
         $this->db->group_by(array('da.id_divisi', 'da.id_gudang', 'da.keranjang'));
 
         $this->db->select('da.*,mg.gudang,md.divisi');
@@ -370,6 +371,27 @@ class M_aluminium extends CI_Model
         // $this->db->where('mi.kode_warna !=', '01');
         $this->db->where('ds.is_bom', 1);
         $this->db->where('ds.id_surat_jalan', 0);
+        $this->db->where('ds.ke_mf', 0);
+        $this->db->select('ds.*,ds.id as id_stock,mi.*,mwa.warna_aluminium,mds.divisi,mg.gudang');
+
+        $this->db->order_by('ds.id', 'asc');
+
+        return $this->db->get('data_stock ds');
+    }
+
+    public function getItemBomMf($id_fppp)
+    {
+        $this->db->join('master_item mi', 'mi.id = ds.id_item', 'left');
+        $this->db->join('master_warna_aluminium mwa', 'mwa.kode = mi.kode_warna', 'left');
+        $this->db->join('master_divisi_stock mds', 'mds.id = ds.id_divisi', 'left');
+        $this->db->join('master_gudang mg', 'mg.id = ds.id_gudang', 'left');
+
+        $this->db->where('ds.id_fppp', $id_fppp);
+        $this->db->where('ds.id_jenis_item', 1);
+        // $this->db->where('mi.kode_warna !=', '01');
+        $this->db->where('ds.is_bom', 1);
+        $this->db->where('ds.id_surat_jalan', 0);
+        $this->db->where('ds.ke_mf', 1);
         $this->db->select('ds.*,ds.id as id_stock,mi.*,mwa.warna_aluminium,mds.divisi,mg.gudang');
 
         $this->db->order_by('ds.id', 'asc');
@@ -622,9 +644,10 @@ class M_aluminium extends CI_Model
         $this->db->join('master_divisi_stock mds', 'mds.id = ds.id_divisi', 'left');
         $this->db->join('master_gudang mg', 'mg.id = ds.id_gudang', 'left');
         $this->db->join('master_item mi', 'mi.id = ds.id_item', 'left');
+        $this->db->join('master_warna_aluminium mwa', 'mwa.kode = mi.kode_warna', 'left');
 
         $this->db->where('ds.id_surat_jalan', $id_sj);
-        $this->db->select('ds.id as id_stock,ds.*,df.no_fppp,df.nama_proyek,mds.divisi as divisi_stock,mg.gudang,mi.*');
+        $this->db->select('ds.id as id_stock,ds.*,mwa.warna_aluminium,df.no_fppp,df.nama_proyek,mds.divisi as divisi_stock,mg.gudang,mi.*');
 
         return $this->db->get('data_stock ds');
     }
@@ -699,17 +722,20 @@ class M_aluminium extends CI_Model
     public function getDivisiBom($jenis_item)
     {
         $this->db->join('master_divisi_stock mds', 'mds.id = dc.id_divisi', 'left');
+
         $this->db->where('dc.id_jenis_item', $jenis_item);
         $this->db->group_by('dc.id_divisi');
         $this->db->select('mds.*');
         return $this->db->get('data_counter dc');
     }
 
-    public function getGudangBom($jenis_item)
+    public function getGudangBom($jenis_item, $is_bon = '')
     {
         $this->db->join('master_gudang mg', 'mg.id = dc.id_gudang', 'left');
         $this->db->where('dc.id_jenis_item', $jenis_item);
-        $this->db->where('mg.id >=', 3);
+        if ($is_bon != 1) {
+            $this->db->where('mg.id >=', 3);
+        }
         $this->db->group_by('dc.id_gudang');
         $this->db->select('mg.*');
         return $this->db->get('data_counter dc');
@@ -723,6 +749,50 @@ class M_aluminium extends CI_Model
         $this->db->group_by('dc.id_gudang');
         $this->db->select('mg.*');
         return $this->db->get('data_counter dc');
+    }
+    public function updatekeMf($id_stock, $id_fppp)
+    {
+        $id_item      = $this->db->get_where('data_stock', array('id' => $id_stock))->row()->id_item;
+        $qty_bom      = $this->db->get_where('data_stock', array('id' => $id_stock))->row()->qty_bom;
+
+        $section_ata = $this->db->get_where('master_item', array('id' => $id_item))->row()->section_ata;
+        $section_allure = $this->db->get_where('master_item', array('id' => $id_item))->row()->section_allure;
+        $temper = $this->db->get_where('master_item', array('id' => $id_item))->row()->temper;
+        $ukuran = $this->db->get_where('master_item', array('id' => $id_item))->row()->ukuran;
+        $kode_warna = '01';
+
+        $this->db->where('section_ata', $section_ata);
+        $this->db->where('section_allure', $section_allure);
+        $this->db->where('temper', $temper);
+        $this->db->where('ukuran', $ukuran);
+        $this->db->where('kode_warna', $kode_warna);
+        $hasil = $this->db->get('master_item');
+        if ($hasil->num_rows() > 0) {
+            $get_id = $hasil->row()->id;
+            $this->db->where('id_item', $get_id);
+            $this->db->where('id_fppp', $id_fppp);
+            $this->db->where('ke_mf', 1);
+            $cek_ada = $this->db->get('data_stock')->num_rows();
+            if ($cek_ada == 0) {
+                $object = array(
+                    'is_bom' => '1',
+                    'ke_mf' => '1',
+                    'id_fppp' => $id_fppp,
+                    'id_jenis_item' => 1,
+                    'id_item' => $get_id,
+                    'qty_bom' => $qty_bom,
+                    'created' => date('Y-m-d H:i:s'),
+                );
+                $this->db->insert('data_stock', $object);
+            }
+        }
+
+
+
+
+        // $object = array('ke_mf' => 1);
+        // $this->db->where('id', $id_stock);
+        // $this->db->update('data_stock', $object);
     }
 
     public function getKeranjangBom($jenis_item)
