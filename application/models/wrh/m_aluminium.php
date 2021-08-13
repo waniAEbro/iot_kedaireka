@@ -800,6 +800,7 @@ class M_aluminium extends CI_Model
         if ($cek_ada == 0) {
             $object = array(
                 'is_bom' => '1',
+                'id_item_sblm' => $id_item,
                 'ke_mf' => '1',
                 'id_fppp' => $id_fppp,
                 'id_jenis_item' => 1,
@@ -862,6 +863,13 @@ class M_aluminium extends CI_Model
         $this->db->where('lapangan', 1);
         $this->db->where('id_surat_jalan', 0);
         $this->db->update('data_stock', $object);
+    }
+
+    public function getRowItemWarna($id_item)
+    {
+        $this->db->join('master_warna_aluminium mwa', 'mwa.kode = mi.kode_warna', 'left');
+        $this->db->where('mi.id', $id_item);
+        return $this->db->get('master_item mi')->row();
     }
 }
 

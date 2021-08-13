@@ -106,7 +106,8 @@ $html .= '
             <td width="10%" align="center"><b>Jumlah</b></td>
             <td width="15%" align="center"><b>Jumlah Packing</b></td>
             <td width="10%" align="center"><b>Satuan</b></td>
-            <td width="30%" align="center"><b>Warna</b></td>
+            <td width="15%" align="center"><b>Warna</b></td>
+            <td width="15%" align="center"><b>Warna Akhir</b></td>
         </tr>';
 $i = 1;
 $total = 0;
@@ -115,6 +116,12 @@ foreach ($detail as $key) {
         $itm = $key->section_allure;
     } else {
         $itm = $key->section_ata . ' ' . $key->section_allure;
+    }
+
+    if ($key->ke_mf == 1) {
+        $warna_sblm = $this->m_aluminium->getRowItemWarna($key->id_item_sblm)->warna_aluminium;
+    } else {
+        $warna_sblm = '-';
     }
 
     $total = $total + $key->qty_out;
@@ -126,6 +133,7 @@ foreach ($detail as $key) {
                     <td align="center">1</td>
                     <td align="center">' . $key->satuan . '</td>
                     <td align="center">' . $key->warna_aluminium . '</td>
+                    <td align="center">' . $warna_sblm . '</td>
                 </tr>';
 }
 $html .= '</table><br><br>';
