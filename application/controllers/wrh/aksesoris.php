@@ -289,7 +289,7 @@ class aksesoris extends CI_Controller
     public function list_surat_jalan()
     {
         $this->fungsi->check_previleges('aksesoris');
-        $data['surat_jalan'] = $this->m_aksesoris->getSuratJalan(1, 1);
+        $data['surat_jalan'] = $this->m_aksesoris->getSuratJalan(1, 2);
         $this->load->view('wrh/aksesoris/v_aksesoris_out_sj_list', $data);
     }
 
@@ -531,7 +531,7 @@ class aksesoris extends CI_Controller
     public function bon_manual()
     {
         $this->fungsi->check_previleges('aksesoris');
-        $data['surat_jalan'] = $this->m_aksesoris->getSuratJalan(2, 1);
+        $data['surat_jalan'] = $this->m_aksesoris->getSuratJalan(2, 2);
         $this->load->view('wrh/aksesoris/v_aksesoris_bon_list', $data);
     }
 
