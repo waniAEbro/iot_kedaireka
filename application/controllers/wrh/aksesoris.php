@@ -281,7 +281,7 @@ class aksesoris extends CI_Controller
     {
         $this->fungsi->check_previleges('aksesoris');
         $data['no_fppp']        = $this->db->get_where('data_fppp', array('id_status' => 1));
-        $data['no_surat_jalan'] = str_pad($this->m_aksesoris->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJ/AL/' . date('m') . '/' . date('Y');
+        $data['no_surat_jalan'] = str_pad($this->m_aksesoris->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJ/AK/' . date('m') . '/' . date('Y');
 
         $this->load->view('wrh/aksesoris/v_aksesoris_out', $data);
     }
@@ -539,7 +539,7 @@ class aksesoris extends CI_Controller
     {
         $this->fungsi->check_previleges('aksesoris');
         $data['no_fppp']        = $this->db->get_where('data_fppp', array('id_status' => 1));
-        $data['no_surat_jalan'] = str_pad($this->m_aksesoris->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJ/AL/' . date('m') . '/' . date('Y');
+        $data['no_surat_jalan'] = str_pad($this->m_aksesoris->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJ/AK/' . date('m') . '/' . date('Y');
 
         $this->load->view('wrh/aksesoris/v_aksesoris_bon_add', $data);
     }
