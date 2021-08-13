@@ -306,7 +306,9 @@ class M_aksesoris extends CI_Model
         $this->db->join('data_fppp df', 'df.id = ds.id_fppp', 'left');
         $this->db->where('ds.id_jenis_item', $jenis_item);
         $this->db->select('df.*');
+        $this->db->where('id_fppp !=', 0);
         $this->db->group_by('ds.id_fppp');
+
         return $this->db->get('data_stock ds');
     }
 
