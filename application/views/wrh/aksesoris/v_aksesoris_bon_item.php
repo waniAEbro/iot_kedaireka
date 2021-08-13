@@ -90,29 +90,29 @@
                     <hr>
                     <tbody>
                         <tr>
-                            <td><select id="id_fppp" name="id_fppp" class="form-control" style="width:100px" required>
+                            <td><select id="id_fppp" name="id_fppp" class="form-control" style="width:100%" required>
                                     <option value="">-- Select --</option>
                                     <?php foreach ($fppp->result() as $valap) : ?>
                                         <option value="<?= $valap->id ?>"><?= $valap->no_fppp ?> - <?= $valap->nama_proyek ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </td>
-                            <td><select id="item" name="item" class="form-control" style="width:120px" required>
+                            <td><select id="item" name="item" class="form-control" style="width:100%" required>
                                     <option value="">-- Select --</option>
                                     <?php foreach ($item->result() as $valap) : ?>
                                         <option value="<?= $valap->id ?>">
-                                            <?= $valap->item_code ?> - <?= $valap->deskripsi ?>
+                                            <?= $valap->item_code ?>
                                         </option>
                                     <?php endforeach; ?>
                                 </select></td>
-                            <td><select id="id_divisi" name="id_divisi" class="form-control" style="width:100px" required>
+                            <td><select id="id_divisi" name="id_divisi" class="form-control" style="width:100%" required>
                                     <option value="">-- Select --</option>
                                     <?php foreach ($divisi->result() as $valap) : ?>
                                         <option value="<?= $valap->id ?>"><?= $valap->divisi ?>
                                         </option>
                                     <?php endforeach; ?>
                                 </select></td>
-                            <td><select id="id_gudang" name="id_gudang" class="form-control" style="width:100px" required>
+                            <td><select id="id_gudang" name="id_gudang" class="form-control" style="width:100%" required>
                                     <option value="">-- Select --</option>
                                     <?php foreach ($gudang->result() as $valap) : ?>
                                         <option value="<?= $valap->id ?>"><?= $valap->gudang ?>
@@ -120,7 +120,7 @@
                                     <?php endforeach; ?>
                                 </select>
                             </td>
-                            <td><select id="keranjang" name="keranjang" class="form-control" style="width:100px" required>
+                            <td><select id="keranjang" name="keranjang" class="form-control" style="width:100%" required>
                                     <option value="">-- Select --</option>
                                     <?php foreach ($keranjang->result() as $valap) : ?>
                                         <option value="<?= $valap->keranjang ?>"><?= $valap->keranjang ?>
@@ -298,7 +298,7 @@
                 })
                 .success(function(datasaved) {
                     //code here
-                    xi++;
+                    x++;
                     var i = datasaved['id'];
 
 

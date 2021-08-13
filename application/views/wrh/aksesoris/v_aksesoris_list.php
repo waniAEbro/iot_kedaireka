@@ -6,7 +6,7 @@
     }
 
     tr.shown {
-        background: #FCFF43;
+        background: #edffb3;
     }
 
     tr.shown td.details-control {
@@ -62,7 +62,7 @@
                     <div>&nbsp;</div>
                 </div>
                 <div class="large-table-container-3">
-                    <table width="100%" id="tableku" class="table table-striped">
+                    <table width="100%" id="tableku" class="table">
                         <thead>
                             <th width="5%"></th>
                             <th width="5%">No</th>
@@ -79,16 +79,16 @@
                             <?php
                             $i = 1;
                             foreach ($aksesoris->result() as $row) :
-                                $ada = 1;
+                                $ada                        = 1;
                                 $stock_awal_bulan           = @$stock_awal_bulan[$row->id];
                                 $tampil_stock_awal_bulan    = ($stock_awal_bulan != '') ? $stock_awal_bulan : 0;
-                                $total_in_per_bulan         = @$total_in_per_bulan[$row->id];
-                                $tampil_total_in_per_bulan  = ($total_in_per_bulan != '') ? $total_in_per_bulan : 0;
-                                $total_out_per_bulan        = @$total_out_per_bulan[$row->id];
-                                $tampil_total_out_per_bulan = ($total_out_per_bulan != '') ? $total_out_per_bulan : 0;
-                                $stock_akhir_bulan          = $total_in_per_bulan - $total_out_per_bulan;
-                                $total_bom                  = @$total_bom[$row->id];
-                                $ots_persiapan              = $total_bom;
+                                $tot_in                     = @$total_in_per_bulan[$row->id];
+                                $tampil_total_in_per_bulan  = ($tot_in != '') ? $tot_in : 0;
+                                $tot_out                    = @$total_out_per_bulan[$row->id];
+                                $tampil_total_out_per_bulan = ($tot_out != '') ? $tot_out : 0;
+                                $stock_akhir_bulan          = $tot_in - $tot_out;
+                                $tot_bom                  = @$total_bom[$row->id] - $tampil_total_out_per_bulan;
+                                $ots_persiapan              = $tot_bom;
                                 $free_stock                 = $stock_akhir_bulan - $ots_persiapan;
                             ?>
                                 <tr>

@@ -569,6 +569,13 @@ class M_aluminium extends CI_Model
         }
     }
 
+    public function getKodeDivisi($id_fppp)
+    {
+        $this->db->join('master_divisi md', 'md.id = df.id_divisi', 'left');
+        $this->db->where('df.id', $id_fppp);
+        return $this->db->get('data_fppp df')->row()->divisi_pendek;
+    }
+
     public function getRowFppp($id)
     {
         $this->db->where('id', $id);
@@ -816,8 +823,11 @@ class M_aluminium extends CI_Model
     {
         $this->db->join('master_item mi', 'mi.id = ds.id_item', 'left');
         $this->db->join('master_warna_aluminium mwa', 'mwa.kode = mi.kode_warna', 'left');
+        $this->db->join('data_fppp df', 'df.id = ds.id_fppp', 'left');
+
         $this->db->where('ds.inout', 2);
         $this->db->where('ds.lapangan', 1);
+        $this->db->where('ds.id_jenis_item', 1);
         $this->db->where('ds.id_surat_jalan', $id);
         return $this->db->get('data_stock ds');
     }

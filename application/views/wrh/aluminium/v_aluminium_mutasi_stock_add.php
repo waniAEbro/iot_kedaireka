@@ -127,7 +127,7 @@
     function mutasi() {
         var qty1 = parseInt($('#qty').val());
         var qty2 = parseInt($('#qty2').val());
-        if (qty1 > qty2) {
+        if (qty1 >= qty2) {
             $.ajax({
                 url: "<?= site_url('wrh/aluminium/simpanMutasi') ?>",
                 dataType: "json",

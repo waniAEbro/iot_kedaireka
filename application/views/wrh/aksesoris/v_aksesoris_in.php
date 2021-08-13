@@ -8,6 +8,24 @@
                 <form method="post" class="form-vertical form" role="form" id="formid">
                     <div class="box-body">
                         <div class="form-group">
+                            <label class="control-label">Supplier:</label>
+                            <select id="supplier" name="supplier" class="form-control" style="width:100%" required>
+                                <option value="">-- Select --</option>
+                                <?php foreach ($supplier->result() as $valap) : ?>
+                                    <option value="<?= $valap->id ?>"><?= $valap->supplier ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">No Surat Jalan:</label>
+                            <input type="text" class="form-control" id="no_surat_jalan" placeholder="No Surat Jalan">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">No PR:</label>
+                            <input type="text" class="form-control" id="no_pr" placeholder="No PR">
+                        </div>
+                        <hr>
+                        <div class="form-group">
                             <label class="control-label">Item:</label>
                             <select id="item" name="item" class="form-control" style="width:100%" required>
                                 <option value="">-- Select --</option>
@@ -22,18 +40,7 @@
                             <label class="control-label">Qty Surat Jalan:</label>
                             <input type="text" style="text-align: right;" class="form-control" id="qty" placeholder="Qty" autocomplete="off">
                         </div>
-                        <div class="form-group">
-                            <label class="control-label">Supplier:</label>
-                            <input type="text" class="form-control" id="supplier" placeholder="Supplier">
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">No Surat Jalan:</label>
-                            <input type="text" class="form-control" id="no_surat_jalan" placeholder="No Surat Jalan">
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">No PR:</label>
-                            <input type="text" class="form-control" id="no_pr" placeholder="No PR">
-                        </div>
+
                         <div class="form-group">
                             <label class="control-label">Divisi:</label>
                             <select id="id_divisi" name="id_divisi" class="form-control" style="width:100%" required>
@@ -110,7 +117,7 @@
                 title: 'Berhasil',
                 message: "Tambah Stock selesai!"
             });
-            load_silent("wrh/aksesoris", "#content");
+            load_silent("wrh/aksesoris/stok_in", "#content");
         }
     }
     $(document).ready(function() {
@@ -168,7 +175,7 @@
                     ' + $('#qty').val() + '\
                   </td>\
                   <td width = "15%">\
-                    ' + $('#supplier').val() + '\
+                  ' + $('#supplier :selected').text() + '\
                   </td>\
                   <td width = "15%">\
                     ' + $('#no_surat_jalan').val() + '\
@@ -195,9 +202,9 @@
                     $('#id_divisi').val('').trigger('change');
                     $('#id_gudang').val('').trigger('change');
                     $("#qty").val('');
-                    $("#supplier").val('');
-                    $("#no_surat_jalan").val('');
-                    $("#no_pr").val('');
+                    // $("#supplier").val('');
+                    // $("#no_surat_jalan").val('');
+                    // $("#no_pr").val('');
                     $("#keranjang").val('');
                     $("#keterangan").val('');
                     $.growl.notice({

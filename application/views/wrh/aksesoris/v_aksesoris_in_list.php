@@ -20,7 +20,7 @@
                     <thead>
                         <th width="5%">No</th>
                         <th>Tgl</th>
-                        <th>Item Code</th>
+                        <th>Item</th>
                         <th>Divisi</th>
                         <th>Gudang</th>
                         <th>Keranjang</th>
