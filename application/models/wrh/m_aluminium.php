@@ -767,6 +767,7 @@ class M_aluminium extends CI_Model
         $section_allure = $this->db->get_where('master_item', array('id' => $id_item))->row()->section_allure;
         $temper = $this->db->get_where('master_item', array('id' => $id_item))->row()->temper;
         $ukuran = $this->db->get_where('master_item', array('id' => $id_item))->row()->ukuran;
+        $satuan = $this->db->get_where('master_item', array('id' => $id_item))->row()->satuan;
         $kode_warna = '01';
 
         $this->db->where('section_ata', $section_ata);
@@ -775,24 +776,38 @@ class M_aluminium extends CI_Model
         $this->db->where('ukuran', $ukuran);
         $this->db->where('kode_warna', $kode_warna);
         $hasil = $this->db->get('master_item');
-        if ($hasil->num_rows() > 0) {
+        if ($hasil->num_rows() == 0) {
+            $obj_item = array(
+                'id_jenis_item' => 1,
+                'section_ata' => $section_ata,
+                'section_allure' => $section_allure,
+                'temper' => $temper,
+                'ukuran' => $ukuran,
+                'kode_warna' => $kode_warna,
+                'satuan' => $satuan,
+                'created' => date('Y-m-d H:i:s'),
+            );
+            $this->db->insert('master_item', $obj_item);
+            $get_id = $this->db->insert_id();
+        } else {
             $get_id = $hasil->row()->id;
-            $this->db->where('id_item', $get_id);
-            $this->db->where('id_fppp', $id_fppp);
-            $this->db->where('ke_mf', 1);
-            $cek_ada = $this->db->get('data_stock')->num_rows();
-            if ($cek_ada == 0) {
-                $object = array(
-                    'is_bom' => '1',
-                    'ke_mf' => '1',
-                    'id_fppp' => $id_fppp,
-                    'id_jenis_item' => 1,
-                    'id_item' => $get_id,
-                    'qty_bom' => $qty_bom,
-                    'created' => date('Y-m-d H:i:s'),
-                );
-                $this->db->insert('data_stock', $object);
-            }
+        }
+
+        $this->db->where('id_item', $get_id);
+        $this->db->where('id_fppp', $id_fppp);
+        $this->db->where('ke_mf', 1);
+        $cek_ada = $this->db->get('data_stock')->num_rows();
+        if ($cek_ada == 0) {
+            $object = array(
+                'is_bom' => '1',
+                'ke_mf' => '1',
+                'id_fppp' => $id_fppp,
+                'id_jenis_item' => 1,
+                'id_item' => $get_id,
+                'qty_bom' => $qty_bom,
+                'created' => date('Y-m-d H:i:s'),
+            );
+            $this->db->insert('data_stock', $object);
         }
 
 

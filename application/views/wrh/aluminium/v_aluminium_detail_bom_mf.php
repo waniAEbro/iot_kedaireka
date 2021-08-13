@@ -53,7 +53,7 @@
                 <!-- <button type="submit" id="update" onclick="update()" id="proses" class="btn btn-success">Update</button> -->
             </div>
             <div class="box-footer">
-                <table width="100%" id="tableku" class="table table-striped">
+                <table width="100%" id="tableku" class="table">
                     <thead>
                         <th width="5%">No</th>
                         <th>Section ATA</th>
@@ -96,12 +96,14 @@
                                 $qty_aktual = $qtyBOM;
                             }
 
+                            $bgrow = ($qty_gudang == 0) ? "#ffb6a3" : "";
+
 
                         ?>
-                            <tr>
+                            <tr bgcolor="<?= $bgrow ?>">
                                 <td align="center"><?= $i++ ?></td>
                                 <td><?= $row->section_ata ?>
-                                    <br><?php echo button_confirm("Anda yakin mengirim parsial item " . $row->section_ata . "-" . $row->section_allure . "?", "wrh/aluminium/kirim_parsial/" . $id_fppp . "/" . $row->id_stock, "#content", 'Kirim Parsial', 'btn btn-xs btn-default', 'data-toggle="tooltip" title="Kirim Parsial"');
+                                    <br><?php //echo button_confirm("Anda yakin mengirim parsial item " . $row->section_ata . "-" . $row->section_allure . "?", "wrh/aluminium/kirim_parsial/" . $id_fppp . "/" . $row->id_stock, "#content", 'Kirim Parsial', 'btn btn-xs btn-default', 'data-toggle="tooltip" title="Kirim Parsial"');
                                         ?>
                                 </td>
                                 <td><?= $row->section_allure ?></td>

@@ -147,34 +147,7 @@
             <div class="box-footer">
                 <?= button_confirm("Anda yakin menyelesaikan stock out?", "wrh/aksesoris/buat_surat_jalan/" . $id_fppp, "#content", 'Buat Surat Jalan', 'btn btn-success', 'data-toggle="tooltip" title="Buat Surat Jalan"'); ?>
             </div>
-            <div class="box-footer">
-                <table width="100%" id="tb1" class="table table-stripped">
-                    <thead>
-                        <th width="5%">No</th>
-                        <th>Item</th>
-                        <th>Divisi</th>
-                        <th>Gudang</th>
-                        <th>Keranjang</th>
-                        <th>Qty</th>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $i = 1;
-                        foreach ($aksesoris->result() as $row) :
-                        ?>
-                            <tr>
-                                <td align="center"><?= $i ?></td>
-                                <td><?= $row->item_code ?></td>
-                                <td><?= $row->divisi ?></td>
-                                <td><?= $row->gudang ?></td>
-                                <td><?= $row->keranjang ?></td>
-                                <td><?= $row->qty ?></td>
-                            </tr>
-                        <?php $i++;
-                        endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
+
             <?php // echo button_confirm("Anda yakin menambahkan item stock out?", "wrh/aksesoris/additemdetailbom/" . $id_fppp, "#modal", 'Add Item', 'btn btn-info', 'data-toggle="tooltip" title="Add Item"'); 
             ?>
             <?php //echo button_confirm("Anda yakin menyelesaikan stock out?", "wrh/aksesoris/finishdetailbom/" . $id_fppp, "#content", 'Finish', 'btn btn-success', 'data-toggle="tooltip" title="Finish"'); 

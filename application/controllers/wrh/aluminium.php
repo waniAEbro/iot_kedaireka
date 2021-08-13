@@ -164,6 +164,7 @@ class aluminium extends CI_Controller
 
     public function stok_out_make_mf($id_fppp)
     {
+
         $id_jenis_item = 1;
         $data['id_fppp']   = $id_fppp;
         $data['rowFppp']   = $this->m_aluminium->getRowFppp($id_fppp);
