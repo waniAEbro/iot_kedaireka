@@ -152,7 +152,7 @@
         <div class="col-md-4">
           <div class="form-group">
             <label>Warna aluminium</label>
-            <?= form_dropdown('id_warna_aluminium', $warna_aluminium, '', 'id="id_warna_aluminium" class="form-control"') ?>
+            <?= form_dropdown('id_warna', $warna, '', 'id="id_warna" class="form-control"') ?>
           </div>
         </div>
         <div class="col-md-4">
@@ -299,7 +299,7 @@
             </div>
             <div class="form-group">
               <label class="control-label">Finish Coating</label>
-              <?= form_dropdown('finish_coating', $warna_aluminium, '', 'id="finish_coating" class="form-control"') ?>
+              <?= form_dropdown('finish_coating', $warna, '', 'id="finish_coating" class="form-control"') ?>
             </div>
             <div class="form-group">
               <label class="control-label">Kode Opening</label>
@@ -400,7 +400,7 @@
 
   function save() {
     var path = $("#lampiran").val().replace('C:\\fakepath\\', '');
-    var wa = $('#id_warna_aluminium').val();
+    var wa = $('#id_warna').val();
     $('#finish_coating').val(wa).trigger('change');
     if (path == '') {
       $.ajax({
@@ -427,7 +427,7 @@
           id_metode_pengiriman: $("#id_metode_pengiriman").val(),
           id_penggunaan_peti: $("#id_penggunaan_peti").val(),
           id_penggunaan_sealant: $("#id_penggunaan_sealant").val(),
-          id_warna_aluminium: $("#id_warna_aluminium").val(),
+          id_warna: $("#id_warna").val(),
           id_warna_lainya: $("#id_warna_lainya").val(),
           warna_sealant: $("#warna_sealant").val(),
           ditujukan_kepada: $("#ditujukan_kepada").val(),
@@ -486,7 +486,7 @@
           id_metode_pengiriman: $("#id_metode_pengiriman").val(),
           id_penggunaan_peti: $("#id_penggunaan_peti").val(),
           id_penggunaan_sealant: $("#id_penggunaan_sealant").val(),
-          id_warna_aluminium: $("#id_warna_aluminium").val(),
+          id_warna: $("#id_warna").val(),
           id_warna_lainya: $("#id_warna_lainya").val(),
           warna_sealant: $("#warna_sealant").val(),
           ditujukan_kepada: $("#ditujukan_kepada").val(),
@@ -763,8 +763,8 @@
           <label>Finish Coating</label>
           <select id="finish_coating_edit" name="finish_coating_edit" class="form-control" style="width:100%" required>
             <option value="">-- Select Finish Coating --</option>
-            <?php foreach ($warna_aluminium_edit->result() as $val) : ?>
-              <option value="<?= $val->id ?>"><?= $val->warna_aluminium ?></option>
+            <?php foreach ($warna_edit->result() as $val) : ?>
+              <option value="<?= $val->id ?>"><?= $val->warna ?></option>
             <?php endforeach; ?>
           </select>
         </div>

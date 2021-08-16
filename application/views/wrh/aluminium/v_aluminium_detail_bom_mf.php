@@ -75,6 +75,11 @@
                         <?php
                         $i = 1;
                         foreach ($list_bom->result() as $row) :
+                            $divisi = $this->m_aluminium->getDivisiBomItem($id_jenis_item, $row->id_item);
+                            $gudang = $this->m_aluminium->getGudangBomItem($id_jenis_item, $row->id_item);
+                            $keranjang = $this->m_aluminium->getKeranjangBomItem($id_jenis_item, $row->id_item);
+
+
                             $qtyTotalOut = $this->m_aluminium->getQtyOutFppp($row->id_fppp, $row->id_item);
                             $id_divisi_stock = $this->m_aluminium->getQtyTerbanyakStockDivisiMf($row->id_item);
                             $id_gudang_stock = $this->m_aluminium->getQtyTerbanyakStockGudangMf($row->id_item);
@@ -108,7 +113,7 @@
                                 </td>
                                 <td><?= $row->section_allure ?></td>
                                 <td><?= $row->temper ?></td>
-                                <td><?= $row->warna_aluminium ?></td>
+                                <td><?= $row->warna ?></td>
                                 <td><?= $row->ukuran ?></td>
                                 <td align="center"><span id="qty_bom_<?= $row->id_stock ?>" class='edit'><?= $qtyBOM ?></span></td>
                                 <td align="center"><span id="qty_kurang_<?= $row->id_stock ?>"><?= $kurang ?></span></td>
@@ -156,43 +161,6 @@
             <div class="box-footer">
                 <?= button_confirm("Anda yakin menyelesaikan stock out?", "wrh/aluminium/buat_surat_jalan/" . $id_fppp, "#content", 'Buat Surat Jalan', 'btn btn-success', 'data-toggle="tooltip" title="Buat Surat Jalan"'); ?>
                 <?= button('load_silent("wrh/aluminium/stok_out_make/' . $id_fppp . '","#content")', 'Kembali ke Gudang Warna', 'btn btn-primary', 'data-toggle="tooltip" title="Kembali ke Gudang Warna"'); ?>
-            </div>
-            <div class="box-footer">
-                <table width="100%" id="tb1" class="table table-stripped">
-                    <thead>
-                        <th width="5%">No</th>
-                        <th>Section ATA</th>
-                        <th>Section Allure</th>
-                        <th>Temper</th>
-                        <th>Warna</th>
-                        <th>Ukuran</th>
-                        <th>Divisi</th>
-                        <th>Gudang</th>
-                        <th>Keranjang</th>
-                        <th>Qty</th>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $i = 1;
-                        foreach ($aluminium->result() as $row) :
-                        ?>
-                            <tr>
-                                <td align="center"><?= $i ?></td>
-                                <td><?= $row->section_ata ?></td>
-                                <td><?= $row->section_allure ?></td>
-                                <td><?= $row->temper ?></td>
-                                <td><?= $row->warna_aluminium ?></td>
-                                <td><?= $row->ukuran ?></td>
-                                <td><?= $row->divisi ?></td>
-                                <td><?= $row->gudang ?></td>
-                                <td><?= $row->keranjang ?></td>
-                                <td><?= $row->qty ?></td>
-                            </tr>
-
-                        <?php $i++;
-                        endforeach; ?>
-                    </tbody>
-                </table>
             </div>
             <?php // echo button_confirm("Anda yakin menambahkan item stock out?", "wrh/aluminium/additemdetailbom/" . $id_fppp, "#modal", 'Add Item', 'btn btn-info', 'data-toggle="tooltip" title="Add Item"'); 
             ?>
@@ -366,7 +334,7 @@
             $('#produksi_' + edit_id).prop('checked', false);
         } else {
             $.ajax({
-                url: "<?= site_url('wrh/aluminium/saveoutcheck/') ?>",
+                url: "<?= site_url('wrh/aluminium/saveoutcheckmf/') ?>",
                 dataType: "json",
                 type: "POST",
                 data: {

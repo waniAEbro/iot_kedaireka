@@ -46,7 +46,7 @@
                                 <td><?= $row->section_ata ?></td>
                                 <td><?= $row->section_allure ?></td>
                                 <td><?= $row->temper ?></td>
-                                <td><?= $row->warna_aluminium ?></td>
+                                <td><?= $row->warna ?></td>
                                 <td><?= $row->ukuran ?></td>
                                 <td><?= $row->divisi ?></td>
                                 <td><?= $row->gudang ?></td>

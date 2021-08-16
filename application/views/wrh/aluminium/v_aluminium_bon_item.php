@@ -76,7 +76,7 @@
 
                             <tr id="output_data_<?= $row->id_stock ?>" class="output_data">
                                 <td align="center"><?= $row->no_fppp ?>-<?= $row->nama_proyek ?></td>
-                                <td><?= $row->section_ata ?>-<?= $row->section_allure ?>-<?= $row->temper ?>-<?= $row->warna_aluminium ?>-<?= $row->ukuran ?></td>
+                                <td><?= $row->section_ata ?>-<?= $row->section_allure ?>-<?= $row->temper ?>-<?= $row->warna ?>-<?= $row->ukuran ?></td>
                                 <td align="center"><?= $row->divisi_stock ?></td>
                                 <td align="center"><?= $row->gudang ?></td>
                                 <td align="center"><?= $row->keranjang ?></td>
@@ -104,8 +104,9 @@
                                             <?= $valap->section_ata ?> -
                                             <?= $valap->section_allure ?> -
                                             <?= $valap->temper ?> -
-                                            <?= $valap->warna_aluminium ?> -
-                                            <?= $valap->ukuran ?>
+                                            <?= $valap->kode_warna ?> -
+                                            <?= $valap->ukuran ?> -
+                                            <?= $valap->warna ?>
                                         </option>
                                     <?php endforeach; ?>
                                 </select></td>
@@ -118,18 +119,10 @@
                                 </select></td>
                             <td><select id="id_gudang" name="id_gudang" class="form-control" style="width:100%" required>
                                     <option value="">-- Select --</option>
-                                    <?php foreach ($gudang->result() as $valap) : ?>
-                                        <option value="<?= $valap->id ?>"><?= $valap->gudang ?>
-                                        </option>
-                                    <?php endforeach; ?>
                                 </select>
                             </td>
                             <td><select id="keranjang" name="keranjang" class="form-control" style="width:100%" required>
                                     <option value="">-- Select --</option>
-                                    <?php foreach ($keranjang->result() as $valap) : ?>
-                                        <option value="<?= $valap->keranjang ?>"><?= $valap->keranjang ?>
-                                        </option>
-                                    <?php endforeach; ?>
                                 </select>
                                 Qty Gudang :<span id="txt_qty_gudang">0</span>
                             </td>
@@ -200,76 +193,151 @@
         $('#id_divisi').val('').trigger('change');
         $('#id_gudang').val('').trigger('change');
         $('#keranjang').val('').trigger('change');
+        $('#stock').val(0);
+        $('#txt_qty_gudang').html("<b> " + 0 + "</b>");
     });
 
-    $("#id_divisi").change(function() {
+    $("select[name=id_divisi]").change(function() {
+        var x = $("select[name=id_gudang]");
+        if ($(this).val() == "") {
+            x.html("<option>-- Select --</option>");
+        } else {
+            z = "<option>-- Select --</option>";
+            $.ajax({
+                url: "<?= site_url('wrh/aluminium/optionGetGudangDivisi') ?>",
+                dataType: "json",
+                type: "POST",
+                data: {
+                    "item": $('#item').val(),
+                    "divisi": $(this).val()
+                },
+                success: function(data) {
+
+                    var z = "<option value=''>-- Select --</option>";
+                    for (var i = 0; i < data.length; i++) {
+                        z += '<option value=' + data[i].id + '>' + data[i].gudang + '</option>';
+                    }
+                    x.html(z);
+                }
+            });
+
+        }
+    });
+
+    $("select[name=id_gudang]").change(function() {
+        var x = $("select[name=keranjang]");
+        if ($(this).val() == "") {
+            x.html("<option>-- Select --</option>");
+        } else {
+            z = "<option>-- Select --</option>";
+            $.ajax({
+                url: "<?= site_url('wrh/aluminium/optionGetKeranjangGudang') ?>",
+                dataType: "json",
+                type: "POST",
+                data: {
+                    "item": $('#item').val(),
+                    "divisi": $('#id_divisi').val(),
+                    "gudang": $(this).val()
+                },
+                success: function(data) {
+
+                    var z = "<option value=''>-- Select --</option>";
+                    for (var i = 0; i < data.length; i++) {
+                        z += '<option value=' + data[i].keranjang + '>' + data[i].keranjang + '</option>';
+                    }
+                    x.html(z);
+                }
+            });
+
+        }
+    });
+
+    $("select[name=keranjang]").change(function() {
         $.ajax({
-            url: "<?= site_url('wrh/aluminium/getQtyRowGudangBon') ?>",
+            url: "<?= site_url('wrh/aluminium/optionGetQtyKeranjang') ?>",
             dataType: "json",
             type: "POST",
             data: {
-                item: $('#item').val(),
-                divisi: $('#id_divisi').val(),
-                gudang: $('#id_gudang').val(),
-                keranjang: $('#keranjang').val(),
+                "item": $('#item').val(),
+                "divisi": $('#id_divisi').val(),
+                "gudang": $('#id_gudang').val(),
+                "keranjang": $(this).val()
             },
             success: function(data) {
-                if (data['qty_gudang'] == null) {
-                    var qtygdg = 0;
-                } else {
-                    var qtygdg = data['qty_gudang'];
-                }
-                $('#stock').val(qtygdg);
-                $('#txt_qty_gudang').html("<b> " + qtygdg + "</b>");
+                $('#stock').val(data['qty']);
+                $('#txt_qty_gudang').html("<b> " + data['qty'] + "</b>");
             }
         });
     });
 
-    $("#id_gudang").change(function() {
-        $.ajax({
-            url: "<?= site_url('wrh/aluminium/getQtyRowGudangBon') ?>",
-            dataType: "json",
-            type: "POST",
-            data: {
-                item: $('#item').val(),
-                divisi: $('#id_divisi').val(),
-                gudang: $('#id_gudang').val(),
-                keranjang: $('#keranjang').val(),
-            },
-            success: function(data) {
-                if (data['qty_gudang'] == null) {
-                    var qtygdg = 0;
-                } else {
-                    var qtygdg = data['qty_gudang'];
-                }
-                $('#stock').val(qtygdg);
-                $('#txt_qty_gudang').html("<b> " + qtygdg + "</b>");
-            }
-        });
-    });
+    // $("#id_divisi").change(function() {
+    //     $.ajax({
+    //         url: "<?= site_url('wrh/aluminium/getQtyRowGudangBon') ?>",
+    //         dataType: "json",
+    //         type: "POST",
+    //         data: {
+    //             item: $('#item').val(),
+    //             divisi: $('#id_divisi').val(),
+    //             gudang: $('#id_gudang').val(),
+    //             keranjang: $('#keranjang').val(),
+    //         },
+    //         success: function(data) {
+    //             if (data['qty_gudang'] == null) {
+    //                 var qtygdg = 0;
+    //             } else {
+    //                 var qtygdg = data['qty_gudang'];
+    //             }
+    //             $('#stock').val(qtygdg);
+    //             $('#txt_qty_gudang').html("<b> " + qtygdg + "</b>");
+    //         }
+    //     });
+    // });
 
-    $("#keranjang").change(function() {
-        $.ajax({
-            url: "<?= site_url('wrh/aluminium/getQtyRowGudangBon') ?>",
-            dataType: "json",
-            type: "POST",
-            data: {
-                item: $('#item').val(),
-                divisi: $('#id_divisi').val(),
-                gudang: $('#id_gudang').val(),
-                keranjang: $('#keranjang').val(),
-            },
-            success: function(data) {
-                if (data['qty_gudang'] == null) {
-                    var qtygdg = 0;
-                } else {
-                    var qtygdg = data['qty_gudang'];
-                }
-                $('#stock').val(qtygdg);
-                $('#txt_qty_gudang').html("<b> " + qtygdg + "</b>");
-            }
-        });
-    });
+    // $("#id_gudang").change(function() {
+    //     $.ajax({
+    //         url: "<?= site_url('wrh/aluminium/getQtyRowGudangBon') ?>",
+    //         dataType: "json",
+    //         type: "POST",
+    //         data: {
+    //             item: $('#item').val(),
+    //             divisi: $('#id_divisi').val(),
+    //             gudang: $('#id_gudang').val(),
+    //             keranjang: $('#keranjang').val(),
+    //         },
+    //         success: function(data) {
+    //             if (data['qty_gudang'] == null) {
+    //                 var qtygdg = 0;
+    //             } else {
+    //                 var qtygdg = data['qty_gudang'];
+    //             }
+    //             $('#stock').val(qtygdg);
+    //             $('#txt_qty_gudang').html("<b> " + qtygdg + "</b>");
+    //         }
+    //     });
+    // });
+
+    // $("#keranjang").change(function() {
+    //     $.ajax({
+    //         url: "<?= site_url('wrh/aluminium/getQtyRowGudangBon') ?>",
+    //         dataType: "json",
+    //         type: "POST",
+    //         data: {
+    //             item: $('#item').val(),
+    //             divisi: $('#id_divisi').val(),
+    //             gudang: $('#id_gudang').val(),
+    //             keranjang: $('#keranjang').val(),
+    //         },
+    //         success: function(data) {
+    //             if (data['qty_gudang'] == null) {
+    //                 var qtygdg = 0;
+    //             } else {
+    //                 var qtygdg = data['qty_gudang'];
+    //             }
+    //             $('#stock').val(qtygdg);
+    //             $('#txt_qty_gudang').html("<b> " + qtygdg + "</b>");
+    //         }
+    //     });
+    // });
 
 
     function quotation() {

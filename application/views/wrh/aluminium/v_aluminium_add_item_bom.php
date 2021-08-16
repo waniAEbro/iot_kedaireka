@@ -12,7 +12,7 @@
                         <?= $valap->section_ata ?> -
                         <?= $valap->section_allure ?> -
                         <?= $valap->temper ?> -
-                        <?= $valap->warna_aluminium ?> -
+                        <?= $valap->warna ?> -
                         <?= $valap->ukuran ?>
                     </option>
                 <?php endforeach; ?>

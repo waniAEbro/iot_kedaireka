@@ -24,7 +24,8 @@
                                     <?= $valap->section_allure ?> -
                                     <?= $valap->temper ?> -
                                     <?= $valap->kode_warna ?> -
-                                    <?= $valap->ukuran ?>
+                                    <?= $valap->ukuran ?> -
+                                    <?= $valap->warna ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
@@ -217,7 +218,6 @@
                         z += '<option value=' + data[i].keranjang + '>' + data[i].keranjang + '</option>';
                     }
                     x.html(z);
-                    $('#qty').val(data['qty']);
                 }
             });
 

@@ -21,6 +21,7 @@
                         <th width="5%">No</th>
                         <th>Tgl</th>
                         <th>Item</th>
+                        <th>Deskripsi</th>
                         <th>Divisi</th>
                         <th>Gudang</th>
                         <th>Keranjang</th>
@@ -39,7 +40,8 @@
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
                                 <td><?= $row->created ?></td>
-                                <td><?= $row->item_code ?></td>
+                                <td><?= $row->item ?></td>
+                                <td><?= $row->deskripsi ?></td>
                                 <td><?= $row->divisi ?></td>
                                 <td><?= $row->gudang ?></td>
                                 <td><?= $row->keranjang ?></td>

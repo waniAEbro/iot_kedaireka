@@ -10,14 +10,14 @@ class M_fppp extends CI_Model
 		$this->db->join('master_kaca mk', 'mk.id = df.id_kaca', 'left');
 		$this->db->join('master_pengiriman mp', 'mp.id = df.id_pengiriman', 'left');
 		$this->db->join('master_metode_pengiriman mpp', 'mpp.id = df.id_metode_pengiriman', 'left');
-		$this->db->join('master_warna_aluminium mwa', 'mwa.id = df.id_warna_aluminium', 'left');
+		$this->db->join('master_warna mwa', 'mwa.id = df.id_warna', 'left');
 		$this->db->join('master_status ms', 'ms.id = df.id_status', 'left');
 
 		$this->db->where('df.id_divisi', $param);
 		$this->db->where('df.is_memo', 1);
 		$this->db->order_by('df.id', 'desc');
 
-		$this->db->select('df.*,md.divisi,mk.kaca,mp.pengiriman,metode_pengiriman,mwa.warna_aluminium,ms.status');
+		$this->db->select('df.*,md.divisi,mk.kaca,mp.pengiriman,metode_pengiriman,mwa.warna,ms.status');
 
 		return $this->db->get('data_fppp df');
 	}
@@ -28,13 +28,13 @@ class M_fppp extends CI_Model
 		$this->db->join('master_kaca mk', 'mk.id = df.id_kaca', 'left');
 		$this->db->join('master_pengiriman mp', 'mp.id = df.id_pengiriman', 'left');
 		$this->db->join('master_metode_pengiriman mpp', 'mpp.id = df.id_metode_pengiriman', 'left');
-		$this->db->join('master_warna_aluminium mwa', 'mwa.id = df.id_warna_aluminium', 'left');
+		$this->db->join('master_warna mwa', 'mwa.id = df.id_warna', 'left');
 		$this->db->join('master_status ms', 'ms.id = df.id_status', 'left');
 
 		$this->db->where('df.is_memo', 2);
 		$this->db->order_by('df.id', 'desc');
 
-		$this->db->select('df.*,md.divisi,mk.kaca,mp.pengiriman,metode_pengiriman,mwa.warna_aluminium,ms.status');
+		$this->db->select('df.*,md.divisi,mk.kaca,mp.pengiriman,metode_pengiriman,mwa.warna,ms.status');
 
 		return $this->db->get('data_fppp df');
 	}
@@ -58,8 +58,8 @@ class M_fppp extends CI_Model
 	{
 		$this->db->join('master_brand mb', 'mb.id = did.id_brand', 'left');
 		$this->db->join('master_barang mi', 'mi.id = did.id_item', 'left');
-		$this->db->join('master_warna_aluminium mwa', 'mwa.id = did.finish_coating', 'left');
-		$this->db->select('did.*,mb.brand,mi.barang as item,mwa.warna_aluminium');
+		$this->db->join('master_warna mwa', 'mwa.id = did.finish_coating', 'left');
+		$this->db->select('did.*,mb.brand,mi.barang as item,mwa.warna');
 
 		$this->db->where('did.id_fppp', $value);
 		return $this->db->get('data_fppp_detail did')->result();
@@ -166,9 +166,10 @@ class M_fppp extends CI_Model
 	{
 		$this->db->join('data_fppp df', 'df.id = db.id_fppp', 'left');
 		$this->db->join('master_item mi', 'mi.id = db.id_item', 'left');
-		$this->db->join('master_warna_aluminium mwa', 'mwa.kode = mi.kode_warna', 'left');
+		$this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
 		$this->db->where('db.id_jenis_item', 1);
 		$this->db->where('db.is_bom', 1);
+		$this->db->where('db.ke_mf', 0);
 
 		$this->db->where('db.id_fppp', $id_fppp);
 		return $this->db->get('data_stock db');
@@ -180,6 +181,7 @@ class M_fppp extends CI_Model
 		$this->db->join('master_item mi', 'mi.id = db.id_item', 'left');
 		$this->db->where('db.id_jenis_item', 2);
 		$this->db->where('db.is_bom', 1);
+		$this->db->where('db.ke_mf', 0);
 
 		$this->db->where('db.id_fppp', $id_fppp);
 		return $this->db->get('data_stock db');
@@ -191,6 +193,7 @@ class M_fppp extends CI_Model
 		$this->db->join('master_item mi', 'mi.id = db.id_item', 'left');
 		$this->db->where('db.id_jenis_item', 3);
 		$this->db->where('db.is_bom', 1);
+		$this->db->where('db.ke_mf', 0);
 
 		$this->db->where('db.id_fppp', $id_fppp);
 		return $this->db->get('data_stock db');
@@ -309,14 +312,14 @@ class M_fppp extends CI_Model
 		$this->db->where('df.id', $id);
 		$this->db->join('master_logo_kaca mlk', 'mlk.id = df.id_logo_kaca', 'left');
 		$this->db->join('master_kaca mk', 'mk.id = df.id_kaca', 'left');
-		$this->db->join('master_warna_aluminium mwa', 'mwa.id = df.id_warna_aluminium', 'left');
-		$this->db->join('master_warna_aluminium mwal', 'mwal.id = df.id_warna_lainya', 'left');
+		$this->db->join('master_warna mwa', 'mwa.id = df.id_warna', 'left');
+		$this->db->join('master_warna mwal', 'mwal.id = df.id_warna_lainya', 'left');
 		$this->db->join('master_metode_pengiriman mp', 'mp.id = df.id_metode_pengiriman', 'left');
 		$this->db->join('master_penggunaan_sealant mps', 'mps.id = df.id_penggunaan_sealant', 'left');
 		$this->db->join('master_pengiriman mpe', 'mpe.id = df.id_pengiriman', 'left');
 		$this->db->join('master_penggunaan_peti mpp', 'mpp.id = df.id_penggunaan_peti', 'left');
 
-		$this->db->select('df.*,mps.penggunaan_sealant,mpp.penggunaan_peti,mpe.pengiriman,mp.metode_pengiriman,mlk.logo_kaca,mk.kaca,mwa.warna_aluminium,mwal.warna_aluminium as warna_lainya');
+		$this->db->select('df.*,mps.penggunaan_sealant,mpp.penggunaan_peti,mpe.pengiriman,mp.metode_pengiriman,mlk.logo_kaca,mk.kaca,mwa.warna,mwal.warna as warna_lainya');
 
 		return $this->db->get('data_fppp df');
 	}
@@ -325,10 +328,10 @@ class M_fppp extends CI_Model
 	{
 		$this->db->join('master_brand mb', 'mb.id = dfd.id_brand', 'left');
 		$this->db->join('master_barang mbr', 'mbr.id = dfd.id_item', 'left');
-		$this->db->join('master_warna_aluminium mwa', 'mwa.id = dfd.finish_coating', 'left');
+		$this->db->join('master_warna mwa', 'mwa.id = dfd.finish_coating', 'left');
 
 		$this->db->where('dfd.id_fppp', $id);
-		$this->db->select('dfd.*,mb.brand,mbr.barang,mwa.warna_aluminium');
+		$this->db->select('dfd.*,mb.brand,mbr.barang,mwa.warna');
 
 		return $this->db->get('data_fppp_detail dfd')->result();
 	}

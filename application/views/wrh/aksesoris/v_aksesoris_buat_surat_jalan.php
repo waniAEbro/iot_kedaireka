@@ -92,6 +92,7 @@
             dataType: "json",
             type: "POST",
             data: {
+                "id_fppp": $("#id_fppp").val(),
                 "no_fppp": $("#no_fppp").val(),
                 "no_surat_jalan": $("#no_surat_jalan").val(),
                 "penerima": $("#penerima").val(),

@@ -79,11 +79,11 @@ class aksesoris extends CI_Controller
         $data['item']     = $this->m_aksesoris->getdataItem();
         $data['divisi']   = $this->db->get_where('master_divisi_stock', array('id_jenis_item' => 2));
         $data['gudang']   = $this->db->get_where('master_gudang', array('id_jenis_item' => 2));
-        $data['supplier'] = $this->db->get_where('master_supplier', array('id_jenis_item' => 2));
+        $data['supplier'] = $this->db->get('master_supplier');
         $this->load->view('wrh/aksesoris/v_aksesoris_in', $data);
     }
 
-    public function savestokin($value = '')
+    public function savestokin()
     {
         $this->fungsi->check_previleges('aksesoris');
 
@@ -155,22 +155,26 @@ class aksesoris extends CI_Controller
         $data['id_fppp']   = $id_fppp;
         $data['rowFppp']   = $this->m_aksesoris->getRowFppp($id_fppp);
         $data['list_bom']  = $this->m_aksesoris->getItemBom($id_fppp);
-        $data['divisi']    = $this->m_aksesoris->getDivisiBom($id_jenis_item);
-        $data['gudang']    = $this->m_aksesoris->getGudangBom($id_jenis_item);
-        $data['keranjang'] = $this->m_aksesoris->getKeranjangBom($id_jenis_item);
-        $data['aksesoris'] = $this->m_aksesoris->getAllDataCounter($id_jenis_item);
+        $data['id_jenis_item']    = $id_jenis_item;
+        // $data['divisi']    = $this->m_aksesoris->getDivisiBom($id_jenis_item);
+        // $data['gudang']    = $this->m_aksesoris->getGudangBom($id_jenis_item);
+        // $data['keranjang'] = $this->m_aksesoris->getKeranjangBom($id_jenis_item);
+        // $data['aksesoris'] = $this->m_aksesoris->getItemBomfppp($id_fppp, $id_jenis_item);
+        $data['aksesoris'] = $this->m_aksesoris->getAllDataCounter($id_fppp);
         $this->load->view('wrh/aksesoris/v_aksesoris_detail_bom', $data);
     }
 
     public function stok_out_make_mf($id_fppp)
     {
+
         $id_jenis_item = 2;
         $data['id_fppp']   = $id_fppp;
         $data['rowFppp']   = $this->m_aksesoris->getRowFppp($id_fppp);
         $data['list_bom']  = $this->m_aksesoris->getItemBomMf($id_fppp);
-        $data['divisi']    = $this->m_aksesoris->getDivisiBom($id_jenis_item);
-        $data['gudang']    = $this->m_aksesoris->getGudangBomMf($id_jenis_item);
-        $data['keranjang'] = $this->m_aksesoris->getKeranjangBom($id_jenis_item);
+        $data['id_jenis_item']    = $id_jenis_item;
+        // $data['divisi']    = $this->m_aksesoris->getDivisiBom($id_jenis_item);
+        // $data['gudang']    = $this->m_aksesoris->getGudangBomMf($id_jenis_item);
+        // $data['keranjang'] = $this->m_aksesoris->getKeranjangBom($id_jenis_item);
         $data['aksesoris'] = $this->m_aksesoris->getAllDataCounter($id_jenis_item);
         $this->load->view('wrh/aksesoris/v_aksesoris_detail_bom_mf', $data);
     }
@@ -248,6 +252,44 @@ class aksesoris extends CI_Controller
         echo json_encode($data);
     }
 
+    public function saveoutcheckmf()
+    {
+        $this->fungsi->check_previleges('aksesoris');
+        $field  = $this->input->post('field');
+        $value  = $this->input->post('value');
+        $editid = $this->input->post('id');
+        // $id_fppp = $this->input->post('id_fppp');
+        if ($field == 'produksi_' . $editid) {
+            $this->m_aksesoris->editRowOut('produksi', $value, $editid);
+            $this->m_aksesoris->editRowOut('lapangan', 0, $editid);
+        } else if ($field == 'lapangan_' . $editid) {
+            $this->m_aksesoris->editRowOut('lapangan', $value, $editid);
+            $this->m_aksesoris->editRowOut('produksi', 0, $editid);
+        }
+        $obj = array(
+            'id_divisi' => $this->input->post('divisi'),
+            'id_gudang' => $this->input->post('gudang'),
+            'keranjang' => $this->input->post('keranjang'),
+            'qty_out'   => $this->input->post('qtytxt'),
+        );
+        $this->m_aksesoris->editQtyOut($editid, $obj);
+        $this->m_aksesoris->editStatusInOut($editid);
+        $id_item      = $this->db->get_where('data_stock', array('id' => $editid))->row()->id_item;
+        $id_divisi    = $this->input->post('divisi');
+        $id_gudang    = $this->input->post('gudang');
+        $keranjang    = $this->input->post('keranjang');
+        $qtyin        = $this->m_aksesoris->getQtyInDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
+        $qtyout       = $this->m_aksesoris->getQtyOutDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
+        $data['qty_gudang'] = $qtyin - $qtyout;
+        $this->m_aksesoris->updateDataCounter($id_item, $id_divisi, $id_gudang, $keranjang, $data['qty_gudang']);
+
+        $id_stock_sblm = $this->db->get_where('data_stock', array('id' => $editid))->row()->id_stock_sblm;
+        $this->m_aksesoris->updateIsBom($id_stock_sblm);
+
+        $data['status'] = "berhasil";
+        echo json_encode($data);
+    }
+
     public function kirim_parsial($id_fppp, $id_stock)
     {
         $this->fungsi->check_previleges('aksesoris');
@@ -281,7 +323,7 @@ class aksesoris extends CI_Controller
     {
         $this->fungsi->check_previleges('aksesoris');
         $data['no_fppp']        = $this->db->get_where('data_fppp', array('id_status' => 1));
-        $data['no_surat_jalan'] = str_pad($this->m_aksesoris->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJ/AK/' . date('m') . '/' . date('Y');
+        $data['no_surat_jalan'] = str_pad($this->m_aksesoris->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJ/AL/' . date('m') . '/' . date('Y');
 
         $this->load->view('wrh/aksesoris/v_aksesoris_out', $data);
     }
@@ -289,7 +331,8 @@ class aksesoris extends CI_Controller
     public function list_surat_jalan()
     {
         $this->fungsi->check_previleges('aksesoris');
-        $data['surat_jalan'] = $this->m_aksesoris->getSuratJalan(1, 2);
+        $id_jenis_item = 2;
+        $data['surat_jalan'] = $this->m_aksesoris->getSuratJalan(1, $id_jenis_item);
         $this->load->view('wrh/aksesoris/v_aksesoris_out_sj_list', $data);
     }
 
@@ -310,21 +353,23 @@ class aksesoris extends CI_Controller
     public function simpanSuratJalan()
     {
         $this->fungsi->check_previleges('aksesoris');
+        $id_jenis_item = 2;
+        $id_fppp           = $this->input->post('id_fppp');
         $no_fppp           = $this->input->post('no_fppp');
         $penerima          = $this->input->post('penerima');
         $alamat_pengiriman = $this->input->post('alamat_pengiriman');
         $sopir             = $this->input->post('sopir');
         $no_kendaraan      = $this->input->post('no_kendaraan');
-        $kode_divisi = $this->m_aksesoris->getKodeDivisi($no_fppp);
+        $kode_divisi = $this->m_aksesoris->getKodeDivisi($id_fppp);
         $no_surat_jalan = str_pad($this->m_aksesoris->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJ/' . $kode_divisi . '/' . date('m') . '/' . date('Y');
         $obj               = array(
-            'id_fppp'           => $no_fppp,
+            'id_fppp'           => $id_fppp,
             'no_surat_jalan'    => $no_surat_jalan,
             'penerima'          => $penerima,
             'alamat_pengiriman' => $alamat_pengiriman,
             'sopir'             => $sopir,
             'no_kendaraan'      => $no_kendaraan,
-            'id_jenis_item'     => 2,
+            'id_jenis_item'     => $id_jenis_item,
             'tipe'              => 1,
             'created'           => date('Y-m-d H:i:s'),
         );
@@ -355,79 +400,6 @@ class aksesoris extends CI_Controller
         echo json_encode($data);
     }
 
-    public function detailbom($id_sj)
-    {
-        $this->fungsi->check_previleges('aksesoris');
-
-        $data['id_sj']               = $id_sj;
-        $id                    = $this->m_aksesoris->getRowSj($id_sj)->row()->id_fppp;
-        $data['id_fppp']             = $id;
-        $data['list_bom_sj']         = $this->m_aksesoris->getBomSJ($id_sj);
-        $data['no_fppp']             = $this->m_aksesoris->getRowFppp($id)->no_fppp;
-        $data['nama_proyek']         = $this->m_aksesoris->getRowFppp($id)->nama_proyek;
-        $data['alamat_proyek']       = $this->m_aksesoris->getRowFppp($id)->alamat_proyek;
-        $data['sales']               = $this->m_aksesoris->getRowFppp($id)->sales;
-        $data['deadline_pengiriman'] = $this->m_aksesoris->getRowFppp($id)->deadline_pengiriman;
-        $data['no_surat_jalan']      = $this->m_aksesoris->getRowSj($id_sj)->row()->no_surat_jalan;
-        $data['penerima']            = $this->m_aksesoris->getRowSj($id_sj)->row()->penerima;
-        $data['alamat_pengiriman']   = $this->m_aksesoris->getRowSj($id_sj)->row()->alamat_pengiriman;
-        $data['sopir']               = $this->m_aksesoris->getRowSj($id_sj)->row()->sopir;
-        $data['no_kendaraan']        = $this->m_aksesoris->getRowSj($id_sj)->row()->no_kendaraan;
-        // $data['divisi']              = get_options($this->db->get_where('master_divisi_stock', array('id_jenis_item' => 1)), 'id', 'divisi', true);
-        $data['divisi']    = $this->m_aksesoris->getDivisiBom();
-        $data['gudang']    = $this->m_aksesoris->getGudangBom();
-        $data['keranjang'] = $this->m_aksesoris->getKeranjangBom();
-        $this->load->view('wrh/aksesoris/v_aksesoris_detail_bom', $data);
-    }
-
-    // public function kuncidetailbom($id_sj, $id_detail)
-    // {
-    //     $this->fungsi->check_previleges('aksesoris');
-    //     $this->m_aksesoris->kuncidetailbom($id_detail);
-    //     $data['id_sj']               = $id_sj;
-    //     $id                    = $this->m_aksesoris->getRowSj($id_sj)->row()->id_fppp;
-    //     $data['id_fppp']             = $id;
-    //     $data['list_bom_sj']         = $this->m_aksesoris->getBomSJ($id_sj);
-    //     $data['no_fppp']             = $this->m_aksesoris->getRowFppp($id)->no_fppp;
-    //     $data['nama_proyek']         = $this->m_aksesoris->getRowFppp($id)->nama_proyek;
-    //     $data['alamat_proyek']       = $this->m_aksesoris->getRowFppp($id)->alamat_proyek;
-    //     $data['sales']               = $this->m_aksesoris->getRowFppp($id)->sales;
-    //     $data['deadline_pengiriman'] = $this->m_aksesoris->getRowFppp($id)->deadline_pengiriman;
-    //     $data['no_surat_jalan']      = $this->m_aksesoris->getRowSj($id_sj)->row()->no_surat_jalan;
-    //     $data['penerima']            = $this->m_aksesoris->getRowSj($id_sj)->row()->penerima;
-    //     $data['alamat_pengiriman']   = $this->m_aksesoris->getRowSj($id_sj)->row()->alamat_pengiriman;
-    //     $data['sopir']               = $this->m_aksesoris->getRowSj($id_sj)->row()->sopir;
-    //     $data['no_kendaraan']        = $this->m_aksesoris->getRowSj($id_sj)->row()->no_kendaraan;
-    //     $data['divisi']              = $this->m_aksesoris->getDivisiBom();
-    //     $data['gudang']              = $this->m_aksesoris->getGudangBom();
-    //     $data['keranjang']           = $this->m_aksesoris->getKeranjangBom();
-    //     $this->load->view('wrh/aksesoris/v_aksesoris_detail_bom', $data);
-    // }
-
-    // public function bukakuncidetailbom($id_sj, $id_detail)
-    // {
-    //     $this->fungsi->check_previleges('aksesoris');
-    //     $this->m_aksesoris->bukakuncidetailbom($id_detail);
-    //     $data['id_sj']               = $id_sj;
-    //     $id                    = $this->m_aksesoris->getRowSj($id_sj)->row()->id_fppp;
-    //     $data['id_fppp']             = $id;
-    //     $data['list_bom_sj']         = $this->m_aksesoris->getBomSJ($id_sj);
-    //     $data['no_fppp']             = $this->m_aksesoris->getRowFppp($id)->no_fppp;
-    //     $data['nama_proyek']         = $this->m_aksesoris->getRowFppp($id)->nama_proyek;
-    //     $data['alamat_proyek']       = $this->m_aksesoris->getRowFppp($id)->alamat_proyek;
-    //     $data['sales']               = $this->m_aksesoris->getRowFppp($id)->sales;
-    //     $data['deadline_pengiriman'] = $this->m_aksesoris->getRowFppp($id)->deadline_pengiriman;
-    //     $data['no_surat_jalan']      = $this->m_aksesoris->getRowSj($id_sj)->row()->no_surat_jalan;
-    //     $data['penerima']            = $this->m_aksesoris->getRowSj($id_sj)->row()->penerima;
-    //     $data['alamat_pengiriman']   = $this->m_aksesoris->getRowSj($id_sj)->row()->alamat_pengiriman;
-    //     $data['sopir']               = $this->m_aksesoris->getRowSj($id_sj)->row()->sopir;
-    //     $data['no_kendaraan']        = $this->m_aksesoris->getRowSj($id_sj)->row()->no_kendaraan;
-    //     $data['divisi']              = $this->m_aksesoris->getDivisiBom();
-    //     $data['gudang']              = $this->m_aksesoris->getGudangBom();
-    //     $data['keranjang']           = $this->m_aksesoris->getKeranjangBom();
-    //     $this->load->view('wrh/aksesoris/v_aksesoris_detail_bom', $data);
-    // }
-
     public function finishdetailbom($id_sj)
     {
         $this->fungsi->check_previleges('aksesoris');
@@ -452,6 +424,7 @@ class aksesoris extends CI_Controller
     {
         $this->fungsi->check_previleges('aksesoris');
         $this->load->library('form_validation');
+        $id_jenis_item = 2;
         $config = array(
             array(
                 'field' => 'id_item',
@@ -470,7 +443,7 @@ class aksesoris extends CI_Controller
         } else {
             $datapost_bom = array(
                 'id_fppp'       => $this->input->post('id_fppp'),
-                'id_jenis_item' => 2,
+                'id_jenis_item' => $id_jenis_item,
                 'id_item'       => $this->input->post('id_item'),
                 'qty'           => $this->input->post('qty'),
                 'keterangan'    => 'TAMBAHAN',
@@ -482,7 +455,7 @@ class aksesoris extends CI_Controller
                 'inout'          => 0,
                 'id_fppp'        => $this->input->post('id_fppp'),
                 'id_surat_jalan' => $this->input->post('id_sj'),
-                'id_jenis_item'  => 2,
+                'id_jenis_item'  => $id_jenis_item,
                 'id_item'        => $this->input->post('id_item'),
                 'qty_bom'        => $this->input->post('qty'),
                 'created'        => date('Y-m-d H:i:s'),
@@ -531,7 +504,8 @@ class aksesoris extends CI_Controller
     public function bon_manual()
     {
         $this->fungsi->check_previleges('aksesoris');
-        $data['surat_jalan'] = $this->m_aksesoris->getSuratJalan(2, 2);
+        $id_jenis_item = 2;
+        $data['surat_jalan'] = $this->m_aksesoris->getSuratJalan(2, $id_jenis_item);
         $this->load->view('wrh/aksesoris/v_aksesoris_bon_list', $data);
     }
 
@@ -539,7 +513,7 @@ class aksesoris extends CI_Controller
     {
         $this->fungsi->check_previleges('aksesoris');
         $data['no_fppp']        = $this->db->get_where('data_fppp', array('id_status' => 1));
-        $data['no_surat_jalan'] = str_pad($this->m_aksesoris->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJ/AK/' . date('m') . '/' . date('Y');
+        $data['no_surat_jalan'] = str_pad($this->m_aksesoris->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJ/AL/' . date('m') . '/' . date('Y');
 
         $this->load->view('wrh/aksesoris/v_aksesoris_bon_add', $data);
     }
@@ -547,6 +521,7 @@ class aksesoris extends CI_Controller
     public function simpanSuratJalanBon()
     {
         $this->fungsi->check_previleges('aksesoris');
+        $id_jenis_item = 2;
         $penerima          = $this->input->post('penerima');
         $no_surat_jalan    = $this->input->post('no_surat_jalan');
         $alamat_pengiriman = $this->input->post('alamat_pengiriman');
@@ -558,7 +533,7 @@ class aksesoris extends CI_Controller
             'alamat_pengiriman' => $alamat_pengiriman,
             'sopir'             => $sopir,
             'no_kendaraan'      => $no_kendaraan,
-            'id_jenis_item'     => 2,
+            'id_jenis_item'     => $id_jenis_item,
             'tipe'              => 2,
             'created'           => date('Y-m-d H:i:s'),
         );
@@ -581,8 +556,6 @@ class aksesoris extends CI_Controller
         $data['sopir']             = $this->m_aksesoris->getRowSj($id_sj)->row()->sopir;
         $data['no_kendaraan']      = $this->m_aksesoris->getRowSj($id_sj)->row()->no_kendaraan;
         $data['divisi']            = $this->m_aksesoris->getDivisiBom($id_jenis_item);
-        $data['gudang']            = $this->m_aksesoris->getGudangBom($id_jenis_item, 1);
-        $data['keranjang']         = $this->m_aksesoris->getKeranjangBom($id_jenis_item);
         $data['list_sj']           = $this->m_aksesoris->getListItemBonManual($id_sj);
         $this->load->view('wrh/aksesoris/v_aksesoris_bon_item', $data);
     }
@@ -604,13 +577,14 @@ class aksesoris extends CI_Controller
     public function savebonmanual()
     {
         $this->fungsi->check_previleges('aksesoris');
+        $id_jenis_item = 2;
         $id_item = $this->input->post('item');
         $id_divisi = $this->input->post('id_divisi');
         $id_gudang = $this->input->post('id_gudang');
         $keranjang = $this->input->post('keranjang');
         $datapost = array(
             'inout'          => 2,
-            'id_jenis_item'  => 2,
+            'id_jenis_item'  => $id_jenis_item,
             'id_surat_jalan' => $this->input->post('id_sj'),
             'id_fppp'        => $this->input->post('id_fppp'),
             'id_item'        => $this->input->post('item'),
@@ -667,10 +641,11 @@ class aksesoris extends CI_Controller
     public function mutasi_stock_add($id = '')
     {
         $this->fungsi->check_previleges('aksesoris');
+        $id_jenis_item = 2;
         $data['id_item'] = $id;
         $data['item']    = $this->m_aksesoris->getDataItem();
-        $data['divisi']  = $this->db->get_where('master_divisi_stock', array('id_jenis_item' => 2));
-        $data['gudang']  = $this->db->get_where('master_gudang', array('id_jenis_item' => 2));
+        $data['divisi']  = $this->db->get_where('master_divisi_stock', array('id_jenis_item' => $id_jenis_item));
+        $data['gudang']  = $this->db->get_where('master_gudang', array('id_jenis_item' => $id_jenis_item));
         $this->load->view('wrh/aksesoris/v_aksesoris_mutasi_stock_add', $data);
     }
 
@@ -718,7 +693,7 @@ class aksesoris extends CI_Controller
     public function simpanMutasi()
     {
         $this->fungsi->check_previleges('aksesoris');
-
+        $id_jenis_item = 2;
         $id_item   = $this->input->post('item');
         $id_divisi = $this->input->post('divisi');
         $id_gudang = $this->input->post('gudang');
@@ -760,7 +735,7 @@ class aksesoris extends CI_Controller
         $cekDataCounter = $this->m_aksesoris->getDataCounter($datapost_in['id_item'], $datapost_in['id_divisi'], $datapost_in['id_gudang'], $datapost_in['keranjang'])->num_rows();
         if ($cekDataCounter == 0) {
             $simpan = array(
-                'id_jenis_item' => 2,
+                'id_jenis_item' => $id_jenis_item,
                 'id_item'       => $datapost_in['id_item'],
                 'id_divisi'     => $datapost_in['id_divisi'],
                 'id_gudang'     => $datapost_in['id_gudang'],

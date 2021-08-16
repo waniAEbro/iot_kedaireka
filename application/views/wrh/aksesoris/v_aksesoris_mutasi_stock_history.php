@@ -3,7 +3,7 @@
     <div class="col-lg-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">History Mutasi : <?= $item->item_code ?> </h3>
+                <h3 class="box-title">History Mutasi Alumunium : <?= $item->item_code ?> - <?= $item->deskripsi ?></h3>
                 <div class="box-tools pull-right">
                     <?php
                     echo button('load_silent("wrh/aksesoris/","#content")', 'Kembali', 'btn btn-warning', 'data-toggle="tooltip" title="Mutasi"');

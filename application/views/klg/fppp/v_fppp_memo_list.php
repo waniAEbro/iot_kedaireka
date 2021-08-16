@@ -107,7 +107,7 @@
                                     <td><?= $row->sales ?></td>
                                     <td><?= $row->pic_project ?></td>
                                     <td><?= $row->pengiriman ?></td>
-                                    <td><?= $row->warna_aluminium ?></td>
+                                    <td><?= $row->warna ?></td>
                                     <td><?= $row->jumlah_gambar ?></td>
                                     <td><?= $row->tgl_pembuatan ?></td>
                                     <td><?= $row->deadline_pengiriman ?></td>

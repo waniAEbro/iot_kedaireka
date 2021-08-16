@@ -132,7 +132,7 @@
                                     </td>
                                     <td><?= $row->section_allure ?></td>
                                     <td><?= $row->temper ?></td>
-                                    <td><?= $row->warna_aluminium ?></td>
+                                    <td><?= $row->warna ?></td>
                                     <td><?= $row->ukuran ?></td>
                                     <td align="center"><?= $qtyBOM ?></td>
                                     <td align="center"><span id="qty_kurang_<?= $row->id_stock ?>"><?= $kurang ?></span></td>

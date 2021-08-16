@@ -101,7 +101,7 @@
                                     <td><?= $row->section_ata ?></td>
                                     <td><?= $row->section_allure ?></td>
                                     <td><?= $row->temper ?></td>
-                                    <td><?= $row->warna_aluminium ?></td>
+                                    <td><?= $row->warna ?></td>
                                     <td><?= $row->ukuran ?></td>
                                     <td><?= $tampil_stock_awal_bulan ?></td>
                                     <td><?= $tampil_total_in_per_bulan ?></td>

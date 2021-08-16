@@ -17,7 +17,7 @@
     <div class="col-lg-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Monitoring aksesoris</h3>
+                <h3 class="box-title">Monitoring aksesoris <?= $warna ?></h3>
 
                 <div class="box-tools pull-right">
                     <?php
@@ -66,7 +66,8 @@
                         <thead>
                             <th width="5%"></th>
                             <th width="5%">No</th>
-                            <th>Item Code</th>
+                            <th>Item</th>
+                            <th>Deskripsi</th>
                             <th>Stock Awal Bulan</th>
                             <th>Total In Per Bulan</th>
                             <th>Total Out Per Bulan</th>
@@ -95,6 +96,7 @@
                                     <td class="details-control" id="<?= $i ?>"><input type="hidden" id="id_<?= $i ?>" value="<?= $row->id ?>"></td>
                                     <td align="center"><?= $i ?></td>
                                     <td><?= $row->item_code ?></td>
+                                    <td><?= $row->deskripsi ?></td>
                                     <td><?= $tampil_stock_awal_bulan ?></td>
                                     <td><?= $tampil_total_in_per_bulan ?></td>
                                     <td><?= $tampil_total_out_per_bulan ?></td>

@@ -4,7 +4,7 @@
     <div class="col-lg-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">List BOM aksesoris</h3>
+                <h3 class="box-title">List BOM aksesoris warna</h3>
                 <div class="box-tools pull-right">
                     <?php //echo button('load_silent("klg/fppp","#content")', 'Kembali', 'btn btn-success'); 
                     ?>
@@ -57,6 +57,7 @@
                     <thead>
                         <th width="5%">No</th>
                         <th>Item</th>
+                        <th>Deskripsi</th>
                         <th>Qty BOM</th>
                         <th>Kekurangan</th>
                         <th>Qty Gudang</th>
@@ -71,6 +72,11 @@
                         <?php
                         $i = 1;
                         foreach ($list_bom->result() as $row) :
+                            $divisi = $this->m_aksesoris->getDivisiBomItem($id_jenis_item, $row->id_item);
+                            $gudang = $this->m_aksesoris->getGudangBomItem($id_jenis_item, $row->id_item);
+                            $keranjang = $this->m_aksesoris->getKeranjangBomItem($id_jenis_item, $row->id_item);
+
+
                             $qtyTotalOut = $this->m_aksesoris->getQtyOutFppp($row->id_fppp, $row->id_item);
                             $id_divisi_stock = $this->m_aksesoris->getQtyTerbanyakStockDivisi($row->id_item);
                             $id_gudang_stock = $this->m_aksesoris->getQtyTerbanyakStockGudang($row->id_item);
@@ -99,11 +105,17 @@
                             <tr bgcolor="<?= $bgrow ?>">
                                 <td align="center"><?= $i++ ?></td>
                                 <td><?= $row->item_code ?>
-                                    <br><?php echo button_confirm("Anda yakin mengirim parsial item " . $row->item_code . "?", "wrh/aksesoris/kirim_parsial/" . $id_fppp . "/" . $row->id_stock, "#content", 'Kirim Parsial', 'btn btn-xs btn-default', 'data-toggle="tooltip" title="Kirim Parsial"'); ?>
+                                    <br><?php echo button_confirm("Anda yakin mengirim parsial item " . $row->section_ata . "-" . $row->section_allure . "?", "wrh/aksesoris/kirim_parsial/" . $id_fppp . "/" . $row->id_stock, "#content", 'Kirim Parsial', 'btn btn-xs btn-default', 'data-toggle="tooltip" title="Kirim Parsial"'); ?>
+                                    <br><?php //echo button_confirm("Anda yakin membuat di MF item " . $row->section_ata . "-" . $row->section_allure . "?", "wrh/aksesoris/buat_mf/" . $id_fppp . "/" . $row->id_stock, "#content", 'Buat di MF', 'btn btn-xs btn-info', 'data-toggle="tooltip" title="Buat di MF"'); 
+                                        ?>
                                 </td>
+                                <td><?= $row->deskripsi ?></td>
                                 <td align="center"><span id="qty_bom_<?= $row->id_stock ?>" class='edit'><?= $qtyBOM ?></span></td>
                                 <td align="center"><span id="qty_kurang_<?= $row->id_stock ?>"><?= $kurang ?></span></td>
-                                <td align="center"><span id="qty_gudang_<?= $row->id_stock ?>"><?= $totalgudang ?></span></td>
+                                <td align="center">
+                                    <span id="qty_gudang_asli_<?= $row->id_stock ?>"><?= $totalgudang ?></span>
+                                    <span id="qty_gudang_<?= $row->id_stock ?>"><?= $totalgudang ?></span>
+                                </td>
                                 <td style="background-color:#ffd45e">
                                     <select id="id_divisi_<?= $row->id_stock ?>" onchange="divisi(<?= $row->id_stock ?>)" data-id="<?= $row->id_stock ?>" data-field="id_divisi" class="form-control">
                                         <option id="">Pilih</option>
@@ -147,7 +159,6 @@
             <div class="box-footer">
                 <?= button_confirm("Anda yakin menyelesaikan stock out?", "wrh/aksesoris/buat_surat_jalan/" . $id_fppp, "#content", 'Buat Surat Jalan', 'btn btn-success', 'data-toggle="tooltip" title="Buat Surat Jalan"'); ?>
             </div>
-
             <?php // echo button_confirm("Anda yakin menambahkan item stock out?", "wrh/aksesoris/additemdetailbom/" . $id_fppp, "#modal", 'Add Item', 'btn btn-info', 'data-toggle="tooltip" title="Add Item"'); 
             ?>
             <?php //echo button_confirm("Anda yakin menyelesaikan stock out?", "wrh/aksesoris/finishdetailbom/" . $id_fppp, "#content", 'Finish', 'btn btn-success', 'data-toggle="tooltip" title="Finish"'); 
@@ -220,6 +231,7 @@
                     var qtygdg = response['qty_gudang'];
                 }
                 $('#qty_gudang_' + id).html(qtygdg);
+                $('#qty_gudang_asli_' + id).html(qtygdg);
                 // load_silent("wrh/aksesoris/detailbom/" + $("#id_fppp").val(), "#content");
             }
         })
@@ -252,6 +264,7 @@
                     var qtygdg = response['qty_gudang'];
                 }
                 $('#qty_gudang_' + id).html(qtygdg);
+                $('#qty_gudang_asli_' + id).html(qtygdg);
                 // load_silent("wrh/aksesoris/detailbom/" + $("#id_fppp").val(), "#content");
             }
         })
@@ -285,6 +298,7 @@
                     var qtygdg = response['qty_gudang'];
                 }
                 $('#qty_gudang_' + id).html(qtygdg);
+                $('#qty_gudang_asli_' + id).html(qtygdg);
                 // load_silent("wrh/aksesoris/detailbom/" + $("#id_fppp").val(), "#content");
             }
         })
@@ -311,7 +325,7 @@
         }
 
         var qtybom = $('#qty_bom_' + edit_id).html();
-        var qty_gudang = $('#qty_gudang_' + edit_id).html();
+        var qty_gudang = $('#qty_gudang_asli_' + edit_id).html();
         var qty_kurang = $('#qty_kurang_' + edit_id).html();
         var qty_aktual = $('#txt_' + edit_id).val();
         if (parseInt(qty_gudang) < parseInt(qty_aktual)) {
@@ -343,7 +357,7 @@
                         var qtygdg = response['qty_gudang'];
                     }
                     $('#qty_gudang_' + edit_id).html(qtygdg);
-                    $('#qty_kurang_' + edit_id).html(qtybom - qty_aktual);
+                    $('#qty_kurang_asli_' + edit_id).html(qtybom - qty_aktual);
                 }
             });
         }
@@ -376,7 +390,7 @@
             var element = this;
 
             var qtybom = $('#qty_bom_' + edit_id).html();
-            var qty_gudang = $('#qty_gudang_' + edit_id).html();
+            var qty_gudang = $('#qty_gudang_asli_' + edit_id).html();
             var qty_kurang = $('#qty_kurang_' + edit_id).html();
 
             if (parseInt(qty_gudang) < parseInt(value)) {

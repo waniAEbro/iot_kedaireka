@@ -4,7 +4,7 @@
     <div class="col-lg-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">List BOM aluminium MF</h3>
+                <h3 class="box-title">List BOM aluminium warna</h3>
                 <div class="box-tools pull-right">
                     <?php //echo button('load_silent("klg/fppp","#content")', 'Kembali', 'btn btn-success'); 
                     ?>
@@ -53,7 +53,7 @@
                 <!-- <button type="submit" id="update" onclick="update()" id="proses" class="btn btn-success">Update</button> -->
             </div>
             <div class="box-footer">
-                <table width="100%" id="tableku" class="table table-striped">
+                <table width="100%" id="tableku" class="table">
                     <thead>
                         <th width="5%">No</th>
                         <th>Section ATA</th>
@@ -76,18 +76,15 @@
                         $i = 1;
                         foreach ($list_bom->result() as $row) :
                             $qtyTotalOut = $this->m_aluminium->getQtyOutFppp($row->id_fppp, $row->id_item);
-                            $id_divisi_stock = $this->m_aluminium->getQtyTerbanyakStockDivisiMf($row->id_item);
-                            $id_gudang_stock = $this->m_aluminium->getQtyTerbanyakStockGudangMf($row->id_item);
-                            $keranjang_stock = $this->m_aluminium->getQtyTerbanyakStockKeranjangMf($row->id_item);
-                            $qty_stock = $this->m_aluminium->getQtyTerbanyakStockQtyMf($row->id_item);
+                            $id_divisi_stock = $this->m_aluminium->getQtyTerbanyakStockDivisi($row->id_item);
+                            $id_gudang_stock = $this->m_aluminium->getQtyTerbanyakStockGudang($row->id_item);
+                            $keranjang_stock = $this->m_aluminium->getQtyTerbanyakStockKeranjang($row->id_item);
+                            $qty_stock = $this->m_aluminium->getQtyTerbanyakStockQty($row->id_item);
 
                             $qtyBOM = $row->qty_bom;
                             $kurang = $qtyBOM - $qtyTotalOut;
                             $cekproduksi = ($row->produksi == 1) ? 'checked' : '';
                             $ceklapangan = ($row->lapangan == 1) ? 'checked' : '';
-                            // $qtyin           = $this->m_aluminium->getQtyInDetailTabel($row->id_item, $row->id_divisi, $row->id_gudang, $row->keranjang);
-                            // $qtyout          = $this->m_aluminium->getQtyOutDetailTabel($row->id_item, $row->id_divisi, $row->id_gudang, $row->keranjang);
-                            // $qty_gudang = ($getqtygdg > 0) ? $getqtygdg : 0;
                             $qty_gudang = $qty_stock;
                             $totalgudang = $qty_gudang;
                             if ($row->qty_out != 0) {
@@ -96,17 +93,23 @@
                                 $qty_aktual = $qtyBOM;
                             }
 
+                            $bgrow = ($qty_gudang == 0) ? "#ffb6a3" : "";
+                            if ($qty_gudang < $qtyBOM) {
+                                $this->m_aluminium->updatekeMf($row->id_stock, $id_fppp);
+                            }
+
 
                         ?>
-                            <tr>
+                            <tr bgcolor="<?= $bgrow ?>">
                                 <td align="center"><?= $i++ ?></td>
                                 <td><?= $row->section_ata ?>
-                                    <br><?php echo button_confirm("Anda yakin mengirim parsial item " . $row->section_ata . "-" . $row->section_allure . "?", "wrh/aluminium/kirim_parsial/" . $id_fppp . "/" . $row->id_stock, "#content", 'Kirim Parsial', 'btn btn-xs btn-default', 'data-toggle="tooltip" title="Kirim Parsial"');
+                                    <br><?php echo button_confirm("Anda yakin mengirim parsial item " . $row->section_ata . "-" . $row->section_allure . "?", "wrh/aluminium/kirim_parsial/" . $id_fppp . "/" . $row->id_stock, "#content", 'Kirim Parsial', 'btn btn-xs btn-default', 'data-toggle="tooltip" title="Kirim Parsial"'); ?>
+                                    <br><?php //echo button_confirm("Anda yakin membuat di MF item " . $row->section_ata . "-" . $row->section_allure . "?", "wrh/aluminium/buat_mf/" . $id_fppp . "/" . $row->id_stock, "#content", 'Buat di MF', 'btn btn-xs btn-info', 'data-toggle="tooltip" title="Buat di MF"'); 
                                         ?>
                                 </td>
                                 <td><?= $row->section_allure ?></td>
                                 <td><?= $row->temper ?></td>
-                                <td><?= $row->warna_aluminium ?></td>
+                                <td><?= $row->warna ?></td>
                                 <td><?= $row->ukuran ?></td>
                                 <td align="center"><span id="qty_bom_<?= $row->id_stock ?>" class='edit'><?= $qtyBOM ?></span></td>
                                 <td align="center"><span id="qty_kurang_<?= $row->id_stock ?>"><?= $kurang ?></span></td>
@@ -153,7 +156,7 @@
             </div>
             <div class="box-footer">
                 <?= button_confirm("Anda yakin menyelesaikan stock out?", "wrh/aluminium/buat_surat_jalan/" . $id_fppp, "#content", 'Buat Surat Jalan', 'btn btn-success', 'data-toggle="tooltip" title="Buat Surat Jalan"'); ?>
-                <?= button('load_silent("wrh/aluminium/stok_out_make/' . $id_fppp . '","#content")', 'Kembali ke Gudang Warna', 'btn btn-primary', 'data-toggle="tooltip" title="Kembali ke Gudang Warna"'); ?>
+                <?= button_confirm("Anda yakin lanjut ke gudang MF?", "wrh/aluminium/stok_out_make_mf/" . $id_fppp, "#content", 'ke Gudang MF', 'btn btn-primary', 'data-toggle="tooltip" title="ke Gudang MF"'); ?>
             </div>
             <div class="box-footer">
                 <table width="100%" id="tb1" class="table table-stripped">
@@ -172,23 +175,23 @@
                     <tbody>
                         <?php
                         $i = 1;
-                        foreach ($aluminium->result() as $row) :
+                        foreach ($aluminium->result() as $row) {
+                            // $detail_lagi = $this->m_aluminium->getDataCounter();
                         ?>
                             <tr>
                                 <td align="center"><?= $i ?></td>
                                 <td><?= $row->section_ata ?></td>
                                 <td><?= $row->section_allure ?></td>
                                 <td><?= $row->temper ?></td>
-                                <td><?= $row->warna_aluminium ?></td>
+                                <td><?= $row->warna ?></td>
                                 <td><?= $row->ukuran ?></td>
                                 <td><?= $row->divisi ?></td>
                                 <td><?= $row->gudang ?></td>
                                 <td><?= $row->keranjang ?></td>
                                 <td><?= $row->qty ?></td>
                             </tr>
-
                         <?php $i++;
-                        endforeach; ?>
+                        } ?>
                     </tbody>
                 </table>
             </div>

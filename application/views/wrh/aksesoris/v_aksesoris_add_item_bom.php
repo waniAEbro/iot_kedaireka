@@ -9,7 +9,8 @@
                 <option>Pilih</option>
                 <?php foreach ($item->result() as $valap) : ?>
                     <option value="<?= $valap->id ?>">
-                        <?= $valap->item_code ?>
+                        <?= $valap->item_code ?> -
+                        <?= $valap->deskripsi ?>
                     </option>
                 <?php endforeach; ?>
             </select>

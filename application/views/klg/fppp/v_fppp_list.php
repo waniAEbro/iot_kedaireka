@@ -146,7 +146,7 @@
                                 <td><?= $row->sales ?></td>
                                 <td><?= $row->pic_project ?></td>
                                 <td><?= $row->pengiriman ?></td>
-                                <td><?= $row->warna_aluminium ?></td>
+                                <td><?= $row->warna ?></td>
                                 <td><?= $row->jumlah_gambar ?></td>
                                 <td><?= $row->jumlah_unit ?></td>
                                 <td align="center"><?= $row->tgl_pembuatan ?></td>
@@ -337,7 +337,7 @@
                         infoTable += '<tr bgcolor="' + color + '">' +
                             '<td><font color="' + fontcolor + '">' + no + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].brand + '</font></td>' +
-                            '<td><font color="' + fontcolor + '">' + data.detail[i].warna_aluminium + '</font></td>' +
+                            '<td><font color="' + fontcolor + '">' + data.detail[i].warna + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].kode_opening + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].kode_unit + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].item + '</font></td>' +

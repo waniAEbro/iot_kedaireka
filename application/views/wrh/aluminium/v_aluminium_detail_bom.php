@@ -75,6 +75,11 @@
                         <?php
                         $i = 1;
                         foreach ($list_bom->result() as $row) :
+                            $divisi = $this->m_aluminium->getDivisiBomItem($id_jenis_item, $row->id_item);
+                            $gudang = $this->m_aluminium->getGudangBomItem($id_jenis_item, $row->id_item);
+                            $keranjang = $this->m_aluminium->getKeranjangBomItem($id_jenis_item, $row->id_item);
+
+
                             $qtyTotalOut = $this->m_aluminium->getQtyOutFppp($row->id_fppp, $row->id_item);
                             $id_divisi_stock = $this->m_aluminium->getQtyTerbanyakStockDivisi($row->id_item);
                             $id_gudang_stock = $this->m_aluminium->getQtyTerbanyakStockGudang($row->id_item);
@@ -109,11 +114,14 @@
                                 </td>
                                 <td><?= $row->section_allure ?></td>
                                 <td><?= $row->temper ?></td>
-                                <td><?= $row->warna_aluminium ?></td>
+                                <td><?= $row->warna ?></td>
                                 <td><?= $row->ukuran ?></td>
                                 <td align="center"><span id="qty_bom_<?= $row->id_stock ?>" class='edit'><?= $qtyBOM ?></span></td>
                                 <td align="center"><span id="qty_kurang_<?= $row->id_stock ?>"><?= $kurang ?></span></td>
-                                <td align="center"><span id="qty_gudang_<?= $row->id_stock ?>"><?= $totalgudang ?></span></td>
+                                <td align="center">
+                                    <span id="qty_gudang_asli_<?= $row->id_stock ?>"><?= $totalgudang ?></span>
+                                    <span id="qty_gudang_<?= $row->id_stock ?>"><?= $totalgudang ?></span>
+                                </td>
                                 <td style="background-color:#ffd45e">
                                     <select id="id_divisi_<?= $row->id_stock ?>" onchange="divisi(<?= $row->id_stock ?>)" data-id="<?= $row->id_stock ?>" data-field="id_divisi" class="form-control">
                                         <option id="">Pilih</option>
@@ -157,42 +165,6 @@
             <div class="box-footer">
                 <?= button_confirm("Anda yakin menyelesaikan stock out?", "wrh/aluminium/buat_surat_jalan/" . $id_fppp, "#content", 'Buat Surat Jalan', 'btn btn-success', 'data-toggle="tooltip" title="Buat Surat Jalan"'); ?>
                 <?= button_confirm("Anda yakin lanjut ke gudang MF?", "wrh/aluminium/stok_out_make_mf/" . $id_fppp, "#content", 'ke Gudang MF', 'btn btn-primary', 'data-toggle="tooltip" title="ke Gudang MF"'); ?>
-            </div>
-            <div class="box-footer">
-                <table width="100%" id="tb1" class="table table-stripped">
-                    <thead>
-                        <th width="5%">No</th>
-                        <th>Section ATA</th>
-                        <th>Section Allure</th>
-                        <th>Temper</th>
-                        <th>Warna</th>
-                        <th>Ukuran</th>
-                        <th>Divisi</th>
-                        <th>Gudang</th>
-                        <th>Keranjang</th>
-                        <th>Qty</th>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $i = 1;
-                        foreach ($aluminium->result() as $row) :
-                        ?>
-                            <tr>
-                                <td align="center"><?= $i ?></td>
-                                <td><?= $row->section_ata ?></td>
-                                <td><?= $row->section_allure ?></td>
-                                <td><?= $row->temper ?></td>
-                                <td><?= $row->warna_aluminium ?></td>
-                                <td><?= $row->ukuran ?></td>
-                                <td><?= $row->divisi ?></td>
-                                <td><?= $row->gudang ?></td>
-                                <td><?= $row->keranjang ?></td>
-                                <td><?= $row->qty ?></td>
-                            </tr>
-                        <?php $i++;
-                        endforeach; ?>
-                    </tbody>
-                </table>
             </div>
             <?php // echo button_confirm("Anda yakin menambahkan item stock out?", "wrh/aluminium/additemdetailbom/" . $id_fppp, "#modal", 'Add Item', 'btn btn-info', 'data-toggle="tooltip" title="Add Item"'); 
             ?>
@@ -266,6 +238,7 @@
                     var qtygdg = response['qty_gudang'];
                 }
                 $('#qty_gudang_' + id).html(qtygdg);
+                $('#qty_gudang_asli_' + id).html(qtygdg);
                 // load_silent("wrh/aluminium/detailbom/" + $("#id_fppp").val(), "#content");
             }
         })
@@ -298,6 +271,7 @@
                     var qtygdg = response['qty_gudang'];
                 }
                 $('#qty_gudang_' + id).html(qtygdg);
+                $('#qty_gudang_asli_' + id).html(qtygdg);
                 // load_silent("wrh/aluminium/detailbom/" + $("#id_fppp").val(), "#content");
             }
         })
@@ -331,6 +305,7 @@
                     var qtygdg = response['qty_gudang'];
                 }
                 $('#qty_gudang_' + id).html(qtygdg);
+                $('#qty_gudang_asli_' + id).html(qtygdg);
                 // load_silent("wrh/aluminium/detailbom/" + $("#id_fppp").val(), "#content");
             }
         })
@@ -357,7 +332,7 @@
         }
 
         var qtybom = $('#qty_bom_' + edit_id).html();
-        var qty_gudang = $('#qty_gudang_' + edit_id).html();
+        var qty_gudang = $('#qty_gudang_asli_' + edit_id).html();
         var qty_kurang = $('#qty_kurang_' + edit_id).html();
         var qty_aktual = $('#txt_' + edit_id).val();
         if (parseInt(qty_gudang) < parseInt(qty_aktual)) {
@@ -389,7 +364,7 @@
                         var qtygdg = response['qty_gudang'];
                     }
                     $('#qty_gudang_' + edit_id).html(qtygdg);
-                    $('#qty_kurang_' + edit_id).html(qtybom - qty_aktual);
+                    $('#qty_kurang_asli_' + edit_id).html(qtybom - qty_aktual);
                 }
             });
         }
@@ -422,7 +397,7 @@
             var element = this;
 
             var qtybom = $('#qty_bom_' + edit_id).html();
-            var qty_gudang = $('#qty_gudang_' + edit_id).html();
+            var qty_gudang = $('#qty_gudang_asli_' + edit_id).html();
             var qty_kurang = $('#qty_kurang_' + edit_id).html();
 
             if (parseInt(qty_gudang) < parseInt(value)) {

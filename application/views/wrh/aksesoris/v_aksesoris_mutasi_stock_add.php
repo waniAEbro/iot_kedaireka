@@ -20,7 +20,8 @@
                                 $selected = ($valap->id == $id_item) ? "selected" : "";
                             ?>
                                 <option value="<?= $valap->id ?>" <?= $selected ?>>
-                                    <?= $valap->item_code ?>
+                                    <?= $valap->item_code ?> -
+                                    <?= $valap->deskripsi ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>
@@ -213,7 +214,6 @@
                         z += '<option value=' + data[i].keranjang + '>' + data[i].keranjang + '</option>';
                     }
                     x.html(z);
-                    $('#qty').val(data['qty']);
                 }
             });
 

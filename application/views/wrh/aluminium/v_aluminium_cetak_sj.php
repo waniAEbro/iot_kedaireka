@@ -119,7 +119,7 @@ foreach ($detail as $key) {
     }
 
     if ($key->ke_mf == 1) {
-        $warna_sblm = $this->m_aluminium->getRowItemWarna($key->id_item_sblm)->warna_aluminium;
+        $warna_sblm = $this->m_aluminium->getRowItemWarna($key->id_item_sblm)->warna;
     } else {
         $warna_sblm = '-';
     }
@@ -132,7 +132,7 @@ foreach ($detail as $key) {
                     <td align="center">' . $key->qty_out . '</td>
                     <td align="center">1</td>
                     <td align="center">' . $key->satuan . '</td>
-                    <td align="center">' . $key->warna_aluminium . '</td>
+                    <td align="center">' . $key->warna . '</td>
                     <td align="center">' . $warna_sblm . '</td>
                 </tr>';
 }

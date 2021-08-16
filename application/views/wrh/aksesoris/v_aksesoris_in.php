@@ -12,7 +12,7 @@
                             <select id="supplier" name="supplier" class="form-control" style="width:100%" required>
                                 <option value="">-- Select --</option>
                                 <?php foreach ($supplier->result() as $valap) : ?>
-                                    <option value="<?= $valap->id ?>"><?= $valap->supplier ?></option>
+                                    <option value="<?= $valap->id ?>"><?= $valap->kode ?> - <?= $valap->supplier ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -31,7 +31,8 @@
                                 <option value="">-- Select --</option>
                                 <?php foreach ($item->result() as $valap) : ?>
                                     <option value="<?= $valap->id ?>">
-                                        <?= $valap->item_code ?>
+                                        <?= $valap->item_code ?> -
+                                        <?= $valap->deskripsi ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>
@@ -139,7 +140,7 @@
 
     function quotation() {
 
-        if ($('#item').val() != '' && $('#divisi').val() != '' && $('#area').val() != '' && $('#rak').val() != '') {
+        if ($('#item').val() != '' && $('#qty').val() != '' && $('#id_divisi').val() != '' && $('#id_gudang').val() != '' && $('#keranjang').val() != '') {
 
             $.ajax({
                     type: "POST",

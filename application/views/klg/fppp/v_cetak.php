@@ -138,7 +138,7 @@ table.first {
         <tr>
             <td>Warna Aluminium</td>
             <td>:</td>
-            <td>' . $header->warna_aluminium . '</td>
+            <td>' . $header->warna . '</td>
         </tr>
         <tr>
             <td>Warna Lainya</td>
