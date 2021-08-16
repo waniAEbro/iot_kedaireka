@@ -620,8 +620,8 @@ class Fppp extends CI_Controller
 					'satuan'        => $rowData[0][2],
 					'created'       => date('Y-m-d H:i:s'),
 				);
-				$qty        = $rowData[0][3];
-				$keterangan = $rowData[0][4];
+				// $qty        = $rowData[0][3];
+				// $keterangan = $rowData[0][4];
 				$cek_item   = $this->m_fppp->getMasterAksesoris($obj['item_code']);
 				if ($cek_item->num_rows() < 1) {
 					$this->m_fppp->simpanItem($obj);
@@ -651,16 +651,16 @@ class Fppp extends CI_Controller
 				}
 			}
 
-			$obj_bom = array(
-				'is_bom'        => 1,
-				'id_fppp'       => $id_fppp,
-				'id_jenis_item' => $jenis_bom,
-				'id_item'       => $id_item,
-				'qty_bom'       => $qty,
-				'keterangan'    => $keterangan,
-				'created'       => date('Y-m-d H:i:s'),
-			);
-			$this->db->insert('data_stock', $obj_bom);
+			// $obj_bom = array(
+			// 	'is_bom'        => 1,
+			// 	'id_fppp'       => $id_fppp,
+			// 	'id_jenis_item' => $jenis_bom,
+			// 	'id_item'       => $id_item,
+			// 	'qty_bom'       => $qty,
+			// 	'keterangan'    => $keterangan,
+			// 	'created'       => date('Y-m-d H:i:s'),
+			// );
+			// $this->db->insert('data_stock', $obj_bom);
 		}
 		unlink($inputFileName);
 		$data['msg'] = "Data BOM Baru Disimpan....";
