@@ -269,6 +269,15 @@ class M_aksesoris extends CI_Model
         return $stock;
     }
 
+    public function getRowDataCounter($id, $id_divisi, $id_gudang, $keranjang)
+    {
+        $this->db->where('id_item', $id);
+        $this->db->where('id_divisi', $id_divisi);
+        $this->db->where('id_gudang', $id_gudang);
+        $this->db->where('keranjang', $keranjang);
+        return $this->db->get('data_counter')->row();
+    }
+
 
     public function getDataStock()
     {

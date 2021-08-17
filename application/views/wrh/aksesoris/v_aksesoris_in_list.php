@@ -40,7 +40,7 @@
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
                                 <td><?= $row->created ?></td>
-                                <td><?= $row->item ?></td>
+                                <td><?= $row->item_code ?></td>
                                 <td><?= $row->deskripsi ?></td>
                                 <td><?= $row->divisi ?></td>
                                 <td><?= $row->gudang ?></td>

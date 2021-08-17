@@ -46,6 +46,7 @@ class aksesoris extends CI_Controller
             $stok_awal_bulan = $this->m_aksesoris->getAwalBulanDetailTabel($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
             $qtyin           = $this->m_aksesoris->getQtyInDetailTabelMonth($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
             $qtyout          = $this->m_aksesoris->getQtyOutDetailTabel($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
+            $rowCounter          = $this->m_aksesoris->getRowDataCounter($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
             $temp            = array(
                 "divisi"           => $key->divisi,
                 "gudang"           => $key->gudang,
@@ -54,8 +55,8 @@ class aksesoris extends CI_Controller
                 "tot_in"           => $qtyin,
                 "tot_out"          => $qtyout,
                 "stok_akhir_bulan" => $qtyin - $qtyout,
-                "rata_pemakaian"   => '0',
-                "min_stock"        => '0',
+                "rata_pemakaian"   => $rowCounter->rata_pemakaian,
+                "min_stock"        => $rowCounter->minimum_stock,
             );
 
             array_push($arr, $temp);
