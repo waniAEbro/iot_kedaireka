@@ -258,7 +258,7 @@
           <div class="form-group">
             <label>Lampiran</label>
             <?php echo form_upload(array('name' => 'lampiran', 'id' => 'lampiran')); ?>
-            <span style="color:red">*) Lampiran File berformat .pdf maks 5MB</span>
+            <span style="color:red">*) Lampiran File berformat .pdf</span>
           </div>
         </div>
       </div>

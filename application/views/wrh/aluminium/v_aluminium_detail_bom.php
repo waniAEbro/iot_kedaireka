@@ -80,7 +80,7 @@
                             $keranjang = $this->m_aluminium->getKeranjangBomItem($id_jenis_item, $row->id_item);
 
 
-                            $qtyTotalOut = $this->m_aluminium->getQtyOutFppp($row->id_fppp, $row->id_item);
+                            $qtyTotalOut = $this->m_aluminium->getQtyOutFppp($row->id_fppp, $row->id_item_sblm);
                             $id_divisi_stock = $this->m_aluminium->getQtyTerbanyakStockDivisi($row->id_item);
                             $id_gudang_stock = $this->m_aluminium->getQtyTerbanyakStockGudang($row->id_item);
                             $keranjang_stock = $this->m_aluminium->getQtyTerbanyakStockKeranjang($row->id_item);
@@ -92,18 +92,13 @@
                             $ceklapangan = ($row->lapangan == 1) ? 'checked' : '';
                             $qty_gudang = $qty_stock;
                             $totalgudang = $qty_gudang;
-                            if ($row->qty_out != 0) {
-                                $qty_aktual = $row->qty_out;
-                            } else {
-                                $qty_aktual = $qtyBOM;
-                            }
+
+                            $qty_aktual = $row->qty_out;
 
                             $bgrow = ($qty_gudang == 0) ? "#ffb6a3" : "";
                             if ($qty_gudang < $qtyBOM) {
                                 $this->m_aluminium->updatekeMf($row->id_stock, $id_fppp);
                             }
-
-
                         ?>
                             <tr bgcolor="<?= $bgrow ?>">
                                 <td align="center"><?= $i++ ?></td>
@@ -119,7 +114,7 @@
                                 <td align="center"><span id="qty_bom_<?= $row->id_stock ?>" class='edit'><?= $qtyBOM ?></span></td>
                                 <td align="center"><span id="qty_kurang_<?= $row->id_stock ?>"><?= $kurang ?></span></td>
                                 <td align="center">
-                                    <span id="qty_gudang_asli_<?= $row->id_stock ?>"><?= $totalgudang ?></span>
+                                    <span style="display:none;" id="qty_gudang_asli_<?= $row->id_stock ?>"><?= $totalgudang ?></span>
                                     <span id="qty_gudang_<?= $row->id_stock ?>"><?= $totalgudang ?></span>
                                 </td>
                                 <td style="background-color:#ffd45e">

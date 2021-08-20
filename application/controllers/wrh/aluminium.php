@@ -300,6 +300,7 @@ class aluminium extends CI_Controller
             'id_jenis_item' => $getRowStock->id_jenis_item,
             'id_item'       => $getRowStock->id_item,
             'qty_bom'       => $getRowStock->qty_bom,
+            'is_parsial'       => 1,
             'created'       => date('Y-m-d H:i:s'),
         );
         $this->db->insert('data_stock', $object);
@@ -374,7 +375,7 @@ class aluminium extends CI_Controller
         );
         $this->db->insert('data_surat_jalan', $obj);
         $data['id']    = $this->db->insert_id();
-        $this->m_aluminium->updateJadiSuratJalan($no_fppp, $data['id']);
+        $this->m_aluminium->updateJadiSuratJalan($id_fppp, $data['id']);
         echo json_encode($data);
     }
 
