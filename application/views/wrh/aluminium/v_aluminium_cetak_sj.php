@@ -70,27 +70,33 @@ table.first {
 </style>
 <table border="0" class="first" cellpadding="1">
         <tr>
-            <td width="15%"><b>Kepada</b></td>
+            <td width="15%"><b>Nama Proyek</b></td>
             <td width="5%">:</td>
-            <td width="40%"></td>
+            <td width="40%">' . $header->nama_proyek . '</td>
             <td width="15%">No Surat Jalan</td>
             <td width="5%">:</td>
             <td width="20%">' . $header->no_surat_jalan . '</td>
         </tr>
         <tr>
-            <td colspan="3">' . $header->nama_proyek . '</td>
+            <td>Penerima</td>
+            <td>:</td>
+            <td>' . $header->penerima . '</td>
             <td>Tanggal</td>
             <td>:</td>
             <td>' . date('Y-m-d', strtotime($header->created)) . '</td>
         </tr>
         <tr>
-            <td colspan="3">' . $header->penerima . '</td>
+            <td>Penerima</td>
+            <td>:</td>
+            <td>' . $header->penerima . '</td>
             <td>Sopir</td>
             <td>:</td>
             <td>' . $header->sopir . '</td>
         </tr>
         <tr>
-            <td colspan="3">' . $header->alamat_pengiriman . '</td>
+            <td>Penerima</td>
+            <td>:</td>
+            <td>' . $header->alamat_pengiriman . '</td>
             <td>No Polisi</td>
             <td>:</td>
             <td>' . $header->no_kendaraan . '</td>
@@ -112,11 +118,19 @@ $html .= '
 $i = 1;
 $total = 0;
 foreach ($detail as $key) {
-    if ($key->id_divisi == 3) {
+    // if ($key->id_divisi == 3) {
+    $itm_if = $key->section_allure;
+    // } else {
+    // $itm = $key->section_ata . ' ' . $key->section_allure;
+    // }
+    if ($key->section_ata != '-' && $key->section_allure != '-') {
+        $itm = $key->section_allure;
+    } else if ($key->section_ata == '-' && $key->section_allure != '-') {
         $itm = $key->section_allure;
     } else {
-        $itm = $key->section_ata . ' ' . $key->section_allure;
+        $itm = $key->section_ata;
     }
+
 
     if ($key->ke_mf == 1) {
         $warna_sblm = $this->m_aluminium->getRowItemWarna($key->id_item_sblm)->warna;
@@ -127,7 +141,7 @@ foreach ($detail as $key) {
     $total = $total + $key->qty_out;
     $html .= '<tr>
                     <td align="center">' . $i++ . '</td>
-                    <td> ' . $itm . '</td>
+                    <td align="center"> ' . $itm . '</td>
                     <td align="center">' . $key->ukuran . '</td>
                     <td align="center">' . $key->qty_out . '</td>
                     <td align="center">1</td>
