@@ -211,7 +211,7 @@ class aluminium extends CI_Controller
         $qtyin        = $this->m_aluminium->getQtyInDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
         $qtyout       = $this->m_aluminium->getQtyOutDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
         $data['qty_gudang'] = $qtyin - $qtyout;
-        $this->m_aluminium->updateDataCounter($id_item, $id_divisi, $id_gudang, $keranjang, $data['qty_gudang']);
+        // $this->m_aluminium->updateDataCounter($id_item, $id_divisi, $id_gudang, $keranjang, $data['qty_gudang']);
 
         $data['status'] = "berhasil";
         echo json_encode($data);
