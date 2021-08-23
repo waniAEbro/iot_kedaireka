@@ -115,7 +115,7 @@
                                 <td><?= $row->temper ?></td>
                                 <td><?= $row->warna ?></td>
                                 <td><?= $row->ukuran ?></td>
-                                <td align="center"><span id="qty_bom_<?= $row->id_stock ?>" class='edit'><?= $qtyBOM ?></span></td>
+                                <td align="center"><span id="qty_bom_<?= $row->id_stock ?>"><?= $qtyBOM ?></span></td>
                                 <td align="center"><span id="qty_kurang_<?= $row->id_stock ?>"><?= $kurang ?></span></td>
                                 <td align="center">
                                     <span style="display:none;" id="qty_gudang_asli_<?= $row->id_stock ?>"><?= $totalgudang ?></span>
