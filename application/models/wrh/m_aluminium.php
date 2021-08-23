@@ -319,6 +319,12 @@ class M_aluminium extends CI_Model
         return $this->db->get('data_stock')->row();
     }
 
+    public function hapusParsial($id_stock)
+    {
+        $this->db->where('id', $id_stock);
+        $this->db->delete('data_stock');
+    }
+
     public function getFpppStockOut($jenis_item)
     {
         $this->db->join('data_fppp df', 'df.id = ds.id_fppp', 'left');
@@ -667,15 +673,19 @@ class M_aluminium extends CI_Model
         $this->db->update('data_stock', $object);
     }
 
-    public function getListItemBonManual($id_sj)
+    public function getListItemBonManual()
     {
+        $id_jenis_item = 1;
         $this->db->join('data_fppp df', 'df.id = ds.id_fppp', 'left');
         $this->db->join('master_divisi_stock mds', 'mds.id = ds.id_divisi', 'left');
         $this->db->join('master_gudang mg', 'mg.id = ds.id_gudang', 'left');
         $this->db->join('master_item mi', 'mi.id = ds.id_item', 'left');
         $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
 
-        $this->db->where('ds.id_surat_jalan', $id_sj);
+        $this->db->where('ds.id_surat_jalan', 0);
+        $this->db->where('ds.is_bom', 0);
+        $this->db->where('ds.inout', 2);
+        $this->db->where('ds.id_jenis_item', $id_jenis_item);
         $this->db->select('ds.id as id_stock,ds.*,mwa.warna,df.no_fppp,df.nama_proyek,mds.divisi as divisi_stock,mg.gudang,mi.*');
 
         return $this->db->get('data_stock ds');
@@ -910,6 +920,28 @@ class M_aluminium extends CI_Model
         $this->db->where('inout', 2);
         // $this->db->where('lapangan', 1);
         $this->db->where('id_surat_jalan', 0);
+        $this->db->where('sj_mf', 0);
+        $this->db->update('data_stock', $object);
+    }
+
+    public function updateJadiSuratJalanBon($id_sj)
+    {
+        $object = array('id_surat_jalan' => $id_sj);
+        $this->db->where('inout', 2);
+        $this->db->where('id_surat_jalan', 0);
+        $this->db->where('sj_mf', 0);
+        $this->db->where('is_bom', 0);
+        $this->db->update('data_stock', $object);
+    }
+
+    public function updateJadiSuratJalanMf($id_fppp, $id_sj)
+    {
+        $object = array('id_surat_jalan' => $id_sj);
+        $this->db->where('id_fppp', $id_fppp);
+        $this->db->where('inout', 2);
+        // $this->db->where('lapangan', 1);
+        $this->db->where('id_surat_jalan', 0);
+        $this->db->where('sj_mf', 1);
         $this->db->update('data_stock', $object);
     }
 

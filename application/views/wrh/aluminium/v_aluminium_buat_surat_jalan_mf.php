@@ -88,7 +88,7 @@
     function finish() {
         $("#finish").hide();
         $.ajax({
-            url: "<?= site_url('wrh/aluminium/simpanSuratJalan/') ?>",
+            url: "<?= site_url('wrh/aluminium/simpanSuratJalanMf/') ?>",
             dataType: "json",
             type: "POST",
             data: {

@@ -95,11 +95,7 @@
                             // $qty_gudang = ($getqtygdg > 0) ? $getqtygdg : 0;
                             $qty_gudang = $qty_stock;
                             $totalgudang = $qty_gudang;
-                            if ($row->qty_out != 0) {
-                                $qty_aktual = $row->qty_out;
-                            } else {
-                                $qty_aktual = $qtyBOM;
-                            }
+                            $qty_aktual = $row->qty_out;
 
                             $bgrow = ($qty_gudang == 0) ? "#ffb6a3" : "";
 
@@ -159,7 +155,7 @@
                 </table>
             </div>
             <div class="box-footer">
-                <?= button_confirm("Anda yakin menyelesaikan stock out?", "wrh/aluminium/buat_surat_jalan/" . $id_fppp, "#content", 'Buat Surat Jalan', 'btn btn-success', 'data-toggle="tooltip" title="Buat Surat Jalan"'); ?>
+                <?= button_confirm("Anda yakin menyelesaikan stock out?", "wrh/aluminium/buat_surat_jalan_mf/" . $id_fppp, "#content", 'Buat Surat Jalan MF', 'btn btn-success', 'data-toggle="tooltip" title="Buat Surat Jalan"'); ?>
                 <?= button('load_silent("wrh/aluminium/stok_out_make/' . $id_fppp . '","#content")', 'Kembali ke Gudang Warna', 'btn btn-primary', 'data-toggle="tooltip" title="Kembali ke Gudang Warna"'); ?>
             </div>
             <?php // echo button_confirm("Anda yakin menambahkan item stock out?", "wrh/aluminium/additemdetailbom/" . $id_fppp, "#modal", 'Add Item', 'btn btn-info', 'data-toggle="tooltip" title="Add Item"'); 
@@ -332,6 +328,10 @@
             alert("Tidak boleh melebihi Qty Gudang!");
             $('#lapangan_' + edit_id).prop('checked', false);
             $('#produksi_' + edit_id).prop('checked', false);
+        } else if (value == '') {
+            $(element).hide();
+            $(element).prev('.edit').show();
+            $(element).prev('.edit').text(0);
         } else {
             $.ajax({
                 url: "<?= site_url('wrh/aluminium/saveoutcheckmf/') ?>",

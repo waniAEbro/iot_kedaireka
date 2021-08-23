@@ -106,6 +106,10 @@
                                     <br><?php echo button_confirm("Anda yakin mengirim parsial item " . $row->section_ata . "-" . $row->section_allure . "?", "wrh/aluminium/kirim_parsial/" . $id_fppp . "/" . $row->id_stock, "#content", 'Kirim Parsial', 'btn btn-xs btn-default', 'data-toggle="tooltip" title="Kirim Parsial"'); ?>
                                     <br><?php //echo button_confirm("Anda yakin membuat di MF item " . $row->section_ata . "-" . $row->section_allure . "?", "wrh/aluminium/buat_mf/" . $id_fppp . "/" . $row->id_stock, "#content", 'Buat di MF', 'btn btn-xs btn-info', 'data-toggle="tooltip" title="Buat di MF"'); 
                                         ?>
+                                    <?php if ($row->is_parsial == 1) {
+                                        echo button_confirm("Anda yakin mengirim parsial item " . $row->section_ata . "-" . $row->section_allure . "?", "wrh/aluminium/hapus_parsial/" . $id_fppp . "/" . $row->id_stock, "#content", 'Haous Parsial', 'btn btn-xs btn-danger', 'data-toggle="tooltip" title="Hapus Parsial"');
+                                    }
+                                    ?>
                                 </td>
                                 <td><?= $row->section_allure ?></td>
                                 <td><?= $row->temper ?></td>
@@ -400,6 +404,10 @@
                 $(element).hide();
                 $(element).prev('.edit').show();
                 $(element).prev('.edit').text(qtybom);
+            } else if (value == '') {
+                $(element).hide();
+                $(element).prev('.edit').show();
+                $(element).prev('.edit').text(0);
             } else {
                 $.ajax({
                     url: "<?= site_url('wrh/aluminium/saveout/') ?>",

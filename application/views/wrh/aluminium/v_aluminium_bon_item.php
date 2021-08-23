@@ -11,48 +11,6 @@
                 </div>
             </div>
             <div class="box-body">
-                <form method="post" class="form-vertical form_faktur" role="form">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label>No Surat Jalan</label>
-                                <input type="text" class="form-control" value="<?= $no_surat_jalan ?>" id="no_surat_jalan" readonly>
-                                <input type="hidden" class="form-control" value="<?= $id_sj ?>" id="id_sj" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Penerima</label>
-                                <input type="text" class="form-control" value="<?= $penerima ?>" id="penerima">
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Alamat Pengiriman</label>
-                                <input type="text" class="form-control" value="<?= $alamat_pengiriman ?>" id="alamat_pengiriman">
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Sopir</label>
-                                <input type="text" class="form-control" value="<?= $sopir ?>" id="sopir">
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>No Kendaraan</label>
-                                <input type="text" class="form-control" value="<?= $no_kendaraan ?>" id="no_kendaraan">
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="box-footer">
-                <button type="submit" id="update" onclick="update()" id="proses" class="btn btn-success">Update</button>
-            </div>
-            <div class="box-body">
                 <table width="100%" id="tableku" class="table table-bordered table-striped" style="font-size: smaller;">
                     <thead>
                         <tr>
@@ -137,7 +95,7 @@
                     <input type="hidden" style="text-align: right;" class="form-control" id="stock" placeholder="Stock" readonly>
                 </div>
             </div>
-            <?php echo button_confirm("Anda yakin menyelesaikan stock out?", "wrh/aluminium/finishdetailbon/" . $id_sj, "#content", 'Finish', 'btn btn-success', 'data-toggle="tooltip" title="Finish"'); ?>
+            <?php echo button_confirm("Anda yakin menyelesaikan stock out BON?", "wrh/aluminium/buat_surat_jalan_bon/", "#content", 'Finish Buat Surat Jalan', 'btn btn-success', 'data-toggle="tooltip" title="Finish Buat Surat Jalan"'); ?>
         </div>
     </div>
 </div>
@@ -270,75 +228,6 @@
         });
     });
 
-    // $("#id_divisi").change(function() {
-    //     $.ajax({
-    //         url: "<?= site_url('wrh/aluminium/getQtyRowGudangBon') ?>",
-    //         dataType: "json",
-    //         type: "POST",
-    //         data: {
-    //             item: $('#item').val(),
-    //             divisi: $('#id_divisi').val(),
-    //             gudang: $('#id_gudang').val(),
-    //             keranjang: $('#keranjang').val(),
-    //         },
-    //         success: function(data) {
-    //             if (data['qty_gudang'] == null) {
-    //                 var qtygdg = 0;
-    //             } else {
-    //                 var qtygdg = data['qty_gudang'];
-    //             }
-    //             $('#stock').val(qtygdg);
-    //             $('#txt_qty_gudang').html("<b> " + qtygdg + "</b>");
-    //         }
-    //     });
-    // });
-
-    // $("#id_gudang").change(function() {
-    //     $.ajax({
-    //         url: "<?= site_url('wrh/aluminium/getQtyRowGudangBon') ?>",
-    //         dataType: "json",
-    //         type: "POST",
-    //         data: {
-    //             item: $('#item').val(),
-    //             divisi: $('#id_divisi').val(),
-    //             gudang: $('#id_gudang').val(),
-    //             keranjang: $('#keranjang').val(),
-    //         },
-    //         success: function(data) {
-    //             if (data['qty_gudang'] == null) {
-    //                 var qtygdg = 0;
-    //             } else {
-    //                 var qtygdg = data['qty_gudang'];
-    //             }
-    //             $('#stock').val(qtygdg);
-    //             $('#txt_qty_gudang').html("<b> " + qtygdg + "</b>");
-    //         }
-    //     });
-    // });
-
-    // $("#keranjang").change(function() {
-    //     $.ajax({
-    //         url: "<?= site_url('wrh/aluminium/getQtyRowGudangBon') ?>",
-    //         dataType: "json",
-    //         type: "POST",
-    //         data: {
-    //             item: $('#item').val(),
-    //             divisi: $('#id_divisi').val(),
-    //             gudang: $('#id_gudang').val(),
-    //             keranjang: $('#keranjang').val(),
-    //         },
-    //         success: function(data) {
-    //             if (data['qty_gudang'] == null) {
-    //                 var qtygdg = 0;
-    //             } else {
-    //                 var qtygdg = data['qty_gudang'];
-    //             }
-    //             $('#stock').val(qtygdg);
-    //             $('#txt_qty_gudang').html("<b> " + qtygdg + "</b>");
-    //         }
-    //     });
-    // });
-
 
     function quotation() {
         if (parseInt($('#qty').val()) > parseInt($('#stock').val())) {
@@ -357,7 +246,7 @@
                     url: "<?= site_url('wrh/aluminium/savebonmanual') ?>",
                     dataType: 'json',
                     data: {
-                        'id_sj': $('#id_sj').val(),
+                        'id_sj': 0,
                         'id_fppp': $('#id_fppp').val(),
                         'item': $('#item').val(),
                         'id_divisi': $("#id_divisi").val(),

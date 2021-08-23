@@ -3,7 +3,7 @@
     <div class="col-lg-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">BON Manual List </h3>
+                <h3 class="box-title">List BON</h3>
                 <div class="box-tools pull-right">
                     <?php
                     $sesi = from_session('level');
@@ -41,7 +41,8 @@
                                 <td><?= $row->sopir ?></td>
                                 <td><?= $row->no_kendaraan ?></td>
                                 <td>
-                                    <?php echo button('load_silent("wrh/aluminium/edit_bon_manual/' . $row->id . '","#content")', 'Edit', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Stock OUT"'); ?>
+                                    <?php //echo button('load_silent("wrh/aluminium/edit_bon_manual/' . $row->id . '","#content")', 'Edit', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Stock OUT"'); 
+                                    ?>
                                     <a target="_blank" href="<?= base_url('wrh/aluminium/cetakSj'); ?>/<?= $row->id ?>" class="btn btn-xs btn-warning">Cetak Surat Jalan</a>
                                 </td>
                             </tr>
