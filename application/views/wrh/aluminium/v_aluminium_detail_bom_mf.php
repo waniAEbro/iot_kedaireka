@@ -87,8 +87,8 @@
                             $keranjang_stock = $this->m_aluminium->getQtyTerbanyakStockKeranjangMf($row->id_item);
                             $qty_stock = $this->m_aluminium->getQtyTerbanyakStockQtyMf($row->id_item);
 
-                            $qtyBOM = $row->qty_bom;
-                            $kurang = $qtyBOM - ($qtyTotalOut + $qtyTotalOutMf);
+                            $qtyBOM = $row->qty_bom - $qtyTotalOut;
+                            $kurang = $qtyBOM - $qtyTotalOutMf;
                             $cekproduksi = ($row->produksi == 1) ? 'checked' : '';
                             $ceklapangan = ($row->lapangan == 1) ? 'checked' : '';
                             // $qtyin           = $this->m_aluminium->getQtyInDetailTabel($row->id_item, $row->id_divisi, $row->id_gudang, $row->keranjang);
