@@ -281,6 +281,7 @@ class M_aluminium extends CI_Model
         $this->db->where('da.inout', 1);
         $this->db->where('mi.id_jenis_item', $id_jenis_item);
         $this->db->order_by('da.id', 'desc');
+        $this->db->select('da.*,md.divisi,mg.gudang,mwa.warna');
 
         return $this->db->get('data_stock da');
     }
