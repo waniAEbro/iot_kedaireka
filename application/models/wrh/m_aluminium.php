@@ -383,7 +383,7 @@ class M_aluminium extends CI_Model
         $this->db->where('ds.id_fppp', $id_fppp);
         $this->db->where('ds.id_jenis_item', $id_jenis_item);
         $this->db->where('ds.is_bom', 1);
-        $this->db->where('ds.id_surat_jalan', 0);
+        // $this->db->where('ds.id_surat_jalan', 0);
         $this->db->where('ds.ke_mf', 0);
         $this->db->select('ds.*,ds.id as id_stock,mi.*,mwa.warna,mds.divisi,mg.gudang');
 
@@ -819,6 +819,20 @@ class M_aluminium extends CI_Model
         return $this->db->get('data_counter dc');
     }
 
+    public function updateIsKurang($id_stock)
+    {
+        $obj = array('is_kurang' => 1,);
+        $this->db->where('id', $id_stock);
+        $this->db->update('data_stock', $obj);
+    }
+
+    public function getListBomKurang($id_fppp)
+    {
+        $this->db->where('id_fppp', $id_fppp);
+        $this->db->where('id_kurang', 1);
+
+        return $this->db->get('data_stock');
+    }
 
     public function updatekeMf($id_stock, $id_fppp)
     {

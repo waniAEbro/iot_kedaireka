@@ -169,6 +169,11 @@ class aluminium extends CI_Controller
 
         $id_jenis_item = 1;
         $data['id_fppp']   = $id_fppp;
+        $list =  $this->m_aluminium->getListBomKurang($id_fppp);
+        foreach ($list->result() as $key) {
+            $this->m_aluminium->updatekeMf($key->id_stock, $id_fppp);
+        }
+        sleep(1);
         $data['rowFppp']   = $this->m_aluminium->getRowFppp($id_fppp);
         $data['list_bom']  = $this->m_aluminium->getItemBomMf($id_fppp);
         $data['id_jenis_item']    = $id_jenis_item;
@@ -235,7 +240,7 @@ class aluminium extends CI_Controller
         $qty_out = ($qty_txt == '') ? 0 : $qty_txt;
 
         $obj = array(
-            'sj_mf' => 1,
+            'sj_mf' => 0,
             'id_divisi' => $this->input->post('divisi'),
             'id_gudang' => $this->input->post('gudang'),
             'keranjang' => $this->input->post('keranjang'),
@@ -298,7 +303,7 @@ class aluminium extends CI_Controller
         echo json_encode($data);
     }
 
-    public function kirim_parsial($id_fppp, $id_stock)
+    public function kirim_parsial($id_fppp, $id_stock, $kurang)
     {
         $this->fungsi->check_previleges('aluminium');
         $getRowStock = $this->m_aluminium->getRowStock($id_stock);
@@ -308,7 +313,7 @@ class aluminium extends CI_Controller
             'is_bom'        => $getRowStock->is_bom,
             'id_jenis_item' => $getRowStock->id_jenis_item,
             'id_item'       => $getRowStock->id_item,
-            'qty_bom'       => $getRowStock->qty_bom,
+            'qty_bom'       => $kurang,
             'is_parsial'       => 1,
             'created'       => date('Y-m-d H:i:s'),
         );
@@ -558,6 +563,18 @@ class aluminium extends CI_Controller
         // print_r($data['detail']);
 
         $this->load->view('wrh/aluminium/v_aluminium_cetak_sj', $data);
+    }
+
+    public function cetakSjBon($id)
+    {
+        $data = array(
+            'id'     => $id,
+            'header' => $this->m_aluminium->getHeaderSendCetak($id)->row(),
+            'detail' => $this->m_aluminium->getDataDetailSendCetak($id)->result(),
+        );
+        // print_r($data['detail']);
+
+        $this->load->view('wrh/aluminium/v_aluminium_cetak_sj_bon', $data);
     }
 
     public function bon_manual()

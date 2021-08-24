@@ -43,7 +43,7 @@
                                 <td>
                                     <?php //echo button('load_silent("wrh/aluminium/edit_bon_manual/' . $row->id . '","#content")', 'Edit', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Stock OUT"'); 
                                     ?>
-                                    <a target="_blank" href="<?= base_url('wrh/aluminium/cetakSj'); ?>/<?= $row->id ?>" class="btn btn-xs btn-warning">Cetak Surat Jalan</a>
+                                    <a target="_blank" href="<?= base_url('wrh/aluminium/cetakSjBon'); ?>/<?= $row->id ?>" class="btn btn-xs btn-warning">Cetak Surat Jalan</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
