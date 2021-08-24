@@ -829,7 +829,7 @@ class M_aluminium extends CI_Model
     public function getListBomKurang($id_fppp)
     {
         $this->db->where('id_fppp', $id_fppp);
-        $this->db->where('id_kurang', 1);
+        $this->db->where('is_kurang', 1);
 
         return $this->db->get('data_stock');
     }

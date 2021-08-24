@@ -171,7 +171,7 @@ class aluminium extends CI_Controller
         $data['id_fppp']   = $id_fppp;
         $list =  $this->m_aluminium->getListBomKurang($id_fppp);
         foreach ($list->result() as $key) {
-            $this->m_aluminium->updatekeMf($key->id_stock, $id_fppp);
+            $this->m_aluminium->updatekeMf($key->id, $id_fppp);
         }
         sleep(1);
         $data['rowFppp']   = $this->m_aluminium->getRowFppp($id_fppp);
