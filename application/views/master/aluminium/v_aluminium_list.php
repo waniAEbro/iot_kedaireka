@@ -37,7 +37,7 @@
                                 <td><?= $row->section_allure ?></td>
                                 <td><?= $row->temper ?></td>
                                 <td><?= $row->kode_warna ?></td>
-                                <td><?= $row->warna_aluminium ?></td>
+                                <td><?= $row->warna ?></td>
                                 <td><?= $row->ukuran ?></td>
                                 <td><?= $row->satuan ?></td>
                                 <td align="center">

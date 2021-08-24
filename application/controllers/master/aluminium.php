@@ -50,7 +50,7 @@ class aluminium extends CI_Controller
         $this->form_validation->set_error_delimiters('<span class="error-span">', '</span>');
 
         if ($this->form_validation->run() == FALSE) {
-            $data['warna'] = $this->db->get('master_warna_aluminium');
+            $data['warna'] = $this->db->get('master_warna');
             $this->load->view('master/aluminium/v_aluminium_add', $data);
         } else {
             $datapost = get_post_data(array('id_jenis_item', 'section_ata', 'section_allure', 'temper', 'kode_warna', 'ukuran', 'satuan'));
@@ -81,7 +81,7 @@ class aluminium extends CI_Controller
         $this->form_validation->set_error_delimiters('<span class="error-span">', '</span>');
 
         if ($this->form_validation->run() == FALSE) {
-            $data['warna'] = $this->db->get('master_warna_aluminium');
+            $data['warna'] = $this->db->get('master_warna');
             $data['edit'] = $this->db->get_where('master_item', array('id' => $id));
             $this->load->view('master/aluminium/v_aluminium_edit', $data);
         } else {
