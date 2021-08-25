@@ -88,7 +88,7 @@
                             $qty_stock = $this->m_aluminium->getQtyTerbanyakStockQtyMf($row->id_item);
 
                             $qtyBOM = $row->qty_bom - $qtyTotalOut;
-                            $kurang = $qtyBOM - $qtyTotalOutMf;
+                            $kurang = $qtyBOM - $row->qty_out;;
                             $cekproduksi = ($row->produksi == 1) ? 'checked' : '';
                             $ceklapangan = ($row->lapangan == 1) ? 'checked' : '';
                             // $qtyin           = $this->m_aluminium->getQtyInDetailTabel($row->id_item, $row->id_divisi, $row->id_gudang, $row->keranjang);
