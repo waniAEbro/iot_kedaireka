@@ -70,28 +70,36 @@ table.first {
 </style>
 <table border="0" class="first" cellpadding="1">
         <tr>
-            <td width="15%"><b>Nama Proyek</b></td>
+            <td width="15%"><b>No FPPP</b></td>
             <td width="1%">:</td>
-            <td width="38%">' . $header->nama_proyek . '</td>
+            <td width="38%">' . $header->no_fppp . '</td>
             <td width="25%">No Surat Jalan</td>
             <td width="1%">:</td>
             <td width="20%">' . $header->no_surat_jalan . '</td>
         </tr>
         <tr>
-            <td>Penerima</td>
+            <td>Nama Proyek</td>
             <td>:</td>
-            <td>' . $header->penerima . '</td>
+            <td>' . $header->nama_proyek . '</td>
             <td>Tanggal</td>
             <td>:</td>
             <td>' . date('Y-m-d', strtotime($header->created)) . '</td>
         </tr>
         <tr>
+            <td>Penerima</td>
+            <td>:</td>
+            <td>' . $header->penerima . '</td>
+            <td>Sopir</td>
+            <td>:</td>
+            <td>' . $header->sopir . '</td>
+        </tr>
+        <tr>
             <td>Alamat</td>
             <td>:</td>
             <td>' . $header->alamat_pengiriman . '</td>
-            <td>Sopir / No Kendaraan</td>
+            <td>No Kendaraan</td>
             <td>:</td>
-            <td>' . $header->sopir . ' / ' . $header->no_kendaraan . '</td>
+            <td>' . $header->no_kendaraan . '</td>
         </tr>
 </table><br>
 ';
