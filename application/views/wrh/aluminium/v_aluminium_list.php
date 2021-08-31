@@ -91,6 +91,7 @@
                                 $tot_out                    = @$total_out_per_bulan[$row->id];
                                 $tampil_total_out_per_bulan = ($tot_out != '') ? $tot_out : 0;
                                 $stock_akhir_bulan          = $tot_in - $tot_out;
+                                // $tot_bom                  = @$total_bom[$row->id] - $tampil_total_out_per_bulan;
                                 $tot_bom                  = @$total_bom[$row->id] - $tampil_total_out_per_bulan;
                                 $ots_persiapan              = $tot_bom;
                                 $free_stock                 = $stock_akhir_bulan - $ots_persiapan;
@@ -108,7 +109,7 @@
                                     <td><?= $tampil_total_out_per_bulan ?></td>
                                     <td><?= $stock_akhir_bulan ?></td>
                                     <td><?= $free_stock ?></td>
-                                    <td><?= $ots_persiapan ?></td>
+                                    <td><?= @$total_bom[$row->id] ?> - <?= $tampil_total_out_per_bulan ?></td>
                                     <td>
                                         <?= button('load_silent("wrh/aluminium/mutasi_stock_add/' . $row->id . '","#content")', 'mutasi', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Mutasi"'); ?>
                                         <?= button('load_silent("wrh/aluminium/mutasi_stock_history/' . $row->id . '","#content")', 'history mutasi', 'btn btn-xs btn-default', 'data-toggle="tooltip" title="History Mutasi"'); ?></td>
