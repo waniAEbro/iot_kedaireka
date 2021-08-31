@@ -162,6 +162,7 @@ class M_aluminium extends CI_Model
         $this->db->where('DATE_FORMAT(created,"%m")', $month);
         $this->db->where('mutasi', 0);
         $this->db->where('inout', 2);
+        $this->db->where('id_surat_jalan !=', 0);
 
         $res = $this->db->get('data_stock');
         $data = array();
@@ -385,7 +386,7 @@ class M_aluminium extends CI_Model
         $this->db->where('ds.id_fppp', $id_fppp);
         $this->db->where('ds.id_jenis_item', $id_jenis_item);
         $this->db->where('ds.is_bom', 1);
-        // $this->db->where('ds.id_surat_jalan', 0);
+        $this->db->where('ds.id_surat_jalan', 0);
         $this->db->where('ds.ke_mf', 0);
         $this->db->select('ds.*,ds.id as id_stock,mi.*,mwa.warna,mds.divisi,mg.gudang');
 
@@ -405,7 +406,7 @@ class M_aluminium extends CI_Model
         $this->db->where('ds.id_fppp', $id_fppp);
         $this->db->where('ds.id_jenis_item', $id_jenis_item);
         // $this->db->where('mi.kode_warna !=', '01');
-        $this->db->where('ds.is_bom', 1);
+        // $this->db->where('ds.is_bom', 1);
         $this->db->where('ds.id_surat_jalan', 0);
         $this->db->where('ds.ke_mf', 1);
         $this->db->select('ds.*,ds.id as id_stock,mi.*,mwa.warna,mds.divisi,mg.gudang');
