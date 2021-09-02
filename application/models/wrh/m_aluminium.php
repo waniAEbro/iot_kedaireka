@@ -223,8 +223,8 @@ class M_aluminium extends CI_Model
     {
         $year = date('Y');
         $month = date('m');
-        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
-        $this->db->where('DATE_FORMAT(created,"%m")', $month);
+        // $this->db->where('DATE_FORMAT(created,"%Y")', $year);
+        // $this->db->where('DATE_FORMAT(created,"%m")', $month);
         $this->db->where('id_item', $id);
         $this->db->where('id_divisi', $id_divisi);
         $this->db->where('id_gudang', $id_gudang);
