@@ -445,7 +445,7 @@ class M_aluminium extends CI_Model
     public function getQtyTerbanyakStockDivisi($id_item)
     {
         $this->db->where('id_item', $id_item);
-        $this->db->where('id_gudang >=', 3);
+        // $this->db->where('id_gudang >=', 3);
         $this->db->order_by('qty', 'desc');
         $this->db->limit(1);
 
@@ -459,7 +459,7 @@ class M_aluminium extends CI_Model
     public function getQtyTerbanyakStockGudang($id_item)
     {
         $this->db->where('id_item', $id_item);
-        $this->db->where('id_gudang >=', 3);
+        // $this->db->where('id_gudang >=', 3);
         $this->db->order_by('qty', 'desc');
         $this->db->limit(1);
 
@@ -474,7 +474,7 @@ class M_aluminium extends CI_Model
     public function getQtyTerbanyakStockKeranjang($id_item)
     {
         $this->db->where('id_item', $id_item);
-        $this->db->where('id_gudang >=', 3);
+        // $this->db->where('id_gudang >=', 3);
         $this->db->order_by('qty', 'desc');
         $this->db->limit(1);
 
