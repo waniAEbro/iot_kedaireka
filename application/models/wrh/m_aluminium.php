@@ -113,8 +113,8 @@ class M_aluminium extends CI_Model
     {
         $year  = date('Y');
         $month = date('m');
-        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
-        $this->db->where('DATE_FORMAT(created,"%m")', $month);
+        // $this->db->where('DATE_FORMAT(created,"%Y")', $year);
+        // $this->db->where('DATE_FORMAT(created,"%m")', $month);
 
         $res = $this->db->get('data_stock');
         $data = array();
@@ -158,12 +158,12 @@ class M_aluminium extends CI_Model
     {
         $year  = date('Y');
         $month = date('m');
-        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
-        $this->db->where('DATE_FORMAT(created,"%m")', $month);
+        // $this->db->where('DATE_FORMAT(created,"%Y")', $year);
+        // $this->db->where('DATE_FORMAT(created,"%m")', $month);
         $this->db->where('mutasi', 0);
         $this->db->where('inout', 2);
         $this->db->where('is_bom', 1);
-        $this->db->where('id_surat_jalan !=', 0);
+        // $this->db->where('id_surat_jalan !=', 0);
 
         $res = $this->db->get('data_stock');
         $data = array();
@@ -387,7 +387,7 @@ class M_aluminium extends CI_Model
         $this->db->where('ds.id_fppp', $id_fppp);
         $this->db->where('ds.id_jenis_item', $id_jenis_item);
         $this->db->where('ds.is_bom', 1);
-        $this->db->where('ds.id_surat_jalan', 0);
+        // $this->db->where('ds.id_surat_jalan', 0);
         $this->db->where('ds.ke_mf', 0);
         $this->db->select('ds.*,ds.id as id_stock,mi.*,mwa.warna,mds.divisi,mg.gudang');
 
@@ -560,7 +560,7 @@ class M_aluminium extends CI_Model
         }
     }
 
-    public function getSuratJalan($tipe, $iji)
+    public function getSuratJalan($tipe, $id_jenis_item)
     {
         if ($tipe == 1) {
             $this->db->join('data_fppp df', 'df.id = dsj.id_fppp', 'left');
@@ -572,8 +572,25 @@ class M_aluminium extends CI_Model
 
         $this->db->order_by('dsj.id', 'desc');
         $this->db->where('dsj.tipe', $tipe);
-        $this->db->where('dsj.id_jenis_item', $iji);
+        $this->db->where('dsj.id_jenis_item', $id_jenis_item);
         return $this->db->get('data_surat_jalan dsj');
+    }
+
+    public function getKeterangan()
+    {
+        $this->db->where('lapangan', 1);
+        $res = $this->db->get('data_stock');
+        $data = array();
+        $nilai = 0;
+        foreach ($res->result() as $key) {
+            if (isset($data[$key->id_surat_jalan])) {
+                $nilai = $data[$key->id_surat_jalan];
+            } else {
+                $nilai = 0;
+            }
+            $data[$key->id_surat_jalan] = $key->qty_out + $nilai;
+        }
+        return $data;
     }
 
     public function getNoSuratJalan()

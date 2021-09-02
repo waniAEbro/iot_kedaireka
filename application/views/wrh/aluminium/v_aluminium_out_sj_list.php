@@ -29,12 +29,15 @@
                         <th>Alamat Pengiriman</th>
                         <th>Sopir</th>
                         <th>No Kendaraan</th>
+                        <th>Keterangan</th>
                         <th></th>
                     </thead>
                     <tbody>
                         <?php
                         $i = 1;
                         foreach ($surat_jalan->result() as $row) :
+                            $lapangan = @$keterangan[$row->id];
+                            $ket = ($lapangan > 0) ? 'Lapangan' : 'Produksi';
                         ?>
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
@@ -48,6 +51,7 @@
                                 <td><?= $row->alamat_pengiriman ?></td>
                                 <td><?= $row->sopir ?></td>
                                 <td><?= $row->no_kendaraan ?></td>
+                                <td><?= $ket ?></td>
                                 <td>
                                     <a target="_blank" href="<?= base_url('wrh/aluminium/cetakSj'); ?>/<?= $row->id ?>" class="btn btn-xs btn-warning">Cetak Surat Jalan</a>
                                 </td>

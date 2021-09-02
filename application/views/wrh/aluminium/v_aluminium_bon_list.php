@@ -25,12 +25,15 @@
                         <th>Alamat Pengiriman</th>
                         <th>Sopir</th>
                         <th>No Kendaraan</th>
+                        <th>Keterangan</th>
                         <th></th>
                     </thead>
                     <tbody>
                         <?php
                         $i = 1;
                         foreach ($surat_jalan->result() as $row) :
+                            $lapangan = @$keterangan[$row->id];
+                            $ket = ($lapangan > 0) ? 'Lapangan' : 'Produksi';
                         ?>
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
@@ -40,6 +43,7 @@
                                 <td><?= $row->alamat_pengiriman ?></td>
                                 <td><?= $row->sopir ?></td>
                                 <td><?= $row->no_kendaraan ?></td>
+                                <td><?= $ket ?></td>
                                 <td>
                                     <?php //echo button('load_silent("wrh/aluminium/edit_bon_manual/' . $row->id . '","#content")', 'Edit', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Stock OUT"'); 
                                     ?>

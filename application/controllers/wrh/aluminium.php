@@ -284,6 +284,7 @@ class aluminium extends CI_Controller
             'id_gudang' => $this->input->post('gudang'),
             'keranjang' => $this->input->post('keranjang'),
             'qty_out'   => $qty_out,
+            // 'updated'   => $qty_out, revisi
         );
         $this->m_aluminium->editQtyOut($editid, $obj);
         $this->m_aluminium->editStatusInOut($editid);
@@ -303,10 +304,12 @@ class aluminium extends CI_Controller
         echo json_encode($data);
     }
 
-    public function kirim_parsial($id_fppp, $id_stock, $kurang)
+    public function kirim_parsial($id_fppp, $id_stock)
     {
         $this->fungsi->check_previleges('aluminium');
         $getRowStock = $this->m_aluminium->getRowStock($id_stock);
+        $qtyBOM = $getRowStock->qty_bom;
+        $kurang = $qtyBOM - $getRowStock->qty_out;
         $object      = array(
             'id_fppp'       => $id_fppp,
             'is_parsial'       => 1,
@@ -369,7 +372,9 @@ class aluminium extends CI_Controller
     public function list_surat_jalan()
     {
         $this->fungsi->check_previleges('aluminium');
-        $data['surat_jalan'] = $this->m_aluminium->getSuratJalan(1, 1);
+        $id_jenis_item = 1;
+        $data['surat_jalan'] = $this->m_aluminium->getSuratJalan(1, $id_jenis_item);
+        $data['keterangan'] = $this->m_aluminium->getKeterangan();
         $this->load->view('wrh/aluminium/v_aluminium_out_sj_list', $data);
     }
 
@@ -545,6 +550,7 @@ class aluminium extends CI_Controller
         $keranjang    = $this->input->post('keranjang');
         $qtyin        = $this->m_aluminium->getQtyInDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
         $qtyout       = $this->m_aluminium->getQtyOutDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
+        // $data['qty_gudang'] = $qtyin;
         $data['qty_gudang'] = $qtyin - $qtyout;
 
         $data['status'] = "berhasil";
@@ -580,7 +586,9 @@ class aluminium extends CI_Controller
     public function bon_manual()
     {
         $this->fungsi->check_previleges('aluminium');
-        $data['surat_jalan'] = $this->m_aluminium->getSuratJalan(2, 1);
+        $id_jenis_item = 1;
+        $data['surat_jalan'] = $this->m_aluminium->getSuratJalan(2, $id_jenis_item);
+        $data['keterangan'] = $this->m_aluminium->getKeterangan();
         $this->load->view('wrh/aluminium/v_aluminium_bon_list', $data);
     }
 
