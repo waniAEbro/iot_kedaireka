@@ -107,14 +107,14 @@ $html .= '
 <table border="0.2" cellpadding="1">
         <tr>
             <td width="5%" align="center"><b>No</b></td>
-            <td width="20%" align="center"><b>Nama Barang</b></td>
+            <td width="10%" align="center"><b>Nama Barang</b></td>
             <td width="10%" align="center"><b>Panjang</b></td>
             <td width="10%" align="center"><b>Temper</b></td>
             <td width="10%" align="center"><b>Jumlah</b></td>
             <td width="15%" align="center"><b>Jumlah Packing</b></td>
             <td width="10%" align="center"><b>Satuan</b></td>
-            <td width="10%" align="center"><b>Warna</b></td>
-            <td width="10%" align="center"><b>Warna Akhir</b></td>
+            <td width="15%" align="center"><b>Warna</b></td>
+            <td width="15%" align="center"><b>Warna Akhir</b></td>
         </tr>';
 $i = 1;
 $total = 0;

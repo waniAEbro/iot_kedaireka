@@ -168,13 +168,12 @@
                                         <br><?php echo button_confirm("Anda yakin mengirim parsial item " . $row->section_ata . "-" . $row->section_allure . "?", "wrh/aluminium/kirim_parsial/" . $id_fppp . "/" . $row->id_stock, "#content", 'Kirim Parsial', 'btn btn-xs btn-default', 'data-toggle="tooltip" title="Kirim Parsial"'); ?>
                                         <br><?php //echo button_confirm("Anda yakin membuat di MF item " . $row->section_ata . "-" . $row->section_allure . "?", "wrh/aluminium/buat_mf/" . $id_fppp . "/" . $row->id_stock, "#content", 'Buat di MF', 'btn btn-xs btn-info', 'data-toggle="tooltip" title="Buat di MF"'); 
                                             ?>
-                                        ?>
                                     </td>
                                     <td><?= $row->section_allure ?></td>
                                     <td><?= $row->temper ?></td>
                                     <td><?= $row->warna ?></td>
                                     <td><?= $row->ukuran ?></td>
-                                    <td align="center"><?= $row->qty_bom ?></td>
+                                    <td align="center"><?= $row->qty_bom - $row->qty_out ?></td>
                                     <td align="center">-</td>
                                     <td align="center">-</td>
                                     <td align="center"><?= $row->divisi ?></td>

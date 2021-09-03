@@ -66,6 +66,7 @@
                         <thead>
                             <th width="5%"></th>
                             <th width="5%">No</th>
+                            <th>Divisi</th>
                             <th>Section ATA</th>
                             <th>Section Allure</th>
                             <th>Temper</th>
@@ -83,34 +84,39 @@
                             <?php
                             $i = 1;
                             foreach ($aluminium->result() as $row) :
-                                $ada                        = 1;
-                                $stock_awal_bulan           = @$stock_awal_bulan[$row->id];
-                                $tampil_stock_awal_bulan    = ($stock_awal_bulan != '') ? $stock_awal_bulan : 0;
-                                $tot_in                     = @$total_in_per_bulan[$row->id];
-                                $tampil_total_in_per_bulan  = ($tot_in != '') ? $tot_in : 0;
-                                $tot_out                    = @$total_out_per_bulan[$row->id];
-                                $tampil_total_out_per_bulan = ($tot_out != '') ? $tot_out : 0;
-                                $stock_akhir_bulan          = $tot_in - $tot_out;
-                                // $tot_bom                  = @$total_bom[$row->id] - $tampil_total_out_per_bulan;
-                                $tot_bom                  = @$total_bom[$row->id] - $tampil_total_out_per_bulan;
-                                $ots_persiapan              = $tot_bom;
-                                $free_stock                 = $stock_akhir_bulan - $ots_persiapan;
+                                $ada                     = 1;
+                                $stock_awal_bulan        = @$stock_awal_bulan[$row->id];
+                                $tampil_stock_awal_bulan = ($stock_awal_bulan != '') ? $stock_awal_bulan : 0;
+
+                                $tot_in_per_bulan          = @$total_in_per_bulan[$row->id];
+                                $tampil_total_in_per_bulan = ($tot_in_per_bulan != '') ? $tot_in_per_bulan : 0;
+
+                                $tot_out_per_bulan          = @$total_out_per_bulan[$row->id];
+                                $tampil_total_out_per_bulan = ($tot_out_per_bulan != '') ? $tot_out_per_bulan : 0;
+
+                                $tot_out          = @$total_out[$row->id];
+                                $tampil_total_out = ($tot_out != '') ? $tot_out : 0;
+
+                                $stock_akhir_bulan = $tampil_total_in_per_bulan - $tampil_total_out_per_bulan;
+                                $ots_persiapan = @$total_bom[$row->id] - $tampil_total_out;
+                                $free_stock    = $stock_akhir_bulan - $ots_persiapan;
                             ?>
                                 <tr>
                                     <td class="details-control" id="<?= $i ?>"><input type="hidden" id="id_<?= $i ?>" value="<?= $row->id ?>"></td>
                                     <td align="center"><?= $i ?></td>
-                                    <td><?= $row->section_ata ?></td>
-                                    <td><?= $row->section_allure ?></td>
-                                    <td><?= $row->temper ?></td>
-                                    <td><?= $row->warna ?></td>
-                                    <td><?= $row->ukuran ?></td>
-                                    <td><?= $tampil_stock_awal_bulan ?></td>
-                                    <td><?= $tampil_total_in_per_bulan ?></td>
-                                    <td><?= $tampil_total_out_per_bulan ?></td>
-                                    <td><?= $stock_akhir_bulan ?></td>
-                                    <td><?= $free_stock ?></td>
-                                    <td><?= @$total_bom[$row->id] ?> - <?= $tampil_total_out_per_bulan ?></td>
-                                    <td>
+                                    <td align="center"></td>
+                                    <td align="center"><?= $row->section_ata ?></td>
+                                    <td align="center"><?= $row->section_allure ?></td>
+                                    <td align="center"><?= $row->temper ?></td>
+                                    <td align="center"><?= $row->warna ?></td>
+                                    <td align="center"><?= $row->ukuran ?></td>
+                                    <td align="center"><?= $tampil_stock_awal_bulan ?></td>
+                                    <td align="center"><?= $tampil_total_in_per_bulan ?></td>
+                                    <td align="center"><?= $tampil_total_out_per_bulan ?></td>
+                                    <td align="center"><?= $stock_akhir_bulan ?></td>
+                                    <td align="center"><?= $free_stock ?></td>
+                                    <td align="center"><?= @$total_bom[$row->id] ?> - <?= $tampil_total_out ?></td>
+                                    <td align="center">
                                         <?= button('load_silent("wrh/aluminium/mutasi_stock_add/' . $row->id . '","#content")', 'mutasi', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Mutasi"'); ?>
                                         <?= button('load_silent("wrh/aluminium/mutasi_stock_history/' . $row->id . '","#content")', 'history mutasi', 'btn btn-xs btn-default', 'data-toggle="tooltip" title="History Mutasi"'); ?></td>
                                 </tr>

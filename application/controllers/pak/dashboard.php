@@ -29,7 +29,8 @@ class Dashboard extends CI_Controller
 					'id_divisi' => $key->id_divisi,
 					'id_gudang' => $key->id_gudang,
 					'keranjang' => $key->keranjang,
-					'qty_in' => $this->m_aluminium->getStockBulanSebelum($key->id, $key->id_divisi, $key->id_gudang, $key->keranjang),
+					'id_jenis_item' => $key->id_jenis_item,
+					'qty_in' => $key->qty,
 					'created' => date('Y-m-d H:i:s')
 				);
 				$this->db->insert('data_stock', $obj);

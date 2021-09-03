@@ -173,7 +173,7 @@
                                     <td><?= $row->temper ?></td>
                                     <td><?= $row->warna ?></td>
                                     <td><?= $row->ukuran ?></td>
-                                    <td align="center"><?= $row->qty_bom ?></td>
+                                    <td align="center"><?= $row->qty_bom - $row->qty_out ?></td>
                                     <td align="center">-</td>
                                     <td align="center">-</td>
                                     <td align="center"><?= $row->divisi ?></td>
@@ -356,7 +356,7 @@
         } else {
             $('#produksi_' + edit_id).prop('checked', false); // Checks it
         }
-
+        var id_fppp = "<?= $id_fppp ?>";
         var qtybom = $('#qty_bom_' + edit_id).html();
         var qty_gudang = $('#qty_gudang_asli_' + edit_id).html();
         var qty_kurang = $('#qty_kurang_' + edit_id).html();
@@ -378,6 +378,7 @@
                     gudang: $('#id_gudang_' + edit_id).val(),
                     keranjang: $('#keranjang_' + edit_id).val(),
                     qtytxt: $('#txt_' + edit_id).val(),
+                    id_fppp: id_fppp,
                 },
                 success: function(response) {
                     $.growl.notice({
@@ -421,7 +422,7 @@
             var edit_id = $(this).data('id');
             // assign instance to element variable
             var element = this;
-
+            var id_fppp = "<?= $id_fppp ?>";
             var qtybom = $('#qty_bom_' + edit_id).html();
             var qty_gudang = $('#qty_gudang_asli_' + edit_id).html();
             var qty_kurang = $('#qty_kurang_' + edit_id).html();
@@ -447,6 +448,7 @@
                         divisi: $('#id_divisi_' + edit_id).val(),
                         gudang: $('#id_gudang_' + edit_id).val(),
                         keranjang: $('#keranjang_' + edit_id).val(),
+                        id_fppp: id_fppp,
                     },
                     success: function(response) {
 

@@ -18,6 +18,7 @@ class aluminium extends CI_Controller
         $data['aluminium']           = $this->m_aluminium->getData();
         $data['stock_awal_bulan']    = $this->m_aluminium->getStockAwalBulan();
         $data['total_bom']           = $this->m_aluminium->getTotalBOM();
+        $data['total_out'] = $this->m_aluminium->getTotalOut();
         $data['total_in_per_bulan']  = $this->m_aluminium->getTotalInPerBulan();
         $data['total_out_per_bulan'] = $this->m_aluminium->getTotalOutPerBulan();
         $data['warna']               = 'Warna';
@@ -190,7 +191,7 @@ class aluminium extends CI_Controller
         $field  = $this->input->post('field');
         $value  = $this->input->post('value');
         $editid = $this->input->post('id');
-        // $id_fppp = $this->input->post('id_fppp');
+        $id_fppp = $this->input->post('id_fppp');
         if ($field == 'produksi_' . $editid) {
             $this->m_aluminium->editRowOut('produksi', $value, $editid);
             $this->m_aluminium->editRowOut('lapangan', 0, $editid);
@@ -203,6 +204,7 @@ class aluminium extends CI_Controller
                 'id_gudang' => $this->input->post('gudang'),
                 'keranjang' => $this->input->post('keranjang'),
                 'qty_out'   => $value,
+                'updated'   => date('Y-m-d H:i:s'),
             );
             $this->m_aluminium->editQtyOut($editid, $obj);
         }
@@ -216,7 +218,16 @@ class aluminium extends CI_Controller
         $qtyin        = $this->m_aluminium->getQtyInDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
         $qtyout       = $this->m_aluminium->getQtyOutDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
         $data['qty_gudang'] = $qtyin - $qtyout;
-        // $this->m_aluminium->updateDataCounter($id_item, $id_divisi, $id_gudang, $keranjang, $data['qty_gudang']);
+        $this->m_aluminium->updateDataCounter($id_item, $id_divisi, $id_gudang, $keranjang, $data['qty_gudang']);
+
+        $id_jenis_item = 1;
+        $qty_bom     = $this->m_aluminium->getTotQtyBomFppp($id_jenis_item);
+        $qty_out    = $this->m_aluminium->getTotQtyOutFppp($id_jenis_item);
+        $q_bom           = @$qty_bom[$id_fppp];
+        $q_out           = @$qty_out[$id_fppp];
+        if ($q_bom <= $q_out) {
+            $this->m_aluminium->updateStatusFppp($id_fppp);
+        }
 
         $data['status'] = "berhasil";
         echo json_encode($data);
@@ -228,7 +239,7 @@ class aluminium extends CI_Controller
         $field  = $this->input->post('field');
         $value  = $this->input->post('value');
         $editid = $this->input->post('id');
-        // $id_fppp = $this->input->post('id_fppp');
+        $id_fppp = $this->input->post('id_fppp');
         if ($field == 'produksi_' . $editid) {
             $this->m_aluminium->editRowOut('produksi', $value, $editid);
             $this->m_aluminium->editRowOut('lapangan', 0, $editid);
@@ -245,6 +256,7 @@ class aluminium extends CI_Controller
             'id_gudang' => $this->input->post('gudang'),
             'keranjang' => $this->input->post('keranjang'),
             'qty_out'   => $qty_out,
+            'updated'   => date('Y-m-d H:i:s'),
         );
         $this->m_aluminium->editQtyOut($editid, $obj);
         $this->m_aluminium->editStatusInOut($editid);
@@ -267,7 +279,7 @@ class aluminium extends CI_Controller
         $field  = $this->input->post('field');
         $value  = $this->input->post('value');
         $editid = $this->input->post('id');
-        // $id_fppp = $this->input->post('id_fppp');
+        $id_fppp = $this->input->post('id_fppp');
         if ($field == 'produksi_' . $editid) {
             $this->m_aluminium->editRowOut('produksi', $value, $editid);
             $this->m_aluminium->editRowOut('lapangan', 0, $editid);
@@ -284,7 +296,7 @@ class aluminium extends CI_Controller
             'id_gudang' => $this->input->post('gudang'),
             'keranjang' => $this->input->post('keranjang'),
             'qty_out'   => $qty_out,
-            // 'updated'   => $qty_out, revisi
+            'updated'   => date('Y-m-d H:i:s'),
         );
         $this->m_aluminium->editQtyOut($editid, $obj);
         $this->m_aluminium->editStatusInOut($editid);

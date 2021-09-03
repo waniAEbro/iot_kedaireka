@@ -46,14 +46,15 @@ class M_aluminium extends CI_Model
 
     public function getlistStock()
     {
-        $this->db->join('master_divisi_stock md', 'md.id = da.id_divisi', 'left');
-        $this->db->join('master_gudang mg', 'mg.id = da.id_gudang', 'left');
-        $this->db->group_by('da.id_divisi');
-        $this->db->group_by('da.id_gudang');
-        $this->db->group_by('da.keranjang');
-        $this->db->select('da.*');
+        // $this->db->join('master_divisi_stock md', 'md.id = da.id_divisi', 'left');
+        // $this->db->join('master_gudang mg', 'mg.id = da.id_gudang', 'left');
+        // $this->db->group_by('da.id_divisi');
+        // $this->db->group_by('da.id_gudang');
+        // $this->db->group_by('da.keranjang');
+        // $this->db->select('da.*');
 
-        return $this->db->get('data_stock da');
+        // return $this->db->get('data_stock da');
+        return $this->db->get('data_counter');
     }
 
     public function getStockBulanSebelum($id, $id_divisi, $id_gudang, $keranjang)
@@ -111,11 +112,7 @@ class M_aluminium extends CI_Model
 
     public function getTotalBOM()
     {
-        $year  = date('Y');
-        $month = date('m');
-        // $this->db->where('DATE_FORMAT(created,"%Y")', $year);
-        // $this->db->where('DATE_FORMAT(created,"%m")', $month);
-
+        $this->db->where('status_fppp', 0);
         $res = $this->db->get('data_stock');
         $data = array();
         $nilai = 0;
@@ -154,15 +151,37 @@ class M_aluminium extends CI_Model
         return $data;
     }
 
+    public function getTotalOut()
+    {
+        $this->db->where('mutasi', 0);
+        $this->db->where('inout', 2);
+        $this->db->where('is_bom', 1);
+        $this->db->where('status_fppp', 0);
+
+        $res = $this->db->get('data_stock');
+        $data = array();
+        $nilai = 0;
+        foreach ($res->result() as $key) {
+            if (isset($data[$key->id_item])) {
+                $nilai = $data[$key->id_item];
+            } else {
+                $nilai = 0;
+            }
+            $data[$key->id_item] = $key->qty_out + $nilai;
+        }
+        return $data;
+    }
+
     public function getTotalOutPerBulan()
     {
         $year  = date('Y');
         $month = date('m');
-        // $this->db->where('DATE_FORMAT(created,"%Y")', $year);
-        // $this->db->where('DATE_FORMAT(created,"%m")', $month);
+        $this->db->where('DATE_FORMAT(updated,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(updated,"%m")', $month);
         $this->db->where('mutasi', 0);
         $this->db->where('inout', 2);
         $this->db->where('is_bom', 1);
+        // $this->db->where('status_fppp', 0);
         // $this->db->where('id_surat_jalan !=', 0);
 
         $res = $this->db->get('data_stock');
@@ -223,8 +242,8 @@ class M_aluminium extends CI_Model
     {
         $year = date('Y');
         $month = date('m');
-        // $this->db->where('DATE_FORMAT(created,"%Y")', $year);
-        // $this->db->where('DATE_FORMAT(created,"%m")', $month);
+        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(created,"%m")', $month);
         $this->db->where('id_item', $id);
         $this->db->where('id_divisi', $id_divisi);
         $this->db->where('id_gudang', $id_gudang);
@@ -257,8 +276,8 @@ class M_aluminium extends CI_Model
     {
         $year = date('Y');
         $month = date('m');
-        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
-        $this->db->where('DATE_FORMAT(created,"%m")', $month);
+        $this->db->where('DATE_FORMAT(updated,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(updated,"%m")', $month);
         $this->db->where('id_item', $id);
         $this->db->where('id_divisi', $id_divisi);
         $this->db->where('id_gudang', $id_gudang);
@@ -985,6 +1004,13 @@ class M_aluminium extends CI_Model
         $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
         $this->db->where('mi.id', $id_item);
         return $this->db->get('master_item mi')->row();
+    }
+
+    public function updateStatusFppp($id_fppp)
+    {
+        $object = array('status_fppp' => 1);
+        $this->db->where('id_fppp', $id_fppp);
+        $this->db->update('data_stock', $object);
     }
 }
 
