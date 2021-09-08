@@ -21,7 +21,7 @@
                             <input type="text" class="form-control" id="no_surat_jalan" placeholder="No Surat Jalan">
                         </div>
                         <div class="form-group">
-                            <label class="control-label">No PR:</label>
+                            <label class="control-label">No PR / WO / PO:</label>
                             <input type="text" class="form-control" id="no_pr" placeholder="No PR">
                         </div>
                         <hr>
@@ -67,7 +67,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label class="control-label">Keranjang:</label>
+                            <label class="control-label">Keranjang / Rak:</label>
                             <input type="text" class="form-control" id="keranjang" placeholder="Keranjang">
                         </div>
                         <div class="form-group">

@@ -84,7 +84,7 @@
                             $id_divisi_stock = $this->m_aluminium->getQtyTerbanyakStockDivisi($row->id_item);
                             $id_gudang_stock = $this->m_aluminium->getQtyTerbanyakStockGudang($row->id_item);
                             $keranjang_stock = $this->m_aluminium->getQtyTerbanyakStockKeranjang($row->id_item);
-                            $qty_stock = $this->m_aluminium->getQtyTerbanyakStockQty($row->id_item);
+                            $qty_stock = $this->m_aluminium->getQtyTerbanyakStockQtyMf($row->id_item);
 
                             $qtyBOM = $row->qty_bom;
                             $kurang = $qtyBOM - $row->qty_out;

@@ -520,6 +520,21 @@ class M_aluminium extends CI_Model
         }
     }
 
+    public function getQtyTerbanyakStockQtyMf($id_item)
+    {
+        $this->db->where('id_item', $id_item);
+        $this->db->where('id_gudang <', 3);
+        $this->db->order_by('qty', 'desc');
+        $this->db->limit(1);
+
+        $hasil = $this->db->get('data_counter');
+        if ($hasil->num_rows() < 1) {
+            return 0;
+        } else {
+            return $hasil->row()->qty;
+        }
+    }
+
     public function getQtyTerbanyakStockDivisiMf($id_item)
     {
         $this->db->where('id_item', $id_item);
