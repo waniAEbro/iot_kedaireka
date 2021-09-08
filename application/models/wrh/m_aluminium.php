@@ -427,7 +427,7 @@ class M_aluminium extends CI_Model
         $this->db->where('ds.id_jenis_item', $id_jenis_item);
         // $this->db->where('mi.kode_warna !=', '01');
         // $this->db->where('ds.is_bom', 1);
-        $this->db->where('ds.id_surat_jalan', 0);
+        // $this->db->where('ds.id_surat_jalan', 0);
         $this->db->where('ds.ke_mf', 1);
         $this->db->select('ds.*,ds.id as id_stock,mi.*,mwa.warna,mds.divisi,mg.gudang');
 
