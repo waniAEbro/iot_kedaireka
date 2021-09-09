@@ -130,6 +130,11 @@ class aluminium extends CI_Controller
     {
         $this->fungsi->check_previleges('aluminium');
         $id   = $this->input->post('id');
+        $getRow = $this->m_aluminium->getRowStock($id);
+        $cekQtyCounter = $this->m_aluminium->getDataCounter($getRow->id_item, $getRow->id_divisi, $getRow->id_gudang, $getRow->keranjang)->row()->qty;
+        $qty_jadi      = (int)$cekQtyCounter - (int)$getRow->qty;
+        $this->m_aluminium->updateDataCounter($getRow->id_item, $getRow->id_divisi, $getRow->id_gudang, $getRow->keranjang, $qty_jadi);
+        sleep(1);
         $data = array('id' => $id,);
         $this->db->where('id', $id);
         $this->db->delete('data_stock');
