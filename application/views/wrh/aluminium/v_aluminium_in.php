@@ -44,11 +44,11 @@
                         <div class="form-group">
                             <label class="control-label">Qty Surat Jalan:</label>
                             <input type="text" style="text-align: right;" class="form-control" id="qty" placeholder="Qty" autocomplete="off">
+                            <input type="hidden" class="form-control" id="id_divisi">
                         </div>
-
-                        <div class="form-group">
+                        <div class="form-group" style="display:none;">
                             <label class="control-label">Divisi:</label>
-                            <select id="id_divisi" name="id_divisi" class="form-control" style="width:100%" required>
+                            <select id="id_divisix" name="id_divisix" class="form-control" style="width:100%" required>
                                 <option value="">-- Select --</option>
                                 <?php foreach ($divisi->result() as $valap) : ?>
                                     <option value="<?= $valap->id ?>"><?= $valap->divisi ?>
@@ -204,7 +204,7 @@
                     $('tr.odd').remove();
                     $('#dataTbl').append(x);
                     $('#item').val('').trigger('change');
-                    $('#id_divisi').val('').trigger('change');
+                    $('#id_divisi').val('');
                     $('#id_gudang').val('').trigger('change');
                     $("#qty").val('');
                     // $("#supplier").val('');
@@ -243,6 +243,21 @@
             });
         };
     }
+
+    $("#item").change(function() {
+        var item = $("#item").val();
+        $.ajax({
+                type: "POST",
+                url: "<?= site_url('wrh/aluminium/getIdDivisi') ?>",
+                dataType: 'json',
+                data: {
+                    'id_item': item,
+                }
+            })
+            .success(function(datasaved) {
+                $("#id_divisi").val(datasaved.id_divisi);
+            });
+    });
 
     function hapus(i) {
         if (confirm('Lanjutkan Proses Hapus?')) {

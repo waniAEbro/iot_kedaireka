@@ -126,15 +126,24 @@ class aluminium extends CI_Controller
         echo json_encode($data);
     }
 
+    public function getIdDivisi()
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $id   = $this->input->post('id_item');
+        $id_divisi = $this->m_aluminium->getRowItemWarna($id)->id_divisi;
+        $respon = ['id_divisi' => $id_divisi];
+        echo json_encode($respon);
+    }
+
     public function deleteItemIn()
     {
         $this->fungsi->check_previleges('aluminium');
         $id   = $this->input->post('id');
         $getRow = $this->m_aluminium->getRowStock($id);
         $cekQtyCounter = $this->m_aluminium->getDataCounter($getRow->id_item, $getRow->id_divisi, $getRow->id_gudang, $getRow->keranjang)->row()->qty;
-        $qty_jadi      = (int)$cekQtyCounter - (int)$getRow->qty;
+        $qty_jadi      = (int)$cekQtyCounter - (int)$getRow->qty_in;
         $this->m_aluminium->updateDataCounter($getRow->id_item, $getRow->id_divisi, $getRow->id_gudang, $getRow->keranjang, $qty_jadi);
-        sleep(1);
+        sleep(2);
         $data = array('id' => $id,);
         $this->db->where('id', $id);
         $this->db->delete('data_stock');
