@@ -7,7 +7,7 @@
                 <div class="box-tools pull-right">
                     <?php
                     $sesi = from_session('level');
-                    if ($sesi == '1' || $sesi == '2') {
+                    if ($sesi <= '3') {
                         //echo button('load_silent("master/lembaran/form/base","#modal")', 'Add New lembaran', 'btn btn-success');
                     } else {
                         # code...
@@ -42,7 +42,7 @@
                                 <td align="center">
                                     <?php
                                     $sesi = from_session('level');
-                                    if ($sesi == '1' || $sesi == '2') {
+                                    if ($sesi <= '3') {
                                         echo button('load_silent("master/lembaran/form/sub/' . $row->id . '","#modal")', '', 'btn btn-info fa fa-edit', 'data-toggle="tooltip" title="Edit"');
                                     } else {
                                         # code...

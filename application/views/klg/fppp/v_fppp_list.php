@@ -21,7 +21,7 @@
             <div class="box-tools pull-right">
                 <?php
                 $sesi = from_session('level');
-                if ($sesi == '1' || $sesi == '2') {
+                if ($sesi <= '3') {
                     echo button('load_silent("klg/fppp/formAdd/' . $param . '","#content")', 'Tambah FPPP', 'btn btn-success');
                 }
                 ?>

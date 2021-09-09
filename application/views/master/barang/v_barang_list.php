@@ -9,7 +9,7 @@
                 <div class="box-tools pull-right">
                     <?php
                     $sesi = from_session('level');
-                    if ($sesi == '1' || $sesi == '2') {
+                    if ($sesi <= '3') {
                         echo button('load_silent("master/barang/import/","#content")', 'Import Excel', 'btn btn-primary', 'data-toggle="tooltip" title="Import Excel"');
                         echo button('load_silent("master/barang/show_addForm/","#content")', 'Add New Barang', 'btn btn-success', 'data-toggle="tooltip" title="Add New Barang"');
                     } else {
@@ -48,7 +48,7 @@
                                 <td align="center">
                                     <?php
                                     $sesi = from_session('level');
-                                    if ($sesi == '1' || $sesi == '2') {
+                                    if ($sesi <= '3') {
                                         echo button('load_silent("master/barang/show_editForm/' . $row->id . '","#content")', 'Edit', 'btn btn-info', 'data-toggle="tooltip" title="Edit barang"');
                                         echo button_confirm('Apakah Anda Yakin menghapus barang ini?', 'master/barang/delete/' . $row->id, '#content', 'Delete', 'btn btn-danger', 'data-toggle="tooltip" title="Delete barang"');
                                     } else {

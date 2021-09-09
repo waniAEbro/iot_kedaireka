@@ -22,7 +22,7 @@
                 <div class="box-tools pull-right">
                     <?php
                     $sesi = from_session('level');
-                    if ($sesi == '1' || $sesi == '2') {
+                    if ($sesi <= '3') {
                         //echo button('load_silent("wrh/aksesoris/formAdd","#content")', 'Input Stock', 'btn btn-success');
                     } else {
                         # code...
