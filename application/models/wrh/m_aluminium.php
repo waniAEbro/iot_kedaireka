@@ -1012,11 +1012,6 @@ class M_aluminium extends CI_Model
         $this->db->where('id_fppp', $id_fppp);
         $this->db->update('data_stock', $object);
     }
-
-    public function getRowDataCounter($id_item, $id_divisi, $id_gudang, $id_keranjang)
-    {
-        # code...
-    }
 }
 
 /* End of file m_aluminium.php */
