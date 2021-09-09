@@ -329,6 +329,7 @@ class aluminium extends CI_Controller
             'id_jenis_item' => $getRowStock->id_jenis_item,
             'id_item'       => $getRowStock->id_item,
             'qty_bom'       => $kurang,
+            'ke_mf'       => $getRowStock->ke_mf,
             'is_parsial'       => 1,
             'created'       => date('Y-m-d H:i:s'),
         );
