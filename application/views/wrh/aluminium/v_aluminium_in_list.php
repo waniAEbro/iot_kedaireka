@@ -7,7 +7,7 @@
                 <div class="box-tools pull-right">
                     <?php
                     $sesi = from_session('level');
-                    if ($sesi <= '3') {
+                    if ($sesi <= 3) {
                         echo button('load_silent("wrh/aluminium/stok_in_add/","#content")', 'Tambah Stock', 'btn btn-primary', 'data-toggle="tooltip" title="Tambah Stock"');
                     } else {
                         # code...

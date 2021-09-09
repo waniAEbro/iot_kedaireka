@@ -7,7 +7,7 @@
                 <div class="box-tools pull-right">
                     <?php
                     $sesi = from_session('level');
-                    if ($sesi <= '3') {
+                    if ($sesi <= 3) {
                         echo button('load_silent("master/supplier/import/","#content")', 'Import Excel', 'btn btn-primary', 'data-toggle="tooltip" title="Import Excel"');
                         echo button('load_silent("master/supplier/form/base","#modal")', 'Add Supplier', 'btn btn-info', 'data-toggle="tooltip" title="Add"');
                     } else {
@@ -39,7 +39,7 @@
                                 <td align="center">
                                     <?php
                                     $sesi = from_session('level');
-                                    if ($sesi <= '3') {
+                                    if ($sesi <= 3) {
                                         echo button('load_silent("master/supplier/form/sub/' . $row->id . '","#modal")', '', 'btn btn-info fa fa-edit', 'data-toggle="tooltip" title="Edit"');
                                     } else {
                                         # code...

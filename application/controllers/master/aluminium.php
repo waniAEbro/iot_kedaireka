@@ -69,11 +69,6 @@ class aluminium extends CI_Controller
             array(
                 'field' => 'id',
                 'label' => 'wes mbarke',
-                'rules' => ''
-            ),
-            array(
-                'field' => 'section_ata',
-                'label' => 'section_ata',
                 'rules' => 'required'
             )
         );

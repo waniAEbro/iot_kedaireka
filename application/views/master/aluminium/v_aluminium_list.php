@@ -7,8 +7,10 @@
                 <div class="box-tools pull-right">
                     <?php
                     $sesi = from_session('level');
-                    if ($sesi <= '3') {
+                    if ($sesi == 1) {
                         echo button('load_silent("master/aluminium/import/","#content")', 'Import Excel', 'btn btn-primary', 'data-toggle="tooltip" title="Import Excel"');
+                    }
+                    if ($sesi <= 3) {
                         echo button('load_silent("master/aluminium/form/base","#modal")', 'Add', 'btn btn-info', 'data-toggle="tooltip" title="Add"');
                     }
                     ?>
@@ -43,7 +45,7 @@
                                 <td align="center">
                                     <?php
                                     $sesi = from_session('level');
-                                    if ($sesi <= '3') {
+                                    if ($sesi <= 3) {
                                         echo button('load_silent("master/aluminium/form/sub/' . $row->id . '","#modal")', '', 'btn btn-info fa fa-edit', 'data-toggle="tooltip" title="Edit"');
                                     } else {
                                         # code...

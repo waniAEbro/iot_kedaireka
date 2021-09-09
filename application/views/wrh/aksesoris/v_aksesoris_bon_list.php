@@ -7,7 +7,7 @@
                 <div class="box-tools pull-right">
                     <?php
                     $sesi = from_session('level');
-                    if ($sesi <= '3') {
+                    if ($sesi <= 3) {
                         echo button('load_silent("wrh/aksesoris/bon_manual_add/","#content")', 'Add BON Manual', 'btn btn-primary', 'data-toggle="tooltip" title="BON Manual"');
                     } else {
                         # code...
