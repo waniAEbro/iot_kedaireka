@@ -180,7 +180,7 @@ class M_aluminium extends CI_Model
         $month = date('m');
         $this->db->where('DATE_FORMAT(updated,"%Y")', $year);
         $this->db->where('DATE_FORMAT(updated,"%m")', $month);
-        $this->db->where('mutasi', 0);
+        // $this->db->where('mutasi', 0);
         $this->db->where('inout', 2);
         // $this->db->where('is_bom', 1);
         // $this->db->where('status_fppp', 0);
