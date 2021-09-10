@@ -341,6 +341,21 @@ class M_fppp extends CI_Model
 		$this->db->where('id', $id);
 		$this->db->update('data_fppp_detail', $datapost);
 	}
+
+	public function cekSudahAdaKeluar($id_fppp)
+	{
+		$this->db->where('id_fppp', $id_fppp);
+		$this->db->where('is_bom', 1);
+		$this->db->where('inout', 2);
+		return $this->db->get('data_stock')->num_rows();
+	}
+
+	public function deleteBomSebelum($id_fppp)
+	{
+		$this->db->where('id_fppp', $id_fppp);
+		$this->db->where('is_bom', 1);
+		$this->db->delete('data_stock');
+	}
 }
 
 /* End of file m_fppp.php */

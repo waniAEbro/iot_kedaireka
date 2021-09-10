@@ -8,9 +8,10 @@ class M_aluminium extends CI_Model
     {
         $id_jenis_item = 1;
         $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
+        $this->db->join('master_divisi_stock mds', 'mds.id = mi.id_divisi', 'left');
         $this->db->where('mi.id_jenis_item', $id_jenis_item);
-        $this->db->where('mi.kode_warna !=', '01');
-        $this->db->select('mi.*,mwa.warna');
+        $this->db->where('mi.id_warna >', '2');
+        $this->db->select('mi.*,mwa.warna,mds.divisi');
         return $this->db->get('master_item mi');
     }
 
@@ -18,9 +19,10 @@ class M_aluminium extends CI_Model
     {
         $id_jenis_item = 1;
         $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
+        $this->db->join('master_divisi_stock mds', 'mds.id = mi.id_divisi', 'left');
         $this->db->where('mi.id_jenis_item', $id_jenis_item);
-        $this->db->where('mi.kode_warna', '01');
-        $this->db->select('mi.*,mwa.warna');
+        $this->db->where('mi.id_warna', '2');
+        $this->db->select('mi.*,mwa.warna,mds.divisi');
         return $this->db->get('master_item mi');
     }
 

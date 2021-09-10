@@ -70,6 +70,7 @@
                             <th>Section ATA</th>
                             <th>Section Allure</th>
                             <th>Temper</th>
+                            <th>Kode Warna</th>
                             <th>Warna</th>
                             <th>Ukuran</th>
                             <th>Stock Awal Bulan</th>
@@ -104,10 +105,11 @@
                                 <tr>
                                     <td class="details-control" id="<?= $i ?>"><input type="hidden" id="id_<?= $i ?>" value="<?= $row->id ?>"></td>
                                     <td align="center"><?= $i ?></td>
-                                    <td align="center"></td>
+                                    <td align="center"><?= $row->divisi ?></td>
                                     <td align="center"><?= $row->section_ata ?></td>
                                     <td align="center"><?= $row->section_allure ?></td>
                                     <td align="center"><?= $row->temper ?></td>
+                                    <td align="center"><?= $row->kode_warna ?></td>
                                     <td align="center"><?= $row->warna ?></td>
                                     <td align="center"><?= $row->ukuran ?></td>
                                     <td align="center"><?= $tampil_stock_awal_bulan ?></td>
