@@ -59,7 +59,7 @@
                                     <option value="">-- Select --</option>
                                     <?php foreach ($item->result() as $valap) : ?>
                                         <option value="<?= $valap->id ?>">
-                                            <?= $row->item_code ?>-<?= $row->deskripsi ?>
+                                            <?= $valap->item_code ?>-<?= $valap->deskripsi ?>
                                         </option>
                                     <?php endforeach; ?>
                                 </select></td>

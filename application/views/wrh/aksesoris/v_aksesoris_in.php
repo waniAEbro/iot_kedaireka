@@ -39,9 +39,8 @@
                         <div class="form-group">
                             <label class="control-label">Qty Surat Jalan:</label>
                             <input type="text" style="text-align: right;" class="form-control" id="qty" placeholder="Qty" autocomplete="off">
-                            <input type="hidden" class="form-control" id="id_divisi">
                         </div>
-                        <div class="form-group" style="display:none;">
+                        <div class="form-group">
                             <label class="control-label">Divisi:</label>
                             <select id="id_divisix" name="id_divisix" class="form-control" style="width:100%" required>
                                 <option value="">-- Select --</option>
@@ -238,21 +237,6 @@
             });
         };
     }
-
-    $("#item").change(function() {
-        var item = $("#item").val();
-        $.ajax({
-                type: "POST",
-                url: "<?= site_url('wrh/aksesoris/getIdDivisi') ?>",
-                dataType: 'json',
-                data: {
-                    'id_item': item,
-                }
-            })
-            .success(function(datasaved) {
-                $("#id_divisi").val(datasaved.id_divisi);
-            });
-    });
 
     function hapus(i) {
         if (confirm('Lanjutkan Proses Hapus?')) {
