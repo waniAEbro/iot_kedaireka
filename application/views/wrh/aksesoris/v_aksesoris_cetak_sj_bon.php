@@ -70,56 +70,48 @@ table.first {
 </style>
 <table border="0" class="first" cellpadding="1">
         <tr>
-            <td width="15%"><b>No FPPP</b></td>
+            <td width="15%">Penerima</td>
             <td width="1%">:</td>
-            <td width="38%">' . $header->no_fppp . '</td>
+            <td width="38%">' . $header->penerima . '</td>
             <td width="25%">No Surat Jalan</td>
             <td width="1%">:</td>
             <td width="20%">' . $header->no_surat_jalan . '</td>
         </tr>
         <tr>
-            <td>Nama Proyek</td>
+            <td>Alamat</td>
             <td>:</td>
-            <td>' . $header->nama_proyek . '</td>
+            <td>' . $header->alamat_pengiriman . '</td>
             <td>Tanggal</td>
             <td>:</td>
             <td>' . date('Y-m-d', strtotime($header->created)) . '</td>
         </tr>
         <tr>
-            <td>Penerima</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Sopir / No Kendaraan</td>
             <td>:</td>
-            <td>' . $header->penerima . '</td>
-            <td>Sopir</td>
-            <td>:</td>
-            <td>' . $header->sopir . '</td>
-        </tr>
-        <tr>
-            <td>Alamat</td>
-            <td>:</td>
-            <td>' . $header->alamat_pengiriman . '</td>
-            <td>No Kendaraan</td>
-            <td>:</td>
-            <td>' . $header->no_kendaraan . '</td>
+            <td>' . $header->sopir . ' / ' . $header->no_kendaraan . '</td>
         </tr>
 </table><br>
 ';
 $html .= '
-<table border="0.2" cellpadding="1">
+<table border="0.2" cellpadding="0.5">
         <tr>
             <td width="5%" align="center"><b>No</b></td>
+            <td width="20%" align="center"><b>Nama Proyek - No FPPP</b></td>
             <td width="10%" align="center"><b>Nama Barang</b></td>
-            <td width="10%" align="center"><b>Panjang</b></td>
             <td width="10%" align="center"><b>Temper</b></td>
-            <td width="10%" align="center"><b>Jumlah</b></td>
+            <td width="7%" align="center"><b>Panjang</b></td>
+            <td width="7%" align="center"><b>Jumlah</b></td>
             <td width="15%" align="center"><b>Jumlah Packing</b></td>
-            <td width="10%" align="center"><b>Satuan</b></td>
-            <td width="15%" align="center"><b>Warna</b></td>
-            <td width="15%" align="center"><b>Warna Akhir</b></td>
+            <td width="7%" align="center"><b>Satuan</b></td>
+            <td width="10%" align="center"><b>Warna</b></td>
+            <td width="10%" align="center"><b>Warna Akhir</b></td>
         </tr>';
 $i = 1;
 $total = 0;
 foreach ($detail as $key) {
-    }
 
 
     if ($key->ke_mf == 1) {
@@ -131,6 +123,7 @@ foreach ($detail as $key) {
     $total = $total + $key->qty_out;
     $html .= '<tr>
                     <td align="center">' . $i++ . '</td>
+                    <td align="center"> ' . $key->nama_proyek . '<br>' . $key->no_fppp . '</td>
                     <td align="center"> ' . $item_code . ' - ' . $deskripsi . '</td>
                     <td align="center">' . $key->temper . '</td>
                     <td align="center">' . $key->ukuran . '</td>

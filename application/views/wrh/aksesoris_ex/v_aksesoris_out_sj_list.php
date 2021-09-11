@@ -3,7 +3,7 @@
     <div class="col-lg-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Surat Jalan BOM</h3>
+                <h3 class="box-title">Stock Out List </h3>
                 <div class="box-tools pull-right">
                     <?php
                     $sesi = from_session('level');
@@ -19,39 +19,37 @@
                 <table width="100%" id="tableku" class="table table-striped">
                     <thead>
                         <th width="5%">No</th>
-                        <th>Tgl Upload BOM</th>
+                        <th>Tgl</th>
+                        <th>No Surat Jalan</th>
                         <th>No FPPP</th>
                         <th>Nama Proyek</th>
                         <th>Deadline Sales</th>
                         <th>Deadline Workshop</th>
-                        <th>Status</th>
+                        <th>Penerima</th>
+                        <th>Alamat Pengiriman</th>
+                        <th>Sopir</th>
+                        <th>No Kendaraan</th>
                         <th></th>
                     </thead>
                     <tbody>
                         <?php
                         $i = 1;
-                        foreach ($dataFpppOut->result() as $row) :
-                            $qtybom           = @$qty_bom[$row->id];
-                            $qtyout           = @$qty_out[$row->id];
-                            if ($qtyout == 0) {
-                                $status = "PROSES";
-                            } else if ($qtybom > $qtyout) {
-                                $status = "PARSIAL";
-                            } else {
-                                $status = "LUNAS";
-                            }
-
+                        foreach ($surat_jalan->result() as $row) :
                         ?>
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
-                                <td align="center"><?= $row->tgl_upload_bom_aksesoris ?></td>
+                                <td align="center"><?= $row->created ?></td>
+                                <td><?= $row->no_surat_jalan ?></td>
                                 <td><?= $row->no_fppp ?></td>
                                 <td><?= $row->nama_proyek ?></td>
                                 <td align="center"><?= $row->deadline_pengiriman ?></td>
                                 <td align="center"><?= $row->deadline_workshop ?></td>
-                                <td><?= $status ?></td>
+                                <td><?= $row->penerima ?></td>
+                                <td><?= $row->alamat_pengiriman ?></td>
+                                <td><?= $row->sopir ?></td>
+                                <td><?= $row->no_kendaraan ?></td>
                                 <td>
-                                    <?php echo button('load_silent("wrh/aksesoris/stok_out_make/' . $row->id . '","#content")', 'Stock OUT', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Stock OUT"'); ?>
+                                    <a target="_blank" href="<?= base_url('wrh/aksesoris/cetakSj'); ?>/<?= $row->id ?>" class="btn btn-xs btn-warning">Cetak Surat Jalan</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

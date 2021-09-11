@@ -3,7 +3,7 @@
     <div class="col-lg-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">List BON</h3>
+                <h3 class="box-title">BON Manual List </h3>
                 <div class="box-tools pull-right">
                     <?php
                     $sesi = from_session('level');
@@ -25,15 +25,12 @@
                         <th>Alamat Pengiriman</th>
                         <th>Sopir</th>
                         <th>No Kendaraan</th>
-                        <th>Keterangan</th>
                         <th></th>
                     </thead>
                     <tbody>
                         <?php
                         $i = 1;
                         foreach ($surat_jalan->result() as $row) :
-                            $lapangan = @$keterangan[$row->id];
-                            $ket = ($lapangan > 0) ? 'Lapangan' : 'Produksi';
                         ?>
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
@@ -43,11 +40,9 @@
                                 <td><?= $row->alamat_pengiriman ?></td>
                                 <td><?= $row->sopir ?></td>
                                 <td><?= $row->no_kendaraan ?></td>
-                                <td><?= $ket ?></td>
                                 <td>
-                                    <?php echo button('load_silent("wrh/aksesoris/lihat_item_stok_out/' . $row->id . '","#content")', 'Lihat Item', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Lihat Item Stock OUT"');
-                                    ?>
-                                    <a target="_blank" href="<?= base_url('wrh/aksesoris/cetakSjBon'); ?>/<?= $row->id ?>" class="btn btn-xs btn-warning">Cetak Surat Jalan</a>
+                                    <?php echo button('load_silent("wrh/aksesoris/edit_bon_manual/' . $row->id . '","#content")', 'Edit', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Stock OUT"'); ?>
+                                    <a target="_blank" href="<?= base_url('wrh/aksesoris/cetakSj'); ?>/<?= $row->id ?>" class="btn btn-xs btn-warning">Cetak Surat Jalan</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

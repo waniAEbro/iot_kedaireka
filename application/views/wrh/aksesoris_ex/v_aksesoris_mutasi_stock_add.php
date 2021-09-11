@@ -20,7 +20,8 @@
                                 $selected = ($valap->id == $id_item) ? "selected" : "";
                             ?>
                                 <option value="<?= $valap->id ?>" <?= $selected ?>>
-                                    <?= $valap->item_code ?>-<?= $valap->deskripsi ?>
+                                    <?= $valap->item_code ?> -
+                                    <?= $valap->deskripsi ?>
                                 </option>
                             <?php endforeach; ?>
                         </select>

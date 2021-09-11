@@ -15,6 +15,32 @@ class M_aluminium extends CI_Model
         return $this->db->get('master_item mi');
     }
 
+    public function getdatapaging($num = false, $keyword = '', $perpage = '', $offset = '')
+    {
+        $id_jenis_item = 1;
+        $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
+        $this->db->join('master_divisi_stock mds', 'mds.id = mi.id_divisi', 'left');
+        $this->db->where('mi.id_jenis_item', $id_jenis_item);
+        $this->db->where('mi.id_warna >', '2');
+        $this->db->select('mi.*,mwa.warna,mds.divisi');
+        if ($keyword != '') {
+            $this->db->like('mi.section_ata', $keyword);
+            $this->db->like('mi.section_allure', $keyword);
+            $this->db->like('mi.temper', $keyword);
+            $this->db->like('mi.ukuran', $keyword);
+            $this->db->like('mi.kode_warna', $keyword);
+            $this->db->like('mds.divisi', $keyword);
+            $this->db->like('mwa.warna', $keyword);
+        }
+        if ($num) {
+            $r = $this->db->get('master_item mi');
+            return $r->num_rows();
+        } else {
+            $this->db->limit($perpage, $offset);
+            return $this->db->get('master_item mi');
+        }
+    }
+
     public function getdataMf()
     {
         $id_jenis_item = 1;
@@ -356,9 +382,10 @@ class M_aluminium extends CI_Model
     {
         $this->db->join('data_fppp df', 'df.id = ds.id_fppp', 'left');
         $this->db->where('ds.id_jenis_item', $jenis_item);
-        $this->db->where('wh_aluminium <', 3);
+        $this->db->where('df.wh_aluminium <', 3);
+        $this->db->where('df.bom_aluminium', 1);
+        $this->db->where('ds.id_fppp !=', 0);
         $this->db->select('df.*');
-        $this->db->where('id_fppp !=', 0);
         $this->db->group_by('ds.id_fppp');
         return $this->db->get('data_stock ds');
     }
@@ -733,6 +760,29 @@ class M_aluminium extends CI_Model
         $this->db->select('ds.id as id_stock,ds.*,mwa.warna,df.no_fppp,df.nama_proyek,mds.divisi as divisi_stock,mg.gudang,mi.*');
 
         return $this->db->get('data_stock ds');
+    }
+
+    public function getListItemStokOut($id_sj)
+    {
+        $id_jenis_item = 1;
+        $this->db->join('data_fppp df', 'df.id = ds.id_fppp', 'left');
+        $this->db->join('master_divisi_stock mds', 'mds.id = ds.id_divisi', 'left');
+        $this->db->join('master_gudang mg', 'mg.id = ds.id_gudang', 'left');
+        $this->db->join('master_item mi', 'mi.id = ds.id_item', 'left');
+        $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
+
+        $this->db->where('ds.id_surat_jalan', $id_sj);
+        $this->db->where('ds.inout', 2);
+        $this->db->where('ds.id_jenis_item', $id_jenis_item);
+        $this->db->select('ds.id as id_stock,ds.*,mwa.warna,df.no_fppp,df.nama_proyek,mds.divisi as divisi_stock,mg.gudang,mi.*');
+
+        return $this->db->get('data_stock ds');
+    }
+
+    public function getRowSuratJalan($id_sj)
+    {
+        $this->db->where('id', $id_sj);
+        return $this->db->get('data_surat_jalan');
     }
 
     public function finishdetailbom($id_sj)

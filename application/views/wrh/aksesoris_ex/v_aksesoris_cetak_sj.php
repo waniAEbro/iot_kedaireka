@@ -59,7 +59,7 @@ $hed .= '</table><hr>';
 // output the HTML content
 $pdf->writeHTML($hed, true, false, true, false, '');
 // $this->Line(15, 20, 190, 20);
-$pdf->SetFont('Helvetica', '', 8, '', 'false');
+$pdf->SetFont('Helvetica', '', 9, '', 'false');
 $html = '
 <style>
 
@@ -70,34 +70,28 @@ table.first {
 </style>
 <table border="0" class="first" cellpadding="1">
         <tr>
-            <td width="15%"><b>No FPPP</b></td>
-            <td width="1%">:</td>
-            <td width="38%">' . $header->no_fppp . '</td>
-            <td width="25%">No Surat Jalan</td>
-            <td width="1%">:</td>
+            <td width="15%"><b>Kepada</b></td>
+            <td width="5%">:</td>
+            <td width="40%"></td>
+            <td width="15%">No Surat Jalan</td>
+            <td width="5%">:</td>
             <td width="20%">' . $header->no_surat_jalan . '</td>
         </tr>
         <tr>
-            <td>Nama Proyek</td>
-            <td>:</td>
-            <td>' . $header->nama_proyek . '</td>
+            <td colspan="3">' . $header->nama_proyek . '</td>
             <td>Tanggal</td>
             <td>:</td>
             <td>' . date('Y-m-d', strtotime($header->created)) . '</td>
         </tr>
         <tr>
-            <td>Penerima</td>
-            <td>:</td>
-            <td>' . $header->penerima . '</td>
+            <td colspan="3">' . $header->penerima . '</td>
             <td>Sopir</td>
             <td>:</td>
             <td>' . $header->sopir . '</td>
         </tr>
         <tr>
-            <td>Alamat</td>
-            <td>:</td>
-            <td>' . $header->alamat_pengiriman . '</td>
-            <td>No Kendaraan</td>
+            <td colspan="3">' . $header->alamat_pengiriman . '</td>
+            <td>No Polisi</td>
             <td>:</td>
             <td>' . $header->no_kendaraan . '</td>
         </tr>
@@ -107,9 +101,8 @@ $html .= '
 <table border="0.2" cellpadding="1">
         <tr>
             <td width="5%" align="center"><b>No</b></td>
-            <td width="10%" align="center"><b>Nama Barang</b></td>
+            <td width="20%" align="center"><b>Nama Barang</b></td>
             <td width="10%" align="center"><b>Panjang</b></td>
-            <td width="10%" align="center"><b>Temper</b></td>
             <td width="10%" align="center"><b>Jumlah</b></td>
             <td width="15%" align="center"><b>Jumlah Packing</b></td>
             <td width="10%" align="center"><b>Satuan</b></td>
@@ -119,26 +112,18 @@ $html .= '
 $i = 1;
 $total = 0;
 foreach ($detail as $key) {
-    }
 
 
-    if ($key->ke_mf == 1) {
-        $warna_sblm = $this->m_aksesoris->getRowItemWarna($key->id_item_sblm)->warna;
-    } else {
-        $warna_sblm = '-';
-    }
 
     $total = $total + $key->qty_out;
     $html .= '<tr>
                     <td align="center">' . $i++ . '</td>
-                    <td align="center"> ' . $item_code . ' - ' . $deskripsi . '</td>
-                    <td align="center">' . $key->temper . '</td>
+                    <td> ' . $key->item_code . '</td>
                     <td align="center">' . $key->ukuran . '</td>
                     <td align="center">' . $key->qty_out . '</td>
                     <td align="center">1</td>
                     <td align="center">' . $key->satuan . '</td>
                     <td align="center">' . $key->warna . '</td>
-                    <td align="center">' . $warna_sblm . '</td>
                 </tr>';
 }
 $html .= '</table><br><br>';

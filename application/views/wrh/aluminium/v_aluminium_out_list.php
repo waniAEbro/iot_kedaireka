@@ -19,7 +19,7 @@
                 <table width="100%" id="tableku" class="table table-striped">
                     <thead>
                         <th width="5%">No</th>
-                        <th>Tgl</th>
+                        <th>Tgl Upload BOM</th>
                         <th>No FPPP</th>
                         <th>Nama Proyek</th>
                         <th>Deadline Sales</th>
@@ -44,7 +44,7 @@
                         ?>
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
-                                <td align="center"><?= $row->created ?></td>
+                                <td align="center"><?= $row->tgl_upload_bom_aluminium ?></td>
                                 <td><?= $row->no_fppp ?></td>
                                 <td><?= $row->nama_proyek ?></td>
                                 <td align="center"><?= $row->deadline_pengiriman ?></td>

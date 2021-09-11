@@ -10,43 +10,10 @@
     <div class="box-body">
         <form method="post" class="form-vertical form_faktur" role="form">
             <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>No FPPP</label>
-                        <input type="hidden" class="form-control" id="id_fppp" value="<?= $id_fppp ?>" readonly>
-                        <input type="text" class="form-control" id="no_fppp" value="<?= $row_fppp->no_fppp ?>" readonly>
-                    </div>
-                </div>
-                <div class="col-md-4">
+                <div class="col-md-12">
                     <div class="form-group">
                         <label>No Surat Jalan</label>
                         <input type="text" class="form-control" value="<?= $no_surat_jalan ?>" id="no_surat_jalan" readonly>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Nama Proyek</label>
-                        <input type="text" class="form-control" id="nama_proyek" value="<?= $row_fppp->nama_proyek ?>" readonly>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Alamat Proyek</label>
-                        <input type="text" class="form-control" id="alamat_proyek" value="<?= $row_fppp->alamat_proyek ?>" readonly>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Nama Sales</label>
-                        <input type="text" class="form-control" id="sales" value="<?= $row_fppp->sales ?>" readonly>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Deadline Pengiriman</label>
-                        <input type="text" class="form-control" id="deadline_pengiriman" value="<?= $row_fppp->deadline_pengiriman ?>" readonly>
                     </div>
                 </div>
             </div>
@@ -88,11 +55,10 @@
     function finish() {
         $("#finish").hide();
         $.ajax({
-            url: "<?= site_url('wrh/aksesoris/simpanSuratJalan/') ?>",
+            url: "<?= site_url('wrh/aksesoris/simpanSuratJalanBon/') ?>",
             dataType: "json",
             type: "POST",
             data: {
-                "id_fppp": $("#id_fppp").val(),
                 "no_surat_jalan": $("#no_surat_jalan").val(),
                 "penerima": $("#penerima").val(),
                 "alamat_pengiriman": $("#alamat_pengiriman").val(),
@@ -104,7 +70,7 @@
                     title: 'Berhasil',
                     message: "Menyimpan Surat Jalan!"
                 });
-                load_silent("wrh/aksesoris/list_surat_jalan/", "#content");
+                load_silent("wrh/aksesoris/edit_bon_manual/" + img['id'] + "/", "#content");
             }
         });
         // if (confirm('Anda yakin ingin melanjutkan?')) {

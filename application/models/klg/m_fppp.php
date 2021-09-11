@@ -356,6 +356,12 @@ class M_fppp extends CI_Model
 		$this->db->where('is_bom', 1);
 		$this->db->delete('data_stock');
 	}
+
+	public function updateStatusUploadBom($id_fppp, $object)
+	{
+		$this->db->where('id', $id_fppp);
+		$this->db->update('data_fppp', $object);
+	}
 }
 
 /* End of file m_fppp.php */

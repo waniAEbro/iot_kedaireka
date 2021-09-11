@@ -4,9 +4,9 @@
     <div class="col-lg-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">List BOM aksesoris</h3>
+                <h3 class="box-title">List Item Stock Out aluminium</h3>
                 <div class="box-tools pull-right">
-                    <?php //echo button('load_silent("klg/fppp","#content")', 'Kembali', 'btn btn-success'); 
+                    <?php //echo button('load_silent("wrh/aluminium/bon_manual","#content")', 'Kembali', 'btn btn-success');
                     ?>
                 </div>
             </div>
@@ -26,32 +26,29 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Penerima</label>
-                                <input type="text" class="form-control" id="penerima">
+                                <input type="text" class="form-control" id="penerima" value="<?= $penerima ?>" readonly>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Alamat Pengiriman</label>
-                                <input type="text" class="form-control" id="alamat_pengiriman">
+                                <input type="text" class="form-control" id="alamat_pengiriman" value="<?= $alamat_pengiriman ?>" readonly>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Sopir</label>
-                                <input type="text" class="form-control" id="sopir">
+                                <input type="text" class="form-control" id="sopir" value="<?= $sopir ?>" readonly>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>No Kendaraan</label>
-                                <input type="text" class="form-control" id="no_kendaraan">
+                                <input type="text" class="form-control" id="no_kendaraan" value="<?= $no_kendaraan ?>" readonly>
                             </div>
                         </div>
                     </div>
                 </form>
-            </div>
-            <div class="box-footer">
-                <button type="submit" id="simpan" onclick="simpan()" class="btn btn-success">Simpan</button>
             </div>
             <div class="box-body">
                 <table width="100%" id="tableku" class="table table-bordered table-striped" style="font-size: smaller;">
@@ -65,7 +62,6 @@
                             <th width="7%">Qty</th>
                             <th width="7%">Produksi</th>
                             <th width="7%">Lapangan</th>
-                            <th width="5%">Act</th>
                         </tr>
                     </thead>
                     <tbody id="dataTbl">
@@ -77,21 +73,17 @@
 
                             <tr id="output_data_<?= $row->id_stock ?>" class="output_data">
                                 <td align="center"><?= $row->no_fppp ?>-<?= $row->nama_proyek ?></td>
-                                <td><?= $row->item_code ?>-<?= $row->deskripsi ?></td>
+                                <td><?= $row->section_ata ?>-<?= $row->section_allure ?>-<?= $row->temper ?>-<?= $row->warna ?>-<?= $row->ukuran ?></td>
                                 <td align="center"><?= $row->divisi_stock ?></td>
                                 <td align="center"><?= $row->gudang ?></td>
                                 <td align="center"><?= $row->keranjang ?></td>
                                 <td align="center"><?= $row->qty_out ?></td>
                                 <td align="center"><input type="checkbox" onclick="return false;" class="checkbox" <?= $cekproduksi ?>></td>
                                 <td align="center"><input type="checkbox" onclick="return false;" class="checkbox" <?= $ceklapangan ?>></td>
-                                <td align="center"><a class="btn btn-xs btn-danger" href="javascript:void(0)" onClick="hapus(<?= $row->id_stock ?>)"><i class="fa fa-trash"></i></a></td>
                             </tr>
                         <?php } ?>
                     </tbody>
                 </table>
-                <div class="form-group">
-                    <input type="hidden" style="text-align: right;" class="form-control" id="stock" placeholder="Stock" readonly>
-                </div>
             </div>
         </div>
     </div>
@@ -105,42 +97,4 @@
         });
         $("select").select2();
     });
-
-    $(".checkbox").change(function() {
-        var fieldname = $(this).data('field');
-        if (fieldname == 'produksi') {
-            $('#lapangan').prop('checked', false); // Unchecks it
-            $('#lapangan').val('0');
-            $('#produksi').val('1');
-        } else {
-            $('#produksi').prop('checked', false); // Checks it
-            $('#lapangan').val('1');
-            $('#produksi').val('0');
-        }
-    });
-
-    function simpan() {
-        $("#simpan").hide();
-        $.ajax({
-            url: "<?= site_url('wrh/aksesoris/simpanSuratJalanBon/') ?>",
-            dataType: "json",
-            type: "POST",
-            data: {
-                "id_fppp": $("#id_fppp").val(),
-                "no_surat_jalan": $("#no_surat_jalan").val(),
-                "penerima": $("#penerima").val(),
-                "alamat_pengiriman": $("#alamat_pengiriman").val(),
-                "sopir": $("#sopir").val(),
-                "no_kendaraan": $("#no_kendaraan").val(),
-            },
-            success: function(img) {
-                $.growl.notice({
-                    title: 'Berhasil',
-                    message: "Menyimpan Surat Jalan!"
-                });
-                load_silent("wrh/aksesoris/bon_manual/", "#content");
-            }
-        });
-
-    }
 </script>

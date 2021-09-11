@@ -53,6 +53,8 @@
                                 <td><?= $row->no_kendaraan ?></td>
                                 <td><?= $ket ?></td>
                                 <td>
+                                    <?php echo button('load_silent("wrh/aluminium/lihat_item_stok_out/' . $row->id . '","#content")', 'Lihat Item', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Lihat Item Stock OUT"');
+                                    ?>
                                     <a target="_blank" href="<?= base_url('wrh/aluminium/cetakSj'); ?>/<?= $row->id ?>" class="btn btn-xs btn-warning">Cetak Surat Jalan</a>
                                 </td>
                             </tr>

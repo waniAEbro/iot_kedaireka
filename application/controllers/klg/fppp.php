@@ -498,6 +498,11 @@ class Fppp extends CI_Controller
 				} else {
 					$id_item = $cek_item->row()->id;
 				}
+				$dt = array(
+					'bom_aluminium'  => 1,
+					'tgl_upload_bom_aluminium'  => date('Y-m-d H:i:s'),
+				);
+				$this->m_fppp->updateStatusUploadBom($id_fppp, $dt);
 			} else if ($jenis_bom == 2) {
 				$obj = array(
 					'id_jenis_item' => 2,
@@ -515,6 +520,11 @@ class Fppp extends CI_Controller
 				} else {
 					$id_item = $cek_item->row()->id;
 				}
+				$dt = array(
+					'bom_aksesoris'  => 1,
+					'tgl_upload_bom_aksesoris'  => date('Y-m-d H:i:s'),
+				);
+				$this->m_fppp->updateStatusUploadBom($id_fppp, $dt);
 			} else {
 				$obj = array(
 					'id_jenis_item'  => 3,
@@ -535,6 +545,11 @@ class Fppp extends CI_Controller
 				} else {
 					$id_item = $cek_item->row()->id;
 				}
+				$dt = array(
+					'bom_lembaran'  => 1,
+					'tgl_upload_bom_lembaran'  => date('Y-m-d H:i:s'),
+				);
+				$this->m_fppp->updateStatusUploadBom($id_fppp, $dt);
 			}
 
 			$obj_bom = array(

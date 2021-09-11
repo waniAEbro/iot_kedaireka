@@ -66,7 +66,7 @@
                         <thead>
                             <th width="5%"></th>
                             <th width="5%">No</th>
-                            <th>Item Code</th>
+                            <th>Item</th>
                             <th>Deskripsi</th>
                             <th>Stock Awal Bulan</th>
                             <th>Total In Per Bulan</th>
@@ -80,35 +80,30 @@
                             <?php
                             $i = 1;
                             foreach ($aksesoris->result() as $row) :
-                                $ada                     = 1;
-                                $stock_awal_bulan        = @$stock_awal_bulan[$row->id];
-                                $tampil_stock_awal_bulan = ($stock_awal_bulan != '') ? $stock_awal_bulan : 0;
-
-                                $tot_in_per_bulan          = @$total_in_per_bulan[$row->id];
-                                $tampil_total_in_per_bulan = ($tot_in_per_bulan != '') ? $tot_in_per_bulan : 0;
-
-                                $tot_out_per_bulan          = @$total_out_per_bulan[$row->id];
-                                $tampil_total_out_per_bulan = ($tot_out_per_bulan != '') ? $tot_out_per_bulan : 0;
-
-                                $tot_out          = @$total_out[$row->id];
-                                $tampil_total_out = ($tot_out != '') ? $tot_out : 0;
-
-                                $stock_akhir_bulan = $tampil_total_in_per_bulan - $tampil_total_out_per_bulan;
-                                $ots_persiapan = @$total_bom[$row->id] - $tampil_total_out;
-                                $free_stock    = $stock_akhir_bulan - $ots_persiapan;
+                                $ada                        = 1;
+                                $stock_awal_bulan           = @$stock_awal_bulan[$row->id];
+                                $tampil_stock_awal_bulan    = ($stock_awal_bulan != '') ? $stock_awal_bulan : 0;
+                                $tot_in                     = @$total_in_per_bulan[$row->id];
+                                $tampil_total_in_per_bulan  = ($tot_in != '') ? $tot_in : 0;
+                                $tot_out                    = @$total_out_per_bulan[$row->id];
+                                $tampil_total_out_per_bulan = ($tot_out != '') ? $tot_out : 0;
+                                $stock_akhir_bulan          = $tot_in - $tot_out;
+                                $tot_bom                  = @$total_bom[$row->id] - $tampil_total_out_per_bulan;
+                                $ots_persiapan              = $tot_bom;
+                                $free_stock                 = $stock_akhir_bulan - $ots_persiapan;
                             ?>
                                 <tr>
                                     <td class="details-control" id="<?= $i ?>"><input type="hidden" id="id_<?= $i ?>" value="<?= $row->id ?>"></td>
                                     <td align="center"><?= $i ?></td>
-                                    <td align="center"><?= $row->item_code ?></td>
-                                    <td align="center"><?= $row->deskripsi ?></td>
-                                    <td align="center"><?= $tampil_stock_awal_bulan ?></td>
-                                    <td align="center"><?= $tampil_total_in_per_bulan ?></td>
-                                    <td align="center"><?= $tampil_total_out_per_bulan ?></td>
-                                    <td align="center"><?= $stock_akhir_bulan ?></td>
-                                    <td align="center"><?= $free_stock ?></td>
-                                    <td align="center"><?= @$total_bom[$row->id] ?> - <?= $tampil_total_out ?></td>
-                                    <td align="center">
+                                    <td><?= $row->item_code ?></td>
+                                    <td><?= $row->deskripsi ?></td>
+                                    <td><?= $tampil_stock_awal_bulan ?></td>
+                                    <td><?= $tampil_total_in_per_bulan ?></td>
+                                    <td><?= $tampil_total_out_per_bulan ?></td>
+                                    <td><?= $stock_akhir_bulan ?></td>
+                                    <td><?= $free_stock ?></td>
+                                    <td><?= $ots_persiapan ?></td>
+                                    <td>
                                         <?= button('load_silent("wrh/aksesoris/mutasi_stock_add/' . $row->id . '","#content")', 'mutasi', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Mutasi"'); ?>
                                         <?= button('load_silent("wrh/aksesoris/mutasi_stock_history/' . $row->id . '","#content")', 'history mutasi', 'btn btn-xs btn-default', 'data-toggle="tooltip" title="History Mutasi"'); ?></td>
                                 </tr>
@@ -166,7 +161,16 @@
 
         return true;
     }
-
+    // function cetak (id) {
+    //   var win = window.open("<?php echo base_url('wrh/aksesoris/cetak/'); ?>/"+id, "_blank");
+    //             if (win) {
+    //                 //Browser has allowed it to be opened
+    //                 win.focus();
+    //             } else {
+    //                 //Browser has blocked it
+    //                 alert('Please allow popups for this website');
+    //             }
+    // }
 
     function setFilter() {
         var store = $('#store').val();
@@ -273,18 +277,12 @@
                             var qty_out = data.detail[i].tot_out;
                         }
 
-                        if (data.detail[i].stok_awal_bulan == null) {
-                            var stok_a_b = 0;
-                        } else {
-                            var stok_a_b = data.detail[i].stok_awal_bulan;
-                        }
-
                         infoTable += '<tr bgcolor="' + color + '">' +
                             '<td><font color="' + fontcolor + '">' + no + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].divisi + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].gudang + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].keranjang + '</font></td>' +
-                            '<td><font color="' + fontcolor + '">' + stok_a_b + '</font></td>' +
+                            '<td><font color="' + fontcolor + '">' + data.detail[i].stok_awal_bulan + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].tot_in + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + qty_out + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].stok_akhir_bulan + '</font></td>' +

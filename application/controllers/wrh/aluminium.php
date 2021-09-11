@@ -25,6 +25,54 @@ class aluminium extends CI_Controller
         $this->load->view('wrh/aluminium/v_aluminium_list', $data);
     }
 
+    public function list()
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $offset = $this->uri->segment(4, 0);
+        $perpage = 10;
+        // $data['user'] = $this->m_catatan->get_user(false,'',$perpage,$offset);
+        $data['aluminium']           = $this->m_aluminium->getData(false, '', $perpage, $offset);
+        $total_rows = $this->m_aluminium->getData(true, '');
+        $data['paging'] = $this->fungsi->create_paging('wrh/aluminium/list', $total_rows, $perpage, 4);
+        $data['datainfo'] = parse_infotable($offset, $perpage, $total_rows);
+
+        $data['stock_awal_bulan']    = $this->m_aluminium->getStockAwalBulan();
+        $data['total_bom']           = $this->m_aluminium->getTotalBOM();
+        $data['total_out'] = $this->m_aluminium->getTotalOut();
+        $data['total_in_per_bulan']  = $this->m_aluminium->getTotalInPerBulan();
+        $data['total_out_per_bulan'] = $this->m_aluminium->getTotalOutPerBulan();
+        $data['warna']               = 'Warna';
+        $this->load->view('wrh/aluminium/v_aluminium_list', $data);
+    }
+
+    public function search_list()
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $offset = $this->uri->segment(5, 0);
+        if ($offset > 0) {
+            $keyword = from_session('keyword_al_warna');
+        } else {
+            $keyword = $this->input->post('keyword');
+            $this->session->set_userdata('keyword_al_warna', $keyword);
+            $keyword = from_session('keyword_al_warna');
+        }
+
+        $perpage = 10;
+        $data['aluminium']           = $this->m_aluminium->getData(false, '', $perpage, $offset);
+        $total_rows = $this->m_aluminium->getData(true, '');
+        $data['paging'] = $this->fungsi->create_paging('wrh/aluminium/list', $total_rows, $perpage, 4);
+        $data['datainfo'] = parse_infotable($offset, $perpage, $total_rows);
+        $data['search'] = true;
+
+        $data['stock_awal_bulan']    = $this->m_aluminium->getStockAwalBulan();
+        $data['total_bom']           = $this->m_aluminium->getTotalBOM();
+        $data['total_out'] = $this->m_aluminium->getTotalOut();
+        $data['total_in_per_bulan']  = $this->m_aluminium->getTotalInPerBulan();
+        $data['total_out_per_bulan'] = $this->m_aluminium->getTotalOutPerBulan();
+        $data['warna']               = 'Warna';
+        $this->load->view('wrh/aluminium/v_aluminium_list', $data);
+    }
+
     public function monitoring_mf()
     {
         $this->fungsi->check_previleges('aluminium');
@@ -650,6 +698,20 @@ class aluminium extends CI_Controller
 
     //     $this->load->view('wrh/aluminium/v_aluminium_bon_add', $data);
     // }
+
+    public function lihat_item_stok_out($id_sj)
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $id_fppp = $this->m_aluminium->getListItemStokOut($id_sj)->row()->id_fppp;
+        $data['id_fppp']        = $id_fppp;
+        $data['no_surat_jalan']    = $this->m_aluminium->getRowSuratJalan($id_sj)->row()->no_surat_jalan;
+        $data['penerima']    = $this->m_aluminium->getRowSuratJalan($id_sj)->row()->penerima;
+        $data['alamat_pengiriman']    = $this->m_aluminium->getRowSuratJalan($id_sj)->row()->alamat_pengiriman;
+        $data['sopir']    = $this->m_aluminium->getRowSuratJalan($id_sj)->row()->sopir;
+        $data['no_kendaraan']    = $this->m_aluminium->getRowSuratJalan($id_sj)->row()->no_kendaraan;
+        $data['list_sj']           = $this->m_aluminium->getListItemStokOut($id_sj);
+        $this->load->view('wrh/aluminium/v_aluminium_lihat_item_out', $data);
+    }
 
     public function simpanSuratJalanBon()
     {

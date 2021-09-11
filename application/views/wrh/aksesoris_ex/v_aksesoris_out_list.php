@@ -3,7 +3,7 @@
     <div class="col-lg-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Surat Jalan BOM</h3>
+                <h3 class="box-title">Stock Out List </h3>
                 <div class="box-tools pull-right">
                     <?php
                     $sesi = from_session('level');
@@ -19,7 +19,7 @@
                 <table width="100%" id="tableku" class="table table-striped">
                     <thead>
                         <th width="5%">No</th>
-                        <th>Tgl Upload BOM</th>
+                        <th>Tgl</th>
                         <th>No FPPP</th>
                         <th>Nama Proyek</th>
                         <th>Deadline Sales</th>
@@ -44,7 +44,7 @@
                         ?>
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
-                                <td align="center"><?= $row->tgl_upload_bom_aksesoris ?></td>
+                                <td align="center"><?= $row->created ?></td>
                                 <td><?= $row->no_fppp ?></td>
                                 <td><?= $row->nama_proyek ?></td>
                                 <td align="center"><?= $row->deadline_pengiriman ?></td>

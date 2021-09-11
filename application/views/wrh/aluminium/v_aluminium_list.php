@@ -176,16 +176,7 @@
 
         return true;
     }
-    // function cetak (id) {
-    //   var win = window.open("<?php echo base_url('wrh/aluminium/cetak/'); ?>/"+id, "_blank");
-    //             if (win) {
-    //                 //Browser has allowed it to be opened
-    //                 win.focus();
-    //             } else {
-    //                 //Browser has blocked it
-    //                 alert('Please allow popups for this website');
-    //             }
-    // }
+
 
     function setFilter() {
         var store = $('#store').val();
@@ -292,12 +283,18 @@
                             var qty_out = data.detail[i].tot_out;
                         }
 
+                        if (data.detail[i].stok_awal_bulan == null) {
+                            var stok_a_b = 0;
+                        } else {
+                            var stok_a_b = data.detail[i].stok_awal_bulan;
+                        }
+
                         infoTable += '<tr bgcolor="' + color + '">' +
                             '<td><font color="' + fontcolor + '">' + no + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].divisi + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].gudang + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].keranjang + '</font></td>' +
-                            '<td><font color="' + fontcolor + '">' + data.detail[i].stok_awal_bulan + '</font></td>' +
+                            '<td><font color="' + fontcolor + '">' + stok_a_b + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].tot_in + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + qty_out + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].stok_akhir_bulan + '</font></td>' +

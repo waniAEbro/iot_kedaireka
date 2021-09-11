@@ -29,12 +29,15 @@
                         <th>Alamat Pengiriman</th>
                         <th>Sopir</th>
                         <th>No Kendaraan</th>
+                        <th>Keterangan</th>
                         <th></th>
                     </thead>
                     <tbody>
                         <?php
                         $i = 1;
                         foreach ($surat_jalan->result() as $row) :
+                            $lapangan = @$keterangan[$row->id];
+                            $ket = ($lapangan > 0) ? 'Lapangan' : 'Produksi';
                         ?>
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
@@ -48,7 +51,10 @@
                                 <td><?= $row->alamat_pengiriman ?></td>
                                 <td><?= $row->sopir ?></td>
                                 <td><?= $row->no_kendaraan ?></td>
+                                <td><?= $ket ?></td>
                                 <td>
+                                    <?php echo button('load_silent("wrh/aksesoris/lihat_item_stok_out/' . $row->id . '","#content")', 'Lihat Item', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Lihat Item Stock OUT"');
+                                    ?>
                                     <a target="_blank" href="<?= base_url('wrh/aksesoris/cetakSj'); ?>/<?= $row->id ?>" class="btn btn-xs btn-warning">Cetak Surat Jalan</a>
                                 </td>
                             </tr>

@@ -21,7 +21,7 @@
                             <input type="text" class="form-control" id="no_surat_jalan" placeholder="No Surat Jalan">
                         </div>
                         <div class="form-group">
-                            <label class="control-label">No PR / WO / PO:</label>
+                            <label class="control-label">No PR:</label>
                             <input type="text" class="form-control" id="no_pr" placeholder="No PR">
                         </div>
                         <hr>
@@ -31,12 +31,8 @@
                                 <option value="">-- Select --</option>
                                 <?php foreach ($item->result() as $valap) : ?>
                                     <option value="<?= $valap->id ?>">
-                                        <?= $valap->section_ata ?> -
-                                        <?= $valap->section_allure ?> -
-                                        <?= $valap->temper ?> -
-                                        <?= $valap->kode_warna ?> -
-                                        <?= $valap->ukuran ?> -
-                                        <?= $valap->warna ?>
+                                        <?= $valap->item_code ?> -
+                                        <?= $valap->deskripsi ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>
@@ -44,11 +40,11 @@
                         <div class="form-group">
                             <label class="control-label">Qty Surat Jalan:</label>
                             <input type="text" style="text-align: right;" class="form-control" id="qty" placeholder="Qty" autocomplete="off">
-                            <input type="hidden" class="form-control" id="id_divisi">
                         </div>
-                        <div class="form-group" style="display:none;">
+
+                        <div class="form-group">
                             <label class="control-label">Divisi:</label>
-                            <select id="id_divisix" name="id_divisix" class="form-control" style="width:100%" required>
+                            <select id="id_divisi" name="id_divisi" class="form-control" style="width:100%" required>
                                 <option value="">-- Select --</option>
                                 <?php foreach ($divisi->result() as $valap) : ?>
                                     <option value="<?= $valap->id ?>"><?= $valap->divisi ?>
@@ -67,7 +63,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label class="control-label">Keranjang / Rak:</label>
+                            <label class="control-label">Keranjang:</label>
                             <input type="text" class="form-control" id="keranjang" placeholder="Keranjang">
                         </div>
                         <div class="form-group">
@@ -122,7 +118,7 @@
                 title: 'Berhasil',
                 message: "Tambah Stock selesai!"
             });
-            load_silent("wrh/aluminium/stok_in", "#content");
+            load_silent("wrh/aksesoris/stok_in", "#content");
         }
     }
     $(document).ready(function() {
@@ -148,7 +144,7 @@
 
             $.ajax({
                     type: "POST",
-                    url: "<?= site_url('wrh/aluminium/savestokin') ?>",
+                    url: "<?= site_url('wrh/aksesoris/savestokin') ?>",
                     dataType: 'json',
                     data: {
                         'item': $('#item').val(),
@@ -204,14 +200,14 @@
                     $('tr.odd').remove();
                     $('#dataTbl').append(x);
                     $('#item').val('').trigger('change');
-                    // $('#id_divisi').val('');
-                    // $('#id_gudang').val('').trigger('change');
+                    $('#id_divisi').val('').trigger('change');
+                    $('#id_gudang').val('').trigger('change');
                     $("#qty").val('');
                     // $("#supplier").val('');
                     // $("#no_surat_jalan").val('');
                     // $("#no_pr").val('');
-                    // $("#keranjang").val('');
-                    // $("#keterangan").val('');
+                    $("#keranjang").val('');
+                    $("#keterangan").val('');
                     $.growl.notice({
                         title: 'Sukses',
                         message: "Berhasil menyimpan"
@@ -244,26 +240,11 @@
         };
     }
 
-    $("#item").change(function() {
-        var item = $("#item").val();
-        $.ajax({
-                type: "POST",
-                url: "<?= site_url('wrh/aluminium/getIdDivisi') ?>",
-                dataType: 'json',
-                data: {
-                    'id_item': item,
-                }
-            })
-            .success(function(datasaved) {
-                $("#id_divisi").val(datasaved.id_divisi);
-            });
-    });
-
     function hapus(i) {
         if (confirm('Lanjutkan Proses Hapus?')) {
             $.ajax({
                     type: "POST",
-                    url: "<?= site_url('wrh/aluminium/deleteItemIn') ?>",
+                    url: "<?= site_url('wrh/aksesoris/deleteItemIn') ?>",
                     dataType: 'json',
                     data: {
                         'id': i

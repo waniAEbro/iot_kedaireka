@@ -13,8 +13,12 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>No FPPP</label>
-                        <input type="hidden" class="form-control" id="id_fppp" value="<?= $id_fppp ?>" readonly>
-                        <input type="text" class="form-control" id="no_fppp" value="<?= $row_fppp->no_fppp ?>" readonly>
+                        <select id="no_fppp" name="no_fppp" class="form-control" style="width:100%" required>
+                            <option value="">-- Select --</option>
+                            <?php foreach ($no_fppp->result() as $valap) : ?>
+                                <option value="<?= $valap->id ?>"><?= $valap->no_fppp ?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -26,7 +30,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Nama Proyek</label>
-                        <input type="text" class="form-control" id="nama_proyek" value="<?= $row_fppp->nama_proyek ?>" readonly>
+                        <input type="text" class="form-control" id="nama_proyek" readonly>
                     </div>
                 </div>
             </div>
@@ -34,19 +38,19 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Alamat Proyek</label>
-                        <input type="text" class="form-control" id="alamat_proyek" value="<?= $row_fppp->alamat_proyek ?>" readonly>
+                        <input type="text" class="form-control" id="alamat_proyek" readonly>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Nama Sales</label>
-                        <input type="text" class="form-control" id="sales" value="<?= $row_fppp->sales ?>" readonly>
+                        <input type="text" class="form-control" id="sales" readonly>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Deadline Pengiriman</label>
-                        <input type="text" class="form-control" id="deadline_pengiriman" value="<?= $row_fppp->deadline_pengiriman ?>" readonly>
+                        <input type="text" class="form-control" id="deadline_pengiriman" readonly>
                     </div>
                 </div>
             </div>
@@ -92,7 +96,7 @@
             dataType: "json",
             type: "POST",
             data: {
-                "id_fppp": $("#id_fppp").val(),
+                "no_fppp": $("#no_fppp").val(),
                 "no_surat_jalan": $("#no_surat_jalan").val(),
                 "penerima": $("#penerima").val(),
                 "alamat_pengiriman": $("#alamat_pengiriman").val(),
@@ -104,7 +108,7 @@
                     title: 'Berhasil',
                     message: "Menyimpan Surat Jalan!"
                 });
-                load_silent("wrh/aksesoris/list_surat_jalan/", "#content");
+                load_silent("wrh/aksesoris/detailbom/" + img['id'] + "/", "#content");
             }
         });
         // if (confirm('Anda yakin ingin melanjutkan?')) {
