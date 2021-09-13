@@ -42,7 +42,7 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">Divisi:</label>
-                            <select id="id_divisix" name="id_divisix" class="form-control" style="width:100%" required>
+                            <select id="id_divisi" name="id_divisi" class="form-control" style="width:100%" required>
                                 <option value="">-- Select --</option>
                                 <?php foreach ($divisi->result() as $valap) : ?>
                                     <option value="<?= $valap->id ?>"><?= $valap->divisi ?>
