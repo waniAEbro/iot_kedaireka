@@ -17,7 +17,7 @@
     <div class="col-lg-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Monitoring aksesoris <?= $warna ?></h3>
+                <h3 class="box-title">Monitoring Aksesoris</h3>
 
                 <div class="box-tools pull-right">
                     <?php
