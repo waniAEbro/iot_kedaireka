@@ -148,6 +148,7 @@ class aluminium extends CI_Controller
             'id_gudang'      => $this->input->post('id_gudang'),
             'keranjang'      => $this->input->post('keranjang'),
             'keterangan'     => $this->input->post('keterangan'),
+            'id_penginput'        => from_session('id'),
             'created'        => date('Y-m-d H:i:s'),
         );
         $this->m_aluminium->insertstokin($datapost);
@@ -266,6 +267,7 @@ class aluminium extends CI_Controller
                 'id_gudang' => $this->input->post('gudang'),
                 'keranjang' => $this->input->post('keranjang'),
                 'qty_out'   => $value,
+                'id_penginput'        => from_session('id'),
                 'updated'   => date('Y-m-d H:i:s'),
             );
             $this->m_aluminium->editQtyOut($editid, $obj);
@@ -318,6 +320,7 @@ class aluminium extends CI_Controller
             'id_gudang' => $this->input->post('gudang'),
             'keranjang' => $this->input->post('keranjang'),
             'qty_out'   => $qty_out,
+            'id_penginput'        => from_session('id'),
             'updated'   => date('Y-m-d H:i:s'),
         );
         $this->m_aluminium->editQtyOut($editid, $obj);
@@ -358,6 +361,7 @@ class aluminium extends CI_Controller
             'id_gudang' => $this->input->post('gudang'),
             'keranjang' => $this->input->post('keranjang'),
             'qty_out'   => $qty_out,
+            'id_penginput'        => from_session('id'),
             'updated'   => date('Y-m-d H:i:s'),
         );
         $this->m_aluminium->editQtyOut($editid, $obj);
@@ -793,6 +797,7 @@ class aluminium extends CI_Controller
             'qty_out'        => $this->input->post('qty'),
             'produksi'       => $this->input->post('produksi'),
             'lapangan'       => $this->input->post('lapangan'),
+            'id_penginput'        => from_session('id'),
             'created'        => date('Y-m-d H:i:s'),
             'updated'        => date('Y-m-d H:i:s'),
         );

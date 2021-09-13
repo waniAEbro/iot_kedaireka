@@ -239,7 +239,7 @@
 
     function quotation2() {
 
-        if ($('#item').val() != '' && $('#id_divisi').val() != '' && $('#id_gudang').val() != '' && $('#qty').val() != '') {
+        if ($('#id_fppp').val() != '' && $('#item').val() != '' && $('#id_divisi').val() != '' && $('#id_gudang').val() != '' && $('#qty').val() != '') {
 
             $.ajax({
                     type: "POST",
