@@ -5,7 +5,7 @@ $t3 = 'load_silent("klg/fppp/list/3/",".tab-content")';
 $t4 = 'load_silent("klg/fppp/list/4/",".tab-content")';
 $t5 = 'load_silent("klg/fppp/list/5/",".tab-content")';
 $t6 = 'load_silent("klg/fppp/list/6/",".tab-content")';
-// $t7 = 'load_silent("klg/fppp/list/7/",".tab-content")';
+$t7 = 'load_silent("klg/fppp/list/7/",".tab-content")';
 if ($param_tab == '1') {
     $this->fungsi->run_js($t1);
     $tab_1 = 'active';
@@ -60,17 +60,16 @@ if ($param_tab == '1') {
     $tab_5 = '';
     $tab_6 = 'active';
     $tab_7 = '';
+} else {
+    $this->fungsi->run_js($t7);
+    $tab_1 = '';
+    $tab_2 = '';
+    $tab_3 = '';
+    $tab_4 = '';
+    $tab_5 = '';
+    $tab_6 = '';
+    $tab_7 = 'active';
 }
-// else {
-//     $this->fungsi->run_js($t7);
-//     $tab_1 = '';
-//     $tab_2 = '';
-//     $tab_3 = '';
-//     $tab_4 = '';
-//     $tab_5 = '';
-//     $tab_6 = '';
-//     $tab_7 = 'active';
-// }
 ?>
 <div class="box box-default">
 
@@ -82,6 +81,7 @@ if ($param_tab == '1') {
             <li class="<?= $tab_4 ?>"><a onclick='<?php echo $t4; ?>' data-toggle="tab" href="javascript:void(0)">ASTRAL BENDING EXTRUTION</a></li>
             <li class="<?= $tab_5 ?>"><a onclick='<?php echo $t5; ?>' data-toggle="tab" href="javascript:void(0)">VITTO</a></li>
             <li class="<?= $tab_6 ?>"><a onclick='<?php echo $t6; ?>' data-toggle="tab" href="javascript:void(0)">HRB</a></li>
+            <li class="<?= $tab_7 ?>"><a onclick='<?php echo $t7; ?>' data-toggle="tab" href="javascript:void(0)">ALPHAMAX</a></li>
         </ul>
         <div class="tab-content">
 
