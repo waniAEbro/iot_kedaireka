@@ -729,7 +729,7 @@ class aluminium extends CI_Controller
         $kode_divisi = $this->m_aluminium->getKodeDivisi($id_fppp);
         $no_surat_jalan = str_pad($this->m_aluminium->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJBON/' . $kode_divisi . '/' . date('m') . '/' . date('Y');
         $obj               = array(
-            'id_fppp'           => 0,
+            'id_fppp'           => $id_fppp,
             'no_surat_jalan'    => $no_surat_jalan,
             'penerima'          => $penerima,
             'alamat_pengiriman' => $alamat_pengiriman,
