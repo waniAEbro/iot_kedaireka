@@ -31,12 +31,7 @@
                                 <option value="">-- Select --</option>
                                 <?php foreach ($item->result() as $valap) : ?>
                                     <option value="<?= $valap->id ?>">
-                                        <?= $valap->section_ata ?> -
-                                        <?= $valap->section_allure ?> -
-                                        <?= $valap->temper ?> -
-                                        <?= $valap->kode_warna ?> -
-                                        <?= $valap->ukuran ?> -
-                                        <?= $valap->warna ?>
+                                        <?= $valap->section_ata ?>-<?= $valap->section_allure ?>-<?= $valap->temper ?>-<?= $valap->kode_warna ?>-<?= $valap->ukuran ?>-<?= $valap->warna ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>
