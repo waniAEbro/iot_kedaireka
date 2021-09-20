@@ -64,7 +64,7 @@
                             <td><select id="id_gudang" name="id_gudang" class="form-control" style="width:100%" required>
                                     <option value="">-- Select --</option>
                                 </select>
-                                <input type="text" id="id_divisi">
+                                <input type="hidden" id="id_divisi">
                             </td>
                             <td><select id="keranjang" name="keranjang" class="form-control" style="width:100%" required>
                                     <option value="">-- Select --</option>
