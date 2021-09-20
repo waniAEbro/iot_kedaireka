@@ -802,6 +802,7 @@ class aksesoris extends CI_Controller
             'updated'        => date('Y-m-d H:i:s'),
         );
         $this->db->insert('data_stock', $datapost);
+        $data['id'] = $this->db->insert_id();
         $qtyin        = $this->m_aksesoris->getQtyInDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
         $qtyout       = $this->m_aksesoris->getQtyOutDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
         $data['qty_gudang'] = $qtyin - $qtyout;
@@ -887,11 +888,11 @@ class aksesoris extends CI_Controller
         $id_divisi = $this->input->post('divisi');
         $id_gudang = $this->input->post('gudang');
         $keranjang = $this->input->post('keranjang');
-        $qtyin     = $this->m_aksesoris->getQtyInDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
-        $qtyout    = $this->m_aksesoris->getQtyOutDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
+        // $qtyin     = $this->m_aksesoris->getQtyInDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
+        // $qtyout    = $this->m_aksesoris->getQtyOutDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
 
-        $get_data = $qtyin - $qtyout;
-        $data['qty']    = $get_data;
+        // $get_data = $qtyin - $qtyout;
+        $data['qty']    = $this->m_aluminium->getQtyCounter($id_item, $id_divisi, $id_gudang, $keranjang);
         echo json_encode($data);
     }
 

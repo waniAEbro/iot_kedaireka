@@ -811,34 +811,49 @@ class M_aluminium extends CI_Model
         $this->db->update('data_stock', $object);
     }
 
+    public function getGudangItem($id_item)
+    {
+        $this->db->where('dc.id_item', $id_item);
+        $this->db->join('master_gudang mg', 'mg.id = dc.id_gudang', 'left');
+        $this->db->select('mg.*');
+        $this->db->group_by('dc.id_gudang');
+        return $this->db->get('data_counter dc')->result();
+    }
+
+    public function mgetDivisiItem($item)
+    {
+        $this->db->where('id', $item);
+        return $this->db->get('master_item')->row()->id_divisi;
+    }
+
     public function getGudangDivisi($id_item, $id_divisi)
     {
-        $year  = date('Y');
-        $month = date('m');
-        $this->db->where('DATE_FORMAT(ds.created,"%Y")', $year);
-        $this->db->where('DATE_FORMAT(ds.created,"%m")', $month);
-        $this->db->where('ds.id_item', $id_item);
-        $this->db->where('ds.id_divisi', $id_divisi);
-        $this->db->join('master_gudang mg', 'mg.id = ds.id_gudang', 'left');
+        $this->db->where('dc.id_item', $id_item);
+        $this->db->where('dc.id_divisi', $id_divisi);
+        $this->db->join('master_gudang mg', 'mg.id = dc.id_gudang', 'left');
         $this->db->select('mg.*');
-        $this->db->group_by('ds.id_gudang');
+        $this->db->group_by('dc.id_gudang');
 
-        return $this->db->get('data_stock ds')->result();
+        return $this->db->get('data_counter dc')->result();
     }
 
     public function getKeranjangGudang($id_item, $id_divisi, $id_gudang)
     {
-        $year  = date('Y');
-        $month = date('m');
-        $this->db->where('DATE_FORMAT(ds.created,"%Y")', $year);
-        $this->db->where('DATE_FORMAT(ds.created,"%m")', $month);
-        $this->db->where('ds.id_item', $id_item);
-        $this->db->where('ds.id_divisi', $id_divisi);
-        $this->db->where('ds.id_gudang', $id_gudang);
-        $this->db->select('ds.keranjang');
-        $this->db->group_by('ds.keranjang');
+        $this->db->where('dc.id_item', $id_item);
+        $this->db->where('dc.id_divisi', $id_divisi);
+        $this->db->where('dc.id_gudang', $id_gudang);
+        $this->db->select('dc.keranjang');
+        return $this->db->get('data_counter dc')->result();
+    }
 
-        return $this->db->get('data_stock ds')->result();
+    public function getQtyCounter($id_item, $id_divisi, $id_gudang, $keranjang)
+    {
+        $this->db->where('dc.id_item', $id_item);
+        $this->db->where('dc.id_divisi', $id_divisi);
+        $this->db->where('dc.id_gudang', $id_gudang);
+        $this->db->where('dc.keranjang', $keranjang);
+        $this->db->select('dc.qty');
+        return $this->db->get('data_counter dc')->row()->qty;
     }
 
     public function getMutasiHistory($id = '')

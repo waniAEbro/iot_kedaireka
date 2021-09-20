@@ -16,6 +16,7 @@
                         <tr>
                             <th width="15%">FPPP</th>
                             <th width="30%">Item</th>
+                            <th width="15%">Divisi</th>
                             <th width="15%">Gudang</th>
                             <th width="15%">Keranjang</th>
                             <th width="7%">Qty</th>
@@ -34,6 +35,7 @@
                             <tr id="output_data_<?= $row->id_stock ?>" class="output_data">
                                 <td align="center"><?= $row->no_fppp ?>-<?= $row->nama_proyek ?></td>
                                 <td><?= $row->section_ata ?>-<?= $row->section_allure ?>-<?= $row->temper ?>-<?= $row->warna ?>-<?= $row->ukuran ?></td>
+                                <td align="center"><?= $row->divisi_stock ?></td>
                                 <td align="center"><?= $row->gudang ?></td>
                                 <td align="center"><?= $row->keranjang ?></td>
                                 <td align="center"><?= $row->qty_out ?></td>
@@ -61,10 +63,16 @@
                                         </option>
                                     <?php endforeach; ?>
                                 </select></td>
+                            <td><select id="id_divisi" name="id_divisi" class="form-control" style="width:100%" required>
+                                    <option value="">-- Select --</option>
+                                    <?php foreach ($divisi->result() as $valap) : ?>
+                                        <option value="<?= $valap->id ?>"><?= $valap->divisi ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select></td>
                             <td><select id="id_gudang" name="id_gudang" class="form-control" style="width:100%" required>
                                     <option value="">-- Select --</option>
                                 </select>
-                                <input type="text" id="id_divisi">
                             </td>
                             <td><select id="keranjang" name="keranjang" class="form-control" style="width:100%" required>
                                     <option value="">-- Select --</option>
@@ -135,34 +143,26 @@
     }
 
     $("#item").change(function() {
+        $('#id_divisi').val('').trigger('change');
+        $('#id_gudang').val('').trigger('change');
         $('#keranjang').val('').trigger('change');
         $('#stock').val(0);
         $('#txt_qty_gudang').html("<b> " + 0 + "</b>");
-        $.ajax({
-            url: "<?= site_url('wrh/aluminium/getDivisiItem') ?>",
-            dataType: "json",
-            type: "POST",
-            data: {
-                "item": $('#item').val(),
-            },
-            success: function(data) {
-                $('#id_divisi').val(data['id_divisi']);
-            }
-        });
     });
 
-    $("select[name=item]").change(function() {
+    $("select[name=id_divisi]").change(function() {
         var x = $("select[name=id_gudang]");
         if ($(this).val() == "") {
             x.html("<option>-- Select --</option>");
         } else {
             z = "<option>-- Select --</option>";
             $.ajax({
-                url: "<?= site_url('wrh/aluminium/optionGetGudangItem') ?>",
+                url: "<?= site_url('wrh/aluminium/optionGetGudangDivisi') ?>",
                 dataType: "json",
                 type: "POST",
                 data: {
-                    "item": $(this).val(),
+                    "item": $('#item').val(),
+                    "divisi": $(this).val()
                 },
                 success: function(data) {
 
