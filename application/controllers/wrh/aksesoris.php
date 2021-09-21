@@ -892,7 +892,7 @@ class aksesoris extends CI_Controller
         // $qtyout    = $this->m_aksesoris->getQtyOutDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
 
         // $get_data = $qtyin - $qtyout;
-        $data['qty']    = $this->m_aluminium->getQtyCounter($id_item, $id_divisi, $id_gudang, $keranjang);
+        $data['qty']    = $this->m_aksesoris->getQtyCounter($id_item, $id_divisi, $id_gudang, $keranjang);
         echo json_encode($data);
     }
 
