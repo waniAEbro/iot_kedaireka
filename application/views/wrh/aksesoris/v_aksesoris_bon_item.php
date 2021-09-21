@@ -65,10 +65,6 @@
                                 </select></td>
                             <td><select id="id_divisi" name="id_divisi" class="form-control" style="width:100%" required>
                                     <option value="">-- Select --</option>
-                                    <?php foreach ($divisi->result() as $valap) : ?>
-                                        <option value="<?= $valap->id ?>"><?= $valap->divisi ?>
-                                        </option>
-                                    <?php endforeach; ?>
                                 </select></td>
                             <td><select id="id_gudang" name="id_gudang" class="form-control" style="width:100%" required>
                                     <option value="">-- Select --</option>
@@ -150,6 +146,32 @@
         $('#txt_qty_gudang').html("<b> " + 0 + "</b>");
     });
 
+    $("select[name=item]").change(function() {
+        var x = $("select[name=id_divisi]");
+        if ($(this).val() == "") {
+            x.html("<option>-- Select --</option>");
+        } else {
+            z = "<option>-- Select --</option>";
+            $.ajax({
+                url: "<?= site_url('wrh/aksesoris/optionGetDivisiItem') ?>",
+                dataType: "json",
+                type: "POST",
+                data: {
+                    "item": $(this).val()
+                },
+                success: function(data) {
+
+                    var z = "<option value=''>-- Select --</option>";
+                    for (var i = 0; i < data.length; i++) {
+                        z += '<option value=' + data[i].id + '>' + data[i].divisi + '</option>';
+                    }
+                    x.html(z);
+                }
+            });
+
+        }
+    });
+
     $("select[name=id_divisi]").change(function() {
         var x = $("select[name=id_gudang]");
         if ($(this).val() == "") {
@@ -176,6 +198,8 @@
 
         }
     });
+
+
 
     $("select[name=id_gudang]").change(function() {
         var x = $("select[name=keranjang]");

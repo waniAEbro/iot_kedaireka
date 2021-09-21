@@ -855,6 +855,18 @@ class aksesoris extends CI_Controller
         $this->load->view('wrh/aksesoris/v_aksesoris_mutasi_stock_add', $data);
     }
 
+    public function optionGetDivisiItem()
+    {
+        $this->fungsi->check_previleges('aksesoris');
+        $id_item   = $this->input->post('item');
+        $get_data  = $this->m_aksesoris->getDivisiItem($id_item);
+        $data      = array();
+        foreach ($get_data as $val) {
+            $data[] = $val;
+        }
+        echo json_encode($data, JSON_PRETTY_PRINT);
+    }
+
     public function optionGetGudangDivisi()
     {
         $this->fungsi->check_previleges('aksesoris');

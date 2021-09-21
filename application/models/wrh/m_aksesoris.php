@@ -766,6 +766,15 @@ class M_aksesoris extends CI_Model
         return $this->db->get('data_counter dc')->result();
     }
 
+    public function getDivisiItem($id_item)
+    {
+        $this->db->where('dc.id_item', $id_item);
+        $this->db->join('master_divisi_stock mds', 'mds.id = dc.id_divisi', 'left');
+        $this->db->select('mds.*');
+        $this->db->group_by('dc.id_divisi');
+        return $this->db->get('data_counter dc')->result();
+    }
+
     public function getGudangDivisi($id_item, $id_divisi)
     {
         $this->db->where('dc.id_item', $id_item);
