@@ -50,6 +50,15 @@
                         </span>
                     </div>
                 </div>
+                <?php if (from_session('id') == 2) { ?>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Upload Stock</label>
+                        <div class="col-sm-8 ">
+                            <input onclick="save_stock()" type="submit" value="Save" class="btn btn-success">
+
+                        </div>
+                    </div>
+                <?php } ?>
                 </form>
             </div>
         </div>
@@ -76,6 +85,31 @@
             data: {
                 id: $('#id').val(),
                 jenis_bom: $('#jenis_bom').val(),
+            },
+            success: function(data) {
+                $.growl.notice({
+                    title: 'Berhasil',
+                    message: data['msg']
+                });
+                load_silent("klg/fppp/", "#content");
+            },
+            error: function(data, e) {
+                $("#info").html(e);
+            }
+        })
+        return false;
+    }
+
+    function save_stock() {
+        $('#tombol').attr('disabled', 'disabled');
+        $('#loading').show(100);
+        $.ajaxFileUpload({
+            url: site + 'klg/fppp/uploadStock',
+            secureuri: false,
+            fileElementId: 'file',
+            dataType: 'json',
+            data: {
+                id: $('#id').val(),
             },
             success: function(data) {
                 $.growl.notice({

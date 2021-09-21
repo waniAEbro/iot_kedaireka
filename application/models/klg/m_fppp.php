@@ -362,6 +362,26 @@ class M_fppp extends CI_Model
 		$this->db->where('id', $id_fppp);
 		$this->db->update('data_fppp', $object);
 	}
+
+	public function getCounter($id_item, $id_divisi, $id_gudang, $keranjang)
+	{
+		$this->db->where('id_item', $id_item);
+		$this->db->where('id_divisi', $id_divisi);
+		$this->db->where('id_gudang', $id_gudang);
+		$this->db->where('keranjang', $keranjang);
+
+		return $this->db->get('data_counter');
+	}
+
+	public function updateDataCounter($item, $divisi, $gudang, $keranjang, $qty)
+	{
+		$object = array('qty' => $qty,);
+		$this->db->where('id_item', $item);
+		$this->db->where('id_divisi', $divisi);
+		$this->db->where('id_gudang', $gudang);
+		$this->db->where('keranjang', $keranjang);
+		$this->db->update('data_counter', $object);
+	}
 }
 
 /* End of file m_fppp.php */
