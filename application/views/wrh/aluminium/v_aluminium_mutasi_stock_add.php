@@ -14,34 +14,8 @@
                     <div class="form-group">
                         <label>Item</label>
                         <input type="hidden" class="form-control" id="item" value="<?= $id_item ?>" readonly>
-                        <select id="itemx" name="itemx" class="form-control" style="width:100%" disabled>
-                            <option value="">-- Select --</option>
-                            <?php foreach ($item->result() as $valap) :
-                                $selected = ($valap->id == $id_item) ? "selected" : "";
-                            ?>
-                                <option value="<?= $valap->id ?>" <?= $selected ?>>
-                                    <?= $valap->section_ata ?> -
-                                    <?= $valap->section_allure ?> -
-                                    <?= $valap->temper ?> -
-                                    <?= $valap->kode_warna ?> -
-                                    <?= $valap->ukuran ?> -
-                                    <?= $valap->warna ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label class="control-label">Divisi:</label>
-                        <select id="id_divisi" name="id_divisi" class="form-control" style="width:100%" required>
-                            <option value="">-- Select --</option>
-                            <?php foreach ($divisi->result() as $valap) : ?>
-                                <option value="<?= $valap->id ?>"><?= $valap->divisi ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                        <input type="text" class="form-control" id="itemx" value="<?= $row->section_ata ?>-<?= $row->section_allure ?>-<?= $row->temper ?>-<?= $row->kode_warna ?>-<?= $row->ukuran ?>-<?= $row->warna ?>" readonly>
+                        <input type="hidden" class="form-control" id="id_divisi" value="<?= $row->id_divisi ?>" readonly>
                     </div>
                 </div>
             </div>
@@ -77,20 +51,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label>Divisi</label>
-                        <select id="id_divisi2" name="id_divisi2" class="form-control" style="width:100%" required>
-                            <option value="">-- Select --</option>
-                            <?php foreach ($divisi->result() as $valap) : ?>
-                                <option value="<?= $valap->id ?>"><?= $valap->divisi ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
                         <label>Gudang</label>
+                        <input type="hidden" class="form-control" id="id_divisi2" value="<?= $row->id_divisi ?>" readonly>
                         <select id="id_gudang2" name="id_gudang2" class="form-control" style="width:100%" required>
                             <option value="">-- Select --</option>
                             <?php foreach ($gudang->result() as $valap) : ?>
@@ -166,35 +128,31 @@
             autoclose: true
         });
         $("select").select2();
+        getGudang();
     });
 
 
-    $("select[name=id_divisi]").change(function() {
+    function getGudang() {
         var x = $("select[name=id_gudang]");
-        if ($(this).val() == "") {
-            x.html("<option>-- Select --</option>");
-        } else {
-            z = "<option>-- Select --</option>";
-            $.ajax({
-                url: "<?= site_url('wrh/aluminium/optionGetGudangDivisi') ?>",
-                dataType: "json",
-                type: "POST",
-                data: {
-                    "item": $('#item').val(),
-                    "divisi": $(this).val()
-                },
-                success: function(data) {
+        z = "<option>-- Select --</option>";
+        $.ajax({
+            url: "<?= site_url('wrh/aluminium/optionGetGudangDivisi') ?>",
+            dataType: "json",
+            type: "POST",
+            data: {
+                "item": $('#item').val(),
+                "divisi": $('#id_divisi').val()
+            },
+            success: function(data) {
 
-                    var z = "<option value=''>-- Select --</option>";
-                    for (var i = 0; i < data.length; i++) {
-                        z += '<option value=' + data[i].id + '>' + data[i].gudang + '</option>';
-                    }
-                    x.html(z);
+                var z = "<option value=''>-- Select --</option>";
+                for (var i = 0; i < data.length; i++) {
+                    z += '<option value=' + data[i].id + '>' + data[i].gudang + '</option>';
                 }
-            });
-
-        }
-    });
+                x.html(z);
+            }
+        });
+    }
 
     $("select[name=id_gudang]").change(function() {
         var x = $("select[name=keranjang]");

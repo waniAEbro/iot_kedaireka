@@ -849,9 +849,11 @@ class aluminium extends CI_Controller
         $this->fungsi->check_previleges('aluminium');
         $id_jenis_item = 1;
         $data['id_item'] = $id;
-        $data['item']    = $this->m_aluminium->getDataItem();
-        $data['divisi']  = $this->db->get_where('master_divisi_stock', array('id_jenis_item' => $id_jenis_item));
+        $data['row'] = $this->m_aluminium->getDataItemMutasi($id)->row();
+        // $data['item']    = $this->m_aluminium->getDataItem();
+        // $data['divisi']  = $this->db->get_where('master_divisi_stock', array('id_jenis_item' => $id_jenis_item));
         $data['gudang']  = $this->db->get_where('master_gudang', array('id_jenis_item' => $id_jenis_item));
+
         $this->load->view('wrh/aluminium/v_aluminium_mutasi_stock_add', $data);
     }
 
