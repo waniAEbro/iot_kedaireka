@@ -651,7 +651,7 @@ class Fppp extends CI_Controller
 				}
 			} else {
 				$cekQtyCounter = $this->m_fppp->getCounter($obj['id_item'], $obj['id_divisi'], $obj['id_gudang'], $obj['keranjang'])->row()->qty;
-				$qty_jadi      = (int)$cekQtyCounter - (int)$obj['qty_in'];
+				$qty_jadi      = (int)$cekQtyCounter - (int)$obj['qty_out'];
 				$this->m_fppp->updateDataCounter($obj['id_item'], $obj['id_divisi'], $obj['id_gudang'], $obj['keranjang'], $qty_jadi);
 			}
 		}
