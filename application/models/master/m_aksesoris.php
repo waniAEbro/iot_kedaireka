@@ -7,6 +7,7 @@ class M_aksesoris extends CI_Model
     public function getData($value = '')
     {
         $this->db->where('id_jenis_item', 2);
+        $this->db->order_by('mi.id', 'desc');
         return $this->db->get('master_item ');
     }
 
