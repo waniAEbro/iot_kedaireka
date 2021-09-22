@@ -986,16 +986,16 @@ class aluminium extends CI_Controller
         $data['item']   = $this->db->get_where('master_item', array("id" => $id))->row();
         $data['mutasi'] = $this->m_aluminium->getMutasiHistory($id);
         if (from_session('id') == 2) {
-            
-        $this->db->where('id_jenis_item', 1);
-        $hasil = $this->db->get('data_counter');
-        foreach ($hasil->result() as $key) {
-            $qtyin        = $this->m_aluminium->getQtyInDetailTabel($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
-            $qtyout       = $this->m_aluminium->getQtyOutDetailTabel($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
-            $data['qty_gudang'] = $qtyin - $qtyout;
-            $this->m_aluminium->updateDataCounter($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang, $data['qty_gudang']);
-        }
 
+            $this->db->where('id_jenis_item', 1);
+            $hasil = $this->db->get('data_counter');
+            foreach ($hasil->result() as $key) {
+                $qtyin        = $this->m_aluminium->getQtyInDetailTabel($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
+                $qtyout       = $this->m_aluminium->getQtyOutDetailTabel($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
+                $data['qty_gudang'] = $qtyin - $qtyout;
+                $this->m_aluminium->updateDataCounter($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang, $data['qty_gudang']);
+            }
+        }
         $this->load->view('wrh/aluminium/v_aluminium_mutasi_stock_history', $data);
     }
 }
