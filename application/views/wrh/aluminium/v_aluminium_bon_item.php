@@ -11,10 +11,10 @@
                 </div>
             </div>
             <div class="box-body">
-                <table width="100%" id="tableku" class="table table-bordered table-striped" style="font-size: smaller;">
+                <table width="100%" id="ableku" class="table table-bordered table-striped table-responsive" style="font-size: smaller;">
                     <thead>
                         <tr>
-                            <th width="15%">FPPP</th>
+                            <th width="20%">FPPP</th>
                             <th width="30%">Item</th>
                             <th width="15%">Gudang</th>
                             <th width="15%">Keranjang</th>
@@ -46,14 +46,14 @@
                     <hr>
                     <tbody>
                         <tr>
-                            <td><select id="id_fppp" name="id_fppp" class="form-control" style="width:100%" required>
+                            <td><select style="width: 130px;" id="id_fppp" name="id_fppp" class="form-control" style="width:100%" required>
                                     <option value="">-- Select --</option>
                                     <?php foreach ($fppp->result() as $valap) : ?>
                                         <option value="<?= $valap->id ?>"><?= $valap->no_fppp ?> - <?= $valap->nama_proyek ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             </td>
-                            <td><select id="item" name="item" class="form-control" style="width:100%" required>
+                            <td><select style="width: 200px;" id="item" name="item" class="form-control" style="width:100%" required>
                                     <option value="">-- Select --</option>
                                     <?php foreach ($item->result() as $valap) : ?>
                                         <option value="<?= $valap->id ?>">
@@ -61,20 +61,20 @@
                                         </option>
                                     <?php endforeach; ?>
                                 </select></td>
-                            <td><select id="id_gudang" name="id_gudang" class="form-control" style="width:100%" required>
+                            <td><select style="width: 120px;" id="id_gudang" name="id_gudang" class="form-control" style="width:100%" required>
                                     <option value="">-- Select --</option>
                                 </select>
                                 <input type="hidden" id="id_divisi">
                             </td>
-                            <td><select id="keranjang" name="keranjang" class="form-control" style="width:100%" required>
+                            <td><select style="width: 120px;" id="keranjang" name="keranjang" class="form-control" style="width:100%" required>
                                     <option value="">-- Select --</option>
                                 </select>
-                                Qty Gudang :<span id="txt_qty_gudang">0</span>
+                                <br>Qty Gudang :<span id="txt_qty_gudang">0</span>
                             </td>
-                            <td><input type="text" style="text-align: right;" class="form-control" id="qty" placeholder="Qty" autocomplete="off"></td>
+                            <td><input style="width: 50px;" type="text" style="text-align: right;" class="form-control" id="qty" placeholder="Qty" autocomplete="off"></td>
                             <td align="center"><input type="checkbox" id="produksi" data-field='produksi' class="checkbox"></td>
                             <td align="center"><input type="checkbox" id="lapangan" data-field='lapangan' class="checkbox"></td>
-                            <td><a onclick="quotation()" class="btn btn-info">Add Stock</a></td>
+                            <td><a onclick="quotation()" class="btn btn-xs btn-info">Add Stock</a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -91,7 +91,7 @@
         var table = $('#tableku').DataTable({
             ordering: false,
             paging: false,
-            scrollX: true,
+            scrollX: false,
         });
         $("select").select2();
         $("#stock").val(0);
@@ -264,9 +264,6 @@
                   </td>\
                   <td width = "30%">\
                     ' + $('#item :selected').text() + '\
-                  </td>\
-                  <td width = "15%">\
-                    ' + $('#id_divisi :selected').text() + '\
                   </td>\
                   <td width = "15%">\
                     ' + $('#id_gudang :selected').text() + '\
