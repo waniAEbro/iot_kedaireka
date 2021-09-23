@@ -18,7 +18,7 @@ class aluminium extends CI_Controller
         $data['aluminium']           = $this->m_aluminium->getData();
         $data['stock_awal_bulan']    = $this->m_aluminium->getStockAwalBulan();
         $data['total_bom']           = $this->m_aluminium->getTotalBOM();
-        $data['total_out'] = $this->m_aluminium->getTotalOut();
+        $data['total_out']           = $this->m_aluminium->getTotalOut();
         $data['total_in_per_bulan']  = $this->m_aluminium->getTotalInPerBulan();
         $data['total_out_per_bulan'] = $this->m_aluminium->getTotalOutPerBulan();
         $data['warna']               = 'Warna';
@@ -28,17 +28,17 @@ class aluminium extends CI_Controller
     public function list()
     {
         $this->fungsi->check_previleges('aluminium');
-        $offset = $this->uri->segment(4, 0);
+        $offset  = $this->uri->segment(4, 0);
         $perpage = 10;
         // $data['user'] = $this->m_catatan->get_user(false,'',$perpage,$offset);
-        $data['aluminium']           = $this->m_aluminium->getData(false, '', $perpage, $offset);
-        $total_rows = $this->m_aluminium->getData(true, '');
-        $data['paging'] = $this->fungsi->create_paging('wrh/aluminium/list', $total_rows, $perpage, 4);
-        $data['datainfo'] = parse_infotable($offset, $perpage, $total_rows);
+        $data['aluminium'] = $this->m_aluminium->getData(false, '', $perpage, $offset);
+        $total_rows  = $this->m_aluminium->getData(true, '');
+        $data['paging']    = $this->fungsi->create_paging('wrh/aluminium/list', $total_rows, $perpage, 4);
+        $data['datainfo']  = parse_infotable($offset, $perpage, $total_rows);
 
         $data['stock_awal_bulan']    = $this->m_aluminium->getStockAwalBulan();
         $data['total_bom']           = $this->m_aluminium->getTotalBOM();
-        $data['total_out'] = $this->m_aluminium->getTotalOut();
+        $data['total_out']           = $this->m_aluminium->getTotalOut();
         $data['total_in_per_bulan']  = $this->m_aluminium->getTotalInPerBulan();
         $data['total_out_per_bulan'] = $this->m_aluminium->getTotalOutPerBulan();
         $data['warna']               = 'Warna';
@@ -57,16 +57,16 @@ class aluminium extends CI_Controller
             $keyword = from_session('keyword_al_warna');
         }
 
-        $perpage = 10;
-        $data['aluminium']           = $this->m_aluminium->getData(false, '', $perpage, $offset);
-        $total_rows = $this->m_aluminium->getData(true, '');
-        $data['paging'] = $this->fungsi->create_paging('wrh/aluminium/list', $total_rows, $perpage, 4);
-        $data['datainfo'] = parse_infotable($offset, $perpage, $total_rows);
-        $data['search'] = true;
+        $perpage     = 10;
+        $data['aluminium'] = $this->m_aluminium->getData(false, '', $perpage, $offset);
+        $total_rows  = $this->m_aluminium->getData(true, '');
+        $data['paging']    = $this->fungsi->create_paging('wrh/aluminium/list', $total_rows, $perpage, 4);
+        $data['datainfo']  = parse_infotable($offset, $perpage, $total_rows);
+        $data['search']    = true;
 
         $data['stock_awal_bulan']    = $this->m_aluminium->getStockAwalBulan();
         $data['total_bom']           = $this->m_aluminium->getTotalBOM();
-        $data['total_out'] = $this->m_aluminium->getTotalOut();
+        $data['total_out']           = $this->m_aluminium->getTotalOut();
         $data['total_in_per_bulan']  = $this->m_aluminium->getTotalInPerBulan();
         $data['total_out_per_bulan'] = $this->m_aluminium->getTotalOutPerBulan();
         $data['warna']               = 'Warna';
@@ -148,7 +148,7 @@ class aluminium extends CI_Controller
             'id_gudang'      => $this->input->post('id_gudang'),
             'keranjang'      => $this->input->post('keranjang'),
             'keterangan'     => $this->input->post('keterangan'),
-            'id_penginput'        => from_session('id'),
+            'id_penginput'   => from_session('id'),
             'created'        => date('Y-m-d H:i:s'),
         );
         $this->m_aluminium->insertstokin($datapost);
@@ -178,17 +178,17 @@ class aluminium extends CI_Controller
     public function getIdDivisi()
     {
         $this->fungsi->check_previleges('aluminium');
-        $id   = $this->input->post('id_item');
+        $id        = $this->input->post('id_item');
         $id_divisi = $this->m_aluminium->getRowItemWarna($id)->id_divisi;
-        $respon = ['id_divisi' => $id_divisi];
+        $respon    = ['id_divisi' => $id_divisi];
         echo json_encode($respon);
     }
 
     public function deleteItemIn()
     {
         $this->fungsi->check_previleges('aluminium');
-        $id   = $this->input->post('id');
-        $getRow = $this->m_aluminium->getRowStock($id);
+        $id            = $this->input->post('id');
+        $getRow        = $this->m_aluminium->getRowStock($id);
         $cekQtyCounter = $this->m_aluminium->getDataCounter($getRow->id_item, $getRow->id_divisi, $getRow->id_gudang, $getRow->keranjang)->row()->qty;
         $qty_jadi      = (int)$cekQtyCounter - (int)$getRow->qty_in;
         $this->m_aluminium->updateDataCounter($getRow->id_item, $getRow->id_divisi, $getRow->id_gudang, $getRow->keranjang, $qty_jadi);
@@ -215,11 +215,11 @@ class aluminium extends CI_Controller
 
     public function stok_out_make($id_fppp)
     {
-        $id_jenis_item = 1;
-        $data['id_fppp']   = $id_fppp;
-        $data['rowFppp']   = $this->m_aluminium->getRowFppp($id_fppp);
-        $data['list_bom']  = $this->m_aluminium->getItemBom($id_fppp);
-        $data['id_jenis_item']    = $id_jenis_item;
+        $id_jenis_item   = 1;
+        $data['id_fppp']       = $id_fppp;
+        $data['rowFppp']       = $this->m_aluminium->getRowFppp($id_fppp);
+        $data['list_bom']      = $this->m_aluminium->getItemBom($id_fppp);
+        $data['id_jenis_item'] = $id_jenis_item;
         // $data['divisi']    = $this->m_aluminium->getDivisiBom($id_jenis_item);
         // $data['gudang']    = $this->m_aluminium->getGudangBom($id_jenis_item);
         // $data['keranjang'] = $this->m_aluminium->getKeranjangBom($id_jenis_item);
@@ -232,15 +232,15 @@ class aluminium extends CI_Controller
     {
 
         $id_jenis_item = 1;
-        $data['id_fppp']   = $id_fppp;
-        $list =  $this->m_aluminium->getListBomKurang($id_fppp);
+        $data['id_fppp']     = $id_fppp;
+        $list          = $this->m_aluminium->getListBomKurang($id_fppp);
         foreach ($list->result() as $key) {
             $this->m_aluminium->updatekeMf($key->id, $id_fppp);
         }
         sleep(1);
-        $data['rowFppp']   = $this->m_aluminium->getRowFppp($id_fppp);
-        $data['list_bom']  = $this->m_aluminium->getItemBomMf($id_fppp);
-        $data['id_jenis_item']    = $id_jenis_item;
+        $data['rowFppp']       = $this->m_aluminium->getRowFppp($id_fppp);
+        $data['list_bom']      = $this->m_aluminium->getItemBomMf($id_fppp);
+        $data['id_jenis_item'] = $id_jenis_item;
         // $data['divisi']    = $this->m_aluminium->getDivisiBom($id_jenis_item);
         // $data['gudang']    = $this->m_aluminium->getGudangBomMf($id_jenis_item);
         // $data['keranjang'] = $this->m_aluminium->getKeranjangBom($id_jenis_item);
@@ -251,9 +251,9 @@ class aluminium extends CI_Controller
     public function saveout()
     {
         $this->fungsi->check_previleges('aluminium');
-        $field  = $this->input->post('field');
-        $value  = $this->input->post('value');
-        $editid = $this->input->post('id');
+        $field   = $this->input->post('field');
+        $value   = $this->input->post('value');
+        $editid  = $this->input->post('id');
         $id_fppp = $this->input->post('id_fppp');
         if ($field == 'produksi_' . $editid) {
             $this->m_aluminium->editRowOut('produksi', $value, $editid);
@@ -263,12 +263,12 @@ class aluminium extends CI_Controller
             $this->m_aluminium->editRowOut('produksi', 0, $editid);
         } else {
             $obj = array(
-                'id_divisi' => $this->input->post('divisi'),
-                'id_gudang' => $this->input->post('gudang'),
-                'keranjang' => $this->input->post('keranjang'),
-                'qty_out'   => $value,
-                'id_penginput'        => from_session('id'),
-                'updated'   => date('Y-m-d H:i:s'),
+                'id_divisi'    => $this->input->post('divisi'),
+                'id_gudang'    => $this->input->post('gudang'),
+                'keranjang'    => $this->input->post('keranjang'),
+                'qty_out'      => $value,
+                'id_penginput' => from_session('id'),
+                'updated'      => date('Y-m-d H:i:s'),
             );
             $this->m_aluminium->editQtyOut($editid, $obj);
         }
@@ -285,10 +285,10 @@ class aluminium extends CI_Controller
         $this->m_aluminium->updateDataCounter($id_item, $id_divisi, $id_gudang, $keranjang, $data['qty_gudang']);
 
         $id_jenis_item = 1;
-        $qty_bom     = $this->m_aluminium->getTotQtyBomFppp($id_jenis_item);
-        $qty_out    = $this->m_aluminium->getTotQtyOutFppp($id_jenis_item);
-        $q_bom           = @$qty_bom[$id_fppp];
-        $q_out           = @$qty_out[$id_fppp];
+        $qty_bom       = $this->m_aluminium->getTotQtyBomFppp($id_jenis_item);
+        $qty_out       = $this->m_aluminium->getTotQtyOutFppp($id_jenis_item);
+        $q_bom         = @$qty_bom[$id_fppp];
+        $q_out         = @$qty_out[$id_fppp];
         if ($q_bom <= $q_out) {
             $this->m_aluminium->updateStatusFppp($id_fppp);
         }
@@ -300,9 +300,9 @@ class aluminium extends CI_Controller
     public function saveoutcheck()
     {
         $this->fungsi->check_previleges('aluminium');
-        $field  = $this->input->post('field');
-        $value  = $this->input->post('value');
-        $editid = $this->input->post('id');
+        $field   = $this->input->post('field');
+        $value   = $this->input->post('value');
+        $editid  = $this->input->post('id');
         $id_fppp = $this->input->post('id_fppp');
         if ($field == 'produksi_' . $editid) {
             $this->m_aluminium->editRowOut('produksi', $value, $editid);
@@ -315,13 +315,13 @@ class aluminium extends CI_Controller
         $qty_out = ($qty_txt == '') ? 0 : $qty_txt;
 
         $obj = array(
-            'sj_mf' => 0,
-            'id_divisi' => $this->input->post('divisi'),
-            'id_gudang' => $this->input->post('gudang'),
-            'keranjang' => $this->input->post('keranjang'),
-            'qty_out'   => $qty_out,
-            'id_penginput'        => from_session('id'),
-            'updated'   => date('Y-m-d H:i:s'),
+            'sj_mf'        => 0,
+            'id_divisi'    => $this->input->post('divisi'),
+            'id_gudang'    => $this->input->post('gudang'),
+            'keranjang'    => $this->input->post('keranjang'),
+            'qty_out'      => $qty_out,
+            'id_penginput' => from_session('id'),
+            'updated'      => date('Y-m-d H:i:s'),
         );
         $this->m_aluminium->editQtyOut($editid, $obj);
         $this->m_aluminium->editStatusInOut($editid);
@@ -341,9 +341,9 @@ class aluminium extends CI_Controller
     public function saveoutcheckmf()
     {
         $this->fungsi->check_previleges('aluminium');
-        $field  = $this->input->post('field');
-        $value  = $this->input->post('value');
-        $editid = $this->input->post('id');
+        $field   = $this->input->post('field');
+        $value   = $this->input->post('value');
+        $editid  = $this->input->post('id');
         $id_fppp = $this->input->post('id_fppp');
         if ($field == 'produksi_' . $editid) {
             $this->m_aluminium->editRowOut('produksi', $value, $editid);
@@ -356,13 +356,13 @@ class aluminium extends CI_Controller
         $qty_out = ($qty_txt == '') ? 0 : $qty_txt;
 
         $obj = array(
-            'sj_mf' => 1,
-            'id_divisi' => $this->input->post('divisi'),
-            'id_gudang' => $this->input->post('gudang'),
-            'keranjang' => $this->input->post('keranjang'),
-            'qty_out'   => $qty_out,
-            'id_penginput'        => from_session('id'),
-            'updated'   => date('Y-m-d H:i:s'),
+            'sj_mf'        => 1,
+            'id_divisi'    => $this->input->post('divisi'),
+            'id_gudang'    => $this->input->post('gudang'),
+            'keranjang'    => $this->input->post('keranjang'),
+            'qty_out'      => $qty_out,
+            'id_penginput' => from_session('id'),
+            'updated'      => date('Y-m-d H:i:s'),
         );
         $this->m_aluminium->editQtyOut($editid, $obj);
         $this->m_aluminium->editStatusInOut($editid);
@@ -386,17 +386,17 @@ class aluminium extends CI_Controller
     {
         $this->fungsi->check_previleges('aluminium');
         $getRowStock = $this->m_aluminium->getRowStock($id_stock);
-        $qtyBOM = $getRowStock->qty_bom;
-        $kurang = $qtyBOM - $getRowStock->qty_out;
+        $qtyBOM      = $getRowStock->qty_bom;
+        $kurang      = $qtyBOM - $getRowStock->qty_out;
         $object      = array(
             'id_fppp'       => $id_fppp,
-            'is_parsial'       => 1,
+            'is_parsial'    => 1,
             'is_bom'        => $getRowStock->is_bom,
             'id_jenis_item' => $getRowStock->id_jenis_item,
             'id_item'       => $getRowStock->id_item,
             'qty_bom'       => $kurang,
-            'ke_mf'       => $getRowStock->ke_mf,
-            'is_parsial'       => 1,
+            'ke_mf'         => $getRowStock->ke_mf,
+            'is_parsial'    => 1,
             'created'       => date('Y-m-d H:i:s'),
         );
         $this->db->insert('data_stock', $object);
@@ -410,7 +410,7 @@ class aluminium extends CI_Controller
         $this->fungsi->check_previleges('aluminium');
         $this->m_aluminium->hapusParsial($id_stock);
         $object      = array(
-            'id_stock'       => $id_stock,
+            'id_stock' => $id_stock,
         );
         $this->fungsi->message_box("Hapus Parsial berhasil", "success");
         $this->fungsi->catat($object, "Menghapus parsial data sbb:", true);
@@ -421,8 +421,8 @@ class aluminium extends CI_Controller
     {
         $this->fungsi->check_previleges('aluminium');
         $data['id_fppp']        = $id_fppp;
-        $data['row_fppp']        = $this->m_aluminium->getRowFppp($id_fppp);
-        $kode_divisi = $this->m_aluminium->getKodeDivisi($id_fppp);
+        $data['row_fppp']       = $this->m_aluminium->getRowFppp($id_fppp);
+        $kode_divisi      = $this->m_aluminium->getKodeDivisi($id_fppp);
         $data['no_surat_jalan'] = str_pad($this->m_aluminium->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJ/' . $kode_divisi . '/' . date('m') . '/' . date('Y');
 
         $this->load->view('wrh/aluminium/v_aluminium_buat_surat_jalan', $data);
@@ -432,8 +432,8 @@ class aluminium extends CI_Controller
     {
         $this->fungsi->check_previleges('aluminium');
         $data['id_fppp']        = $id_fppp;
-        $data['row_fppp']        = $this->m_aluminium->getRowFppp($id_fppp);
-        $kode_divisi = $this->m_aluminium->getKodeDivisi($id_fppp);
+        $data['row_fppp']       = $this->m_aluminium->getRowFppp($id_fppp);
+        $kode_divisi      = $this->m_aluminium->getKodeDivisi($id_fppp);
         $data['no_surat_jalan'] = str_pad($this->m_aluminium->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJMF/' . $kode_divisi . '/' . date('m') . '/' . date('Y');
 
         $this->load->view('wrh/aluminium/v_aluminium_buat_surat_jalan_mf', $data);
@@ -453,7 +453,7 @@ class aluminium extends CI_Controller
         $this->fungsi->check_previleges('aluminium');
         $id_jenis_item = 1;
         $data['surat_jalan'] = $this->m_aluminium->getSuratJalan(1, $id_jenis_item);
-        $data['keterangan'] = $this->m_aluminium->getKeterangan();
+        $data['keterangan']  = $this->m_aluminium->getKeterangan();
         $this->load->view('wrh/aluminium/v_aluminium_out_sj_list', $data);
     }
 
@@ -474,14 +474,14 @@ class aluminium extends CI_Controller
     public function simpanSuratJalan()
     {
         $this->fungsi->check_previleges('aluminium');
-        $id_jenis_item = 1;
+        $id_jenis_item     = 1;
         $id_fppp           = $this->input->post('id_fppp');
         $penerima          = $this->input->post('penerima');
         $alamat_pengiriman = $this->input->post('alamat_pengiriman');
         $sopir             = $this->input->post('sopir');
         $no_kendaraan      = $this->input->post('no_kendaraan');
-        $kode_divisi = $this->m_aluminium->getKodeDivisi($id_fppp);
-        $no_surat_jalan = str_pad($this->m_aluminium->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJ/' . $kode_divisi . '/' . date('m') . '/' . date('Y');
+        $kode_divisi       = $this->m_aluminium->getKodeDivisi($id_fppp);
+        $no_surat_jalan    = str_pad($this->m_aluminium->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJ/' . $kode_divisi . '/' . date('m') . '/' . date('Y');
         $obj               = array(
             'id_fppp'           => $id_fppp,
             'no_surat_jalan'    => $no_surat_jalan,
@@ -494,7 +494,7 @@ class aluminium extends CI_Controller
             'created'           => date('Y-m-d H:i:s'),
         );
         $this->db->insert('data_surat_jalan', $obj);
-        $data['id']    = $this->db->insert_id();
+        $data['id'] = $this->db->insert_id();
         $this->m_aluminium->updateJadiSuratJalan($id_fppp, $data['id']);
         echo json_encode($data);
     }
@@ -502,14 +502,14 @@ class aluminium extends CI_Controller
     public function simpanSuratJalanMf()
     {
         $this->fungsi->check_previleges('aluminium');
-        $id_jenis_item = 1;
+        $id_jenis_item     = 1;
         $id_fppp           = $this->input->post('id_fppp');
         $penerima          = $this->input->post('penerima');
         $alamat_pengiriman = $this->input->post('alamat_pengiriman');
         $sopir             = $this->input->post('sopir');
         $no_kendaraan      = $this->input->post('no_kendaraan');
-        $kode_divisi = $this->m_aluminium->getKodeDivisi($id_fppp);
-        $no_surat_jalan = str_pad($this->m_aluminium->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJMF/' . $kode_divisi . '/' . date('m') . '/' . date('Y');
+        $kode_divisi       = $this->m_aluminium->getKodeDivisi($id_fppp);
+        $no_surat_jalan    = str_pad($this->m_aluminium->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJMF/' . $kode_divisi . '/' . date('m') . '/' . date('Y');
         $obj               = array(
             'id_fppp'           => $id_fppp,
             'no_surat_jalan'    => $no_surat_jalan,
@@ -522,7 +522,7 @@ class aluminium extends CI_Controller
             'created'           => date('Y-m-d H:i:s'),
         );
         $this->db->insert('data_surat_jalan', $obj);
-        $data['id']    = $this->db->insert_id();
+        $data['id'] = $this->db->insert_id();
         $this->m_aluminium->updateJadiSuratJalanMf($id_fppp, $data['id']);
         echo json_encode($data);
     }
@@ -573,7 +573,7 @@ class aluminium extends CI_Controller
         $this->fungsi->check_previleges('aluminium');
         $this->load->library('form_validation');
         $id_jenis_item = 1;
-        $config = array(
+        $config        = array(
             array(
                 'field' => 'id_item',
                 'label' => 'id_item',
@@ -623,12 +623,12 @@ class aluminium extends CI_Controller
         $editid = $this->input->post('id');
         // $id_fppp = $this->input->post('id_fppp');
 
-        $id_item      = $this->db->get_where('data_stock', array('id' => $editid))->row()->id_item;
-        $id_divisi    = $this->input->post('divisi');
-        $id_gudang    = $this->input->post('gudang');
-        $keranjang    = $this->input->post('keranjang');
-        $qtyin        = $this->m_aluminium->getQtyInDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
-        $qtyout       = $this->m_aluminium->getQtyOutDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
+        $id_item   = $this->db->get_where('data_stock', array('id' => $editid))->row()->id_item;
+        $id_divisi = $this->input->post('divisi');
+        $id_gudang = $this->input->post('gudang');
+        $keranjang = $this->input->post('keranjang');
+        $qtyin     = $this->m_aluminium->getQtyInDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
+        $qtyout    = $this->m_aluminium->getQtyOutDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
         // $data['qty_gudang'] = $qtyin;
         $data['qty_gudang'] = $qtyin - $qtyout;
 
@@ -655,7 +655,7 @@ class aluminium extends CI_Controller
         $data = array(
             'id'     => $id,
             'header' => $this->m_aluminium->getHeaderSendCetak($id)->row(),
-            'detail' => $this->m_aluminium->getDataDetailSendCetak($id)->result(),
+            'detail' => $this->m_aluminium->getDataDetailSendCetakBon($id)->result(),
         );
         // print_r($data['detail']);
 
@@ -667,7 +667,7 @@ class aluminium extends CI_Controller
         $this->fungsi->check_previleges('aluminium');
         $id_jenis_item = 1;
         $data['surat_jalan'] = $this->m_aluminium->getSuratJalan(2, $id_jenis_item);
-        $data['keterangan'] = $this->m_aluminium->getKeterangan();
+        $data['keterangan']  = $this->m_aluminium->getKeterangan();
         $this->load->view('wrh/aluminium/v_aluminium_bon_list', $data);
     }
 
@@ -675,22 +675,23 @@ class aluminium extends CI_Controller
     {
         $this->fungsi->check_previleges('aluminium');
         $id_jenis_item = 1;
-        $data['fppp']              = $this->db->get('data_fppp');
-        $data['item']              = $this->m_aluminium->getDataItem();
-        $data['divisi']            = $this->m_aluminium->getDivisiBom($id_jenis_item);
-        $data['list_sj']           = $this->m_aluminium->getListItemBonManual();
+        $data['fppp']        = $this->db->get('data_fppp');
+        $data['warna_akhir'] = $this->db->get('master_warna');
+        $data['item']        = $this->m_aluminium->getDataItem();
+        $data['divisi']      = $this->m_aluminium->getDivisiBom($id_jenis_item);
+        $data['list_sj']     = $this->m_aluminium->getListItemBonManual();
         $this->load->view('wrh/aluminium/v_aluminium_bon_item', $data);
     }
 
     public function buat_surat_jalan_bon()
     {
         $this->fungsi->check_previleges('aluminium');
-        $id_fppp = $this->m_aluminium->getListItemBonManual()->row()->id_fppp;
+        $id_fppp          = $this->m_aluminium->getListItemBonManual()->row()->id_fppp;
         $data['id_fppp']        = $id_fppp;
-        $kode_divisi = $this->m_aluminium->getKodeDivisi($id_fppp);
-        $no_surat_jalan = str_pad($this->m_aluminium->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJBON/' . $kode_divisi . '/' . date('m') . '/' . date('Y');
-        $data['no_surat_jalan']    = $no_surat_jalan;
-        $data['list_sj']           = $this->m_aluminium->getListItemBonManual();
+        $kode_divisi      = $this->m_aluminium->getKodeDivisi($id_fppp);
+        $no_surat_jalan   = str_pad($this->m_aluminium->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJBON/' . $kode_divisi . '/' . date('m') . '/' . date('Y');
+        $data['no_surat_jalan'] = $no_surat_jalan;
+        $data['list_sj']        = $this->m_aluminium->getListItemBonManual();
         $this->load->view('wrh/aluminium/v_aluminium_bon_add', $data);
     }
 
@@ -706,13 +707,13 @@ class aluminium extends CI_Controller
     public function lihat_item_stok_out($id_sj)
     {
         $this->fungsi->check_previleges('aluminium');
-        $id_fppp = $this->m_aluminium->getListItemStokOut($id_sj)->row()->id_fppp;
-        $data['id_fppp']        = $id_fppp;
+        $id_fppp             = $this->m_aluminium->getListItemStokOut($id_sj)->row()->id_fppp;
+        $data['id_fppp']           = $id_fppp;
         $data['no_surat_jalan']    = $this->m_aluminium->getRowSuratJalan($id_sj)->row()->no_surat_jalan;
-        $data['penerima']    = $this->m_aluminium->getRowSuratJalan($id_sj)->row()->penerima;
-        $data['alamat_pengiriman']    = $this->m_aluminium->getRowSuratJalan($id_sj)->row()->alamat_pengiriman;
-        $data['sopir']    = $this->m_aluminium->getRowSuratJalan($id_sj)->row()->sopir;
-        $data['no_kendaraan']    = $this->m_aluminium->getRowSuratJalan($id_sj)->row()->no_kendaraan;
+        $data['penerima']          = $this->m_aluminium->getRowSuratJalan($id_sj)->row()->penerima;
+        $data['alamat_pengiriman'] = $this->m_aluminium->getRowSuratJalan($id_sj)->row()->alamat_pengiriman;
+        $data['sopir']             = $this->m_aluminium->getRowSuratJalan($id_sj)->row()->sopir;
+        $data['no_kendaraan']      = $this->m_aluminium->getRowSuratJalan($id_sj)->row()->no_kendaraan;
         $data['list_sj']           = $this->m_aluminium->getListItemStokOut($id_sj);
         $this->load->view('wrh/aluminium/v_aluminium_lihat_item_out', $data);
     }
@@ -720,14 +721,14 @@ class aluminium extends CI_Controller
     public function simpanSuratJalanBon()
     {
         $this->fungsi->check_previleges('aluminium');
-        $id_jenis_item = 1;
+        $id_jenis_item     = 1;
         $id_fppp           = $this->input->post('id_fppp');
         $penerima          = $this->input->post('penerima');
         $alamat_pengiriman = $this->input->post('alamat_pengiriman');
         $sopir             = $this->input->post('sopir');
         $no_kendaraan      = $this->input->post('no_kendaraan');
-        $kode_divisi = $this->m_aluminium->getKodeDivisi($id_fppp);
-        $no_surat_jalan = str_pad($this->m_aluminium->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJBON/' . $kode_divisi . '/' . date('m') . '/' . date('Y');
+        $kode_divisi       = $this->m_aluminium->getKodeDivisi($id_fppp);
+        $no_surat_jalan    = str_pad($this->m_aluminium->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJBON/' . $kode_divisi . '/' . date('m') . '/' . date('Y');
         $obj               = array(
             'id_fppp'           => $id_fppp,
             'no_surat_jalan'    => $no_surat_jalan,
@@ -740,7 +741,7 @@ class aluminium extends CI_Controller
             'created'           => date('Y-m-d H:i:s'),
         );
         $this->db->insert('data_surat_jalan', $obj);
-        $data['id']    = $this->db->insert_id();
+        $data['id'] = $this->db->insert_id();
         $this->m_aluminium->updateJadiSuratJalanBon($data['id']);
         echo json_encode($data);
     }
@@ -781,11 +782,11 @@ class aluminium extends CI_Controller
     {
         $this->fungsi->check_previleges('aluminium');
         $id_jenis_item = 1;
-        $id_item = $this->input->post('item');
-        $id_divisi = $this->input->post('id_divisi');
-        $id_gudang = $this->input->post('id_gudang');
-        $keranjang = $this->input->post('keranjang');
-        $datapost = array(
+        $id_item       = $this->input->post('item');
+        $id_divisi     = $this->input->post('id_divisi');
+        $id_gudang     = $this->input->post('id_gudang');
+        $keranjang     = $this->input->post('keranjang');
+        $datapost      = array(
             'inout'          => 2,
             'id_jenis_item'  => $id_jenis_item,
             'id_surat_jalan' => 0,
@@ -797,12 +798,13 @@ class aluminium extends CI_Controller
             'qty_out'        => $this->input->post('qty'),
             'produksi'       => $this->input->post('produksi'),
             'lapangan'       => $this->input->post('lapangan'),
-            'id_penginput'        => from_session('id'),
+            'id_warna_akhir' => $this->input->post('warna_akhir'),
+            'id_penginput'   => from_session('id'),
             'created'        => date('Y-m-d H:i:s'),
             'updated'        => date('Y-m-d H:i:s'),
         );
         $this->db->insert('data_stock', $datapost);
-        $data['id'] = $this->db->insert_id();
+        $data['id']         = $this->db->insert_id();
         $qtyin        = $this->m_aluminium->getQtyInDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
         $qtyout       = $this->m_aluminium->getQtyOutDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
         $data['qty_gudang'] = $qtyin - $qtyout;
@@ -816,12 +818,12 @@ class aluminium extends CI_Controller
     public function deleteItemBonManual()
     {
         $this->fungsi->check_previleges('aluminium');
-        $id   = $this->input->post('id');
+        $id = $this->input->post('id');
 
-        $id_item      = $this->db->get_where('data_stock', array('id' => $id))->row()->id_item;
-        $id_divisi    = $this->db->get_where('data_stock', array('id' => $id))->row()->id_divisi;
-        $id_gudang    = $this->db->get_where('data_stock', array('id' => $id))->row()->id_gudang;
-        $keranjang    = $this->db->get_where('data_stock', array('id' => $id))->row()->keranjang;
+        $id_item   = $this->db->get_where('data_stock', array('id' => $id))->row()->id_item;
+        $id_divisi = $this->db->get_where('data_stock', array('id' => $id))->row()->id_divisi;
+        $id_gudang = $this->db->get_where('data_stock', array('id' => $id))->row()->id_gudang;
+        $keranjang = $this->db->get_where('data_stock', array('id' => $id))->row()->keranjang;
         $this->m_aluminium->deleteItemBonManual($id);
         $qtyin        = $this->m_aluminium->getQtyInDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
         $qtyout       = $this->m_aluminium->getQtyOutDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
@@ -848,11 +850,11 @@ class aluminium extends CI_Controller
     {
         $this->fungsi->check_previleges('aluminium');
         $id_jenis_item = 1;
-        $data['id_item'] = $id;
-        $data['row'] = $this->m_aluminium->getDataItemMutasi($id)->row();
+        $data['id_item']     = $id;
+        $data['row']         = $this->m_aluminium->getDataItemMutasi($id)->row();
         // $data['item']    = $this->m_aluminium->getDataItem();
         // $data['divisi']  = $this->db->get_where('master_divisi_stock', array('id_jenis_item' => $id_jenis_item));
-        $data['gudang']  = $this->db->get_where('master_gudang', array('id_jenis_item' => $id_jenis_item));
+        $data['gudang'] = $this->db->get_where('master_gudang', array('id_jenis_item' => $id_jenis_item));
 
         $this->load->view('wrh/aluminium/v_aluminium_mutasi_stock_add', $data);
     }
@@ -860,9 +862,9 @@ class aluminium extends CI_Controller
     public function optionGetGudangItem()
     {
         $this->fungsi->check_previleges('aluminium');
-        $id_item   = $this->input->post('item');
-        $get_data  = $this->m_aluminium->getGudangItem($id_item);
-        $data      = array();
+        $id_item  = $this->input->post('item');
+        $get_data = $this->m_aluminium->getGudangItem($id_item);
+        $data     = array();
         foreach ($get_data as $val) {
             $data[] = $val;
         }
@@ -872,8 +874,8 @@ class aluminium extends CI_Controller
     public function getDivisiItem()
     {
         $this->fungsi->check_previleges('aluminium');
-        $id_item   = $this->input->post('item');
-        $data['id_divisi']    = $this->m_aluminium->mgetDivisiItem($id_item);
+        $id_item     = $this->input->post('item');
+        $data['id_divisi'] = $this->m_aluminium->mgetDivisiItem($id_item);
         echo json_encode($data);
     }
 
@@ -915,7 +917,7 @@ class aluminium extends CI_Controller
 
         // $get_data = $qtyin - $qtyout;
 
-        $data['qty']    = $this->m_aluminium->getQtyCounter($id_item, $id_divisi, $id_gudang, $keranjang);
+        $data['qty'] = $this->m_aluminium->getQtyCounter($id_item, $id_divisi, $id_gudang, $keranjang);
         echo json_encode($data);
     }
 
@@ -923,10 +925,10 @@ class aluminium extends CI_Controller
     {
         $this->fungsi->check_previleges('aluminium');
         $id_jenis_item = 1;
-        $id_item   = $this->input->post('item');
-        $id_divisi = $this->input->post('divisi');
-        $id_gudang = $this->input->post('gudang');
-        $keranjang = $this->input->post('keranjang');
+        $id_item       = $this->input->post('item');
+        $id_divisi     = $this->input->post('divisi');
+        $id_gudang     = $this->input->post('gudang');
+        $keranjang     = $this->input->post('keranjang');
 
         $datapost_out = array(
             'id_item'    => $this->input->post('id_item'),

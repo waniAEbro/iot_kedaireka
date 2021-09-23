@@ -65,6 +65,7 @@
                             <th width="7%">Qty</th>
                             <th width="7%">Produksi</th>
                             <th width="7%">Lapangan</th>
+                            <th width="10%">Warna Akhir</th>
                             <th width="5%">Act</th>
                         </tr>
                     </thead>
@@ -84,6 +85,7 @@
                                 <td align="center"><?= $row->qty_out ?></td>
                                 <td align="center"><input type="checkbox" onclick="return false;" class="checkbox" <?= $cekproduksi ?>></td>
                                 <td align="center"><input type="checkbox" onclick="return false;" class="checkbox" <?= $ceklapangan ?>></td>
+                                <td align="center"><?= $row->warna_akhir ?></td>
                                 <td align="center"><a class="btn btn-xs btn-danger" href="javascript:void(0)" onClick="hapus(<?= $row->id_stock ?>)"><i class="fa fa-trash"></i></a></td>
                             </tr>
                         <?php } ?>

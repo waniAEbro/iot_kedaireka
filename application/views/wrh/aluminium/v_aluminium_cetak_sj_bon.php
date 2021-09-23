@@ -143,7 +143,7 @@ foreach ($detail as $key) {
                     <td align="center">1</td>
                     <td align="center">' . $key->satuan . '</td>
                     <td align="center">' . $key->warna . '</td>
-                    <td align="center">' . $warna_sblm . '</td>
+                    <td align="center">' . $key->warna_akhir . '</td>
                 </tr>';
 }
 $html .= '</table><br><br>';
