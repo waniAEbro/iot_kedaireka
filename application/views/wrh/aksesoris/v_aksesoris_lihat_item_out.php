@@ -58,7 +58,7 @@
                             <th width="30%">Item</th>
                             <th width="15%">Divisi</th>
                             <th width="15%">Gudang</th>
-                            <th width="15%">Keranjang</th>
+                            <th width="15%">Keranjang/Rak</th>
                             <th width="7%">Qty</th>
                             <th width="7%">Produksi</th>
                             <th width="7%">Lapangan</th>

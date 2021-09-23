@@ -94,7 +94,7 @@
                             <th width="15%">No PR</th>
                             <th width="15%">Divisi</th>
                             <th width="15%">Gudang</th>
-                            <th width="15%">Keranjang</th>
+                            <th width="15%">Keranjang/Rak</th>
                             <th width="15%">Keterangan</th>
                         </tr>
                     </thead>

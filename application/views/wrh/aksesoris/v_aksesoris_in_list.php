@@ -24,7 +24,7 @@
                         <th>Deskripsi</th>
                         <th>Divisi</th>
                         <th>Gudang</th>
-                        <th>Keranjang</th>
+                        <th>Keranjang/Rak</th>
                         <th>Qty</th>
                         <th>Supplier</th>
                         <th>No Surat Jalan</th>

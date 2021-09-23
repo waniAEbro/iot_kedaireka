@@ -246,7 +246,7 @@
                 '<th bgcolor="#bfbfbf">No</th>' +
                 '<th bgcolor="#bfbfbf">Divisi</th>' +
                 '<th bgcolor="#bfbfbf">Gudang</th>' +
-                '<th bgcolor="#bfbfbf">Keranjang</th>' +
+                '<th bgcolor="#bfbfbf">Keranjang/Rak</th>' +
                 '<th bgcolor="#bfbfbf">Stock Awal Bulan</th>' +
                 '<th bgcolor="#bfbfbf">Total In Per Bulan</th>' +
                 '<th bgcolor="#bfbfbf">Total Out Per Bulan</th>' +
