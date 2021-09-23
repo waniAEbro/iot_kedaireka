@@ -10,7 +10,7 @@
                     ?>
                 </div>
             </div>
-            <div class="box-body">
+            <div class="box-body" style="overflow-x:auto;">
                 <table width="100%" id="ableku" class="table table-bordered table-striped table-responsive" style="font-size: smaller;">
                     <thead>
                         <tr>

@@ -4,13 +4,13 @@
     <div class="col-lg-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">List BOM aksesoris</h3>
+                <h3 class="box-title">List BON Aksesoris</h3>
                 <div class="box-tools pull-right">
                     <?php //echo button('load_silent("klg/fppp","#content")', 'Kembali', 'btn btn-success'); 
                     ?>
                 </div>
             </div>
-            <div class="box-body">
+            <div class="box-body" style="overflow-x:auto;">
                 <table width="100%" id="ableku" class="table table-bordered table-striped table-responsive" style="font-size: smaller;">
                     <thead>
                         <tr>
