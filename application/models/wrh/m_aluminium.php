@@ -344,6 +344,9 @@ class M_aluminium extends CI_Model
         $this->db->where('da.inout', 1);
         $this->db->where('da.mutasi', 0);
         $this->db->where('mi.id_jenis_item', $id_jenis_item);
+        if (from_session('level' > 1)) {
+            $this->db->where('da.id_penginput', from_session('id'));
+        }
         $this->db->order_by('da.id', 'desc');
         $this->db->select('cu.nama,da.*,md.divisi,ms.supplier,mg.gudang,mwa.warna,mi.section_ata,mi.section_allure,mi.temper,mi.ukuran');
 
