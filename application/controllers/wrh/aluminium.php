@@ -150,7 +150,6 @@ class aluminium extends CI_Controller
             'no_surat_jalan' => $this->input->post('no_surat_jalan'),
             'no_pr'          => $this->input->post('no_pr'),
             'keterangan'     => $this->input->post('keterangan'),
-            'id_penginput'   => from_session('id'),
         );
         $this->m_aluminium->updatestokin($obj, $id);
         $this->fungsi->catat($obj, "mengubah Stock In dengan id " . $id . " data sbb:", true);
