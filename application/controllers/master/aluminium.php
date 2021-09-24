@@ -11,6 +11,7 @@ class aluminium extends CI_Controller
         $this->load->model('master/m_aluminium');
         $this->load->model('klg/m_fppp');
         $this->load->library(array('PHPExcel', 'PHPExcel/IOFactory'));
+        $this->load->library('zend');
     }
 
     public function index()
@@ -55,8 +56,11 @@ class aluminium extends CI_Controller
         } else {
             $datapost = get_post_data(array('id_jenis_item', 'section_ata', 'section_allure', 'temper', 'kode_warna', 'ukuran', 'satuan'));
             $this->m_aluminium->insertData($datapost);
-            $this->fungsi->run_js('load_silent("master/aluminium","#content")');
-            $this->fungsi->message_box("Data Master aluminium sukses disimpan...", "success");
+            $id_item = $this->db->insert_id();
+            $code = '1' . str_pad($id_item, 10, '0', STR_PAD_LEFT);
+            $this->insertbarcode($code, $id_item);
+            // $this->fungsi->run_js('load_silent("master/aluminium","#content")');
+            // $this->fungsi->message_box("Data Master aluminium sukses disimpan...", "success");
             $this->fungsi->catat($datapost, "Menambah Master aluminium dengan data sbb:", true);
         }
     }
@@ -154,6 +158,28 @@ class aluminium extends CI_Controller
         }
         $data['msg'] = "Data Disimpan....";
         echo json_encode($data);
+    }
+
+
+    public function insertbarcode($code, $id)
+    {
+        $this->zend->load('Zend/Barcode');
+        $barcode = $code; //nomor id barcode
+        $imageResource = Zend_Barcode::factory('code128', 'image', array('text' => $barcode), array())->draw();
+        $imageName = $barcode . '.jpg';
+        $imagePath = 'files/'; // penyimpanan file barcode
+        imagejpeg($imageResource, $imagePath . $imageName);
+        $pathBarcode = $imagePath . $imageName; //Menyimpan path image bardcode kedatabase
+
+        $data = array(
+            'id' => $id,
+            'barcode' => $barcode,
+            'image_barcode' => $pathBarcode
+        );
+        $this->m_aluminium->updateData($data);
+
+        $this->fungsi->run_js('load_silent("master/aluminium","#content")');
+        $this->fungsi->message_box("Data Master aluminium sukses disimpan...", "success");
     }
 }
 

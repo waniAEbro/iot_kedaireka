@@ -27,6 +27,7 @@
                         <th width="25%">Deskripsi Warna</th>
                         <th>Ukuran</th>
                         <th>Satuan</th>
+                        <th>Barcode</th>
                         <th>Act</th>
                     </thead>
                     <tbody>
@@ -42,6 +43,7 @@
                                 <td><?= $row->warna ?></td>
                                 <td><?= $row->ukuran ?></td>
                                 <td><?= $row->satuan ?></td>
+                                <td><img src="<?= base_url($row->image_barcode) ?>" width="150"></td>
                                 <td align="center">
                                     <?php
                                     $sesi = from_session('level');
