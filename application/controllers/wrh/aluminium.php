@@ -132,6 +132,32 @@ class aluminium extends CI_Controller
         $this->load->view('wrh/aluminium/v_aluminium_in', $data);
     }
 
+    public function stok_in_edit($id)
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $data['id']       = $id;
+        $data['row']      = $this->m_aluminium->getDataStockRow($id)->row();
+        $data['supplier'] = $this->db->get('master_supplier');
+        $this->load->view('wrh/aluminium/v_aluminium_edit', $data);
+    }
+
+    public function simpan_edit()
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $id  = $this->input->post('id');
+        $obj = array(
+            'id_supplier'    => $this->input->post('supplier'),
+            'no_surat_jalan' => $this->input->post('no_surat_jalan'),
+            'no_pr'          => $this->input->post('no_pr'),
+            'keterangan'     => $this->input->post('keterangan'),
+            'id_penginput'   => from_session('id'),
+        );
+        $this->m_aluminium->updatestokin($obj, $id);
+        $this->fungsi->catat($obj, "mengubah Stock In dengan id " . $id . " data sbb:", true);
+        $respon = ['msg' => 'Data Berhasil Dihapus'];
+        echo json_encode($respon);
+    }
+
     public function savestokin()
     {
         $this->fungsi->check_previleges('aluminium');
@@ -151,7 +177,7 @@ class aluminium extends CI_Controller
             'keterangan'     => $this->input->post('keterangan'),
             'id_penginput'   => from_session('id'),
             'created'        => date('Y-m-d H:i:s'),
-            'updated'    => date('Y-m-d H:i:s'),
+            'updated'        => date('Y-m-d H:i:s'),
         );
         $this->m_aluminium->insertstokin($datapost);
         $data['id'] = $this->db->insert_id();
@@ -927,11 +953,11 @@ class aluminium extends CI_Controller
     {
         $this->fungsi->check_previleges('aluminium');
         $id_jenis_item = 1;
-        $id_item   = $this->input->post('id_item');
-        $id_divisi = $this->input->post('id_divisi');
-        $id_gudang = $this->input->post('id_gudang');
-        $keranjang = $this->input->post('keranjang');
-        $qty       = $this->input->post('qty');
+        $id_item       = $this->input->post('id_item');
+        $id_divisi     = $this->input->post('id_divisi');
+        $id_gudang     = $this->input->post('id_gudang');
+        $keranjang     = $this->input->post('keranjang');
+        $qty           = $this->input->post('qty');
 
         $id_divisi2 = $this->input->post('id_divisi2');
         $id_gudang2 = $this->input->post('id_gudang2');

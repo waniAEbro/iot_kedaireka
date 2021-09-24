@@ -22,11 +22,8 @@
                         <th>Tgl Input</th>
                         <th>Tgl Aktual</th>
                         <th>User</th>
-                        <th>Section ATA</th>
-                        <th>Section Allure</th>
-                        <th>Temper</th>
-                        <th>Kode Warna</th>
-                        <th>Ukuran</th>
+                        <th>Item</th>
+                        <th>Warna</th>
                         <th>Divisi</th>
                         <th>Gudang</th>
                         <th>Keranjang</th>
@@ -34,6 +31,8 @@
                         <th>Supplier</th>
                         <th>No Surat Jalan</th>
                         <th>No PR</th>
+                        <th>Keterangan</th>
+                        <th>Edit</th>
 
                     </thead>
                     <tbody>
@@ -47,11 +46,8 @@
                                 <td><?= $row->created ?></td>
                                 <td><?= $row->aktual ?></td>
                                 <td><?= $row->nama ?></td>
-                                <td><?= $row->section_ata ?></td>
-                                <td><?= $row->section_allure ?></td>
-                                <td><?= $row->temper ?></td>
+                                <td><?= $row->section_ata ?>-<?= $row->section_allure ?>-<?= $row->temper ?>-<?= $row->kode_warna ?>-<?= $row->ukuran ?></td>
                                 <td><?= $row->warna ?></td>
-                                <td><?= $row->ukuran ?></td>
                                 <td><?= $row->divisi ?></td>
                                 <td><?= $row->gudang ?></td>
                                 <td><?= $row->keranjang ?></td>
@@ -59,6 +55,9 @@
                                 <td><?= $row->supplier ?></td>
                                 <td><?= $row->no_surat_jalan ?></td>
                                 <td><?= $row->no_pr ?></td>
+                                <td><?= $row->keterangan ?></td>
+                                <td><?= button('load_silent("wrh/aluminium/stok_in_edit/' . $row->id . '","#content")', 'Edit', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Edit"'); ?></td>
+
 
                             </tr>
 

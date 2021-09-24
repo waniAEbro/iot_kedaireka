@@ -348,7 +348,7 @@ class M_aluminium extends CI_Model
             $this->db->where('da.id_penginput', from_session('id'));
         }
         $this->db->order_by('da.id', 'desc');
-        $this->db->select('cu.nama,da.*,md.divisi,ms.supplier,mg.gudang,mwa.warna,mi.section_ata,mi.section_allure,mi.temper,mi.ukuran');
+        $this->db->select('cu.nama,da.*,md.divisi,ms.supplier,mg.gudang,mwa.warna,mi.section_ata,mi.section_allure,mi.temper,mi.ukuran,mi.kode_warna');
 
         return $this->db->get('data_stock da');
     }
@@ -356,6 +356,27 @@ class M_aluminium extends CI_Model
     public function insertstokin($value = '')
     {
         $this->db->insert('data_stock', $value);
+    }
+
+    public function getDataStockRow($id)
+    {
+        $this->db->join('master_divisi_stock md', 'md.id = da.id_divisi', 'left');
+        $this->db->join('master_gudang mg', 'mg.id = da.id_gudang', 'left');
+        $this->db->join('master_item mi', 'mi.id = da.id_item', 'left');
+        $this->db->join('master_supplier ms', 'ms.id = da.id_supplier', 'left');
+        $this->db->join('cms_user cu', 'cu.id = da.id_penginput', 'left');
+        $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
+        $this->db->where('da.id', $id);
+
+        $this->db->select('cu.nama,da.*,md.divisi,ms.supplier,mg.gudang,mwa.warna,mi.section_ata,mi.section_allure,mi.temper,mi.ukuran,mi.kode_warna');
+
+        return $this->db->get('data_stock da');
+    }
+
+    public function updatestokin($value = '', $id)
+    {
+        $this->db->where('id', $id);
+        $this->db->update('data_stock', $value);
     }
 
     public function getDataCounter($item, $divisi, $gudang, $keranjang)

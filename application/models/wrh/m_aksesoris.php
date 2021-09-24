@@ -299,9 +299,29 @@ class M_aksesoris extends CI_Model
         return $this->db->get('data_stock da');
     }
 
+    public function getDataStockRow($id)
+    {
+        $this->db->join('master_divisi_stock md', 'md.id = da.id_divisi', 'left');
+        $this->db->join('master_gudang mg', 'mg.id = da.id_gudang', 'left');
+        $this->db->join('master_item mi', 'mi.id = da.id_item', 'left');
+        $this->db->join('master_supplier ms', 'ms.id = da.id_supplier', 'left');
+        $this->db->join('cms_user cu', 'cu.id = da.id_penginput', 'left');
+        $this->db->where('da.id', $id);
+
+        $this->db->select('cu.nama,da.*,md.divisi,ms.supplier,mg.gudang,mi.item_code,mi.deskripsi');
+
+        return $this->db->get('data_stock da');
+    }
+
     public function insertstokin($value = '')
     {
         $this->db->insert('data_stock', $value);
+    }
+
+    public function updatestokin($value = '', $id)
+    {
+        $this->db->where('id', $id);
+        $this->db->update('data_stock', $value);
     }
 
     public function getDataCounter($item, $divisi, $gudang, $keranjang)

@@ -31,6 +31,8 @@
                         <th>Supplier</th>
                         <th>No Surat Jalan</th>
                         <th>No PR</th>
+                        <th>Keterangan</th>
+                        <th>Edit</th>
 
                     </thead>
                     <tbody>
@@ -53,6 +55,8 @@
                                 <td><?= $row->supplier ?></td>
                                 <td><?= $row->no_surat_jalan ?></td>
                                 <td><?= $row->no_pr ?></td>
+                                <td><?= $row->keterangan ?></td>
+                                <td><?= button('load_silent("wrh/aksesoris/stok_in_edit/' . $row->id . '","#content")', 'Edit', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Edit"'); ?></td>
 
                             </tr>
 
