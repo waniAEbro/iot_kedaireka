@@ -112,7 +112,7 @@
                         title: 'Sukses',
                         message: "Berhasil mutasi"
                     });
-                    load_silent("wrh/aluminium/", "#content");
+                    load_silent("wrh/aluminium/mutasi_stock_history/" + $('#item').val(), "#content");
                 }
             });
 

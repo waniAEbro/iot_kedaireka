@@ -125,13 +125,6 @@ foreach ($detail as $key) {
         $itm = $key->section_ata;
     }
 
-
-    if ($key->ke_mf == 1) {
-        $warna_sblm = $this->m_aluminium->getRowItemWarna($key->id_item_sblm)->warna;
-    } else {
-        $warna_sblm = '-';
-    }
-
     $total = $total + $key->qty_out;
     $html .= '<tr>
                     <td align="center">' . $i++ . '</td>
@@ -186,6 +179,9 @@ $html .= '
         </tr>
         <tr>
             <td>*Barang diatas merupakan barang titipan PT. Allure Alluminio</td>
+        </tr>
+        <tr>
+            <td>*Info User : ' . $header->nama . '</td>
         </tr>
         ';
 $html .= '</table>';

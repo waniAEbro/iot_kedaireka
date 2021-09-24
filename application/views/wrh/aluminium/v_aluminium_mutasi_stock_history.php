@@ -59,7 +59,7 @@
                             ?>
                                 <tr>
                                     <td align="center"><?= $i++ ?></td>
-                                    <td><?= $row->created ?></td>
+                                    <td><?= $row->waktu ?></td>
                                     <td><?= $row->divisi ?></td>
                                     <td><?= $row->gudang ?></td>
                                     <td><?= $row->keranjang ?></td>

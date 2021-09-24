@@ -140,6 +140,7 @@ class aluminium extends CI_Controller
             'id_item'        => $this->input->post('item'),
             'inout'          => 1,
             'id_jenis_item'  => 1,
+            'aktual'         => $this->input->post('aktual'),
             'qty_in'         => $this->input->post('qty'),
             'id_supplier'    => $this->input->post('supplier'),
             'no_surat_jalan' => $this->input->post('no_surat_jalan'),
@@ -150,6 +151,7 @@ class aluminium extends CI_Controller
             'keterangan'     => $this->input->post('keterangan'),
             'id_penginput'   => from_session('id'),
             'created'        => date('Y-m-d H:i:s'),
+            'updated'    => date('Y-m-d H:i:s'),
         );
         $this->m_aluminium->insertstokin($datapost);
         $data['id'] = $this->db->insert_id();
@@ -925,40 +927,48 @@ class aluminium extends CI_Controller
     {
         $this->fungsi->check_previleges('aluminium');
         $id_jenis_item = 1;
-        $id_item       = $this->input->post('item');
-        $id_divisi     = $this->input->post('divisi');
-        $id_gudang     = $this->input->post('gudang');
-        $keranjang     = $this->input->post('keranjang');
+        $id_item   = $this->input->post('id_item');
+        $id_divisi = $this->input->post('id_divisi');
+        $id_gudang = $this->input->post('id_gudang');
+        $keranjang = $this->input->post('keranjang');
+        $qty       = $this->input->post('qty');
+
+        $id_divisi2 = $this->input->post('id_divisi2');
+        $id_gudang2 = $this->input->post('id_gudang2');
+        $keranjang2 = $this->input->post('keranjang2');
+        $qty2       = $this->input->post('qty2');
 
         $datapost_out = array(
-            'id_item'    => $this->input->post('id_item'),
+            'id_item'    => $id_item,
             'inout'      => 2,
             'mutasi'     => 1,
-            'qty_out'    => $this->input->post('qty2'),
-            'id_divisi'  => $this->input->post('id_divisi'),
-            'id_gudang'  => $this->input->post('id_gudang'),
-            'keranjang'  => $this->input->post('keranjang'),
+            'qty_out'    => $qty2,
+            'id_divisi'  => $id_divisi,
+            'id_gudang'  => $id_gudang,
+            'keranjang'  => $keranjang,
             'keterangan' => 'Mutasi Out',
             'created'    => date('Y-m-d H:i:s'),
+            'updated'    => date('Y-m-d H:i:s'),
         );
         $this->m_aluminium->insertstokin($datapost_out);
         $this->fungsi->catat($datapost_out, "Mutasi OUT sbb:", true);
-        $qtyin        = $this->m_aluminium->getQtyInDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
-        $qtyout       = $this->m_aluminium->getQtyOutDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
-        $data['qty_gudang'] = $qtyin - $qtyout;
+        // $qtyin        = $this->m_aluminium->getQtyInDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
+        // $qtyout       = $this->m_aluminium->getQtyOutDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
+        $data['qty_gudang'] = $qty - $qty2;
         $this->m_aluminium->updateDataCounter($id_item, $id_divisi, $id_gudang, $keranjang, $data['qty_gudang']);
 
 
         $datapost_in = array(
-            'id_item'    => $this->input->post('id_item'),
+            'id_item'    => $id_item,
             'mutasi'     => 1,
             'inout'      => 1,
-            'qty_in'     => $this->input->post('qty2'),
-            'id_divisi'  => $this->input->post('id_divisi2'),
-            'id_gudang'  => $this->input->post('id_gudang2'),
-            'keranjang'  => $this->input->post('keranjang2'),
+            'qty_in'     => $qty2,
+            'id_divisi'  => $id_divisi2,
+            'id_gudang'  => $id_gudang2,
+            'keranjang'  => $keranjang2,
             'keterangan' => 'Mutasi IN',
             'created'    => date('Y-m-d H:i:s'),
+            'updated'    => date('Y-m-d H:i:s'),
         );
         $this->m_aluminium->insertstokin($datapost_in);
         $this->fungsi->catat($datapost_in, "Mutasi IN sbb:", true);

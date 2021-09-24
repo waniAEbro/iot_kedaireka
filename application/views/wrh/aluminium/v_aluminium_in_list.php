@@ -19,7 +19,9 @@
                 <table width="100%" id="tableku" class="table table-striped">
                     <thead>
                         <th width="5%">No</th>
-                        <th>Tgl</th>
+                        <th>Tgl Input</th>
+                        <th>Tgl Aktual</th>
+                        <th>User</th>
                         <th>Section ATA</th>
                         <th>Section Allure</th>
                         <th>Temper</th>
@@ -43,6 +45,8 @@
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
                                 <td><?= $row->created ?></td>
+                                <td><?= $row->aktual ?></td>
+                                <td><?= $row->nama ?></td>
                                 <td><?= $row->section_ata ?></td>
                                 <td><?= $row->section_allure ?></td>
                                 <td><?= $row->temper ?></td>

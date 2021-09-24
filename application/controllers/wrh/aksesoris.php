@@ -150,6 +150,8 @@ class aksesoris extends CI_Controller
             'keterangan'     => $this->input->post('keterangan'),
             'id_penginput'        => from_session('id'),
             'created'        => date('Y-m-d H:i:s'),
+            'updated'    => date('Y-m-d H:i:s'),
+            'aktual'         => $this->input->post('aktual'),
         );
         $this->m_aksesoris->insertstokin($datapost);
         $data['id'] = $this->db->insert_id();
@@ -655,7 +657,7 @@ class aksesoris extends CI_Controller
         $data = array(
             'id'     => $id,
             'header' => $this->m_aksesoris->getHeaderSendCetak($id)->row(),
-            'detail' => $this->m_aksesoris->getDataDetailSendCetak($id)->result(),
+            'detail' => $this->m_aksesoris->getDataDetailSendCetakBon($id)->result(),
         );
         // print_r($data['detail']);
 
@@ -676,6 +678,7 @@ class aksesoris extends CI_Controller
         $this->fungsi->check_previleges('aksesoris');
         $id_jenis_item = 2;
         $data['fppp']              = $this->db->get('data_fppp');
+        $data['warna_akhir'] = $this->db->get('master_warna');
         $data['item']              = $this->m_aksesoris->getDataItem();
         $data['divisi']            = $this->m_aksesoris->getDivisiBom($id_jenis_item);
         $data['list_sj']           = $this->m_aksesoris->getListItemBonManual();
@@ -798,6 +801,7 @@ class aksesoris extends CI_Controller
             'produksi'       => $this->input->post('produksi'),
             'lapangan'       => $this->input->post('lapangan'),
             'id_penginput'        => from_session('id'),
+            'id_warna_akhir' => $this->input->post('warna_akhir'),
             'created'        => date('Y-m-d H:i:s'),
             'updated'        => date('Y-m-d H:i:s'),
         );
@@ -912,40 +916,46 @@ class aksesoris extends CI_Controller
     {
         $this->fungsi->check_previleges('aksesoris');
         $id_jenis_item = 2;
-        $id_item   = $this->input->post('item');
-        $id_divisi = $this->input->post('divisi');
-        $id_gudang = $this->input->post('gudang');
+        $id_item   = $this->input->post('id_item');
+        $id_divisi = $this->input->post('id_divisi');
+        $id_gudang = $this->input->post('id_gudang');
         $keranjang = $this->input->post('keranjang');
+        $qty       = $this->input->post('qty');
+
+        $id_divisi2 = $this->input->post('id_divisi2');
+        $id_gudang2 = $this->input->post('id_gudang2');
+        $keranjang2 = $this->input->post('keranjang2');
+        $qty2       = $this->input->post('qty2');
 
         $datapost_out = array(
-            'id_item'    => $this->input->post('id_item'),
+            'id_item'    => $id_item,
             'inout'      => 2,
             'mutasi'     => 1,
-            'qty_out'    => $this->input->post('qty2'),
-            'id_divisi'  => $this->input->post('id_divisi'),
-            'id_gudang'  => $this->input->post('id_gudang'),
-            'keranjang'  => $this->input->post('keranjang'),
+            'qty_out'    => $qty2,
+            'id_divisi'  => $id_divisi,
+            'id_gudang'  => $id_gudang,
+            'keranjang'  => $keranjang,
             'keterangan' => 'Mutasi Out',
             'created'    => date('Y-m-d H:i:s'),
+            'updated'    => date('Y-m-d H:i:s'),
         );
         $this->m_aksesoris->insertstokin($datapost_out);
         $this->fungsi->catat($datapost_out, "Mutasi OUT sbb:", true);
-        $qtyin        = $this->m_aksesoris->getQtyInDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
-        $qtyout       = $this->m_aksesoris->getQtyOutDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
-        $data['qty_gudang'] = $qtyin - $qtyout;
+        $data['qty_gudang'] = $qty - $qty2;
         $this->m_aksesoris->updateDataCounter($id_item, $id_divisi, $id_gudang, $keranjang, $data['qty_gudang']);
 
 
         $datapost_in = array(
-            'id_item'    => $this->input->post('id_item'),
+            'id_item'    => $id_item,
             'mutasi'     => 1,
             'inout'      => 1,
-            'qty_in'     => $this->input->post('qty2'),
-            'id_divisi'  => $this->input->post('id_divisi2'),
-            'id_gudang'  => $this->input->post('id_gudang2'),
-            'keranjang'  => $this->input->post('keranjang2'),
+            'qty_in'     => $qty2,
+            'id_divisi'  => $id_divisi2,
+            'id_gudang'  => $id_gudang2,
+            'keranjang'  => $keranjang2,
             'keterangan' => 'Mutasi IN',
             'created'    => date('Y-m-d H:i:s'),
+            'updated'    => date('Y-m-d H:i:s'),
         );
         $this->m_aksesoris->insertstokin($datapost_in);
         $this->fungsi->catat($datapost_in, "Mutasi IN sbb:", true);

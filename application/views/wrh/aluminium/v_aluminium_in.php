@@ -8,6 +8,10 @@
                 <form method="post" class="form-vertical form" role="form" id="formid">
                     <div class="box-body">
                         <div class="form-group">
+                            <label class="control-label">Tgl Aktual:</label>
+                            <input type="text" class="form-control datepicker" data-date-format="yyyy-mm-dd" id="aktual" placeholder="Tgl Aktual" autocomplete="off">
+                        </div>
+                        <div class="form-group">
                             <label class="control-label">Supplier:</label>
                             <select id="supplier" name="supplier" class="form-control" style="width:100%" required>
                                 <option value="">-- Select --</option>
@@ -139,13 +143,14 @@
 
     function quotation() {
 
-        if ($('#item').val() != '' && $('#qty').val() != '' && $('#id_divisi').val() != '' && $('#id_gudang').val() != '' && $('#keranjang').val() != '') {
+        if ($('#aktual').val() != '' && $('#item').val() != '' && $('#qty').val() != '' && $('#id_divisi').val() != '' && $('#id_gudang').val() != '' && $('#keranjang').val() != '') {
 
             $.ajax({
                     type: "POST",
                     url: "<?= site_url('wrh/aluminium/savestokin') ?>",
                     dataType: 'json',
                     data: {
+                        'aktual': $('#aktual').val(),
                         'item': $('#item').val(),
                         'qty': $("#qty").val(),
                         'supplier': $("#supplier").val(),

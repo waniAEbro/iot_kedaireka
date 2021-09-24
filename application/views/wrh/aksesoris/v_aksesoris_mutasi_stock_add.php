@@ -145,7 +145,7 @@
                         title: 'Sukses',
                         message: "Berhasil mutasi"
                     });
-                    load_silent("wrh/aksesoris/", "#content");
+                    load_silent("wrh/aksesoris/mutasi_stock_history/" + $('#item').val(), "#content");
                 }
             });
 

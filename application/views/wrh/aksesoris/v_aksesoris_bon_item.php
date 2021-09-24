@@ -20,6 +20,7 @@
                             <th width="15%">Gudang</th>
                             <th width="10%">Keranjang/Rak</th>
                             <th width="7%">Qty</th>
+                            <th width="7%">Warna Akhir</th>
                             <th width="7%">Produksi</th>
                             <th width="7%">Lapangan</th>
                             <th width="5%">Act</th>
@@ -39,6 +40,7 @@
                                 <td align="center"><?= $row->gudang ?></td>
                                 <td align="center"><?= $row->keranjang ?></td>
                                 <td align="center"><?= $row->qty_out ?></td>
+                                <td align="center"><?= $row->warna_akhir ?></td>
                                 <td align="center"><input type="checkbox" onclick="return false;" class="checkbox" <?= $cekproduksi ?>></td>
                                 <td align="center"><input type="checkbox" onclick="return false;" class="checkbox" <?= $ceklapangan ?>></td>
                                 <td align="center"><a class="btn btn-xs btn-danger" href="javascript:void(0)" onClick="hapus(<?= $row->id_stock ?>)"><i class="fa fa-trash"></i></a></td>
@@ -76,6 +78,14 @@
                                 Qty Gudang :<span id="txt_qty_gudang">0</span>
                             </td>
                             <td><input style="width: 50px;" type="text" style="text-align: right;" class="form-control" id="qty" placeholder="Qty" autocomplete="off"></td>
+                            <td><select style="width: 120px;" id="warna_akhir" name="warna_akhir" class="form-control" style="width:100%" required>
+                                    <option value="">-- Select --</option>
+                                    <?php foreach ($warna_akhir->result() as $valap) : ?>
+                                        <option value="<?= $valap->id ?>">
+                                            <?= $valap->kode ?>-<?= $valap->warna ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select></td>
                             <td align="center"><input type="checkbox" id="produksi" data-field='produksi' class="checkbox"></td>
                             <td align="center"><input type="checkbox" id="lapangan" data-field='lapangan' class="checkbox"></td>
                             <td><a onclick="quotation()" class="btn btn-xs btn-info">Add Stock</a></td>
@@ -274,6 +284,7 @@
                         'qty': $("#qty").val(),
                         'produksi': $("#produksi").val(),
                         'lapangan': $("#lapangan").val(),
+                        'warna_akhir': $("#warna_akhir").val(),
                     },
                 })
                 .success(function(datasaved) {
@@ -300,6 +311,9 @@
                   </td>\
                   <td align="center" width = "7%">\
                     ' + $('#qty').val() + '\
+                  </td>\
+                  <td width = "10%">\
+                    ' + $('#warna_akhir :selected').text() + '\
                   </td>\
                   <td align="center" width = "7%">\
                     ' + $('#produksi').val() + '\

@@ -339,11 +339,13 @@ class M_aluminium extends CI_Model
         $this->db->join('master_item mi', 'mi.id = da.id_item', 'left');
         $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
         $this->db->join('master_supplier ms', 'ms.id = da.id_supplier', 'left');
+        $this->db->join('cms_user cu', 'cu.id = da.id_penginput', 'left');
         $this->db->where('da.awal_bulan', 0);
         $this->db->where('da.inout', 1);
+        $this->db->where('da.mutasi', 0);
         $this->db->where('mi.id_jenis_item', $id_jenis_item);
         $this->db->order_by('da.id', 'desc');
-        $this->db->select('da.*,md.divisi,ms.supplier,mg.gudang,mwa.warna,mi.section_ata,mi.section_allure,mi.temper,mi.ukuran');
+        $this->db->select('cu.nama,da.*,md.divisi,ms.supplier,mg.gudang,mwa.warna,mi.section_ata,mi.section_allure,mi.temper,mi.ukuran');
 
         return $this->db->get('data_stock da');
     }
@@ -871,11 +873,13 @@ class M_aluminium extends CI_Model
     public function getMutasiHistory($id = '')
     {
         $this->db->join('master_item mi', 'mi.id = ds.id_item', 'left');
-        $this->db->join('master_divisi md', 'md.id = ds.id_divisi', 'left');
+        $this->db->join('master_divisi_stock md', 'md.id = ds.id_divisi', 'left');
         $this->db->join('master_gudang mg', 'mg.id = ds.id_gudang', 'left');
         $this->db->where('ds.mutasi', 1);
         $this->db->where('ds.id_item', $id);
         $this->db->order_by('ds.id', 'desc');
+        $this->db->select('ds.qty_in,ds.qty_out,,ds.keterangan,ds.keranjang,ds.created as waktu,mi.*,md.divisi,mg.gudang');
+
 
         return $this->db->get('data_stock ds');
     }
@@ -1023,8 +1027,9 @@ class M_aluminium extends CI_Model
     public function getHeaderSendCetak($id)
     {
         $this->db->join('data_fppp df', 'df.id = dsj.id_fppp', 'left');
+        $this->db->join('cms_user cu', 'cu.id = dsj.id_penginput', 'left');
         $this->db->where('dsj.id', $id);
-        $this->db->select('dsj.*,df.no_fppp,df.applicant,df.nama_proyek');
+        $this->db->select('dsj.*,df.no_fppp,df.applicant,df.nama_proyek,cu.nama');
 
         return $this->db->get('data_surat_jalan dsj');
     }

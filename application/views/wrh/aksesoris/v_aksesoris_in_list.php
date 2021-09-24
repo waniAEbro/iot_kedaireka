@@ -19,7 +19,9 @@
                 <table width="100%" id="tableku" class="table table-striped">
                     <thead>
                         <th width="5%">No</th>
-                        <th>Tgl</th>
+                        <th>Tgl Input</th>
+                        <th>Tgl Aktual</th>
+                        <th>User</th>
                         <th>Item Code</th>
                         <th>Deskripsi</th>
                         <th>Divisi</th>
@@ -40,6 +42,8 @@
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
                                 <td><?= $row->created ?></td>
+                                <td><?= $row->aktual ?></td>
+                                <td><?= $row->nama ?></td>
                                 <td><?= $row->item_code ?></td>
                                 <td><?= $row->deskripsi ?></td>
                                 <td><?= $row->divisi ?></td>

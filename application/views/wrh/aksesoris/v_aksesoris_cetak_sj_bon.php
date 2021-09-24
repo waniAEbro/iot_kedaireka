@@ -100,38 +100,28 @@ $html .= '
         <tr>
             <td width="5%" align="center"><b>No</b></td>
             <td width="20%" align="center"><b>Nama Proyek - No FPPP</b></td>
-            <td width="10%" align="center"><b>Nama Barang</b></td>
-            <td width="10%" align="center"><b>Temper</b></td>
-            <td width="7%" align="center"><b>Panjang</b></td>
-            <td width="7%" align="center"><b>Jumlah</b></td>
-            <td width="15%" align="center"><b>Jumlah Packing</b></td>
+            <td width="30%" align="center"><b>Nama Barang</b></td>
+            <td width="8%" align="center"><b>Jumlah</b></td>
+            <td width="10%" align="center"><b>Jumlah Packing</b></td>
             <td width="7%" align="center"><b>Satuan</b></td>
-            <td width="10%" align="center"><b>Warna</b></td>
-            <td width="10%" align="center"><b>Warna Akhir</b></td>
+            <td width="20%" align="center"><b>Warna Akhir</b></td>
         </tr>';
 $i = 1;
 $total = 0;
 foreach ($detail as $key) {
 
 
-    if ($key->ke_mf == 1) {
-        $warna_sblm = $this->m_aksesoris->getRowItemWarna($key->id_item_sblm)->warna;
-    } else {
-        $warna_sblm = '-';
-    }
+
 
     $total = $total + $key->qty_out;
     $html .= '<tr>
                     <td align="center">' . $i++ . '</td>
                     <td align="center"> ' . $key->nama_proyek . '<br>' . $key->no_fppp . '</td>
-                    <td align="center"> ' . $item_code . ' - ' . $deskripsi . '</td>
-                    <td align="center">' . $key->temper . '</td>
-                    <td align="center">' . $key->ukuran . '</td>
+                    <td align="center"> ' . $key->item_code . ' - ' . $key->deskripsi . '</td>
                     <td align="center">' . $key->qty_out . '</td>
                     <td align="center">1</td>
                     <td align="center">' . $key->satuan . '</td>
-                    <td align="center">' . $key->warna . '</td>
-                    <td align="center">' . $warna_sblm . '</td>
+                    <td align="center">' . $key->warna_akhir . '</td>
                 </tr>';
 }
 $html .= '</table><br><br>';
@@ -174,6 +164,9 @@ $html .= '
         </tr>
         <tr>
             <td>*Barang diatas merupakan barang titipan PT. Allure Alluminio</td>
+        </tr>
+        <tr>
+            <td>*Info User : ' . $header->nama . '</td>
         </tr>
         ';
 $html .= '</table>';
