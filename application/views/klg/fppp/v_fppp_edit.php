@@ -610,12 +610,7 @@
                 </tr>';
           $('tr.odd').remove();
           $('#dataTbl').append(x);
-          $('#id_brand').val('').trigger('change');
           $('#id_item').val('').trigger('change');
-          $("#gbritem").html('');
-          $('#kode_opening').val('');
-          $('#kode_unit').val('');
-          $('#glass_thick').val('');
           $.growl.notice({
             title: 'Sukses',
             message: "Berhasil menyimpan FPPP"
