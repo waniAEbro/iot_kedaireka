@@ -71,8 +71,8 @@ class Aksesoris extends CI_Controller
                 'rules' => ''
             ),
             array(
-                'field' => 'aksesoris',
-                'label' => 'aksesoris',
+                'field' => 'item_code',
+                'label' => 'item_code',
                 'rules' => 'required'
             )
         );
@@ -80,10 +80,10 @@ class Aksesoris extends CI_Controller
         $this->form_validation->set_error_delimiters('<span class="error-span">', '</span>');
 
         if ($this->form_validation->run() == FALSE) {
-            $data['edit'] = $this->db->get_where('master_aksesoris', array('id' => $id));
+            $data['edit'] = $this->db->get_where('master_item', array('id' => $id));
             $this->load->view('master/aksesoris/v_aksesoris_edit', $data);
         } else {
-            $datapost = get_post_data(array('id', 'aksesoris'));
+            $datapost = get_post_data(array('id', 'item_code', 'deskripsi', 'satuan'));
             $this->m_aksesoris->updateData($datapost);
             $this->fungsi->run_js('load_silent("master/aksesoris","#content")');
             $this->fungsi->message_box("Data Master aksesoris sukses diperbarui...", "success");

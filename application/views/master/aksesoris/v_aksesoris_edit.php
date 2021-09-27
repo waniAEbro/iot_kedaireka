@@ -8,11 +8,26 @@ $row = fetch_single_row($edit);
 
 
     <div class="form-group">
-        <label class="col-sm-4 control-label">aksesoris</label>
+        <label class="col-sm-4 control-label">Item Code</label>
         <div class="col-sm-8">
             <?php echo form_hidden('id', $row->id); ?>
-            <?php echo form_input(array('name' => 'aksesoris', 'value' => $row->aksesoris, 'class' => 'form-control')); ?>
-            <?php echo form_error('aksesoris'); ?>
+            <?php echo form_input(array('name' => 'item_code', 'value' => $row->item_code, 'class' => 'form-control')); ?>
+            <?php echo form_error('item_code'); ?>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-4 control-label">Deskripsi</label>
+        <div class="col-sm-8">
+            <?php echo form_input(array('name' => 'deskripsi', 'value' => $row->deskripsi, 'class' => 'form-control')); ?>
+            <?php echo form_error('deskripsi'); ?>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-4 control-label">Satuan</label>
+        <div class="col-sm-8">
+            <?php echo form_input(array('name' => 'satuan', 'value' => $row->satuan, 'class' => 'form-control')); ?>
+            <?php echo form_error('satuan'); ?>
         </div>
     </div>
 

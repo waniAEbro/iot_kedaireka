@@ -22,9 +22,6 @@
                         <th>Item code</th>
                         <th>Deskripsi</th>
                         <th>Satuan</th>
-                        <th>Supplier</th>
-                        <th>Deskripsi Supplier</th>
-                        <th>Divisi</th>
                         <th>Act</th>
                     </thead>
                     <tbody>
@@ -36,9 +33,6 @@
                                 <td><?= $row->item_code ?></td>
                                 <td><?= $row->deskripsi ?></td>
                                 <td><?= $row->satuan ?></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
                                 <td align="center">
                                     <?php
                                     $sesi = from_session('level');
