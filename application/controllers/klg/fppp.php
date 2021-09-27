@@ -473,10 +473,10 @@ class Fppp extends CI_Controller
 			$id_fppp   = $this->input->post('id');
 			$jenis_bom = $this->input->post('jenis_bom');
 
-			$cek_sudah_ada_keluar = $this->m_fppp->cekSudahAdaKeluar($id_fppp);
-			if ($cek_sudah_ada_keluar == 0) {
-				$this->m_fppp->deleteBomSebelum($id_fppp);
-			}
+			// $cek_sudah_ada_keluar = $this->m_fppp->cekSudahAdaKeluar($id_fppp);
+			// if ($cek_sudah_ada_keluar == 0) {
+			// 	$this->m_fppp->deleteBomSebelum($id_fppp);
+			// }
 
 			if ($jenis_bom == 1) {
 				$obj = array(
