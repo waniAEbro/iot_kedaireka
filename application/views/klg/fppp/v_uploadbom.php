@@ -26,6 +26,8 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Jenis BOM</label>
                     <div class="col-sm-8">
+                        <input type="hidden" id="id_divisi" value="<?= $id_divisi ?>">
+                        <input type="hidden" id="id" value="<?= $id ?>">
                         <select id="jenis_bom" class="form-control">
                             <option value="">Pilih</option>
                             <option value="1">Aluminium</option>
@@ -37,7 +39,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label" for="userfile">File Excel</label>
                     <div class="col-sm-8">
-                        <input type="hidden" id="id" value="<?= $id ?>">
+
                         <?php echo form_upload(array('name' => 'file', 'id' => 'file')); ?>
                     </div>
                 </div>
@@ -91,7 +93,8 @@
                     title: 'Berhasil',
                     message: data['msg']
                 });
-                load_silent("klg/fppp/", "#content");
+                // load_silent("klg/fppp/", "#content");
+                load_silent("klg/fppp/hasil_finish/" + $('#id_divisi').val() + "", "#content");
             },
             error: function(data, e) {
                 $("#info").html(e);
@@ -116,7 +119,8 @@
                     title: 'Berhasil',
                     message: data['msg']
                 });
-                load_silent("klg/fppp/", "#content");
+                // load_silent("klg/fppp/", "#content");
+
             },
             error: function(data, e) {
                 $("#info").html(e);

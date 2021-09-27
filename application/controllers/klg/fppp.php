@@ -426,6 +426,7 @@ class Fppp extends CI_Controller
 	public function uploadbom($id = '')
 	{
 		$data['id'] = $id;
+		$data['id_divisi'] = $this->m_fppp->getRowFppp($id)->row()->id_divisi;
 		$this->load->view('klg/fppp/v_uploadbom', $data);
 	}
 
