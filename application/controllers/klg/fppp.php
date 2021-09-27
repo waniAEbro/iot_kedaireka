@@ -467,7 +467,7 @@ class Fppp extends CI_Controller
 		$jenis_bom = $this->input->post('jenis_bom');
 		// $cek_sudah_ada_keluar = $this->m_fppp->cekSudahAdaKeluar($id_fppp);
 		// if ($cek_sudah_ada_keluar == 0) {
-		$this->m_fppp->deleteBomSebelum($id_fppp);
+		$this->m_fppp->deleteBomSebelum($id_fppp, $jenis_bom);
 		// }
 
 		for ($row = 2; $row <= $highestRow; $row++) {                  //  Read a row of data into an array
