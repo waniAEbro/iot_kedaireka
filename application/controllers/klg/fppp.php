@@ -468,6 +468,7 @@ class Fppp extends CI_Controller
 		// $cek_sudah_ada_keluar = $this->m_fppp->cekSudahAdaKeluar($id_fppp);
 		// if ($cek_sudah_ada_keluar == 0) {
 		$this->m_fppp->deleteBomSebelum($id_fppp, $jenis_bom);
+		$this->m_fppp->delete_temp($id_fppp, $jenis_bom);
 		// }
 
 		for ($row = 2; $row <= $highestRow; $row++) {                  //  Read a row of data into an array
@@ -477,10 +478,6 @@ class Fppp extends CI_Controller
 				TRUE,
 				FALSE
 			);
-
-
-
-
 
 			if ($jenis_bom == 1) {
 				$obj = array(
@@ -497,10 +494,25 @@ class Fppp extends CI_Controller
 				$keterangan = $rowData[0][7];
 				$cek_item   = $this->m_fppp->getMasterAluminium($obj['section_ata'], $obj['section_allure'], $obj['temper'], $obj['kode_warna'], $obj['ukuran']);
 				if ($cek_item->num_rows() < 1) {
-					$this->m_fppp->simpanItem($obj);
-					$id_item = $this->db->insert_id();
+					$temp = array(
+						"item_code" => $rowData[0][0] . '-' . $rowData[0][1] . '-' . $rowData[0][2] . '-' . $rowData[0][3] . '-' . $rowData[0][4],
+						"id_penginput" => from_session('id'),
+						"id_fppp" => $id_fppp,
+						"id_jenis_item" => $jenis_bom,
+					);
+					$this->db->insert('data_temp', $temp);
 				} else {
 					$id_item = $cek_item->row()->id;
+					$obj_bom = array(
+						'is_bom'        => 1,
+						'id_fppp'       => $id_fppp,
+						'id_jenis_item' => $jenis_bom,
+						'id_item'       => $id_item,
+						'qty_bom'       => $qty,
+						'keterangan'    => $keterangan,
+						'created'       => date('Y-m-d H:i:s'),
+					);
+					$this->db->insert('data_stock', $obj_bom);
 				}
 				$dt = array(
 					'bom_aluminium'  => 1,
@@ -519,10 +531,25 @@ class Fppp extends CI_Controller
 				$keterangan = $rowData[0][4];
 				$cek_item   = $this->m_fppp->getMasterAksesoris($obj['item_code']);
 				if ($cek_item->num_rows() < 1) {
-					$this->m_fppp->simpanItem($obj);
-					$id_item = $this->db->insert_id();
+					$temp = array(
+						"item_code" => $rowData[0][0],
+						"id_penginput" => from_session('id'),
+						"id_fppp" => $id_fppp,
+						"id_jenis_item" => $jenis_bom,
+					);
+					$this->db->insert('data_temp', $temp);
 				} else {
 					$id_item = $cek_item->row()->id;
+					$obj_bom = array(
+						'is_bom'        => 1,
+						'id_fppp'       => $id_fppp,
+						'id_jenis_item' => $jenis_bom,
+						'id_item'       => $id_item,
+						'qty_bom'       => $qty,
+						'keterangan'    => $keterangan,
+						'created'       => date('Y-m-d H:i:s'),
+					);
+					$this->db->insert('data_stock', $obj_bom);
 				}
 				$dt = array(
 					'bom_aksesoris'  => 1,
@@ -544,10 +571,25 @@ class Fppp extends CI_Controller
 				$keterangan = $rowData[0][7];
 				$cek_item   = $this->m_fppp->getMasterLembaran($obj['nama_barang']);
 				if ($cek_item->num_rows() < 1) {
-					$this->m_fppp->simpanItem($obj);
-					$id_item = $this->db->insert_id();
+					$temp = array(
+						"item_code" => $rowData[0][1],
+						"id_penginput" => from_session('id'),
+						"id_fppp" => $id_fppp,
+						"id_jenis_item" => $jenis_bom,
+					);
+					$this->db->insert('data_temp', $temp);
 				} else {
 					$id_item = $cek_item->row()->id;
+					$obj_bom = array(
+						'is_bom'        => 1,
+						'id_fppp'       => $id_fppp,
+						'id_jenis_item' => $jenis_bom,
+						'id_item'       => $id_item,
+						'qty_bom'       => $qty,
+						'keterangan'    => $keterangan,
+						'created'       => date('Y-m-d H:i:s'),
+					);
+					$this->db->insert('data_stock', $obj_bom);
 				}
 				$dt = array(
 					'bom_lembaran'  => 1,
@@ -555,19 +597,10 @@ class Fppp extends CI_Controller
 				);
 				$this->m_fppp->updateStatusUploadBom($id_fppp, $dt);
 			}
-
-			$obj_bom = array(
-				'is_bom'        => 1,
-				'id_fppp'       => $id_fppp,
-				'id_jenis_item' => $jenis_bom,
-				'id_item'       => $id_item,
-				'qty_bom'       => $qty,
-				'keterangan'    => $keterangan,
-				'created'       => date('Y-m-d H:i:s'),
-			);
-			$this->db->insert('data_stock', $obj_bom);
 		}
 		unlink($inputFileName);
+		sleep(1);
+		$data['detail'] = $this->m_fppp->getTemp($id_fppp, $jenis_bom);
 		$data['msg'] = "Data BOM Baru Disimpan....";
 		echo json_encode($data);
 	}

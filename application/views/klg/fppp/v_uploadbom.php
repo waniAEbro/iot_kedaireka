@@ -63,6 +63,9 @@
                 <?php } ?>
                 </form>
             </div>
+            <div class="box-body">
+                <span id="item_salah"></span>
+            </div>
         </div>
     </div>
 </div>
@@ -79,6 +82,11 @@
     function save() {
         $('#tombol').attr('disabled', 'disabled');
         $('#loading').show(100);
+        infoTable = '<h3>Item Tidak Tersimpan</h3><br><table id="infoTable" class="table table-striped" border="1px">' +
+            '<tr>' +
+            '<th bgcolor="#bfbfbf" width="5%">No</th>' +
+            '<th bgcolor="#bfbfbf">Item Code</th>' +
+            '</tr>';
         $.ajaxFileUpload({
             url: site + 'klg/fppp/upload',
             secureuri: false,
@@ -93,8 +101,22 @@
                     title: 'Berhasil',
                     message: data['msg']
                 });
+                $('#loading').hide(100);
+                var jml_data = data.detail.length;
+                for (var i = 0; i < data.detail.length; i++) {
+                    var no = i + 1;
+                    infoTable += '<tr>' +
+                        '<td>' + no + '</td>' +
+                        '<td>' + data.detail[i].item_code + '</td>' +
+                        '</tr>';
+                }
+                infoTable += '</table>';
+                if (jml_data > 0) {
+                    $('#item_salah').html(infoTable);
+                } else {
+                    load_silent("klg/fppp/hasil_finish/" + $('#id_divisi').val() + "", "#content");
+                }
                 // load_silent("klg/fppp/", "#content");
-                load_silent("klg/fppp/hasil_finish/" + $('#id_divisi').val() + "", "#content");
             },
             error: function(data, e) {
                 $("#info").html(e);

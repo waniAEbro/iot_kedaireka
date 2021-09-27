@@ -359,6 +359,22 @@ class M_fppp extends CI_Model
 		$this->db->delete('data_stock');
 	}
 
+	public function delete_temp($id_fppp, $jenis_item)
+	{
+		$this->db->where('id_fppp', $id_fppp);
+		$this->db->where('id_jenis_item', $jenis_item);
+		$this->db->where('id_penginput', from_session('id'));
+		$this->db->delete('data_temp');
+	}
+
+	public function getTemp($id_fppp, $jenis_item)
+	{
+		$this->db->where('id_fppp', $id_fppp);
+		$this->db->where('id_jenis_item', $jenis_item);
+		$this->db->where('id_penginput', from_session('id'));
+		return $this->db->get('data_temp')->result();
+	}
+
 	public function updateStatusUploadBom($id_fppp, $object)
 	{
 		$this->db->where('id', $id_fppp);
