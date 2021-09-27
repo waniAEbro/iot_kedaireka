@@ -463,6 +463,13 @@ class Fppp extends CI_Controller
 		$highestRow    = $sheet->getHighestRow();
 		$highestColumn = $sheet->getHighestColumn();
 
+		$id_fppp   = $this->input->post('id');
+		$jenis_bom = $this->input->post('jenis_bom');
+		// $cek_sudah_ada_keluar = $this->m_fppp->cekSudahAdaKeluar($id_fppp);
+		// if ($cek_sudah_ada_keluar == 0) {
+		$this->m_fppp->deleteBomSebelum($id_fppp);
+		// }
+
 		for ($row = 2; $row <= $highestRow; $row++) {                  //  Read a row of data into an array
 			$rowData = $sheet->rangeToArray(
 				'A' . $row . ':' . $highestColumn . $row,
@@ -471,13 +478,9 @@ class Fppp extends CI_Controller
 				FALSE
 			);
 
-			$id_fppp   = $this->input->post('id');
-			$jenis_bom = $this->input->post('jenis_bom');
 
-			// $cek_sudah_ada_keluar = $this->m_fppp->cekSudahAdaKeluar($id_fppp);
-			// if ($cek_sudah_ada_keluar == 0) {
-			// 	$this->m_fppp->deleteBomSebelum($id_fppp);
-			// }
+
+
 
 			if ($jenis_bom == 1) {
 				$obj = array(

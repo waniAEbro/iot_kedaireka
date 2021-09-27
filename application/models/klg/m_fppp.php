@@ -354,6 +354,7 @@ class M_fppp extends CI_Model
 	{
 		$this->db->where('id_fppp', $id_fppp);
 		$this->db->where('is_bom', 1);
+		$this->db->where('inout', 0);
 		$this->db->delete('data_stock');
 	}
 
