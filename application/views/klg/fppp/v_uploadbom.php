@@ -84,8 +84,8 @@
         $('#loading').show(100);
         infoTable = '<h3>Item Tidak Tersimpan</h3><br><table id="infoTable" class="table table-striped" border="1px">' +
             '<tr>' +
-            '<th bgcolor="#bfbfbf" width="5%">No</th>' +
-            '<th bgcolor="#bfbfbf">Item Code</th>' +
+            '<th bgcolor="#ff8482" width="5%">No</th>' +
+            '<th bgcolor="#ff8482">Item Code</th>' +
             '</tr>';
         $.ajaxFileUpload({
             url: site + 'klg/fppp/upload',
