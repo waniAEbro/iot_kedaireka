@@ -6,9 +6,8 @@ class M_supplier extends CI_Model
 
     public function getData($value = '')
     {
-        $this->db->join('master_jenis_item mji', 'mji.id = ma.id_jenis_item', 'left');
-        $this->db->join('kabupaten k', 'k.id = ma.id_kabupaten', 'left');
-        $this->db->select('ma.*,mji.jenis_item,k.kabupaten');
+        // $this->db->join('kabupaten k', 'k.id = ma.id_kabupaten', 'left');
+        // $this->db->select('ma.*,k.kabupaten');
         $this->db->order_by('ma.id', 'desc');
 
         return $this->db->get('master_supplier ma');

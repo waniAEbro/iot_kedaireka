@@ -20,9 +20,8 @@
                 <table width="100%" id="tableku" class="table table-striped">
                     <thead>
                         <th width="5%">No</th>
-                        <th>Jenis Item</th>
+                        <th>Kode</th>
                         <th>Supplier</th>
-                        <th>Kota</th>
                         <th>Alamat</th>
                         <th>Act</th>
                     </thead>
@@ -32,9 +31,8 @@
                         foreach ($supplier->result() as $row) : ?>
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
-                                <td><?= $row->jenis_item ?></td>
+                                <td><?= $row->kode ?></td>
                                 <td><?= $row->supplier ?></td>
-                                <td><?= $row->kabupaten ?></td>
                                 <td><?= $row->alamat ?></td>
                                 <td align="center">
                                     <?php
