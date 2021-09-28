@@ -53,7 +53,7 @@ class supplier extends CI_Controller
             $data['kabupaten'] = $this->db->get('kabupaten');
             $this->load->view('master/supplier/v_supplier_add', $data);
         } else {
-            $datapost = get_post_data(array('id_jenis_item', 'supplier', 'id_kabupaten', 'alamat'));
+            $datapost = get_post_data(array('kode', 'supplier', 'alamat'));
             $this->m_supplier->insertData($datapost);
             $this->fungsi->run_js('load_silent("master/supplier","#content")');
             $this->fungsi->message_box("Data Master supplier sukses disimpan...", "success");
@@ -86,7 +86,7 @@ class supplier extends CI_Controller
             $data['edit'] = $this->db->get_where('master_supplier', array('id' => $id));
             $this->load->view('master/supplier/v_supplier_edit', $data);
         } else {
-            $datapost = get_post_data(array('id', 'id_jenis_item', 'supplier', 'id_kabupaten', 'alamat'));
+            $datapost = get_post_data(array('id', 'kode', 'supplier', 'alamat'));
 
             $this->m_supplier->updateData($datapost);
             $this->fungsi->run_js('load_silent("master/supplier","#content")');

@@ -4,14 +4,10 @@
     <?php echo form_open('', array('name' => 'faddmenugrup', 'class' => 'form-horizontal', 'role' => 'form')); ?>
 
     <div class="form-group">
-        <label class="col-sm-4 control-label">Jenis Item</label>
+        <label class="col-sm-4 control-label">Kode</label>
         <div class="col-sm-8">
-            <select id="id_jenis_item" name="id_jenis_item" class="form-control" style="width:100%" required>
-                <option value="">-- Select --</option>
-                <?php foreach ($jenis_item->result() as $valap) : ?>
-                    <option value="<?= $valap->id ?>"><?= $valap->jenis_item ?></option>
-                <?php endforeach; ?>
-            </select>
+            <?php echo form_input(array('name' => 'kode', 'class' => 'form-control')); ?>
+            <?php echo form_error('kode'); ?>
         </div>
     </div>
     <div class="form-group">
@@ -19,17 +15,6 @@
         <div class="col-sm-8">
             <?php echo form_input(array('name' => 'supplier', 'class' => 'form-control')); ?>
             <?php echo form_error('supplier'); ?>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-4 control-label">Kabupaten</label>
-        <div class="col-sm-8">
-            <select id="id_kabupaten" name="id_kabupaten" class="form-control" style="width:100%" required>
-                <option value="">-- Select --</option>
-                <?php foreach ($kabupaten->result() as $valap) : ?>
-                    <option value="<?= $valap->id ?>"><?= $valap->kabupaten ?></option>
-                <?php endforeach; ?>
-            </select>
         </div>
     </div>
     <div class="form-group">
