@@ -10,6 +10,7 @@ class Aksesoris extends CI_Controller
         $this->fungsi->restrict();
         $this->load->model('master/m_aksesoris');
         $this->load->library(array('PHPExcel', 'PHPExcel/IOFactory'));
+        $this->load->library('zend');
     }
 
     public function index()
@@ -40,7 +41,7 @@ class Aksesoris extends CI_Controller
         $this->load->library('form_validation');
         $config = array(
             array(
-                'field' => 'aksesoris',
+                'field' => 'item_code',
                 'label' => 'item_code',
                 'rules' => 'required'
             )
@@ -52,11 +53,17 @@ class Aksesoris extends CI_Controller
             $data['status'] = '';
             $this->load->view('master/aksesoris/v_aksesoris_add', $data);
         } else {
-            $datapost = get_post_data(array('item_code', 'deskripsi'));
-            $this->m_aksesoris->insertData($datapost);
-            $this->fungsi->run_js('load_silent("master/aksesoris","#content")');
-            $this->fungsi->message_box("Data Master aksesoris sukses disimpan...", "success");
-            $this->fungsi->catat($datapost, "Menambah Master aksesoris dengan data sbb:", true);
+            $datapost = get_post_data(array('item_code', 'deskripsi', 'satuan'));
+            $cek = $this->m_aksesoris->cekMaster($datapost);
+            if ($cek > 0) {
+                $this->fungsi->message_box("Data Master aksesoris sudah ada!", "warning");
+            } else {
+                $this->m_aksesoris->insertData($datapost);
+                $id_item = $this->db->insert_id();
+                $code = '2' . str_pad($id_item, 10, '0', STR_PAD_LEFT);
+                $this->insertbarcode($code, $id_item);
+                $this->fungsi->catat($datapost, "Menambah Master aksesoris dengan data sbb:", true);
+            }
         }
     }
 
@@ -158,6 +165,27 @@ class Aksesoris extends CI_Controller
         }
         $data['msg'] = "Data Disimpan....";
         echo json_encode($data);
+    }
+
+    public function insertbarcode($code, $id)
+    {
+        $this->zend->load('Zend/Barcode');
+        $barcode = $code; //nomor id barcode
+        $imageResource = Zend_Barcode::factory('code128', 'image', array('text' => $barcode), array())->draw();
+        $imageName = $barcode . '.jpg';
+        $imagePath = 'files/'; // penyimpanan file barcode
+        imagejpeg($imageResource, $imagePath . $imageName);
+        $pathBarcode = $imagePath . $imageName; //Menyimpan path image bardcode kedatabase
+
+        $data = array(
+            'id' => $id,
+            'barcode' => $barcode,
+            'image_barcode' => $pathBarcode
+        );
+        $this->m_aksesoris->updateData($data);
+
+        $this->fungsi->run_js('load_silent("master/aksesoris","#content")');
+        $this->fungsi->message_box("Data Master aksesoris sukses disimpan...", "success");
     }
 }
 

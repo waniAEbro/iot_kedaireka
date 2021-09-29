@@ -7,10 +7,11 @@
                 <div class="box-tools pull-right">
                     <?php
                     $sesi = from_session('level');
-                    if ($sesi <= 3) {
+                    if ($sesi <= 2) {
                         echo button('load_silent("master/aksesoris/import/","#content")', 'Import Excel', 'btn btn-primary', 'data-toggle="tooltip" title="Import Excel"');
-                    } else {
-                        # code...
+                    }
+                    if ($sesi <= 3) {
+                        echo button('load_silent("master/aksesoris/form/base","#modal")', 'Add', 'btn btn-info', 'data-toggle="tooltip" title="Add"');
                     }
                     ?>
                 </div>
@@ -22,6 +23,7 @@
                         <th>Item code</th>
                         <th>Deskripsi</th>
                         <th>Satuan</th>
+                        <th>Barcode</th>
                         <th>Act</th>
                     </thead>
                     <tbody>
@@ -33,6 +35,7 @@
                                 <td><?= $row->item_code ?></td>
                                 <td><?= $row->deskripsi ?></td>
                                 <td><?= $row->satuan ?></td>
+                                <td><img src="<?= base_url($row->image_barcode) ?>" width="150"></td>
                                 <td align="center">
                                     <?php
                                     $sesi = from_session('level');

@@ -39,6 +39,12 @@ class M_aksesoris extends CI_Model
         $this->db->where('item_code', $item_code);
         return $this->db->get('master_item')->num_rows();
     }
+
+    public function cekMaster($data = '')
+    {
+        $this->db->where('item_code', $data['item_code']);
+        return $this->db->get('master_item')->num_rows();
+    }
 }
 
 /* End of file m_aksesoris.php */

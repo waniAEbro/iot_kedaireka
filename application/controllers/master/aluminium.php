@@ -55,13 +55,16 @@ class aluminium extends CI_Controller
             $this->load->view('master/aluminium/v_aluminium_add', $data);
         } else {
             $datapost = get_post_data(array('id_jenis_item', 'section_ata', 'section_allure', 'temper', 'kode_warna', 'ukuran', 'satuan'));
-            $this->m_aluminium->insertData($datapost);
-            $id_item = $this->db->insert_id();
-            $code = '1' . str_pad($id_item, 10, '0', STR_PAD_LEFT);
-            $this->insertbarcode($code, $id_item);
-            // $this->fungsi->run_js('load_silent("master/aluminium","#content")');
-            // $this->fungsi->message_box("Data Master aluminium sukses disimpan...", "success");
-            $this->fungsi->catat($datapost, "Menambah Master aluminium dengan data sbb:", true);
+            $cek = $this->m_aluminium->cekMaster($datapost);
+            if ($cek > 0) {
+                $this->fungsi->message_box("Data Master aluminium sudah ada!", "warning");
+            } else {
+                $this->m_aluminium->insertData($datapost);
+                $id_item = $this->db->insert_id();
+                $code = '1' . str_pad($id_item, 10, '0', STR_PAD_LEFT);
+                $this->insertbarcode($code, $id_item);
+                $this->fungsi->catat($datapost, "Menambah Master aluminium dengan data sbb:", true);
+            }
         }
     }
 
@@ -85,6 +88,7 @@ class aluminium extends CI_Controller
             $this->load->view('master/aluminium/v_aluminium_edit', $data);
         } else {
             $datapost = get_post_data(array('id', 'id_jenis_item', 'section_ata', 'section_allure', 'temper', 'kode_warna', 'ukuran', 'satuan'));
+
             $this->m_aluminium->updateData($datapost);
             $this->fungsi->run_js('load_silent("master/aluminium","#content")');
             $this->fungsi->message_box("Data Master aluminium sukses diperbarui...", "success");

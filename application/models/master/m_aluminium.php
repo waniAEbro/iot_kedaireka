@@ -32,6 +32,16 @@ class M_aluminium extends CI_Model
         $this->db->where('id', $id);
         $this->db->delete('master_item');
     }
+
+    public function cekMaster($data = '')
+    {
+        $this->db->where('section_ata', $data['section_ata']);
+        $this->db->where('section_allure', $data['section_allure']);
+        $this->db->where('temper', $data['temper']);
+        $this->db->where('kode_warna', $data['kode_warna']);
+        $this->db->where('ukuran', $data['ukuran']);
+        return $this->db->get('master_item')->num_rows();
+    }
 }
 
 /* End of file m_aluminium.php */
