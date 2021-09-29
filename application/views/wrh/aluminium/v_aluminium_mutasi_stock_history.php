@@ -6,7 +6,12 @@
                 <h3 class="box-title">History Mutasi Alumunium : <?= $item->section_ata ?> - <?= $item->section_allure ?> - <?= $item->temper ?> - <?= $item->kode_warna ?> - <?= $item->ukuran ?> </h3>
                 <div class="box-tools pull-right">
                     <?php
-                    echo button('load_silent("wrh/aluminium/","#content")', 'Kembali', 'btn btn-warning', 'data-toggle="tooltip" title="Mutasi"');
+                    if ($item->kode_warna == '01') {
+                        echo button('load_silent("wrh/aluminium/monitoring_mf","#content")', 'Kembali', 'btn btn-warning', 'data-toggle="tooltip" title="Mutasi"');
+                    } else {
+                        echo button('load_silent("wrh/aluminium/","#content")', 'Kembali', 'btn btn-warning', 'data-toggle="tooltip" title="Mutasi"');
+                    }
+
                     ?>
                 </div>
             </div>
