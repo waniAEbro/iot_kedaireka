@@ -163,7 +163,7 @@ class M_aksesoris extends CI_Model
         $month = date('m');
         $this->db->where('DATE_FORMAT(updated,"%Y")', $year);
         $this->db->where('DATE_FORMAT(updated,"%m")', $month);
-        // $this->db->where('mutasi', 0);
+        $this->db->where('mutasi', 0);
         $this->db->where('inout', 2);
         // $this->db->where('is_bom', 1);
         // $this->db->where('status_fppp', 0);
@@ -242,6 +242,24 @@ class M_aksesoris extends CI_Model
         $stock = ($res->num_rows() < 1) ? 0 : $res->row()->stock_in;
         return $stock;
     }
+    public function getQtyInDetailTabelMonitoring($id, $id_divisi, $id_gudang, $keranjang)
+    {
+        $year = date('Y');
+        $month = date('m');
+        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(created,"%m")', $month);
+        $this->db->where('id_item', $id);
+        $this->db->where('id_divisi', $id_divisi);
+        $this->db->where('id_gudang', $id_gudang);
+        $this->db->where('keranjang', $keranjang);
+        $this->db->select('sum(qty_in) as stock_in');
+        $this->db->where('inout', 1);
+        $this->db->where('awal_bulan', 0);
+        $this->db->where('mutasi', 0);
+        $res = $this->db->get('data_stock');
+        $stock = ($res->num_rows() < 1) ? 0 : $res->row()->stock_in;
+        return $stock;
+    }
     public function getQtyInDetailTabel($id, $id_divisi, $id_gudang, $keranjang)
     {
         $year = date('Y');
@@ -271,6 +289,25 @@ class M_aksesoris extends CI_Model
         $this->db->where('keranjang', $keranjang);
         $this->db->select('sum(qty_out) as stock_out');
         $this->db->where('inout', 2);
+
+        $res = $this->db->get('data_stock');
+        $stock = ($res->num_rows() < 1) ? 0 : $res->row()->stock_out;
+        return $stock;
+    }
+
+    public function getQtyOutDetailTabelMonitoring($id, $id_divisi, $id_gudang, $keranjang)
+    {
+        $year = date('Y');
+        $month = date('m');
+        $this->db->where('DATE_FORMAT(updated,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(updated,"%m")', $month);
+        $this->db->where('id_item', $id);
+        $this->db->where('id_divisi', $id_divisi);
+        $this->db->where('id_gudang', $id_gudang);
+        $this->db->where('keranjang', $keranjang);
+        $this->db->select('sum(qty_out) as stock_out');
+        $this->db->where('inout', 2);
+        $this->db->where('mutasi', 0);
 
         $res = $this->db->get('data_stock');
         $stock = ($res->num_rows() < 1) ? 0 : $res->row()->stock_out;
