@@ -119,7 +119,7 @@ $html .= '
 $i = 1;
 $total = 0;
 foreach ($detail as $key) {
-    }
+
 
 
     if ($key->ke_mf == 1) {
@@ -153,8 +153,8 @@ table.ttd {
         <tr>
             <td width="15%" align="center">Tanda Terima</td>
             <td width="15%" align="center">Sopir</td>
-            <td width="25%" align="center">Bag. Logistik</td>
-            <td width="30%" align="center">SPV Admin Logistik</td>
+            <td width="25%" align="center">Dibuat Oleh / Logistik</td>
+            <td width="30%" align="center">Diketahui Oleh / SPV Logistik</td>
             <td width="15%" align="center">Security</td>
         </tr>
         <tr>

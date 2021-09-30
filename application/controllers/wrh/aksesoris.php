@@ -765,6 +765,7 @@ class aksesoris extends CI_Controller
             'no_kendaraan'      => $no_kendaraan,
             'id_jenis_item'     => $id_jenis_item,
             'tipe'              => 2,
+            'id_penginput'              => from_session('id'),
             'created'           => date('Y-m-d H:i:s'),
         );
         $this->db->insert('data_surat_jalan', $obj);
