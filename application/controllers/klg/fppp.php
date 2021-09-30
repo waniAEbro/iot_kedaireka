@@ -239,7 +239,7 @@ class Fppp extends CI_Controller
 		$datapost = array(
 			'id_divisi'              => $this->input->post('id_divisi'),
 			'tgl_pembuatan'          => $this->input->post('tgl_pembuatan'),
-			'no_fppp'                => $nofppp,
+			'no_fppp'                => $this->input->post('no_fppp'),
 			'applicant'              => $this->input->post('applicant'),
 			'applicant_sector'       => $this->input->post('applicant_sector'),
 			'authorized_distributor' => $this->input->post('authorized_distributor'),
@@ -311,7 +311,7 @@ class Fppp extends CI_Controller
 				'applicant'              => $this->input->post('applicant'),
 				'applicant_sector'       => $this->input->post('applicant_sector'),
 				'authorized_distributor' => $this->input->post('authorized_distributor'),
-				'no_fppp'                => $nofppp,
+				'no_fppp'                => $this->input->post('no_fppp'),
 				'nama_proyek'            => $this->input->post('nama_proyek'),
 				'tahap'                  => $this->input->post('tahap'),
 				'alamat_proyek'          => $this->input->post('alamat_proyek'),

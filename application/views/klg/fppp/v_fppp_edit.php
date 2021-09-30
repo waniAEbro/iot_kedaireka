@@ -468,7 +468,7 @@
         },
         success: function(data) {
 
-          $('#id_fppp').val(data['id']);
+          // $('#id_fppp').val(data['id']);
           $.growl.notice({
             title: 'Sukses',
             message: data['msg']
@@ -526,7 +526,7 @@
           note: CKEDITOR.instances.keterangan.getData(),
         },
         success: function(data) {
-          $('#id_fppp').val(data['id']);
+          // $('#id_fppp').val(data['id']);
           $.growl.notice({
             title: 'Sukses',
             message: data['msg']
