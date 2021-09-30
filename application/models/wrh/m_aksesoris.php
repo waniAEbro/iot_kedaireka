@@ -255,7 +255,7 @@ class M_aksesoris extends CI_Model
         $this->db->select('sum(qty_in) as stock_in');
         $this->db->where('inout', 1);
         $this->db->where('awal_bulan', 0);
-        $this->db->where('mutasi', 0);
+        // $this->db->where('mutasi', 0);
         $res = $this->db->get('data_stock');
         $stock = ($res->num_rows() < 1) ? 0 : $res->row()->stock_in;
         return $stock;
@@ -307,7 +307,7 @@ class M_aksesoris extends CI_Model
         $this->db->where('keranjang', $keranjang);
         $this->db->select('sum(qty_out) as stock_out');
         $this->db->where('inout', 2);
-        $this->db->where('mutasi', 0);
+        // $this->db->where('mutasi', 0);
 
         $res = $this->db->get('data_stock');
         $stock = ($res->num_rows() < 1) ? 0 : $res->row()->stock_out;
