@@ -95,14 +95,15 @@ class aluminium extends CI_Controller
             $stok_awal_bulan = $this->m_aluminium->getAwalBulanDetailTabel($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
             $qtyin           = $this->m_aluminium->getQtyInDetailTabelMonitoring($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
             $qtyout          = $this->m_aluminium->getQtyOutDetailTabelMonitoring($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
+            $qtyin_tulis = ($qtyin == 'null') ? '0' : $qtyin;
             $temp            = array(
                 "divisi"           => $key->divisi,
                 "gudang"           => $key->gudang,
                 "keranjang"        => $key->keranjang,
                 "stok_awal_bulan"  => $stok_awal_bulan,
-                "tot_in"           => $qtyin,
+                "tot_in"           => $qtyin_tulis,
                 "tot_out"          => $qtyout,
-                "stok_akhir_bulan" => $qtyin - $qtyout,
+                "stok_akhir_bulan" => ($stok_awal_bulan + $qtyin) - $qtyout,
                 "rata_pemakaian"   => '0',
                 "min_stock"        => '0',
             );

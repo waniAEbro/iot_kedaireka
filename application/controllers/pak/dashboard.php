@@ -25,7 +25,7 @@ class Dashboard extends CI_Controller
 				$obj = array(
 					'awal_bulan' => 1,
 					'inout' => 1,
-					'id_item' => $key->id,
+					'id_item' => $key->id_item,
 					'id_divisi' => $key->id_divisi,
 					'id_gudang' => $key->id_gudang,
 					'keranjang' => $key->keranjang,

@@ -244,12 +244,12 @@ class M_aluminium extends CI_Model
         $this->db->join('master_gudang mg', 'mg.id = da.id_gudang', 'left');
         $this->db->where('da.inout', 1);
         $this->db->where('da.id_item', $id_item);
-        $this->db->where('da.id_surat_jalan', 0);
+        // $this->db->where('da.id_surat_jalan', 0);
         $this->db->where('da.awal_bulan', 0);
         $this->db->group_by('da.id_divisi');
         $this->db->group_by('da.id_gudang');
         $this->db->group_by('da.keranjang');
-        $this->db->group_by(array('da.id_divisi', 'da.id_gudang', 'da.keranjang'));
+        // $this->db->group_by(array('da.id_divisi', 'da.id_gudang', 'da.keranjang'));
 
         $this->db->select('da.*,mg.gudang,md.divisi');
 
