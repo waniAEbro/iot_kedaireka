@@ -33,7 +33,8 @@
                         <label class="control-label">Divisi:</label>
                         <select id="id_divisi" name="id_divisi" class="form-control" style="width:100%" required>
                             <option value="">-- Select --</option>
-                            <?php foreach ($divisi->result() as $valap) : ?>
+                            <?php
+                            foreach ($divisi as $valap) : ?>
                                 <option value="<?= $valap->id ?>"><?= $valap->divisi ?></option>
                             <?php endforeach; ?>
                         </select>
@@ -75,7 +76,7 @@
                         <label>Divisi</label>
                         <select id="id_divisi2" name="id_divisi2" class="form-control" style="width:100%" required>
                             <option value="">-- Select --</option>
-                            <?php foreach ($divisi->result() as $valap) : ?>
+                            <?php foreach ($divisi2->result() as $valap) : ?>
                                 <option value="<?= $valap->id ?>"><?= $valap->divisi ?></option>
                             <?php endforeach; ?>
                         </select>

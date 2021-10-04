@@ -37,6 +37,21 @@ class Dashboard extends CI_Controller
 			}
 		}
 
+		// $dc = $this->m_aluminium->getDC();
+		// foreach ($dc->result() as $key) {
+		// 	$qtyin = $this->m_aluminium->getQtyTotalIn($key->id_jenis_item, $key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
+		// 	$qtyout = $this->m_aluminium->getQtyTotalOut($key->id_jenis_item, $key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
+		// 	$obj = array(
+		// 		'id_jenis_item' => $key->id_jenis_item,
+		// 		'id_item' => $key->id_item,
+		// 		'id_divisi' => $key->id_divisi,
+		// 		'id_gudang' => $key->id_gudang,
+		// 		'keranjang' => $key->keranjang,
+		// 		'qty' => $qtyin - $qtyout,
+		// 	);
+		// 	$this->db->insert('data_counter', $obj);
+		// }
+
 		$this->load->view('v_dashboard');
 	}
 }

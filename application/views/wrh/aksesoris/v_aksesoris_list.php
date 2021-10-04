@@ -79,9 +79,9 @@
                         <tbody>
                             <?php
                             $i = 1;
-                            foreach ($aksesoris->result() as $row) :
+                            foreach ($aksesoris->result() as $row) {
                                 $ada                     = 1;
-                                $stock_awal_bulan        = @$stock_awal_bulan[$row->id];
+                                $stock_awal_bulan        = @$s_awal_bulan[$row->id];
                                 $tampil_stock_awal_bulan = ($stock_awal_bulan != '') ? $stock_awal_bulan : 0;
 
                                 $tot_in_per_bulan          = @$total_in_per_bulan[$row->id];
@@ -114,7 +114,7 @@
                                 </tr>
 
                             <?php $i++;
-                            endforeach; ?>
+                            } ?>
                         </tbody>
                     </table>
                 </div>
@@ -273,6 +273,12 @@
                             var qty_out = data.detail[i].tot_out;
                         }
 
+                        if (data.detail[i].tot_in == null) {
+                            var stok_t_i = 0;
+                        } else {
+                            var stok_t_i = data.detail[i].tot_in;
+                        }
+
                         if (data.detail[i].stok_awal_bulan == null) {
                             var stok_a_b = 0;
                         } else {
@@ -285,7 +291,7 @@
                             '<td><font color="' + fontcolor + '">' + data.detail[i].gudang + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].keranjang + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + stok_a_b + '</font></td>' +
-                            '<td><font color="' + fontcolor + '">' + data.detail[i].tot_in + '</font></td>' +
+                            '<td><font color="' + fontcolor + '">' + stok_t_i + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + qty_out + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].stok_akhir_bulan + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].rata_pemakaian + '</font></td>' +

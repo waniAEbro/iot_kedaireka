@@ -9,6 +9,7 @@ class M_aksesoris extends CI_Model
         $id_jenis_item = 2;
         $this->db->where('mi.id_jenis_item', $id_jenis_item);
         $this->db->select('mi.*');
+        $this->db->limit(10);
         return $this->db->get('master_item mi');
     }
     public function getdataItem()
@@ -77,11 +78,12 @@ class M_aksesoris extends CI_Model
     {
         $year  = date('Y');
         $month = date('m');
-        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
-        $this->db->where('DATE_FORMAT(created,"%m")', $month);
-        $this->db->where('awal_bulan', 1);
+        $this->db->where('DATE_FORMAT(ds.created,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(ds.created,"%m")', $month);
+        $this->db->where('ds.awal_bulan', 1);
+        $this->db->select('*');
 
-        $res = $this->db->get('data_stock');
+        $res = $this->db->get('data_stock ds');
         $data = array();
         $nilai = 0;
         foreach ($res->result() as $key) {
@@ -91,6 +93,26 @@ class M_aksesoris extends CI_Model
                 $nilai = 0;
             }
             $data[$key->id_item] = $key->qty_in + $nilai;
+        }
+        return $data;
+    }
+
+    function getTerkirim()
+    {
+        $this->db->join('data_invoice di', 'di.id = dsd.id_invoice', 'left');
+        $this->db->where('di.id_status', 1);
+        $this->db->where('dsd.inout', 2);
+        // $this->db->where('dsd.deleted', 1);
+        $res = $this->db->get('data_stok_detail dsd');
+        $data = array();
+        $nilai = 0;
+        foreach ($res->result() as $key) {
+            if (isset($data[$key->id_item][$key->id_warna][$key->bukaan])) {
+                $nilai = $data[$key->id_item][$key->id_warna][$key->bukaan];
+            } else {
+                $nilai = 0;
+            }
+            $data[$key->id_item][$key->id_warna][$key->bukaan] = $key->qty_out + $nilai;
         }
         return $data;
     }

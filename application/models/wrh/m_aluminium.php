@@ -1179,6 +1179,41 @@ class M_aluminium extends CI_Model
         $this->db->where('id_fppp', $id_fppp);
         $this->db->update('data_stock', $object);
     }
+
+    public function getDC()
+    {
+        $this->db->where('id_jenis_item', 1);
+
+        return $this->db->get('data_counter_ex');
+    }
+
+    public function getQtyTotalIn($jenis_item, $item, $divisi, $gudang, $keranjang)
+    {
+        $this->db->where('awal_bulan', 0);
+        $this->db->where('id_jenis_item', $jenis_item);
+        $this->db->where('id_item', $item);
+        $this->db->where('id_divisi', $divisi);
+        $this->db->where('id_gudang', $gudang);
+        $this->db->where('keranjang', $keranjang);
+        $this->db->where('inout', 1);
+        $this->db->select('sum(qty_in) as qty');
+
+        return $this->db->get('data_stock')->row()->qty;
+    }
+
+    public function getQtyTotalOut($jenis_item, $item, $divisi, $gudang, $keranjang)
+    {
+        $this->db->where('awal_bulan', 0);
+        $this->db->where('id_jenis_item', $jenis_item);
+        $this->db->where('id_item', $item);
+        $this->db->where('id_divisi', $divisi);
+        $this->db->where('id_gudang', $gudang);
+        $this->db->where('keranjang', $keranjang);
+        $this->db->where('inout', 2);
+        $this->db->select('sum(qty_out) as qty');
+
+        return $this->db->get('data_stock')->row()->qty;
+    }
 }
 
 /* End of file m_aluminium.php */
