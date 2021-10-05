@@ -6,11 +6,12 @@ class M_aluminium extends CI_Model
 
     public function getData($value = '')
     {
-        $this->db->where('id_jenis_item', 1);
+        $this->db->where('mi.id_jenis_item', 1);
         $this->db->join('master_warna mw', 'mw.kode = mi.kode_warna', 'left');
+        $this->db->join('master_divisi_stock md', 'md.id = mi.id_divisi', 'left');
         $this->db->order_by('mi.id', 'desc');
 
-        $this->db->select('mi.*,mw.warna');
+        $this->db->select('mi.*,mw.warna,md.divisi');
 
         return $this->db->get('master_item mi');
     }
