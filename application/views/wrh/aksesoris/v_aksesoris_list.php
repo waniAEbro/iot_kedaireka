@@ -90,11 +90,8 @@
                                 $tot_out_per_bulan          = @$total_out_per_bulan[$row->id];
                                 $tampil_total_out_per_bulan = ($tot_out_per_bulan != '') ? $tot_out_per_bulan : 0;
 
-                                $tot_out          = @$total_out[$row->id];
-                                $tampil_total_out = ($tot_out != '') ? $tot_out : 0;
-
                                 $stock_akhir_bulan = ($tampil_stock_awal_bulan + $tampil_total_in_per_bulan) - $tampil_total_out_per_bulan;
-                                $ots_persiapan = @$total_bom[$row->id] - $tampil_total_out;
+                                $ots_persiapan = @$total_bom[$row->id] - $tampil_total_out_per_bulan;
                                 $free_stock    = $stock_akhir_bulan - $ots_persiapan;
                             ?>
                                 <tr>
@@ -107,7 +104,7 @@
                                     <td align="center"><?= $tampil_total_out_per_bulan ?></td>
                                     <td align="center"><?= $stock_akhir_bulan ?></td>
                                     <td align="center"><?= $free_stock ?></td>
-                                    <td align="center"><?= @$total_bom[$row->id] ?> - <?= $tampil_total_out ?></td>
+                                    <td align="center"><?= @$total_bom[$row->id] ?> - <?= $tampil_total_out_per_bulan ?></td>
                                     <td align="center">
                                         <?= button('load_silent("wrh/aksesoris/mutasi_stock_add/' . $row->id . '","#content")', 'mutasi', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Mutasi"'); ?>
                                         <?= button('load_silent("wrh/aksesoris/mutasi_stock_history/' . $row->id . '","#content")', 'history mutasi', 'btn btn-xs btn-default', 'data-toggle="tooltip" title="History Mutasi"'); ?></td>

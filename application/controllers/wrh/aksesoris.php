@@ -18,7 +18,6 @@ class aksesoris extends CI_Controller
         $data['aksesoris']           = $this->m_aksesoris->getData();
         $data['s_awal_bulan']    = $this->m_aksesoris->getStockAwalBulan();
         $data['total_bom']           = $this->m_aksesoris->getTotalBOM();
-        $data['total_out']           = $this->m_aksesoris->getTotalOut();
         $data['total_in_per_bulan']  = $this->m_aksesoris->getTotalInPerBulan();
         $data['total_out_per_bulan'] = $this->m_aksesoris->getTotalOutPerBulan();
         $data['warna']               = 'Warna';

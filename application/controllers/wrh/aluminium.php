@@ -18,7 +18,6 @@ class aluminium extends CI_Controller
         $data['aluminium']           = $this->m_aluminium->getData();
         $data['s_awal_bulan']    = $this->m_aluminium->getStockAwalBulan();
         $data['total_bom']           = $this->m_aluminium->getTotalBOM();
-        $data['total_out']           = $this->m_aluminium->getTotalOut();
         $data['total_in_per_bulan']  = $this->m_aluminium->getTotalInPerBulan();
         $data['total_out_per_bulan'] = $this->m_aluminium->getTotalOutPerBulan();
         $data['warna']               = 'Warna';
