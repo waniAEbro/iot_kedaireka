@@ -47,6 +47,19 @@
         </div>
     </div>
 
+    <div class="form-group">
+        <label class="col-sm-4 control-label">Divisi</label>
+        <div class="col-sm-8">
+            <select name="id_divisi" class="form-control">
+                <option value="-">Pilih</option>
+                <?php foreach ($divisi->result() as $key) {
+                ?>
+                    <option value="<?= $key->id ?>"><?= $key->divisi ?></option>
+                <?php } ?>
+            </select>
+        </div>
+    </div>
+
 
     <div class="form-group">
         <label class="col-sm-4 control-label">Save</label>
