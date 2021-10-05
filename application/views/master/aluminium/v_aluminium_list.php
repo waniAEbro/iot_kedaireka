@@ -20,6 +20,7 @@
                 <table width="100%" id="tableku" class="table table-striped">
                     <thead>
                         <th width="5%">No</th>
+                        <th>Divisi</th>
                         <th>Section ATA</th>
                         <th>Section Allure</th>
                         <th>Temper</th>

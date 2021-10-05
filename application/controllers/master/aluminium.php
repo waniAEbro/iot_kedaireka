@@ -26,7 +26,7 @@ class aluminium extends CI_Controller
         $content   = "<div id='divsubcontent'></div>";
         $header    = "Form Master aluminium";
         $subheader = "aluminium";
-        $buttons[]          = button('jQuery.facebox.close()', 'Tutup', 'btn btn-default', 'data-dismiss="modal"');
+        $buttons[]          = button('', 'Tutup', 'btn btn-default', 'data-dismiss="modal"');
         echo $this->fungsi->parse_modal($header, $subheader, $content, $buttons, "");
         if ($param == 'base') {
             $this->fungsi->run_js('load_silent("master/aluminium/show_addForm/","#divsubcontent")');
