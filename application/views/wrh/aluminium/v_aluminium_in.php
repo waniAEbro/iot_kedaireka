@@ -143,7 +143,12 @@
 
     function quotation() {
 
-        if ($('#aktual').val() != '' && $('#item').val() != '' && $('#qty').val() != '' && $('#id_divisi').val() != '' && $('#id_gudang').val() != '' && $('#keranjang').val() != '') {
+        if ($('#id_divisi').val() == '' || $('#id_divisi').val() == 0) {
+            $.growl.error({
+                title: 'Peringatan',
+                message: 'Divisi di item ini masih kosong, silahkan edit di master!'
+            });
+        } else if ($('#aktual').val() != '' && $('#item').val() != '' && $('#qty').val() != '' && $('#id_divisi').val() != '' && $('#id_gudang').val() != '' && $('#keranjang').val() != '') {
 
             $.ajax({
                     type: "POST",
