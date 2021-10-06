@@ -53,7 +53,7 @@ class M_aksesoris extends CI_Model
         $this->db->where('DATE_FORMAT(created,"%m")', $month);
         $this->db->where('id_divisi', $id_divisi);
         $this->db->where('id_gudang', $id_gudang);
-        $this->db->where('keranjang', $keranjang);
+        $this->db->like('keranjang', $keranjang);
         $this->db->select('sum(qty_in) as stock_in');
         $this->db->where('inout', 1);
         $this->db->where('id_item', $id);
@@ -64,7 +64,7 @@ class M_aksesoris extends CI_Model
         $this->db->where('DATE_FORMAT(created,"%m")', $month);
         $this->db->where('id_divisi', $id_divisi);
         $this->db->where('id_gudang', $id_gudang);
-        $this->db->where('keranjang', $keranjang);
+        $this->db->like('keranjang', $keranjang);
         $this->db->select('sum(qty_out) as stock_out');
         $this->db->where('inout', 2);
         $this->db->where('id_item', $id);
@@ -238,7 +238,7 @@ class M_aksesoris extends CI_Model
         $this->db->where('id_item', $id);
         $this->db->where('id_divisi', $id_divisi);
         $this->db->where('id_gudang', $id_gudang);
-        $this->db->where('keranjang', $keranjang);
+        $this->db->like('keranjang', $keranjang);
         $this->db->where('awal_bulan', 1);
 
         $res = $this->db->get('data_stock');
@@ -256,7 +256,7 @@ class M_aksesoris extends CI_Model
         $this->db->where('id_item', $id);
         $this->db->where('id_divisi', $id_divisi);
         $this->db->where('id_gudang', $id_gudang);
-        $this->db->where('keranjang', $keranjang);
+        $this->db->like('keranjang', $keranjang);
         $this->db->select('sum(qty_in) as stock_in');
         $this->db->where('inout', 1);
         $this->db->where('awal_bulan', 0);
@@ -273,7 +273,7 @@ class M_aksesoris extends CI_Model
         $this->db->where('id_item', $id);
         $this->db->where('id_divisi', $id_divisi);
         $this->db->where('id_gudang', $id_gudang);
-        $this->db->where('keranjang', $keranjang);
+        $this->db->like('keranjang', $keranjang);
         $this->db->select('sum(qty_in) as stock_in');
         $this->db->where('inout', 1);
         $this->db->where('awal_bulan', 0);
@@ -291,7 +291,7 @@ class M_aksesoris extends CI_Model
         $this->db->where('id_item', $id);
         $this->db->where('id_divisi', $id_divisi);
         $this->db->where('id_gudang', $id_gudang);
-        $this->db->where('keranjang', $keranjang);
+        $this->db->like('keranjang', $keranjang);
         $this->db->select('sum(qty_in) as stock_in');
         $this->db->where('inout', 1);
         $res = $this->db->get('data_stock');
@@ -308,7 +308,7 @@ class M_aksesoris extends CI_Model
         $this->db->where('id_item', $id);
         $this->db->where('id_divisi', $id_divisi);
         $this->db->where('id_gudang', $id_gudang);
-        $this->db->where('keranjang', $keranjang);
+        $this->db->like('keranjang', $keranjang);
         $this->db->select('sum(qty_out) as stock_out');
         $this->db->where('inout', 2);
 
@@ -326,7 +326,7 @@ class M_aksesoris extends CI_Model
         $this->db->where('id_item', $id);
         $this->db->where('id_divisi', $id_divisi);
         $this->db->where('id_gudang', $id_gudang);
-        $this->db->where('keranjang', $keranjang);
+        $this->db->like('keranjang', $keranjang);
         $this->db->select('sum(qty_out) as stock_out');
         $this->db->where('inout', 2);
         // $this->db->where('mutasi', 0);
@@ -390,7 +390,7 @@ class M_aksesoris extends CI_Model
         $this->db->where('id_item', $item);
         $this->db->where('id_divisi', $divisi);
         $this->db->where('id_gudang', $gudang);
-        $this->db->where('keranjang', $keranjang);
+        $this->db->like('keranjang', $keranjang);
         return $this->db->get('data_counter');
     }
 
@@ -402,7 +402,7 @@ class M_aksesoris extends CI_Model
         $this->db->where('id_item', $item);
         $this->db->where('id_divisi', $divisi);
         $this->db->where('id_gudang', $gudang);
-        $this->db->where('keranjang', $keranjang);
+        $this->db->like('keranjang', $keranjang);
         $this->db->update('data_counter', $object);
     }
 
@@ -885,7 +885,7 @@ class M_aksesoris extends CI_Model
         $this->db->where('dc.id_item', $id_item);
         $this->db->where('dc.id_divisi', $id_divisi);
         $this->db->where('dc.id_gudang', $id_gudang);
-        $this->db->where('dc.keranjang', $keranjang);
+        $this->db->like('dc.keranjang', $keranjang);
         $this->db->select('dc.qty');
         return $this->db->get('data_counter dc')->row()->qty;
     }
