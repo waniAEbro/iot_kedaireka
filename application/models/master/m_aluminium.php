@@ -43,6 +43,12 @@ class M_aluminium extends CI_Model
         $this->db->where('ukuran', $data['ukuran']);
         return $this->db->get('master_item')->num_rows();
     }
+
+    public function getRowIdWarna($kode)
+    {
+        $this->db->where('kode', $kode);
+        return $this->db->get('master_warna')->row()->id;
+    }
 }
 
 /* End of file m_aluminium.php */

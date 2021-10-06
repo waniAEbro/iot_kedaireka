@@ -62,6 +62,12 @@ class aluminium extends CI_Controller
             } else {
                 $this->m_aluminium->insertData($datapost);
                 $id_item = $this->db->insert_id();
+                $id_warna = $this->m_aluminium->getRowIdWarna($this->input->post('kode_warna'));
+                $datax = array(
+                    'id' => $id_item,
+                    'id_warna' => $id_warna,
+                );
+                $this->m_aluminium->updateData($datax);
                 $code = '1' . str_pad($id_item, 10, '0', STR_PAD_LEFT);
                 $this->insertbarcode($code, $id_item);
                 $this->fungsi->catat($datapost, "Menambah Master aluminium dengan data sbb:", true);
@@ -90,8 +96,13 @@ class aluminium extends CI_Controller
             $this->load->view('master/aluminium/v_aluminium_edit', $data);
         } else {
             $datapost = get_post_data(array('id', 'id_jenis_item', 'section_ata', 'section_allure', 'temper', 'kode_warna', 'ukuran', 'satuan', 'id_divisi'));
-
             $this->m_aluminium->updateData($datapost);
+            $id_warna = $this->m_aluminium->getRowIdWarna($this->input->post('kode_warna'));
+            $datax = array(
+                'id' => $this->input->post('id'),
+                'id_warna' => $id_warna,
+            );
+            $this->m_aluminium->updateData($datax);
             $this->fungsi->run_js('load_silent("master/aluminium","#content")');
             $this->fungsi->message_box("Data Master aluminium sukses diperbarui...", "success");
             $this->fungsi->catat($datapost, "Mengedit Master aluminium dengan data sbb:", true);
