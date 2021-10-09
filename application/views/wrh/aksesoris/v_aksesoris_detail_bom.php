@@ -114,7 +114,7 @@
                                     <td align="center"><span id="qty_bom_<?= $row->id_stock ?>"><?= $qtyBOM ?></span></td>
                                     <td align="center"><span id="qty_kurang_<?= $row->id_stock ?>"><?= $kurang ?></span></td>
                                     <td align="center">
-                                        <span id="qty_gudang_asli_<?= $row->id_stock ?>"><?= $totalgudang ?></span>
+                                        <span style="display:none;" id="qty_gudang_asli_<?= $row->id_stock ?>"><?= $totalgudang ?></span>
                                         <span id="qty_gudang_<?= $row->id_stock ?>"><?= $totalgudang ?></span>
                                     </td>
                                     <td style="background-color:#ffd45e">
@@ -179,9 +179,8 @@
             </div>
             <div class="box-footer">
                 <?= button_confirm("Anda yakin menyelesaikan stock out?", "wrh/aksesoris/buat_surat_jalan/" . $id_fppp, "#content", 'Buat Surat Jalan', 'btn btn-success', 'data-toggle="tooltip" title="Buat Surat Jalan"'); ?>
+                <?php echo button_confirm("Anda yakin menambahkan item stock out?", "wrh/aksesoris/additemdetailbom/" . $id_fppp, "#modal", 'Add Item', 'btn btn-info', 'data-toggle="tooltip" title="Add Item"'); ?>
             </div>
-            <?php // echo button_confirm("Anda yakin menambahkan item stock out?", "wrh/aksesoris/additemdetailbom/" . $id_fppp, "#modal", 'Add Item', 'btn btn-info', 'data-toggle="tooltip" title="Add Item"'); 
-            ?>
             <?php //echo button_confirm("Anda yakin menyelesaikan stock out?", "wrh/aksesoris/finishdetailbom/" . $id_fppp, "#content", 'Finish', 'btn btn-success', 'data-toggle="tooltip" title="Finish"'); 
             ?>
         </div>

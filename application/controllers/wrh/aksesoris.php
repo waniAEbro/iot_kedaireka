@@ -584,17 +584,17 @@ class aksesoris extends CI_Controller
         $this->stok_out();
     }
 
-    public function additemdetailbom($id_sj, $id_fppp)
+    public function additemdetailbom($id_fppp)
     {
         $content   = "<div id='divsubcontent'></div>";
         $header    = "Form Tambah Item BOM";
         $subheader = "";
         $buttons[]          = button('', 'Tutup', 'btn btn-default', 'data-dismiss="modal"');
         echo $this->fungsi->parse_modal($header, $subheader, $content, $buttons, "");
-        $this->fungsi->run_js('load_silent("wrh/aksesoris/showformitemdetailbom/' . $id_sj . '/' . $id_fppp . '","#divsubcontent")');
+        $this->fungsi->run_js('load_silent("wrh/aksesoris/showformitemdetailbom/' . $id_fppp . '","#divsubcontent")');
     }
 
-    public function showformitemdetailbom($id_sj = '', $id_fppp = '')
+    public function showformitemdetailbom($id_fppp = '')
     {
         $this->fungsi->check_previleges('aksesoris');
         $this->load->library('form_validation');
@@ -611,33 +611,23 @@ class aksesoris extends CI_Controller
 
         if ($this->form_validation->run() == FALSE) {
             $data['id_fppp'] = $id_fppp;
-            $data['id_sj']   = $id_sj;
-            $data['item']    = $this->db->get_where('master_item', array('id_jenis_item' => 1,));
+            $data['item']    = $this->db->get_where('master_item', array('id_jenis_item' => 2,));
             $this->load->view('wrh/aksesoris/v_aksesoris_add_item_bom', $data);
         } else {
             $datapost_bom = array(
+                'is_bom'        => 1,
                 'id_fppp'       => $this->input->post('id_fppp'),
                 'id_jenis_item' => $id_jenis_item,
                 'id_item'       => $this->input->post('id_item'),
-                'qty'           => $this->input->post('qty'),
+                'qty_bom'       => $this->input->post('qty'),
                 'keterangan'    => 'TAMBAHAN',
                 'created'       => date('Y-m-d H:i:s'),
             );
-            $this->db->insert('data_fppp_bom', $datapost_bom);
+            $this->db->insert('data_stock', $datapost_bom);
 
-            $object = array(
-                'inout'          => 0,
-                'id_fppp'        => $this->input->post('id_fppp'),
-                'id_surat_jalan' => $this->input->post('id_sj'),
-                'id_jenis_item'  => $id_jenis_item,
-                'id_item'        => $this->input->post('id_item'),
-                'qty_bom'        => $this->input->post('qty'),
-                'created'        => date('Y-m-d H:i:s'),
-            );
-            $this->db->insert('data_stock', $object);
-            $this->fungsi->run_js('load_silent("wrh/aksesoris/detailbom/' . $this->input->post('id_sj') . '","#content")');
+            $this->fungsi->run_js('load_silent("wrh/aksesoris/stok_out_make/' . $this->input->post('id_fppp') . '","#content")');
             $this->fungsi->message_box("BOM baru disimpan!", "success");
-            $this->fungsi->catat($datapost_bom, "Menambah BOM data sbb:", true);
+            $this->fungsi->catat($datapost_bom, "Menambah tambahan BOM data sbb:", true);
         }
     }
 
