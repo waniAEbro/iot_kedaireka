@@ -36,8 +36,8 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label>Nama Sales</label>
-                                <input type="text" class="form-control" id="sales" value="<?= $rowFppp->sales ?>" readonly>
+                                <label>Warna Aluminium</label>
+                                <input type="text" class="form-control" id="warna" value="<?= $rowFppp->warna ?>" readonly>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -118,7 +118,7 @@
                                         <span id="qty_gudang_<?= $row->id_stock ?>"><?= $totalgudang ?></span>
                                     </td>
                                     <td style="background-color:#ffd45e">
-                                        <select id="id_divisi_<?= $row->id_stock ?>" onchange="divisi(<?= $row->id_stock ?>)" data-id="<?= $row->id_stock ?>" data-field="id_divisi" class="form-control">
+                                        <select style="width: 100px;" id="id_divisi_<?= $row->id_stock ?>" onchange="divisi(<?= $row->id_stock ?>)" data-id="<?= $row->id_stock ?>" data-field="id_divisi" class="form-control">
                                             <option id="">Pilih</option>
                                             <?php foreach ($divisi->result() as $key) {
                                                 $selected1 = ($key->id == $id_divisi_stock) ? "selected" : "";
@@ -128,7 +128,7 @@
                                         </select>
                                     </td>
                                     <td style="background-color:#ffd45e">
-                                        <select id="id_gudang_<?= $row->id_stock ?>" onchange="gudang(<?= $row->id_stock ?>)" data-id="<?= $row->id_stock ?>" data-field="id_gudang" class="form-control">
+                                        <select style="width: 100px;" id="id_gudang_<?= $row->id_stock ?>" onchange="gudang(<?= $row->id_stock ?>)" data-id="<?= $row->id_stock ?>" data-field="id_gudang" class="form-control">
                                             <option id="">Pilih</option>
                                             <?php foreach ($gudang->result() as $key) {
                                                 $selected2 = ($key->id == $id_gudang_stock) ? "selected" : "";
@@ -138,7 +138,7 @@
                                         </select>
                                     </td>
                                     <td style="background-color:#ffd45e">
-                                        <select id="keranjang_<?= $row->id_stock ?>" onchange="keranjang(<?= $row->id_stock ?>)" data-id="<?= $row->id_stock ?>" data-field="keranjang" class="form-control">
+                                        <select style="width: 100px;" id="keranjang_<?= $row->id_stock ?>" onchange="keranjang(<?= $row->id_stock ?>)" data-id="<?= $row->id_stock ?>" data-field="keranjang" class="form-control">
                                             <option id="">Pilih</option>
                                             <?php foreach ($keranjang->result() as $key) {
                                                 $selected2 = ($key->keranjang == $keranjang_stock) ? "selected" : "";
