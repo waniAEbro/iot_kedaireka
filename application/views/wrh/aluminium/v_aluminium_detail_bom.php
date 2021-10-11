@@ -87,7 +87,11 @@
                             $qty_stock = $this->m_aluminium->getQtyTerbanyakStockQty($row->id_item);
 
                             $qtyBOM = $row->qty_bom;
-                            $kurang = $qtyBOM - $row->qty_out;
+                            if ($row->set_parsial == 0) {
+                                $kurang = $qtyBOM - $row->qty_out;
+                            } else {
+                                $kurang = 0;
+                            }
                             $cekproduksi = ($row->produksi == 1) ? 'checked' : '';
                             $ceklapangan = ($row->lapangan == 1) ? 'checked' : '';
                             $qty_gudang = $qty_stock;

@@ -104,7 +104,8 @@ $html .= '
             <td width="8%" align="center"><b>Jumlah</b></td>
             <td width="10%" align="center"><b>Jumlah Packing</b></td>
             <td width="7%" align="center"><b>Satuan</b></td>
-            <td width="20%" align="center"><b>Warna Akhir</b></td>
+            <td width="10%" align="center"><b>Warna Awal</b></td>
+            <td width="10%" align="center"><b>Warna Akhir</b></td>
         </tr>';
 $i = 1;
 $total = 0;
@@ -121,6 +122,7 @@ foreach ($detail as $key) {
                     <td align="center">' . $key->qty_out . '</td>
                     <td align="center">1</td>
                     <td align="center">' . $key->satuan . '</td>
+                    <td align="center">' . $key->warna_awal . '</td>
                     <td align="center">' . $key->warna_akhir . '</td>
                 </tr>';
 }

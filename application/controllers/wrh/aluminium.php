@@ -411,6 +411,10 @@ class aluminium extends CI_Controller
     public function kirim_parsial($id_fppp, $id_stock)
     {
         $this->fungsi->check_previleges('aluminium');
+
+        $set_parsial = array('set_parsial' => 1);
+        $this->m_aksesoris->updateRowStock($id_stock, $set_parsial);
+
         $getRowStock = $this->m_aluminium->getRowStock($id_stock);
         $qtyBOM      = $getRowStock->qty_bom;
         $kurang      = $qtyBOM - $getRowStock->qty_out;

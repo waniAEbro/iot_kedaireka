@@ -72,6 +72,8 @@
                         <?php
                         $i = 1;
                         foreach ($list_bom->result() as $row) :
+
+
                             $divisi = $this->m_aksesoris->getDivisiBomItem($id_jenis_item, $row->id_item);
                             $gudang = $this->m_aksesoris->getGudangBomItem($id_jenis_item, $row->id_item);
                             $keranjang = $this->m_aksesoris->getKeranjangBomItem($id_jenis_item, $row->id_item);
@@ -84,7 +86,14 @@
                             $qty_stock = $this->m_aksesoris->getQtyTerbanyakStockQty($row->id_item);
 
                             $qtyBOM = $row->qty_bom;
-                            $kurang = $qtyBOM - $row->qty_out;
+
+                            if ($row->set_parsial == 0) {
+                                $kurang = $qtyBOM - $row->qty_out;
+                            } else {
+                                $kurang = 0;
+                            }
+
+
                             $cekproduksi = ($row->produksi == 1) ? 'checked' : '';
                             $ceklapangan = ($row->lapangan == 1) ? 'checked' : '';
                             $qty_gudang = $qty_stock;
@@ -163,7 +172,7 @@
                                     </td>
                                     <td><?= $row->deskripsi ?></td>
                                     <td align="center"><?= $row->qty_bom - $row->qty_out ?></td>
-                                    <td align="center">-</td>
+                                    <td align="center">0</td>
                                     <td align="center">-</td>
                                     <td align="center"><?= $row->divisi ?></td>
                                     <td align="center"><?= $row->gudang ?></td>

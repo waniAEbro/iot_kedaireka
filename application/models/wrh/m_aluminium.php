@@ -439,6 +439,12 @@ class M_aluminium extends CI_Model
         $this->db->update('data_counter', $object);
     }
 
+    public function updateRowStock($id_stock, $object)
+    {
+        $this->db->where('id', $id_stock);
+        $this->db->update('data_stock', $object);
+    }
+
     public function getRowStock($id_stock)
     {
         $this->db->where('id', $id_stock);

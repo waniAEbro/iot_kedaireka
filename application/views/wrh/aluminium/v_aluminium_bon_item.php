@@ -146,9 +146,15 @@
     }
 
     $("#item").change(function() {
+        $('#id_divisi').val('').trigger('change');
+        $('#id_gudang').val('').trigger('change');
         $('#keranjang').val('').trigger('change');
+        $('#warna_akhir').val('').trigger('change');
         $('#stock').val(0);
+        $('#qty').val('');
         $('#txt_qty_gudang').html("<b> " + 0 + "</b>");
+        $('#produksi').prop('checked', false);
+        $('#lapangan').prop('checked', false);
         $.ajax({
             url: "<?= site_url('wrh/aluminium/getDivisiItem') ?>",
             dataType: "json",
@@ -189,6 +195,13 @@
     });
 
     $("select[name=id_gudang]").change(function() {
+        $('#keranjang').val('').trigger('change');
+        $('#warna_akhir').val('').trigger('change');
+        $('#stock').val(0);
+        $('#qty').val('');
+        $('#txt_qty_gudang').html("<b> " + 0 + "</b>");
+        $('#produksi').prop('checked', false);
+        $('#lapangan').prop('checked', false);
         var x = $("select[name=keranjang]");
         if ($(this).val() == "") {
             x.html("<option>-- Select --</option>");
@@ -217,6 +230,12 @@
     });
 
     $("select[name=keranjang]").change(function() {
+        $('#warna_akhir').val('').trigger('change');
+        $('#stock').val(0);
+        $('#qty').val('');
+        $('#txt_qty_gudang').html("<b> " + 0 + "</b>");
+        $('#produksi').prop('checked', false);
+        $('#lapangan').prop('checked', false);
         $.ajax({
             url: "<?= site_url('wrh/aluminium/optionGetQtyKeranjang') ?>",
             dataType: "json",
@@ -302,13 +321,7 @@
                 </tr>';
                     // $('tr.odd').remove();
                     $('#dataTbl').append(x);
-                    $('#item').val('').trigger('change');
-                    $('#id_divisi').val('').trigger('change');
-                    $('#id_gudang').val('').trigger('change');
-                    $('#keranjang').val('').trigger('change');
-                    $("#qty").val('');
-                    $('#produksi').prop('checked', false);
-                    $('#lapangan').prop('checked', false);
+
                     $.growl.notice({
                         title: 'Sukses',
                         message: "Berhasil menyimpan"

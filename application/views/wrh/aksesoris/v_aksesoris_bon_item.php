@@ -20,6 +20,7 @@
                             <th width="15%">Gudang</th>
                             <th width="10%">Keranjang/Rak</th>
                             <th width="7%">Qty</th>
+                            <th width="7%">Warna Awal</th>
                             <th width="7%">Warna Akhir</th>
                             <th width="7%">Produksi</th>
                             <th width="7%">Lapangan</th>
@@ -40,6 +41,7 @@
                                 <td align="center"><?= $row->gudang ?></td>
                                 <td align="center"><?= $row->keranjang ?></td>
                                 <td align="center"><?= $row->qty_out ?></td>
+                                <td align="center"><?= $row->warna_awal ?></td>
                                 <td align="center"><?= $row->warna_akhir ?></td>
                                 <td align="center"><input type="checkbox" onclick="return false;" class="checkbox" <?= $cekproduksi ?>></td>
                                 <td align="center"><input type="checkbox" onclick="return false;" class="checkbox" <?= $ceklapangan ?>></td>
@@ -78,6 +80,14 @@
                                 Qty Gudang :<span id="txt_qty_gudang">0</span>
                             </td>
                             <td><input style="width: 50px;" type="text" style="text-align: right;" class="form-control" id="qty" placeholder="Qty" autocomplete="off"></td>
+                            <td><select style="width: 120px;" id="warna_awal" name="warna_awal" class="form-control" style="width:100%" required>
+                                    <option value="">-- Select --</option>
+                                    <?php foreach ($warna_awal->result() as $valap) : ?>
+                                        <option value="<?= $valap->id ?>">
+                                            <?= $valap->kode ?>-<?= $valap->warna ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select></td>
                             <td><select style="width: 120px;" id="warna_akhir" name="warna_akhir" class="form-control" style="width:100%" required>
                                     <option value="">-- Select --</option>
                                     <?php foreach ($warna_akhir->result() as $valap) : ?>
@@ -148,15 +158,30 @@
 
     }
 
-    $("#item").change(function() {
+    // $("#item").change(function() {
+    //     $('#id_divisi').val('').trigger('change');
+    //     $('#id_gudang').val('').trigger('change');
+    //     $('#keranjang').val('').trigger('change');
+    //     $('#warna_awal').val('').trigger('change');
+    //     $('#warna_akhir').val('').trigger('change');
+    //     $('#stock').val(0);
+    //     $('#qty').val('');
+    //     $('#txt_qty_gudang').html("<b> " + 0 + "</b>");
+    //     $('#produksi').prop('checked', false);
+    //     $('#lapangan').prop('checked', false);
+    // });
+
+    $("select[name=item]").change(function() {
         $('#id_divisi').val('').trigger('change');
         $('#id_gudang').val('').trigger('change');
         $('#keranjang').val('').trigger('change');
+        $('#warna_awal').val('').trigger('change');
+        $('#warna_akhir').val('').trigger('change');
         $('#stock').val(0);
+        $('#qty').val('');
         $('#txt_qty_gudang').html("<b> " + 0 + "</b>");
-    });
-
-    $("select[name=item]").change(function() {
+        $('#produksi').prop('checked', false);
+        $('#lapangan').prop('checked', false);
         var x = $("select[name=id_divisi]");
         if ($(this).val() == "") {
             x.html("<option>-- Select --</option>");
@@ -183,6 +208,15 @@
     });
 
     $("select[name=id_divisi]").change(function() {
+        $('#id_gudang').val('').trigger('change');
+        $('#keranjang').val('').trigger('change');
+        $('#warna_awal').val('').trigger('change');
+        $('#warna_akhir').val('').trigger('change');
+        $('#stock').val(0);
+        $('#qty').val('');
+        $('#txt_qty_gudang').html("<b> " + 0 + "</b>");
+        $('#produksi').prop('checked', false);
+        $('#lapangan').prop('checked', false);
         var x = $("select[name=id_gudang]");
         if ($(this).val() == "") {
             x.html("<option>-- Select --</option>");
@@ -212,6 +246,14 @@
 
 
     $("select[name=id_gudang]").change(function() {
+        $('#keranjang').val('').trigger('change');
+        $('#warna_awal').val('').trigger('change');
+        $('#warna_akhir').val('').trigger('change');
+        $('#stock').val(0);
+        $('#qty').val('');
+        $('#txt_qty_gudang').html("<b> " + 0 + "</b>");
+        $('#produksi').prop('checked', false);
+        $('#lapangan').prop('checked', false);
         var x = $("select[name=keranjang]");
         if ($(this).val() == "") {
             x.html("<option>-- Select --</option>");
@@ -240,6 +282,13 @@
     });
 
     $("select[name=keranjang]").change(function() {
+        $('#warna_awal').val('').trigger('change');
+        $('#warna_akhir').val('').trigger('change');
+        $('#stock').val(0);
+        $('#qty').val('');
+        $('#txt_qty_gudang').html("<b> " + 0 + "</b>");
+        $('#produksi').prop('checked', false);
+        $('#lapangan').prop('checked', false);
         $.ajax({
             url: "<?= site_url('wrh/aksesoris/optionGetQtyKeranjang') ?>",
             dataType: "json",
@@ -284,6 +333,7 @@
                         'qty': $("#qty").val(),
                         'produksi': $("#produksi").val(),
                         'lapangan': $("#lapangan").val(),
+                        'warna_awal': $("#warna_awal").val(),
                         'warna_akhir': $("#warna_akhir").val(),
                     },
                 })
@@ -313,6 +363,9 @@
                     ' + $('#qty').val() + '\
                   </td>\
                   <td width = "10%">\
+                    ' + $('#warna_awal :selected').text() + '\
+                  </td>\
+                  <td width = "10%">\
                     ' + $('#warna_akhir :selected').text() + '\
                   </td>\
                   <td align="center" width = "7%">\
@@ -328,13 +381,7 @@
                 </tr>';
                     // $('tr.odd').remove();
                     $('#dataTbl').append(x);
-                    $('#item').val('').trigger('change');
-                    $('#id_divisi').val('').trigger('change');
-                    $('#id_gudang').val('').trigger('change');
-                    $('#keranjang').val('').trigger('change');
-                    $("#qty").val('');
-                    $('#produksi').prop('checked', false);
-                    $('#lapangan').prop('checked', false);
+
                     $.growl.notice({
                         title: 'Sukses',
                         message: "Berhasil menyimpan"

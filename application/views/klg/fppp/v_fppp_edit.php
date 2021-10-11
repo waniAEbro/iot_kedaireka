@@ -610,7 +610,7 @@
                 </tr>';
           $('tr.odd').remove();
           $('#dataTbl').append(x);
-          $('#id_item').val('').trigger('change');
+          // $('#id_item').val('').trigger('change');
           $.growl.notice({
             title: 'Sukses',
             message: "Berhasil menyimpan FPPP"

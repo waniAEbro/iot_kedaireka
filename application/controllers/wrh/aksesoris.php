@@ -411,6 +411,10 @@ class aksesoris extends CI_Controller
     public function kirim_parsial($id_fppp, $id_stock)
     {
         $this->fungsi->check_previleges('aksesoris');
+
+        $set_parsial = array('set_parsial' => 1);
+        $this->m_aksesoris->updateRowStock($id_stock, $set_parsial);
+
         $getRowStock = $this->m_aksesoris->getRowStock($id_stock);
         $qtyBOM      = $getRowStock->qty_bom;
         $kurang      = $qtyBOM - $getRowStock->qty_out;
@@ -692,6 +696,7 @@ class aksesoris extends CI_Controller
         $this->fungsi->check_previleges('aksesoris');
         $id_jenis_item = 2;
         $data['fppp']        = $this->db->get('data_fppp');
+        $data['warna_awal'] = $this->db->get('master_warna');
         $data['warna_akhir'] = $this->db->get('master_warna');
         $data['item']        = $this->m_aksesoris->getDataItem();
         $data['divisi']      = $this->m_aksesoris->getDivisiBom($id_jenis_item);
@@ -816,6 +821,7 @@ class aksesoris extends CI_Controller
             'produksi'       => $this->input->post('produksi'),
             'lapangan'       => $this->input->post('lapangan'),
             'id_penginput'   => from_session('id'),
+            'id_warna_awal' => $this->input->post('warna_awal'),
             'id_warna_akhir' => $this->input->post('warna_akhir'),
             'created'        => date('Y-m-d H:i:s'),
             'updated'        => date('Y-m-d H:i:s'),
