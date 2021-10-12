@@ -117,9 +117,9 @@ foreach ($detail as $key) {
     // } else {
     // $itm = $key->section_ata . ' ' . $key->section_allure;
     // }
-    if ($key->section_ata != '-' && $key->section_allure != '-') {
+    if ($key->section_ata != '-' || $key->section_ata != '' && $key->section_allure != '-' || $key->section_allure != '') {
         $itm = $key->section_allure;
-    } else if ($key->section_ata == '-' && $key->section_allure != '-') {
+    } else if ($key->section_ata == '-' || $key->section_ata == '' && $key->section_allure != '-' || $key->section_allure != '') {
         $itm = $key->section_allure;
     } else {
         $itm = $key->section_ata;
