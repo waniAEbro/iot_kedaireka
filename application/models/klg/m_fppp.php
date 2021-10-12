@@ -201,8 +201,14 @@ class M_fppp extends CI_Model
 
 	public function getMasterAluminium($section_ata = '', $section_allure = '', $temper = '', $kode_warna = '', $ukuran = '')
 	{
-		$this->db->where('section_ata', $section_ata);
-		$this->db->where('section_allure', $section_allure);
+		if ($section_ata != '' && $section_allure == '') {
+			$this->db->where('section_ata', $section_ata);
+		} elseif ($section_ata == '' && $section_allure != '') {
+			$this->db->where('section_allure', $section_allure);
+		} else {
+			$this->db->where('section_ata', $section_ata);
+			$this->db->where('section_allure', $section_allure);
+		}
 		$this->db->where('temper', $temper);
 		$this->db->where('kode_warna', $kode_warna);
 		$this->db->where('ukuran', $ukuran);

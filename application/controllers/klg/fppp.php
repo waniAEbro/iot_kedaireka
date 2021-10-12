@@ -605,6 +605,100 @@ class Fppp extends CI_Controller
 		echo json_encode($data);
 	}
 
+	public function uploadMaster()
+	{
+		$fileName = time();
+		//      $upload_folder = get_upload_folder('./excel_files/');
+
+		// $config['upload_path']   = $upload_folder;
+
+		$config['upload_path']   = './files/';      //buat folder dengan nama excel_files di root folder
+		$config['file_name']     = $fileName;
+		$config['allowed_types'] = 'xls|xlsx|csv';
+		$config['max_size']      = 20000;
+
+		$this->load->library('upload');
+		$this->upload->initialize($config);
+
+		if (!$this->upload->do_upload('file'))
+			$this->upload->display_errors();
+
+		$media         = $this->upload->data('file');
+		$inputFileName = './files/' . $media['file_name'];
+
+		try {
+			$inputFileType = IOFactory::identify($inputFileName);
+			$objReader     = IOFactory::createReader($inputFileType);
+			$objPHPExcel   = $objReader->load($inputFileName);
+		} catch (Exception $e) {
+			die('Error loading file "' . pathinfo($inputFileName, PATHINFO_BASENAME) . '": ' . $e->getMessage());
+		}
+
+		$sheet         = $objPHPExcel->getSheet(0);
+		$highestRow    = $sheet->getHighestRow();
+		$highestColumn = $sheet->getHighestColumn();
+		$id_fppp   = $this->input->post('id');
+		$jenis_bom = $this->input->post('jenis_bom');
+
+		for ($row = 2; $row <= $highestRow; $row++) {                  //  Read a row of data into an array
+			$rowData = $sheet->rangeToArray(
+				'A' . $row . ':' . $highestColumn . $row,
+				NULL,
+				TRUE,
+				FALSE
+			);
+
+			if ($jenis_bom == 1) {
+				$obj = array(
+					'id_jenis_item'  => 1,
+					'section_ata'    => $rowData[0][0],
+					'section_allure' => $rowData[0][1],
+					'temper'         => $rowData[0][2],
+					'kode_warna'     => $rowData[0][3],
+					'ukuran'         => $rowData[0][4],
+					'satuan'         => $rowData[0][5],
+					'created'        => date('Y-m-d H:i:s'),
+				);
+				$cek_item   = $this->m_fppp->getMasterAluminium($obj['section_ata'], $obj['section_allure'], $obj['temper'], $obj['kode_warna'], $obj['ukuran']);
+				if ($cek_item->num_rows() < 1) {
+					$this->db->insert('master_item', $obj);
+				}
+			} else if ($jenis_bom == 2) {
+				$obj = array(
+					'id_jenis_item' => 2,
+					'item_code'     => $rowData[0][0],
+					'deskripsi'     => $rowData[0][1],
+					'satuan'        => $rowData[0][2],
+					'created'       => date('Y-m-d H:i:s'),
+				);
+				$cek_item   = $this->m_fppp->getMasterAksesoris($obj['item_code']);
+				if ($cek_item->num_rows() < 1) {
+					$this->db->insert('master_item', $obj);
+				}
+			} else {
+				$obj = array(
+					'id_jenis_item'  => 3,
+					'jenis_material' => $rowData[0][0],
+					'nama_barang'    => $rowData[0][1],
+					'lebar'          => $rowData[0][2],
+					'tinggi'         => $rowData[0][3],
+					'tebal'          => $rowData[0][4],
+					'warna'          => $rowData[0][5],
+					'created'        => date('Y-m-d H:i:s'),
+				);
+				$cek_item   = $this->m_fppp->getMasterLembaran($obj['nama_barang']);
+				if ($cek_item->num_rows() < 1) {
+					$this->db->insert('master_item', $obj);
+				}
+			}
+		}
+		unlink($inputFileName);
+		sleep(1);
+		$data['detail'] = $this->m_fppp->getTemp($id_fppp, $jenis_bom);
+		$data['msg'] = "Data BOM Baru Disimpan....";
+		echo json_encode($data);
+	}
+
 	public function uploadStock()
 	{
 		$fileName = time();
