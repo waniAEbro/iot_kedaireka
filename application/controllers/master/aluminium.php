@@ -42,8 +42,8 @@ class aluminium extends CI_Controller
         $this->load->library('form_validation');
         $config = array(
             array(
-                'field' => 'section_ata',
-                'label' => 'section_ata',
+                'field' => 'temper',
+                'label' => 'temper',
                 'rules' => 'required'
             )
         );

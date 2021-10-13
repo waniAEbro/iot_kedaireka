@@ -172,8 +172,10 @@
                                     <?php } ?>
 
                                     <?php
-                                    if (from_session('level') < 4) {
+                                    if (from_session('level') < 3) {
                                         echo button('load_silent("klg/fppp/formEdit/' . $row->id . '","#content")', 'Edit', 'btn btn-xs btn-info', 'data-toggle="tooltip" title="Edit"');
+                                    }
+                                    if (from_session('level') < 4) {
                                         echo button('load_silent("klg/fppp/uploadbom/' . $row->id . '","#content")', 'Upload BOM', 'btn btn-xs btn-success', 'data-toggle="tooltip" title="Upload"');
                                         echo button('load_silent("klg/fppp/lihatbom/' . $row->id . '/' . $param . '","#content")', 'Lihat BOM', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Upload"');
                                     }
