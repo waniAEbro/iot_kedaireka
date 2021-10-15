@@ -1065,6 +1065,15 @@ class M_aluminium extends CI_Model
         } else {
             $get_id = $hasil->row()->id;
         }
+        $this->db->where('id_fppp', $id_fppp);
+        $this->db->where('id_item', $id_item);
+        $this->db->select('sum(qty_bom) as tot_bom');
+        $tot_bom = $this->db->get('data_stock')->row()->tot_bom;
+
+        $this->db->where('id_fppp', $id_fppp);
+        $this->db->where('id_item', $id_item);
+        $this->db->select('sum(qty_out) as tot');
+        $tot_terkirim = $this->db->get('data_stock')->row()->tot;
 
         $this->db->where('id_item', $get_id);
         $this->db->where('id_fppp', $id_fppp);
@@ -1079,7 +1088,7 @@ class M_aluminium extends CI_Model
                 'id_fppp' => $id_fppp,
                 'id_jenis_item' => $id_jenis_item,
                 'id_item' => $get_id,
-                'qty_bom' => $qty_bom,
+                'qty_bom' => $tot_bom - $tot_terkirim,
                 'created' => date('Y-m-d H:i:s'),
             );
             $this->db->insert('data_stock', $object);
