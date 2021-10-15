@@ -412,10 +412,14 @@ class aluminium extends CI_Controller
     {
         $this->fungsi->check_previleges('aluminium');
 
-        $set_parsial = array('set_parsial' => 1);
+        $getRowStock = $this->m_aluminium->getRowStock($id_stock);
+        $set_parsial = array(
+            'qty_bom' => $getRowStock->qty_out,
+            'set_parsial' => 1,
+        );
         $this->m_aluminium->updateRowStock($id_stock, $set_parsial);
 
-        $getRowStock = $this->m_aluminium->getRowStock($id_stock);
+
         $qtyBOM      = $getRowStock->qty_bom;
         $kurang      = $qtyBOM - $getRowStock->qty_out;
         $object      = array(
