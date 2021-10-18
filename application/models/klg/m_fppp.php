@@ -406,6 +406,15 @@ class M_fppp extends CI_Model
 		$this->db->where('keranjang', $keranjang);
 		$this->db->update('data_counter', $object);
 	}
+
+	public function getBomTemp()
+	{
+		$this->db->join('master_jenis_item mji', 'mji.id = dt.id_jenis_item', 'left');
+		$this->db->join('data_fppp df', 'df.id = dt.id_fppp', 'left');
+		$this->db->select('dt.*,mji.jenis_item,df.no_fppp');
+
+		return $this->db->get('data_temp dt');
+	}
 }
 
 /* End of file m_fppp.php */
