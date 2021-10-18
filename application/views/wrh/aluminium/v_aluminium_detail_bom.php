@@ -435,7 +435,7 @@
                 alert("Tidak boleh melebihi Qty Gudang!");
                 $(element).hide();
                 $(element).prev('.edit').show();
-                $(element).prev('.edit').text(qtybom);
+                $(element).prev('.edit').text(value);
             } else if (value == '') {
                 $(element).hide();
                 $(element).prev('.edit').show();
