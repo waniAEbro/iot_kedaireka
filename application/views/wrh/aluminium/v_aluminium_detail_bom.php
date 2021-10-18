@@ -64,12 +64,13 @@
                         <th>Qty BOM</th>
                         <th>Kekurangan</th>
                         <th>Qty Gudang</th>
+                        <th>Qty Aktual</th>
                         <th>Out Dari Divisi</th>
                         <th>Area Gudang</th>
                         <th>Keranjang</th>
-                        <th>Qty Aktual</th>
                         <th>Produksi</th>
                         <th>Lapangan</th>
+                        <th>Keterangan</th>
                     </thead>
                     <tbody>
                         <?php
@@ -128,6 +129,9 @@
                                         <span style="display:none;" id="qty_gudang_asli_<?= $row->id_stock ?>"><?= $totalgudang ?></span>
                                         <span id="qty_gudang_<?= $row->id_stock ?>"><?= $totalgudang ?></span>
                                     </td>
+                                    <td style="background-color:#ffd45e" align="center"><span id="qty_aktual_<?= $row->id_stock ?>" class='edit'><?= $qty_aktual ?></span>
+                                        <input type='text' class='txtedit' data-id='<?= $row->id_stock ?>' data-field='qty_out' id='txt_<?= $row->id_stock ?>' value='<?= $qty_aktual ?>'>
+                                    </td>
                                     <td style="background-color:#ffd45e">
                                         <select style="width: 100px;" id="id_divisi_<?= $row->id_stock ?>" onchange="divisi(<?= $row->id_stock ?>)" data-id="<?= $row->id_stock ?>" data-field="id_divisi" class="form-control">
                                             <option id="">Pilih</option>
@@ -158,11 +162,9 @@
                                             <?php } ?>
                                         </select>
                                     </td>
-                                    <td style="background-color:#ffd45e" align="center"><span id="qty_aktual_<?= $row->id_stock ?>" class='edit'><?= $qty_aktual ?></span>
-                                        <input type='text' class='txtedit' data-id='<?= $row->id_stock ?>' data-field='qty_out' id='txt_<?= $row->id_stock ?>' value='<?= $qty_aktual ?>'>
-                                    </td>
                                     <td style="background-color:#ffd45e" align="center"><input type="checkbox" id="produksi_<?= $row->id_stock ?>" data-id='<?= $row->id_stock ?>' data-field='produksi_<?= $row->id_stock ?>' class="checkbox" <?= $cekproduksi ?>></td>
                                     <td style="background-color:#ffd45e" align="center"><input type="checkbox" id="lapangan_<?= $row->id_stock ?>" data-id='<?= $row->id_stock ?>' data-field='lapangan_<?= $row->id_stock ?>' class="checkbox" <?= $ceklapangan ?>></td>
+                                    <td><?= $row->keterangan ?></td>
                                 </tr>
                             <?php
                             } else { ?>
@@ -180,12 +182,13 @@
                                     <td align="center"><?= $row->qty_bom - $row->qty_out ?></td>
                                     <td align="center">-</td>
                                     <td align="center">-</td>
+                                    <td align="center"><?= $row->qty_out ?></td>
                                     <td align="center"><?= $row->divisi ?></td>
                                     <td align="center"><?= $row->gudang ?></td>
                                     <td align="center"><?= $row->keranjang ?></td>
-                                    <td align="center"><?= $row->qty_out ?></td>
                                     <td align="center"><input type="checkbox" onclick="return false;" class="checkbox" <?= $cekproduksi ?>></td>
                                     <td align="center"><input type="checkbox" onclick="return false;" class="checkbox" <?= $ceklapangan ?>></td>
+                                    <td><?= $row->keterangan ?></td>
                                 </tr>
                             <?php } ?>
                         <?php endforeach; ?>
