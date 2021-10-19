@@ -58,6 +58,7 @@
                         <th width="5%">No</th>
                         <th>Item Code</th>
                         <th>Deskripsi</th>
+                        <th>Keterangan</th>
                         <th>Qty BOM</th>
                         <th>Kekurangan</th>
                         <th>Qty Gudang</th>
@@ -67,7 +68,6 @@
                         <th>Keranjang/Rak</th>
                         <th>Produksi</th>
                         <th>Lapangan</th>
-                        <th>Keterangan</th>
                     </thead>
                     <tbody>
                         <?php
@@ -121,6 +121,7 @@
                                         ?>
                                     </td>
                                     <td><?= $row->deskripsi ?></td>
+                                    <td align="center"><?= $row->keterangan ?></td>
                                     <td align="center"><span id="qty_bom_<?= $row->id_stock ?>"><?= $qtyBOM ?></span></td>
                                     <td align="center"><span id="qty_kurang_<?= $row->id_stock ?>"><?= $kurang ?></span></td>
                                     <td align="center">
@@ -163,7 +164,6 @@
 
                                     <td style="background-color:#ffd45e" align="center"><input type="checkbox" id="produksi_<?= $row->id_stock ?>" data-id='<?= $row->id_stock ?>' data-field='produksi_<?= $row->id_stock ?>' class="checkbox" <?= $cekproduksi ?>></td>
                                     <td style="background-color:#ffd45e" align="center"><input type="checkbox" id="lapangan_<?= $row->id_stock ?>" data-id='<?= $row->id_stock ?>' data-field='lapangan_<?= $row->id_stock ?>' class="checkbox" <?= $ceklapangan ?>></td>
-                                    <td align="center"><?= $row->keterangan ?></td>
                                 </tr>
                             <?php
                             } else { ?>
@@ -174,6 +174,7 @@
 
                                     </td>
                                     <td><?= $row->deskripsi ?></td>
+                                    <td align="center"><?= $row->keterangan ?></td>
                                     <td align="center"><?= $row->qty_bom - $row->qty_out ?></td>
                                     <td align="center">0</td>
                                     <td align="center">-</td>
@@ -183,7 +184,6 @@
                                     <td align="center"><?= $row->keranjang ?></td>
                                     <td align="center"><input type="checkbox" onclick="return false;" class="checkbox" <?= $cekproduksi ?>></td>
                                     <td align="center"><input type="checkbox" onclick="return false;" class="checkbox" <?= $ceklapangan ?>></td>
-                                    <td align="center"><?= $row->keterangan ?></td>
                                 </tr>
                             <?php } ?>
                         <?php endforeach; ?>

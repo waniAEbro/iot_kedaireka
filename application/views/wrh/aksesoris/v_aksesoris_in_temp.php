@@ -9,24 +9,25 @@
                     <div class="box-body">
                         <div class="form-group">
                             <label class="control-label">Tgl Aktual:</label>
-                            <input type="text" class="form-control datepicker" data-date-format="yyyy-mm-dd" id="aktual" placeholder="Tgl Aktual" autocomplete="off">
+                            <input type="text" class="form-control datepicker" data-date-format="yyyy-mm-dd" id="aktual" value="<?= $row_temp->tgl_aktual ?>" placeholder="Tgl Aktual" autocomplete="off">
                         </div>
                         <div class="form-group">
                             <label class="control-label">Supplier:</label>
                             <select id="supplier" name="supplier" class="form-control" style="width:100%" required>
                                 <option value="">-- Select --</option>
                                 <?php foreach ($supplier->result() as $valap) : ?>
-                                    <option value="<?= $valap->id ?>"><?= $valap->kode ?> - <?= $valap->supplier ?></option>
+                                    <?php $sele = ($row_temp->id_supplier == $valap->id) ? 'selected' : ''; ?>
+                                    <option value="<?= $valap->id ?>" <?= $sele ?>><?= $valap->kode ?> - <?= $valap->supplier ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
                         <div class="form-group">
                             <label class="control-label">No Surat Jalan:</label>
-                            <input type="text" class="form-control" id="no_surat_jalan" placeholder="No Surat Jalan">
+                            <input type="text" class="form-control" id="no_surat_jalan" value="<?= $row_temp->no_surat_jalan ?>" placeholder="No Surat Jalan">
                         </div>
                         <div class="form-group">
                             <label class="control-label">No PR / WO / PO:</label>
-                            <input type="text" class="form-control" id="no_pr" placeholder="No PR">
+                            <input type="text" class="form-control" id="no_pr" value="<?= $row_temp->no_pr ?>" placeholder="No PR">
                         </div>
                         <hr>
                         <div class="form-group">

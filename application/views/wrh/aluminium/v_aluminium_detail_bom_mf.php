@@ -123,6 +123,7 @@
                                     <td><?= $row->temper ?></td>
                                     <td><?= $row->warna ?></td>
                                     <td><?= $row->ukuran ?></td>
+                                    <td><?= $row->keterangan ?></td>
                                     <td align="center"><span id="qty_bom_<?= $row->id_stock ?>"><?= $qtyBOM ?></span></td>
                                     <td align="center"><span id="qty_kurang_<?= $row->id_stock ?>"><?= $kurang ?></span></td>
                                     <td align="center">
@@ -164,7 +165,6 @@
                                     </td>
                                     <td style="background-color:#ffd45e" align="center"><input type="checkbox" id="produksi_<?= $row->id_stock ?>" data-id='<?= $row->id_stock ?>' data-field='produksi_<?= $row->id_stock ?>' class="checkbox" <?= $cekproduksi ?>></td>
                                     <td style="background-color:#ffd45e" align="center"><input type="checkbox" id="lapangan_<?= $row->id_stock ?>" data-id='<?= $row->id_stock ?>' data-field='lapangan_<?= $row->id_stock ?>' class="checkbox" <?= $ceklapangan ?>></td>
-                                    <td><?= $row->keterangan ?></td>
                                 </tr>
                             <?php
                             } else { ?>
@@ -179,6 +179,7 @@
                                     <td><?= $row->temper ?></td>
                                     <td><?= $row->warna ?></td>
                                     <td><?= $row->ukuran ?></td>
+                                    <td><?= $row->keterangan ?></td>
                                     <td align="center"><?= $row->qty_bom - $row->qty_out ?></td>
                                     <td align="center">-</td>
                                     <td align="center">-</td>
@@ -188,7 +189,6 @@
                                     <td align="center"><?= $row->keranjang ?></td>
                                     <td align="center"><input type="checkbox" onclick="return false;" class="checkbox" <?= $cekproduksi ?>></td>
                                     <td align="center"><input type="checkbox" onclick="return false;" class="checkbox" <?= $ceklapangan ?>></td>
-                                    <td><?= $row->keterangan ?></td>
                                 </tr>
                             <?php } ?>
                         <?php endforeach; ?>

@@ -1098,6 +1098,32 @@ class M_aksesoris extends CI_Model
         $this->db->where('id_fppp', $id_fppp);
         $this->db->update('data_stock', $object);
     }
+
+    public function getinOptionGetKeranjang($id_item, $id_divisi, $id_gudang)
+    {
+        $this->db->where('id_item', $id_item);
+        $this->db->where('id_divisi', $id_divisi);
+        $this->db->where('id_gudang', $id_gudang);
+        return $this->db->get('data_counter')->row()->keranjang;
+    }
+
+    public function getInTemp($id_jenis_item = '')
+    {
+        $this->db->where('id_jenis_item', $id_jenis_item);
+        $this->db->where('id_user', from_session('id'));
+        return $this->db->get('data_in_temp');
+    }
+
+    public function hapusTemp($id_jenis_item = '')
+    {
+        $this->db->where('id_jenis_item', $id_jenis_item);
+        $this->db->where('id_user', from_session('id'));
+        $this->db->delete('data_in_temp');
+
+        $dt = array('in_temp' => 0);
+        $this->db->where('id_penginput', from_session('id'));
+        $this->db->update('data_stock', $dt);
+    }
 }
 
 /* End of file m_aksesoris.php */

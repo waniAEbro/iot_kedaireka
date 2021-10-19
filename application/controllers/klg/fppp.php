@@ -799,6 +799,7 @@ class Fppp extends CI_Controller
 		$data['bom_aksesoris'] = $this->m_fppp->bom_aksesoris($id_fppp);
 		$data['bom_lembaran']  = $this->m_fppp->bom_lembaran($id_fppp);
 		$data['param']         = $param;
+		$data['rowFppp'] = $this->m_fppp->getRowFppp($id_fppp)->row();
 		$this->load->view('klg/fppp/v_fppp_bom_list', $data);
 	}
 

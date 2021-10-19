@@ -9,6 +9,7 @@ class aluminium extends CI_Controller
         parent::__construct();
         $this->fungsi->restrict();
         $this->load->model('wrh/m_aluminium');
+        $this->load->model('wrh/m_aksesoris');
         $this->load->model('klg/m_fppp');
     }
 
@@ -121,6 +122,15 @@ class aluminium extends CI_Controller
         $this->load->view('wrh/aluminium/v_aluminium_in_list', $data);
     }
 
+    public function finish_stok_in()
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $this->m_aksesoris->hapusTemp(2);
+        $data['aluminium'] = $this->m_aluminium->getDataStock();
+
+        $this->load->view('wrh/aluminium/v_aluminium_in_list', $data);
+    }
+
     public function stok_in_add()
     {
         $this->fungsi->check_previleges('aluminium');
@@ -128,7 +138,14 @@ class aluminium extends CI_Controller
         $data['divisi']   = $this->db->get_where('master_divisi_stock', array('id_jenis_item' => 1));
         $data['gudang']   = $this->db->get_where('master_gudang', array('id_jenis_item' => 1));
         $data['supplier'] = $this->db->get('master_supplier');
-        $this->load->view('wrh/aluminium/v_aluminium_in', $data);
+
+        $cek_in_temp = $this->m_aksesoris->getInTemp(1)->num_rows();
+        if ($cek_in_temp < 1) {
+            $this->load->view('wrh/aluminium/v_aluminium_in', $data);
+        } else {
+            $data['row_temp'] =  $this->m_aksesoris->getInTemp(1)->row();
+            $this->load->view('wrh/aluminium/v_aluminium_in_temp', $data);
+        }
     }
 
     public function stok_in_edit($id)
@@ -160,6 +177,20 @@ class aluminium extends CI_Controller
     {
         $this->fungsi->check_previleges('aluminium');
 
+        $cek_in_temp = $this->m_aksesoris->getInTemp(1)->num_rows();;
+        if ($cek_in_temp < 1) {
+            $data_temp = array(
+                'id_user'   => from_session('id'),
+                'id_jenis_item'  => 1,
+                'tgl_aktual'         => $this->input->post('aktual'),
+                'id_supplier'    => $this->input->post('supplier'),
+                'no_surat_jalan' => $this->input->post('no_surat_jalan'),
+                'no_pr'          => $this->input->post('no_pr'),
+                'created'        => date('Y-m-d H:i:s'),
+            );
+            $this->db->insert('data_in_temp', $data_temp);
+        }
+
         $datapost = array(
             'id_item'        => $this->input->post('item'),
             'inout'          => 1,
@@ -176,6 +207,7 @@ class aluminium extends CI_Controller
             'id_penginput'   => from_session('id'),
             'created'        => date('Y-m-d H:i:s'),
             'updated'        => date('Y-m-d H:i:s'),
+            'in_temp'         => 1,
         );
         $this->m_aluminium->insertstokin($datapost);
         $data['id'] = $this->db->insert_id();

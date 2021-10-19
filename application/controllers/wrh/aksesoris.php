@@ -121,6 +121,15 @@ class aksesoris extends CI_Controller
         $this->load->view('wrh/aksesoris/v_aksesoris_in_list', $data);
     }
 
+    public function finish_stok_in()
+    {
+        $this->fungsi->check_previleges('aksesoris');
+        $this->m_aksesoris->hapusTemp(2);
+        $data['aksesoris'] = $this->m_aksesoris->getDataStock();
+
+        $this->load->view('wrh/aksesoris/v_aksesoris_in_list', $data);
+    }
+
     public function stok_in_add()
     {
         $this->fungsi->check_previleges('aksesoris');
@@ -128,7 +137,13 @@ class aksesoris extends CI_Controller
         $data['divisi']   = $this->db->get_where('master_divisi_stock', array('id_jenis_item' => 2));
         $data['gudang']   = $this->db->get_where('master_gudang', array('id_jenis_item' => 2));
         $data['supplier'] = $this->db->get('master_supplier');
-        $this->load->view('wrh/aksesoris/v_aksesoris_in', $data);
+        $cek_in_temp = $this->m_aksesoris->getInTemp(2)->num_rows();
+        if ($cek_in_temp < 1) {
+            $this->load->view('wrh/aksesoris/v_aksesoris_in', $data);
+        } else {
+            $data['row_temp'] =  $this->m_aksesoris->getInTemp(2)->row();
+            $this->load->view('wrh/aksesoris/v_aksesoris_in_temp', $data);
+        }
     }
 
     public function stok_in_edit($id)
@@ -159,6 +174,20 @@ class aksesoris extends CI_Controller
     public function savestokin()
     {
         $this->fungsi->check_previleges('aksesoris');
+        $cek_in_temp = $this->m_aksesoris->getInTemp(2)->num_rows();;
+        if ($cek_in_temp < 1) {
+            $data_temp = array(
+                'id_user'   => from_session('id'),
+                'id_jenis_item'  => 2,
+                'tgl_aktual'         => $this->input->post('aktual'),
+                'id_supplier'    => $this->input->post('supplier'),
+                'no_surat_jalan' => $this->input->post('no_surat_jalan'),
+                'no_pr'          => $this->input->post('no_pr'),
+                'created'        => date('Y-m-d H:i:s'),
+            );
+            $this->db->insert('data_in_temp', $data_temp);
+        }
+
 
         $datapost = array(
             'id_item'        => $this->input->post('item'),
@@ -176,6 +205,7 @@ class aksesoris extends CI_Controller
             'created'        => date('Y-m-d H:i:s'),
             'updated'        => date('Y-m-d H:i:s'),
             'aktual'         => $this->input->post('aktual'),
+            'in_temp'         => 1,
         );
         $this->m_aksesoris->insertstokin($datapost);
         $data['id'] = $this->db->insert_id();
@@ -199,6 +229,17 @@ class aksesoris extends CI_Controller
         }
         $data['msg'] = "stock Disimpan";
         echo json_encode($data);
+    }
+
+    public function inOptionGetKeranjang()
+    {
+        $this->fungsi->check_previleges('aksesoris');
+        $id_item        = $this->input->post('item');
+        $id_divisi        = $this->input->post('divisi');
+        $id_gudang        = $this->input->post('gudang');
+        $keranjang = $this->m_aksesoris->getinOptionGetKeranjang($id_item, $id_divisi, $id_gudang);
+        $respon    = ['keranjang' => $keranjang];
+        echo json_encode($respon);
     }
 
     public function getIdDivisi()

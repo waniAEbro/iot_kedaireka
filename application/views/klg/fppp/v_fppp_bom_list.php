@@ -10,6 +10,43 @@
                 </div>
             </div>
             <div class="box-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>No FPPP</label>
+                            <input type="text" class="form-control" id="no_fppp" value="<?= $rowFppp->no_fppp ?>" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Nama Proyek</label>
+                            <input type="text" class="form-control" id="nama_proyek" value="<?= $rowFppp->nama_proyek ?>" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Alamat Proyek</label>
+                            <input type="text" class="form-control" id="alamat_proyek" value="<?= $rowFppp->alamat_proyek ?>" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Warna Aluminium</label>
+                            <input type="text" class="form-control" id="warna" value="<?= $rowFppp->warna ?>" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Deadline Pengiriman</label>
+                            <input type="text" class="form-control" id="deadline_pengiriman" value="<?= $rowFppp->deadline_pengiriman ?>" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="box-body">
                 <table width="100%" id="tableku" class="table table-striped">
                     <thead>
                         <th width="5%">No</th>

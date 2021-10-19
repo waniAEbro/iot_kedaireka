@@ -121,7 +121,7 @@
                 title: 'Berhasil',
                 message: "Tambah Stock selesai!"
             });
-            load_silent("wrh/aluminium/stok_in", "#content");
+            load_silent("wrh/aluminium/finish_stok_in", "#content");
         }
     }
     $(document).ready(function() {
