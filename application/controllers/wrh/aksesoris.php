@@ -849,33 +849,43 @@ class aksesoris extends CI_Controller
         $id_divisi     = $this->input->post('id_divisi');
         $id_gudang     = $this->input->post('id_gudang');
         $keranjang     = str_replace(" ", "", $this->input->post('keranjang'));
-        $datapost      = array(
-            'inout'          => 2,
-            'id_jenis_item'  => $id_jenis_item,
-            'id_surat_jalan' => 0,
-            'id_fppp'        => $this->input->post('id_fppp'),
-            'id_item'        => $this->input->post('item'),
-            'id_divisi'      => $this->input->post('id_divisi'),
-            'id_gudang'      => $this->input->post('id_gudang'),
-            'keranjang'      => str_replace(" ", "", $this->input->post('keranjang')),
-            'qty_out'        => $this->input->post('qty'),
-            'produksi'       => $this->input->post('produksi'),
-            'lapangan'       => $this->input->post('lapangan'),
-            'id_penginput'   => from_session('id'),
-            'id_warna_awal' => $this->input->post('warna_awal'),
-            'id_warna_akhir' => $this->input->post('warna_akhir'),
-            'created'        => date('Y-m-d H:i:s'),
-            'updated'        => date('Y-m-d H:i:s'),
-        );
-        $this->db->insert('data_stock', $datapost);
-        $data['id']         = $this->db->insert_id();
-        $qtyin        = $this->m_aksesoris->getQtyInDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
-        $qtyout       = $this->m_aksesoris->getQtyOutDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
-        $data['qty_gudang'] = $qtyin - $qtyout;
-        $this->m_aksesoris->updateDataCounter($id_item, $id_divisi, $id_gudang, $keranjang, $data['qty_gudang']);
+        $cekQtyCounter = $this->m_aksesoris->getDataCounter($id_item, $id_divisi, $id_gudang, $keranjang)->row()->qty;
+        $qty_out = $this->input->post('qty');
+        if ($qty_out > $cekQtyCounter) {
+            $data['sts'] = "gagal";
+        } else {
 
-        $this->fungsi->catat($datapost, "Menyimpan detail BON Manual sbb:", true);
-        $data['msg'] = "BON Disimpan";
+
+
+            $datapost      = array(
+                'inout'          => 2,
+                'id_jenis_item'  => $id_jenis_item,
+                'id_surat_jalan' => 0,
+                'id_fppp'        => $this->input->post('id_fppp'),
+                'id_item'        => $this->input->post('item'),
+                'id_divisi'      => $this->input->post('id_divisi'),
+                'id_gudang'      => $this->input->post('id_gudang'),
+                'keranjang'      => str_replace(" ", "", $this->input->post('keranjang')),
+                'qty_out'        => $this->input->post('qty'),
+                'produksi'       => $this->input->post('produksi'),
+                'lapangan'       => $this->input->post('lapangan'),
+                'id_penginput'   => from_session('id'),
+                'id_warna_awal' => $this->input->post('warna_awal'),
+                'id_warna_akhir' => $this->input->post('warna_akhir'),
+                'created'        => date('Y-m-d H:i:s'),
+                'updated'        => date('Y-m-d H:i:s'),
+            );
+            $this->db->insert('data_stock', $datapost);
+            $data['id']         = $this->db->insert_id();
+            $qtyin        = $this->m_aksesoris->getQtyInDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
+            $qtyout       = $this->m_aksesoris->getQtyOutDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
+            $data['qty_gudang'] = $qtyin - $qtyout;
+            $this->m_aksesoris->updateDataCounter($id_item, $id_divisi, $id_gudang, $keranjang, $data['qty_gudang']);
+
+            $this->fungsi->catat($datapost, "Menyimpan detail BON Manual sbb:", true);
+            $data['sts'] = "sukses";
+            $data['msg'] = "BON Disimpan";
+        }
         echo json_encode($data);
     }
 

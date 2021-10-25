@@ -339,11 +339,19 @@
                 })
                 .success(function(datasaved) {
                     //code here
-                    x++;
-                    var i = datasaved['id'];
+                    if (datasaved['sts'] == 'gagal') {
+                        $.growl.warning({
+                            title: 'gagal',
+                            message: "gagal menyimpan, qty gudang tidak cukup!"
+                        });
+                    } else {
 
 
-                    var x = '<tr id="output_data_' + i + '" class="output_data">\
+                        x++;
+                        var i = datasaved['id'];
+
+
+                        var x = '<tr id="output_data_' + i + '" class="output_data">\
                   <td width = "15%">\
                     ' + $('#id_fppp :selected').text() + '\
                   </td>\
@@ -379,13 +387,14 @@
                   <i  class = "fa fa-trash"></i></a>\
                   </td>\
                 </tr>';
-                    // $('tr.odd').remove();
-                    $('#dataTbl').append(x);
+                        // $('tr.odd').remove();
+                        $('#dataTbl').append(x);
 
-                    $.growl.notice({
-                        title: 'Sukses',
-                        message: "Berhasil menyimpan"
-                    });
+                        $.growl.notice({
+                            title: 'Sukses',
+                            message: "Berhasil menyimpan"
+                        });
+                    }
 
                 })
                 .fail(function(XHR) {
