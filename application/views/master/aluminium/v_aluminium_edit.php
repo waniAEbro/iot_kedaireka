@@ -55,14 +55,7 @@ $row = fetch_single_row($edit);
     <div class="form-group">
         <label class="col-sm-4 control-label">Divisi</label>
         <div class="col-sm-8">
-            <select name="id_divisi" class="form-control">
-                <option value="-">Pilih</option>
-                <?php foreach ($divisi->result() as $key) {
-                    $selected = ($key->id == $row->id_divisi) ? 'selected' : '';
-                ?>
-                    <option value="<?= $key->id ?>" <?= $selected ?>><?= $key->divisi ?></option>
-                <?php } ?>
-            </select>
+            <?php echo form_input(array('name' => 'divisi', 'value' => $row->divisi, 'class' => 'form-control')); ?>
         </div>
     </div>
 

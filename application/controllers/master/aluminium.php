@@ -52,10 +52,9 @@ class aluminium extends CI_Controller
 
         if ($this->form_validation->run() == FALSE) {
             $data['warna'] = $this->db->get('master_warna');
-            $data['divisi']   = $this->db->get_where('master_divisi_stock', array('id_jenis_item' => 1));
             $this->load->view('master/aluminium/v_aluminium_add', $data);
         } else {
-            $datapost = get_post_data(array('id_jenis_item', 'section_ata', 'section_allure', 'temper', 'kode_warna', 'ukuran', 'satuan', 'id_divisi'));
+            $datapost = get_post_data(array('id_jenis_item', 'section_ata', 'section_allure', 'temper', 'kode_warna', 'ukuran', 'satuan', 'divisi'));
             $cek = $this->m_aluminium->cekMaster($datapost);
             if ($cek > 0) {
                 $this->fungsi->message_box("Data Master aluminium sudah ada!", "warning");
@@ -91,11 +90,10 @@ class aluminium extends CI_Controller
 
         if ($this->form_validation->run() == FALSE) {
             $data['warna'] = $this->db->get('master_warna');
-            $data['divisi']   = $this->db->get_where('master_divisi_stock', array('id_jenis_item' => 1));
             $data['edit'] = $this->db->get_where('master_item', array('id' => $id));
             $this->load->view('master/aluminium/v_aluminium_edit', $data);
         } else {
-            $datapost = get_post_data(array('id', 'id_jenis_item', 'section_ata', 'section_allure', 'temper', 'kode_warna', 'ukuran', 'satuan', 'id_divisi'));
+            $datapost = get_post_data(array('id', 'id_jenis_item', 'section_ata', 'section_allure', 'temper', 'kode_warna', 'ukuran', 'satuan', 'divisi'));
             $this->m_aluminium->updateData($datapost);
             $id_warna = $this->m_aluminium->getRowIdWarna($this->input->post('kode_warna'));
             $datax = array(
