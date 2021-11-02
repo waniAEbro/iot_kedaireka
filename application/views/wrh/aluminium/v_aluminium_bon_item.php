@@ -66,7 +66,6 @@
                             <td><select style="width: 120px;" id="id_gudang" name="id_gudang" class="form-control" style="width:100%" required>
                                     <option value="">-- Select --</option>
                                 </select>
-                                <input type="hidden" id="id_divisi">
                             </td>
                             <td><select style="width: 120px;" id="keranjang" name="keranjang" class="form-control" style="width:100%" required>
                                     <option value="">-- Select --</option>
@@ -145,28 +144,7 @@
 
     }
 
-    $("#item").change(function() {
-        $('#id_divisi').val('').trigger('change');
-        $('#id_gudang').val('').trigger('change');
-        $('#keranjang').val('').trigger('change');
-        $('#warna_akhir').val('').trigger('change');
-        $('#stock').val(0);
-        $('#qty').val('');
-        $('#txt_qty_gudang').html("<b> " + 0 + "</b>");
-        $('#produksi').prop('checked', false);
-        $('#lapangan').prop('checked', false);
-        $.ajax({
-            url: "<?= site_url('wrh/aluminium/getDivisiItem') ?>",
-            dataType: "json",
-            type: "POST",
-            data: {
-                "item": $('#item').val(),
-            },
-            success: function(data) {
-                $('#id_divisi').val(data['id_divisi']);
-            }
-        });
-    });
+
 
     $("select[name=item]").change(function() {
         var x = $("select[name=id_gudang]");
@@ -213,7 +191,6 @@
                 type: "POST",
                 data: {
                     "item": $('#item').val(),
-                    "divisi": $('#id_divisi').val(),
                     "gudang": $(this).val()
                 },
                 success: function(data) {
@@ -242,7 +219,6 @@
             type: "POST",
             data: {
                 "item": $('#item').val(),
-                "divisi": $('#id_divisi').val(),
                 "gudang": $('#id_gudang').val(),
                 "keranjang": $(this).val()
             },
@@ -264,7 +240,7 @@
 
     function quotation2() {
 
-        if ($('#id_fppp').val() != '' && $('#item').val() != '' && $('#id_divisi').val() != '' && $('#id_gudang').val() != '' && $('#qty').val() != '') {
+        if ($('#id_fppp').val() != '' && $('#item').val() != '' && $('#id_gudang').val() != '' && $('#qty').val() != '') {
 
             $.ajax({
                     type: "POST",
@@ -274,7 +250,6 @@
                         'id_sj': 0,
                         'id_fppp': $('#id_fppp').val(),
                         'item': $('#item').val(),
-                        'id_divisi': $("#id_divisi").val(),
                         'id_gudang': $("#id_gudang").val(),
                         'keranjang': $("#keranjang").val(),
                         'qty': $("#qty").val(),

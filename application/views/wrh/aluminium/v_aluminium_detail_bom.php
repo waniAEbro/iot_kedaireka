@@ -66,7 +66,6 @@
                         <th>Kekurangan</th>
                         <th>Qty Gudang</th>
                         <th>Qty Aktual</th>
-                        <th>Out Dari Divisi</th>
                         <th>Area Gudang</th>
                         <th>Keranjang</th>
                         <th>Produksi</th>
@@ -76,13 +75,13 @@
                         <?php
                         $i = 1;
                         foreach ($list_bom->result() as $row) :
-                            $divisi = $this->m_aluminium->getDivisiBomItem($id_jenis_item, $row->id_item);
+                            // $divisi = $this->m_aluminium->getDivisiBomItem($id_jenis_item, $row->id_item);
                             $gudang = $this->m_aluminium->getGudangBomItem($id_jenis_item, $row->id_item);
                             $keranjang = $this->m_aluminium->getKeranjangBomItem($id_jenis_item, $row->id_item);
 
 
                             $qtyTotalOut = $this->m_aluminium->getQtyOutFppp($row->id_fppp, $row->id_item);
-                            $id_divisi_stock = $this->m_aluminium->getQtyTerbanyakStockDivisi($row->id_item);
+                            // $id_divisi_stock = $this->m_aluminium->getQtyTerbanyakStockDivisi($row->id_item);
                             $id_gudang_stock = $this->m_aluminium->getQtyTerbanyakStockGudang($row->id_item);
                             $keranjang_stock = $this->m_aluminium->getQtyTerbanyakStockKeranjang($row->id_item);
                             $qty_stock = $this->m_aluminium->getQtyTerbanyakStockQty($row->id_item);
@@ -134,16 +133,6 @@
                                         <input type='text' class='txtedit' data-id='<?= $row->id_stock ?>' data-field='qty_out' id='txt_<?= $row->id_stock ?>' value='<?= $qty_aktual ?>'>
                                     </td>
                                     <td style="background-color:#ffd45e">
-                                        <select style="width: 100px;" id="id_divisi_<?= $row->id_stock ?>" onchange="divisi(<?= $row->id_stock ?>)" data-id="<?= $row->id_stock ?>" data-field="id_divisi" class="form-control">
-                                            <option id="">Pilih</option>
-                                            <?php foreach ($divisi->result() as $key) {
-                                                $selected1 = ($key->id == $id_divisi_stock) ? "selected" : "";
-                                            ?>
-                                                <option value="<?= $key->id ?>" <?= $selected1 ?>><?= $key->divisi ?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </td>
-                                    <td style="background-color:#ffd45e">
                                         <select style="width: 100px;" id="id_gudang_<?= $row->id_stock ?>" onchange="gudang(<?= $row->id_stock ?>)" data-id="<?= $row->id_stock ?>" data-field="id_gudang" class="form-control">
                                             <option id="">Pilih</option>
                                             <?php foreach ($gudang->result() as $key) {
@@ -184,7 +173,6 @@
                                     <td align="center">-</td>
                                     <td align="center">-</td>
                                     <td align="center"><?= $row->qty_out ?></td>
-                                    <td align="center"><?= $row->divisi ?></td>
                                     <td align="center"><?= $row->gudang ?></td>
                                     <td align="center"><?= $row->keranjang ?></td>
                                     <td align="center"><input type="checkbox" onclick="return false;" class="checkbox" <?= $cekproduksi ?>></td>
@@ -244,38 +232,38 @@
 
     }
 
-    function divisi(id) {
-        var fieldname = 'id_divisi';
-        var value = $('#id_divisi_' + id).val();
-        var edit_id = id;
-        var id_fppp = "<?= $id_fppp ?>";
-        // Send AJAX request
-        $.ajax({
-            url: "<?= site_url('wrh/aluminium/getQtyRowGudang/') ?>",
-            dataType: "json",
-            type: "POST",
-            data: {
-                field: fieldname,
-                value: value,
-                id: edit_id,
-                id_fppp: id_fppp,
-                divisi: $('#id_divisi_' + id).val(),
-                gudang: $('#id_gudang_' + id).val(),
-                keranjang: $('#keranjang_' + id).val(),
-            },
-            success: function(response) {
-                console.log("divisi sukses!");
-                if (response['qty_gudang'] == null) {
-                    var qtygdg = 0;
-                } else {
-                    var qtygdg = response['qty_gudang'];
-                }
-                $('#qty_gudang_' + id).html(qtygdg);
-                $('#qty_gudang_asli_' + id).html(qtygdg);
-                // load_silent("wrh/aluminium/detailbom/" + $("#id_fppp").val(), "#content");
-            }
-        })
-    }
+    // function divisi(id) {
+    //     var fieldname = 'id_divisi';
+    //     var value = $('#id_divisi_' + id).val();
+    //     var edit_id = id;
+    //     var id_fppp = "<?= $id_fppp ?>";
+    //     // Send AJAX request
+    //     $.ajax({
+    //         url: "<?= site_url('wrh/aluminium/getQtyRowGudang/') ?>",
+    //         dataType: "json",
+    //         type: "POST",
+    //         data: {
+    //             field: fieldname,
+    //             value: value,
+    //             id: edit_id,
+    //             id_fppp: id_fppp,
+    //             divisi: $('#id_divisi_' + id).val(),
+    //             gudang: $('#id_gudang_' + id).val(),
+    //             keranjang: $('#keranjang_' + id).val(),
+    //         },
+    //         success: function(response) {
+    //             console.log("divisi sukses!");
+    //             if (response['qty_gudang'] == null) {
+    //                 var qtygdg = 0;
+    //             } else {
+    //                 var qtygdg = response['qty_gudang'];
+    //             }
+    //             $('#qty_gudang_' + id).html(qtygdg);
+    //             $('#qty_gudang_asli_' + id).html(qtygdg);
+    //             // load_silent("wrh/aluminium/detailbom/" + $("#id_fppp").val(), "#content");
+    //         }
+    //     })
+    // }
 
     function gudang(id) {
         var fieldname = 'id_gudang';
@@ -292,7 +280,6 @@
                 value: value,
                 id: edit_id,
                 id_fppp: id_fppp,
-                divisi: $('#id_divisi_' + id).val(),
                 gudang: $('#id_gudang_' + id).val(),
                 keranjang: $('#keranjang_' + id).val(),
             },
@@ -325,7 +312,6 @@
                 value: value,
                 id: edit_id,
                 id_fppp: id_fppp,
-                divisi: $('#id_divisi_' + id).val(),
                 gudang: $('#id_gudang_' + id).val(),
                 keranjang: $('#keranjang_' + id).val(),
             },
@@ -381,7 +367,6 @@
                     field: fieldname,
                     value: value,
                     id: edit_id,
-                    divisi: $('#id_divisi_' + edit_id).val(),
                     gudang: $('#id_gudang_' + edit_id).val(),
                     keranjang: $('#keranjang_' + edit_id).val(),
                     qtytxt: $('#txt_' + edit_id).val(),
@@ -452,7 +437,6 @@
                         field: fieldname,
                         value: value,
                         id: edit_id,
-                        divisi: $('#id_divisi_' + edit_id).val(),
                         gudang: $('#id_gudang_' + edit_id).val(),
                         keranjang: $('#keranjang_' + edit_id).val(),
                         id_fppp: id_fppp,

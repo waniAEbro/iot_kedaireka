@@ -15,7 +15,6 @@
                         <label>Item</label>
                         <input type="hidden" class="form-control" id="item" value="<?= $id_item ?>" readonly>
                         <input type="text" class="form-control" id="itemx" value="<?= $row->section_ata ?>-<?= $row->section_allure ?>-<?= $row->temper ?>-<?= $row->kode_warna ?>-<?= $row->ukuran ?>-<?= $row->warna ?>" readonly>
-                        <input type="hidden" class="form-control" id="id_divisi" value="<?= $row->id_divisi ?>" readonly>
                     </div>
                 </div>
             </div>
@@ -52,7 +51,6 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>Gudang</label>
-                        <input type="hidden" class="form-control" id="id_divisi2" value="<?= $row->id_divisi ?>" readonly>
                         <select id="id_gudang2" name="id_gudang2" class="form-control" style="width:100%" required>
                             <option value="">-- Select --</option>
                             <?php foreach ($gudang->result() as $valap) : ?>
@@ -97,12 +95,10 @@
                 type: "POST",
                 data: {
                     "id_item": $('#item').val(),
-                    "id_divisi": $('#id_divisi').val(),
                     "id_gudang": $('#id_gudang').val(),
                     "keranjang": $('#keranjang').val(),
                     "qty": $('#qty').val(),
 
-                    "id_divisi2": $('#id_divisi2').val(),
                     "id_gudang2": $('#id_gudang2').val(),
                     "keranjang2": $('#keranjang2').val(),
                     "qty2": $('#qty2').val(),
@@ -141,7 +137,6 @@
             type: "POST",
             data: {
                 "item": $('#item').val(),
-                "divisi": $('#id_divisi').val()
             },
             success: function(data) {
 
@@ -166,7 +161,6 @@
                 type: "POST",
                 data: {
                     "item": $('#item').val(),
-                    "divisi": $('#id_divisi').val(),
                     "gudang": $(this).val()
                 },
                 success: function(data) {
@@ -189,7 +183,6 @@
             type: "POST",
             data: {
                 "item": $('#item').val(),
-                "divisi": $('#id_divisi').val(),
                 "gudang": $('#id_gudang').val(),
                 "keranjang": $(this).val()
             },

@@ -43,17 +43,6 @@
                         <div class="form-group">
                             <label class="control-label">Qty Surat Jalan:</label>
                             <input type="text" style="text-align: right;" class="form-control" id="qty" placeholder="Qty" autocomplete="off">
-                            <input type="hidden" class="form-control" id="id_divisi">
-                        </div>
-                        <div class="form-group" style="display:none;">
-                            <label class="control-label">Divisi:</label>
-                            <select id="id_divisix" name="id_divisix" class="form-control" style="width:100%" required>
-                                <option value="">-- Select --</option>
-                                <?php foreach ($divisi->result() as $valap) : ?>
-                                    <option value="<?= $valap->id ?>"><?= $valap->divisi ?>
-                                    </option>
-                                <?php endforeach; ?>
-                            </select>
                         </div>
                         <div class="form-group">
                             <label class="control-label">Gudang:</label>
@@ -97,7 +86,6 @@
                             <th width="15%">Supplier</th>
                             <th width="15%">No Surat Jalan</th>
                             <th width="15%">No PR</th>
-                            <th width="15%">Divisi</th>
                             <th width="15%">Gudang</th>
                             <th width="15%">Keranjang</th>
                             <th width="15%">Keterangan</th>
@@ -143,12 +131,7 @@
 
     function quotation() {
 
-        if ($('#id_divisi').val() == '' || $('#id_divisi').val() == 0) {
-            $.growl.error({
-                title: 'Peringatan',
-                message: 'Divisi di item ini masih kosong, silahkan edit di master!'
-            });
-        } else if ($('#aktual').val() != '' && $('#item').val() != '' && $('#qty').val() != '' && $('#id_divisi').val() != '' && $('#id_gudang').val() != '' && $('#keranjang').val() != '') {
+        if ($('#aktual').val() != '' && $('#item').val() != '' && $('#qty').val() != '' && $('#id_gudang').val() != '' && $('#keranjang').val() != '') {
 
             $.ajax({
                     type: "POST",
@@ -161,7 +144,6 @@
                         'supplier': $("#supplier").val(),
                         'no_surat_jalan': $("#no_surat_jalan").val(),
                         'no_pr': $("#no_pr").val(),
-                        'id_divisi': $("#id_divisi").val(),
                         'id_gudang': $("#id_gudang").val(),
                         'keranjang': $("#keranjang").val(),
                         'keterangan': $("#keterangan").val(),
@@ -194,9 +176,6 @@
                     ' + $('#no_pr').val() + '\
                   </td>\
                   <td width = "15%">\
-                    ' + $('#id_divisi :selected').text() + '\
-                  </td>\
-                  <td width = "15%">\
                     ' + $('#id_gudang :selected').text() + '\
                   </td>\
                   <td width = "15%">\
@@ -209,7 +188,6 @@
                     $('tr.odd').remove();
                     $('#dataTbl').append(x);
                     $('#item').val('').trigger('change');
-                    // $('#id_divisi').val('');
                     // $('#id_gudang').val('').trigger('change');
                     $("#qty").val('');
                     // $("#supplier").val('');
@@ -248,21 +226,6 @@
             });
         };
     }
-
-    $("#item").change(function() {
-        var item = $("#item").val();
-        $.ajax({
-                type: "POST",
-                url: "<?= site_url('wrh/aluminium/getIdDivisi') ?>",
-                dataType: 'json',
-                data: {
-                    'id_item': item,
-                }
-            })
-            .success(function(datasaved) {
-                $("#id_divisi").val(datasaved.id_divisi);
-            });
-    });
 
     function hapus(i) {
         if (confirm('Lanjutkan Proses Hapus?')) {
