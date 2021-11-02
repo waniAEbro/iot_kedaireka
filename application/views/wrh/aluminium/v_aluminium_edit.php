@@ -23,12 +23,6 @@
                         <input type="text" class="form-control" value="<?= $row->warna ?>" readonly>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Divisi</label>
-                        <input type="text" class="form-control" value="<?= $row->divisi ?>" readonly>
-                    </div>
-                </div>
             </div>
             <div class="row">
                 <div class="col-md-4">

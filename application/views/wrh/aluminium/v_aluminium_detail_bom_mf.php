@@ -65,7 +65,6 @@
                         <th>Kekurangan</th>
                         <th>Qty Aktual</th>
                         <th>Qty Gudang</th>
-                        <!-- <th>Out Dari Divisi</th> -->
                         <th>Area Gudang</th>
                         <th>Keranjang</th>
                         <th>Produksi</th>
@@ -76,13 +75,11 @@
                         <?php
                         $i = 1;
                         foreach ($list_bom->result() as $row) :
-                            // $divisi = $this->m_aluminium->getDivisiBomItem($id_jenis_item, $row->id_item);
                             $gudang = $this->m_aluminium->getGudangBomItem($id_jenis_item, $row->id_item);
                             $keranjang = $this->m_aluminium->getKeranjangBomItem($id_jenis_item, $row->id_item);
 
 
                             $qtyTotalOut = $this->m_aluminium->getQtyOutFppp($row->id_fppp, $row->id_item);
-                            // $id_divisi_stock = $this->m_aluminium->getQtyTerbanyakStockDivisi($row->id_item);
                             $id_gudang_stock = $this->m_aluminium->getQtyTerbanyakStockGudang($row->id_item);
                             $keranjang_stock = $this->m_aluminium->getQtyTerbanyakStockKeranjang($row->id_item);
                             $qty_stock = $this->m_aluminium->getQtyTerbanyakStockQtyMf($row->id_item);
@@ -233,37 +230,7 @@
 
     }
 
-    // function divisi(id) {
-    //     var fieldname = 'id_divisi';
-    //     var value = $('#id_divisi_' + id).val();
-    //     var edit_id = id;
-    //     var id_fppp = "<?= $id_fppp ?>";
-    //     // Send AJAX request
-    //     $.ajax({
-    //         url: "<?= site_url('wrh/aluminium/getQtyRowGudang/') ?>",
-    //         dataType: "json",
-    //         type: "POST",
-    //         data: {
-    //             field: fieldname,
-    //             value: value,
-    //             id: edit_id,
-    //             id_fppp: id_fppp,
-    //             divisi: $('#id_divisi_' + id).val(),
-    //             gudang: $('#id_gudang_' + id).val(),
-    //             keranjang: $('#keranjang_' + id).val(),
-    //         },
-    //         success: function(response) {
-    //             console.log("divisi sukses!");
-    //             if (response['qty_gudang'] == null) {
-    //                 var qtygdg = 0;
-    //             } else {
-    //                 var qtygdg = response['qty_gudang'];
-    //             }
-    //             $('#qty_gudang_' + id).html(qtygdg);
-    //             // load_silent("wrh/aluminium/detailbom/" + $("#id_fppp").val(), "#content");
-    //         }
-    //     })
-    // }
+
 
     function gudang(id) {
         var fieldname = 'id_gudang';

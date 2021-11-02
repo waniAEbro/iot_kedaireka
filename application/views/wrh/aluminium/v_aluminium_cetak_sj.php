@@ -119,11 +119,7 @@ $html .= '
 $i = 1;
 $total = 0;
 foreach ($detail as $key) {
-    // if ($key->id_divisi == 3) {
     $itm_if = $key->section_allure;
-    // } else {
-    // $itm = $key->section_ata . ' ' . $key->section_allure;
-    // }
     if ($key->section_ata != '-' && $key->section_allure != '-') {
         $itm = $key->section_allure;
     } else if ($key->section_ata == '-' && $key->section_allure != '-') {
