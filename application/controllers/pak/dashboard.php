@@ -72,7 +72,7 @@ class Dashboard extends CI_Controller
 
 		$this->load->library('zend');
 		$this->zend->load('Zend/Barcode');
-		$this->db->where('id_jenis_item', 1);
+		$this->db->where('id_jenis_item', 2);
 
 		$hasil = $this->db->get('master_item');
 		foreach ($hasil->result() as $key) {
