@@ -8,7 +8,7 @@
                     <?php
                     $sesi = from_session('level');
                     if ($sesi <= 2) {
-                        echo button('load_silent("master/aksesoris/import/","#content")', 'Import Excel', 'btn btn-primary', 'data-toggle="tooltip" title="Import Excel"');
+                        //echo button('load_silent("master/aksesoris/import/","#content")', 'Import Excel', 'btn btn-primary', 'data-toggle="tooltip" title="Import Excel"');
                     }
                     if ($sesi <= 3) {
                         echo button('load_silent("master/aksesoris/form/base","#modal")', 'Add', 'btn btn-info', 'data-toggle="tooltip" title="Add"');

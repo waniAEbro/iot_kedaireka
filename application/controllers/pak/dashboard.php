@@ -7,7 +7,8 @@ class Dashboard extends CI_Controller
 	{
 		parent::__construct();
 		$this->fungsi->restrict();
-		$this->load->model('wrh/m_aluminium');
+		// $this->load->model('wrh/m_aluminium');
+		$this->load->model('master/m_aluminium');
 	}
 
 	public function index()
@@ -34,25 +35,25 @@ class Dashboard extends CI_Controller
 		// }
 
 
-		$cek_stock_awal_bulan = $this->m_aluminium->cekStockAwalBulan()->num_rows();
-		$item = $this->m_aluminium->getlistStock();
+		// $cek_stock_awal_bulan = $this->m_aluminium->cekStockAwalBulan()->num_rows();
+		// $item = $this->m_aluminium->getlistStock();
 
-		if ($cek_stock_awal_bulan < 1) {
-			foreach ($item->result() as $key) {
-				$obj = array(
-					'awal_bulan' => 1,
-					'inout' => 1,
-					'id_item' => $key->id_item,
-					'id_divisi' => $key->id_divisi,
-					'id_gudang' => $key->id_gudang,
-					'keranjang' => $key->keranjang,
-					'id_jenis_item' => $key->id_jenis_item,
-					'qty_in' => $key->qty,
-					'created' => date('Y-m-d H:i:s')
-				);
-				$this->db->insert('data_stock', $obj);
-			}
-		}
+		// if ($cek_stock_awal_bulan < 1) {
+		// 	foreach ($item->result() as $key) {
+		// 		$obj = array(
+		// 			'awal_bulan' => 1,
+		// 			'inout' => 1,
+		// 			'id_item' => $key->id_item,
+		// 			'id_divisi' => $key->id_divisi,
+		// 			'id_gudang' => $key->id_gudang,
+		// 			'keranjang' => $key->keranjang,
+		// 			'id_jenis_item' => $key->id_jenis_item,
+		// 			'qty_in' => $key->qty,
+		// 			'created' => date('Y-m-d H:i:s')
+		// 		);
+		// 		$this->db->insert('data_stock', $obj);
+		// 	}
+		// }
 
 		// $dc = $this->m_aluminium->getDC();
 		// foreach ($dc->result() as $key) {
@@ -69,7 +70,50 @@ class Dashboard extends CI_Controller
 		// 	$this->db->insert('data_counter', $obj);
 		// }
 
+		$this->load->library('zend');
+		$this->zend->load('Zend/Barcode');
+		$this->db->where('id_jenis_item', 1);
+
+		$hasil = $this->db->get('master_item');
+		foreach ($hasil->result() as $key) {
+			$code = '1' . str_pad($key->id, 10, '0', STR_PAD_LEFT);
+			$barcode = $code; //nomor id barcode
+			$imageResource = Zend_Barcode::factory('code128', 'image', array('text' => $barcode), array())->draw();
+			$imageName = $barcode . '.jpg';
+			$imagePath = 'files/'; // penyimpanan file barcode
+			imagejpeg($imageResource, $imagePath . $imageName);
+			$pathBarcode = $imagePath . $imageName; //Menyimpan path image bardcode kedatabase
+
+			$data = array(
+				'id' => $key->id,
+				'barcode' => $barcode,
+				'image_barcode' => $pathBarcode
+			);
+			$this->m_aluminium->updateData($data);
+		}
+
+
+
 		$this->load->view('v_dashboard');
+	}
+
+	public function insertbarcode($code, $id)
+	{
+		$this->load->library('zend');
+		$this->zend->load('Zend/Barcode');
+		$barcode = $code; //nomor id barcode
+		$imageResource = Zend_Barcode::factory('code128', 'image', array('text' => $barcode), array())->draw();
+		$imageName = $barcode . '.jpg';
+		$imagePath = 'files/'; // penyimpanan file barcode
+		imagejpeg($imageResource, $imagePath . $imageName);
+		$pathBarcode = $imagePath . $imageName; //Menyimpan path image bardcode kedatabase
+
+		$data = array(
+			'id' => $id,
+			'barcode' => $barcode,
+			'image_barcode' => $pathBarcode
+		);
+		$this->m_aluminium->updateData($data);
 	}
 }
 

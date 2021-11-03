@@ -8,7 +8,7 @@
                     <?php
                     $sesi = from_session('level');
                     if ($sesi == 1) {
-                        echo button('load_silent("master/aluminium/import/","#content")', 'Import Excel', 'btn btn-primary', 'data-toggle="tooltip" title="Import Excel"');
+                        //echo button('load_silent("master/aluminium/import/","#content")', 'Import Excel', 'btn btn-primary', 'data-toggle="tooltip" title="Import Excel"');
                     }
                     if ($sesi <= 3) {
                         echo button('load_silent("master/aluminium/form/base","#modal")', 'Add', 'btn btn-info', 'data-toggle="tooltip" title="Add"');
