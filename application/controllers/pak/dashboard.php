@@ -76,7 +76,7 @@ class Dashboard extends CI_Controller
 
 		$hasil = $this->db->get('master_item');
 		foreach ($hasil->result() as $key) {
-			$code = '1' . str_pad($key->id, 10, '0', STR_PAD_LEFT);
+			$code = '2' . str_pad($key->id, 10, '0', STR_PAD_LEFT);
 			$barcode = $code; //nomor id barcode
 			$imageResource = Zend_Barcode::factory('code128', 'image', array('text' => $barcode), array())->draw();
 			$imageName = $barcode . '.jpg';
