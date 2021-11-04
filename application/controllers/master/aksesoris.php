@@ -187,6 +187,13 @@ class Aksesoris extends CI_Controller
         $this->fungsi->run_js('load_silent("master/aksesoris","#content")');
         $this->fungsi->message_box("Data Master aksesoris sukses disimpan...", "success");
     }
+
+    public function cetak_barcode($id)
+    {
+        $this->db->where('id', $id);
+        $data['bcd'] = $this->db->get('master_item')->row();
+        $this->load->view('master/aksesoris/v_aksesoris_cetak_barcode', $data);
+    }
 }
 
 /* End of file aksesoris.php */

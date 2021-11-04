@@ -55,6 +55,7 @@
                                         # code...
                                     }
                                     ?>
+                                    <a target="_blank" href="<?= base_url('master/aluminium/cetak_barcode/' . $row->id); ?>" class="btn btn-xs btn-primary">Cetak Barcode</a>
                                 </td>
                             </tr>
 

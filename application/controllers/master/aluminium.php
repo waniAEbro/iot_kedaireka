@@ -196,6 +196,13 @@ class aluminium extends CI_Controller
         $this->fungsi->run_js('load_silent("master/aluminium","#content")');
         $this->fungsi->message_box("Data Master aluminium sukses disimpan...", "success");
     }
+
+    public function cetak_barcode($id)
+    {
+        $this->db->where('id', $id);
+        $data['bcd'] = $this->db->get('master_item')->row();
+        $this->load->view('master/aluminium/v_aluminium_cetak_barcode', $data);
+    }
 }
 
 /* End of file aluminium.php */
