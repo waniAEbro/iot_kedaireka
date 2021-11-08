@@ -5,6 +5,7 @@
             <div class="box-header with-border">
                 <h3 class="box-title">Master Aluminium</h3>
                 <div class="box-tools pull-right">
+                    <a class="btn btn-primary" onclick="cetakExcel()">Cetak</a>
                     <?php
                     $sesi = from_session('level');
                     if ($sesi == 1) {
@@ -73,4 +74,9 @@
             "scrollX": true,
         });
     });
+
+    function cetakExcel() {
+        var url = "<?= site_url('master/aluminium/cetakExcel') ?>";
+        window.open(url, "_blank");
+    }
 </script>

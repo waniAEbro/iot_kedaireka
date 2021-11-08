@@ -78,13 +78,19 @@
       </div>
 
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Kode Proyek</label>
+            <input type="text" id="kode_proyek" value="<?= $row->kode_proyek ?>" class="form-control" readonly>
+          </div>
+        </div>
+        <div class="col-md-4">
           <div class="form-group">
             <label>Nama Proyek</label>
             <input type="text" id="nama_proyek" value="<?= $row->nama_proyek ?>" class="form-control">
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
           <div class="form-group">
             <label>Tahap</label>
             <input type="text" id="tahap" value="<?= $row->tahap ?>" class="form-control">
@@ -439,6 +445,7 @@
           tahap_produksi: $("#tahap_produksi").val(),
           nama_aplikator: $("#nama_aplikator").val(),
           nama_proyek: $("#nama_proyek").val(),
+          kode_proyek: $("#kode_proyek").val(),
           tahap: $("#tahap").val(),
           alamat_proyek: $("#alamat_proyek").val(),
           status_order: $("#status_order").val(),
@@ -499,6 +506,7 @@
           tahap_produksi: $("#tahap_produksi").val(),
           nama_aplikator: $("#nama_aplikator").val(),
           nama_proyek: $("#nama_proyek").val(),
+          kode_proyek: $("#kode_proyek").val(),
           tahap: $("#tahap").val(),
           alamat_proyek: $("#alamat_proyek").val(),
           status_order: $("#status_order").val(),

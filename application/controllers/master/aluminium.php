@@ -203,6 +203,13 @@ class aluminium extends CI_Controller
         $data['bcd'] = $this->db->get('master_item')->row();
         $this->load->view('master/aluminium/v_aluminium_cetak_barcode', $data);
     }
+
+    public function cetakExcel()
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $data['aluminium'] = $this->m_aluminium->getData();
+        $this->load->view('master/aluminium/v_aluminium_cetak', $data);
+    }
 }
 
 /* End of file aluminium.php */

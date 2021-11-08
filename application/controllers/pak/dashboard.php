@@ -18,6 +18,24 @@ class Dashboard extends CI_Controller
 
 	public function status_pak()
 	{
+		// $this->db->where('mi.id_jenis_item', 1);
+		// // $this->db->where('mi.jum_row >', 1);
+		// $this->db->where('mi.dbl', 1);
+		// $item = $this->db->get('master_item mi');
+		// foreach ($item->result() as $key) {
+		// 	// $nr = $this->m_aluminium->rowsJum($key->section_ata, $key->section_allure, $key->temper, $key->kode_warna, $key->ukuran);
+		// 	// $this->m_aluminium->updtHapus($key->section_ata, $key->section_allure, $key->temper, $key->kode_warna, $key->ukuran);
+		// 	$cek_counter = $this->m_aluminium->cekCounter($key->id);
+
+		// 	$object = array(
+		// 		// 'jum_row' => $nr,
+		// 		'ada_counter' => $cek_counter,
+		// 	);
+		// 	$this->db->where('id', $key->id);
+		// 	$this->db->update('master_item', $object);
+		// }
+
+
 		// $this->db->join('master_divisi_stock mds', 'mds.id = mi.id_divisi', 'left');
 
 		// $this->db->where('mi.id_jenis_item', 1);

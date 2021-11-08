@@ -1198,6 +1198,43 @@ class M_aluminium extends CI_Model
 
         return $this->db->get('data_stock')->row()->qty;
     }
+
+    public function rowsJum($s_at, $s_al, $temper, $kode_warna, $ukuran)
+    {
+        $this->db->where('section_ata', $s_at);
+        $this->db->where('section_allure', $s_al);
+        $this->db->where('temper', $temper);
+        $this->db->where('kode_warna', $kode_warna);
+        $this->db->where('ukuran', $ukuran);
+
+        return $this->db->get('master_item')->num_rows();
+    }
+
+    public function updtHapus($s_at, $s_al, $temper, $kode_warna, $ukuran)
+    {
+        $object = array(
+            'dbl' => 1,
+        );
+        $this->db->where('section_ata', $s_at);
+        $this->db->where('section_allure', $s_al);
+        $this->db->where('temper', $temper);
+        $this->db->where('kode_warna', $kode_warna);
+        $this->db->where('ukuran', $ukuran);
+        // $this->db->where('jum_row', 2);
+        // $this->db->order_by('id', 'desc');
+
+        // $this->db->limit(5);
+
+
+        $this->db->update('master_item', $object);
+    }
+
+    public function cekCounter($id)
+    {
+        $this->db->where('id_item', $id);
+
+        return $this->db->get('data_counter')->num_rows();
+    }
 }
 
 /* End of file m_aluminium.php */

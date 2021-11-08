@@ -124,6 +124,7 @@ class Fppp extends CI_Controller
 			'type_fppp'              => $this->input->post('type_fppp'),
 			'tahap_produksi'         => $this->input->post('tahap_produksi'),
 			'nama_aplikator'         => $this->input->post('nama_aplikator'),
+			'kode_proyek'            => $this->input->post('kode_proyek'),
 			'nama_proyek'            => $this->input->post('nama_proyek'),
 			'tahap'                  => $this->input->post('tahap'),
 			'alamat_proyek'          => $this->input->post('alamat_proyek'),
@@ -155,6 +156,15 @@ class Fppp extends CI_Controller
 		);
 		$this->m_fppp->insertfppp($datapost);
 		$data['id'] = $this->db->insert_id();
+		$cek_kode_proyek = $this->m_fppp->cekKodeProyek($datapost['kode_proyek'])->num_rows();
+		if ($cek_kode_proyek < 1) {
+			$obj_py = array(
+				'kode_proyek' => $datapost['kode_proyek'],
+				'created'                => date('Y-m-d H:i:s'),
+				'updated'                => date('Y-m-d H:i:s'),
+			);
+			$this->db->insert('data_fppp_finance', $obj_py);
+		}
 		$this->fungsi->catat($datapost, "Menyimpan fppp sbb:", true);
 		$data['msg'] = "fppp Disimpan";
 		echo json_encode($data);
@@ -190,6 +200,7 @@ class Fppp extends CI_Controller
 				'applicant_sector'       => $this->input->post('applicant_sector'),
 				'authorized_distributor' => $this->input->post('authorized_distributor'),
 				'no_fppp'                => $nofppp,
+				'kode_proyek'            => $this->input->post('kode_proyek'),
 				'nama_proyek'            => $this->input->post('nama_proyek'),
 				'tahap'                  => $this->input->post('tahap'),
 				'alamat_proyek'          => $this->input->post('alamat_proyek'),
@@ -222,6 +233,15 @@ class Fppp extends CI_Controller
 			);
 			$this->m_fppp->insertfppp($datapost);
 			$data['id'] = $this->db->insert_id();
+			$cek_kode_proyek = $this->m_fppp->cekKodeProyek($datapost['kode_proyek'])->num_rows();
+			if ($cek_kode_proyek < 1) {
+				$obj_py = array(
+					'kode_proyek' => $datapost['kode_proyek'],
+					'created'                => date('Y-m-d H:i:s'),
+					'updated'                => date('Y-m-d H:i:s'),
+				);
+				$this->db->insert('data_fppp_finance', $obj_py);
+			}
 			$this->fungsi->catat($datapost, "Menyimpan fppp sbb:", true);
 			$data['msg'] = "fppp Disimpan";
 			echo json_encode($data);

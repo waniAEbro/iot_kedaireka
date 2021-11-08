@@ -415,6 +415,12 @@ class M_fppp extends CI_Model
 
 		return $this->db->get('data_temp dt');
 	}
+
+	public function cekKodeProyek($kode_proyek)
+	{
+		$this->db->where('kode_proyek', $kode_proyek);
+		return $this->db->get('data_fppp_finance');
+	}
 }
 
 /* End of file m_fppp.php */
