@@ -60,7 +60,8 @@ class Aksesoris extends CI_Controller
             } else {
                 $this->m_aksesoris->insertData($datapost);
                 $id_item = $this->db->insert_id();
-                $code = '2' . str_pad($id_item, 10, '0', STR_PAD_LEFT);
+                // $code = '2' . str_pad($id_item, 10, '0', STR_PAD_LEFT);
+                $code = $datapost['item_code'];
                 $this->insertbarcode($code, $id_item);
                 $this->fungsi->catat($datapost, "Menambah Master aksesoris dengan data sbb:", true);
             }
