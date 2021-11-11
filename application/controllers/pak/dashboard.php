@@ -89,28 +89,28 @@ class Dashboard extends CI_Controller
 		// 	$this->db->insert('data_counter', $obj);
 		// }
 
-		$this->load->library('zend');
-		$this->zend->load('Zend/Barcode');
-		$this->db->where('id_jenis_item', 2);
+		// $this->load->library('zend');
+		// $this->zend->load('Zend/Barcode');
+		// $this->db->where('id_jenis_item', 2);
 
-		$hasil = $this->db->get('master_item');
-		foreach ($hasil->result() as $key) {
-			// $code = '2' . str_pad($key->id, 10, '0', STR_PAD_LEFT);
-			$code = $key->item_code;
-			$barcode = $code; //nomor id barcode
-			$imageResource = Zend_Barcode::factory('code128', 'image', array('text' => $barcode), array())->draw();
-			$imageName = $barcode . '.jpg';
-			$imagePath = 'files/'; // penyimpanan file barcode
-			imagejpeg($imageResource, $imagePath . $imageName);
-			$pathBarcode = $imagePath . $imageName; //Menyimpan path image bardcode kedatabase
+		// $hasil = $this->db->get('master_item');
+		// foreach ($hasil->result() as $key) {
+		// 	// $code = '2' . str_pad($key->id, 10, '0', STR_PAD_LEFT);
+		// 	$code = $key->item_code;
+		// 	$barcode = $code; //nomor id barcode
+		// 	$imageResource = Zend_Barcode::factory('code128', 'image', array('text' => $barcode), array())->draw();
+		// 	$imageName = $barcode . '.jpg';
+		// 	$imagePath = 'files/'; // penyimpanan file barcode
+		// 	imagejpeg($imageResource, $imagePath . $imageName);
+		// 	$pathBarcode = $imagePath . $imageName; //Menyimpan path image bardcode kedatabase
 
-			$data = array(
-				'id' => $key->id,
-				'barcode' => $barcode,
-				'image_barcode' => $pathBarcode
-			);
-			$this->m_aluminium->updateData($data);
-		}
+		// 	$data = array(
+		// 		'id' => $key->id,
+		// 		'barcode' => $barcode,
+		// 		'image_barcode' => $pathBarcode
+		// 	);
+		// 	$this->m_aluminium->updateData($data);
+		// }
 
 
 
