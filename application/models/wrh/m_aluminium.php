@@ -430,6 +430,13 @@ class M_aluminium extends CI_Model
         $this->db->update('data_counter', $object);
     }
 
+    public function updateData($dt)
+    {
+        $this->db->where('id', $dt['id']);
+
+        $this->db->update('master_item', $dt);
+    }
+
     public function updateRowStock($id_stock, $object)
     {
         $this->db->where('id', $id_stock);
@@ -1213,7 +1220,8 @@ class M_aluminium extends CI_Model
     public function updtHapus($s_at, $s_al, $temper, $kode_warna, $ukuran)
     {
         $object = array(
-            'dbl' => 1,
+            'id_hapus' => 1,
+            // 'dbl' => 1,
         );
         $this->db->where('section_ata', $s_at);
         $this->db->where('section_allure', $s_al);
@@ -1221,9 +1229,9 @@ class M_aluminium extends CI_Model
         $this->db->where('kode_warna', $kode_warna);
         $this->db->where('ukuran', $ukuran);
         // $this->db->where('jum_row', 2);
-        // $this->db->order_by('id', 'desc');
+        $this->db->order_by('id', 'desc');
 
-        // $this->db->limit(5);
+        $this->db->limit(1);
 
 
         $this->db->update('master_item', $object);
