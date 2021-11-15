@@ -2,7 +2,7 @@
     <div class="col-lg-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Rekap In Out Aluminium</h3>
+                <h3 class="box-title">Rekap In Out Aksesoris</h3>
             </div>
             <div class="box-body">
                 <?php
@@ -40,12 +40,8 @@
                                 <th width="5%">No</th>
                                 <th>Status</th>
                                 <th>Tgl</th>
-                                <th>Section ATA</th>
-                                <th>Section Allure</th>
-                                <th>Temper</th>
-                                <th>Warna</th>
-                                <th width="25%">Deskripsi Warna</th>
-                                <th>Ukuran</th>
+                                <th>Item Code</th>
+                                <th width="25%">Deskripsi</th>
                                 <th>Satuan</th>
                                 <th>Qty</th>
                                 <th>Keterangan</th>
@@ -53,7 +49,7 @@
                             <tbody>
                                 <?php
                                 $i = 1;
-                                foreach ($aluminium->result() as $row) :
+                                foreach ($aksesoris->result() as $row) :
                                     $qty = ($row->inout == 1) ? $row->qty_in : $row->qty_out;
                                     $status = ($row->inout == 1) ? 'MASUK' : 'KELUAR';
                                 ?>
@@ -61,12 +57,8 @@
                                         <td align="center"><?= $i++ ?></td>
                                         <td><?= $status ?></td>
                                         <td><?= $row->tgl_stok ?></td>
-                                        <td><?= $row->section_ata ?></td>
-                                        <td><?= $row->section_allure ?></td>
-                                        <td><?= $row->temper ?></td>
-                                        <td><?= $row->kode_warna ?></td>
-                                        <td><?= $row->warna ?></td>
-                                        <td><?= $row->ukuran ?></td>
+                                        <td><?= $row->item_code ?></td>
+                                        <td><?= $row->deskripsi ?></td>
                                         <td><?= $row->satuan ?></td>
                                         <td><?= $qty ?></td>
                                         <td><?= $row->keterangan ?></td>
@@ -106,7 +98,7 @@
         } else {
             var tgl2 = '<?= $tgl_akhir ?>';
         };
-        load_silent("inout/aluminium/diSet/" + tlg1 + "/" + tgl2, "#content");
+        load_silent("inout/aksesoris/diSet/" + tlg1 + "/" + tgl2, "#content");
 
     }
 
@@ -124,7 +116,7 @@
             var tgl2 = '<?= $tgl_akhir ?>';
         };
 
-        var url = "<?= site_url('inout/aluminium/diSetCetak/"+tlg1+"/"+tgl2+"') ?>";
+        var url = "<?= site_url('inout/aksesoris/diSetCetak/"+tlg1+"/"+tgl2+"') ?>";
         window.open(url, "_blank");
     }
 </script>

@@ -23,13 +23,21 @@ class aluminium extends CI_Controller
         $this->load->view('inout/aluminium/v_aluminium_list', $data);
     }
 
-    public function diSet($tgl_awal = '', $tgl_akhir = '', $sort = '')
+    public function diSet($tgl_awal = '', $tgl_akhir = '')
     {
         $this->fungsi->check_previleges('aluminium');
         $data['tgl_awal']         = $tgl_awal;
         $data['tgl_akhir']        = $tgl_akhir;
         $data['aluminium']    = $this->m_aluminium->getData($data['tgl_awal'], $data['tgl_akhir']);
         $this->load->view('inout/aluminium/v_aluminium_list', $data);
+    }
+
+    public function diSetCetak($tgl_awal = '', $tgl_akhir = '')
+    {
+        $data['tgl_awal']         = $tgl_awal;
+        $data['tgl_akhir']        = $tgl_akhir;
+        $data['aluminium']    = $this->m_aluminium->getData($data['tgl_awal'], $data['tgl_akhir']);
+        $this->load->view('inout/aluminium/v_aluminium_list_cetak', $data);
     }
 }
 
