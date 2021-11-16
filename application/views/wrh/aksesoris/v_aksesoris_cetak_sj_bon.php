@@ -179,7 +179,17 @@ $pdf->writeHTML($html, true, false, true, false, '');
 $pdf->lastPage();
 // ob_end_clean();
 //Close and output PDF document
+// $pdf->Output(base_url('filepdf') . '/' . $header->nama_proyek . '_SJ_BOM.pdf', 'F');
 
+// $filename = $header->nama_proyek . '_SJ_BOM.pdf';
+// $filelocation = "C:\\xampp\\htdocs\\warehouse\\filepdf"; //windows C:\xampp\htdocs\warehouse\filepdf
+// $filelocation = $_SERVER['DOCUMENT_ROOT'] . "\\warehouse\\filepdf"; //windows C:\xampp\htdocs\warehouse\filepdf
+// $filelocation = "/var/www/project/custom"; //Linux
+
+// $fileNL = $filelocation . "\\" . $filename; //Windows
+// $fileNL = $filelocation."/".$filename; //Linux
+
+// $pdf->Output($fileNL, 'F');
 $pdf->Output($header->nama_proyek . '_SJ_BOM.pdf', 'I');
 // ob_end_clean();
 

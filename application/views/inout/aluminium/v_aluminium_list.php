@@ -39,6 +39,7 @@
                             <thead>
                                 <th width="5%">No</th>
                                 <th>Status</th>
+                                <th>Stok Awal Bulan</th>
                                 <th>Tgl</th>
                                 <th>Section ATA</th>
                                 <th>Section Allure</th>
@@ -48,6 +49,9 @@
                                 <th>Ukuran</th>
                                 <th>Satuan</th>
                                 <th>Qty</th>
+                                <th>Divisi</th>
+                                <th>Gudang</th>
+                                <th>Keranjang</th>
                                 <th>Keterangan</th>
                             </thead>
                             <tbody>
@@ -56,10 +60,12 @@
                                 foreach ($aluminium->result() as $row) :
                                     $qty = ($row->inout == 1) ? $row->qty_in : $row->qty_out;
                                     $status = ($row->inout == 1) ? 'MASUK' : 'KELUAR';
+                                    $awal_bulan = ($row->awal_bulan == 1) ? 'YA' : 'TIDAK';
                                 ?>
                                     <tr>
                                         <td align="center"><?= $i++ ?></td>
                                         <td><?= $status ?></td>
+                                        <td><?= $awal_bulan ?></td>
                                         <td><?= $row->tgl_stok ?></td>
                                         <td><?= $row->section_ata ?></td>
                                         <td><?= $row->section_allure ?></td>
@@ -69,6 +75,9 @@
                                         <td><?= $row->ukuran ?></td>
                                         <td><?= $row->satuan ?></td>
                                         <td><?= $qty ?></td>
+                                        <td><?= $row->divisi ?></td>
+                                        <td><?= $row->gudang ?></td>
+                                        <td><?= $row->keranjang ?></td>
                                         <td><?= $row->keterangan ?></td>
 
                                     </tr>

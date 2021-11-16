@@ -8,10 +8,11 @@ class M_aluminium extends CI_Model
     {
         $this->db->join('master_item mi', 'mi.id = ds.id_item', 'left');
         $this->db->join('master_warna mw', 'mw.kode = mi.kode_warna', 'left');
+        $this->db->join('master_gudang mg', 'mg.id = ds.id_gudang', 'left');
         $this->db->where('mi.id_jenis_item', 1);
         $this->db->where('DATE(ds.created) >=', $tgl_awal);
         $this->db->where('DATE(ds.created) <=', $tgl_akhir);
-        $this->db->select('ds.*,mi.*,mw.*,ds.created as tgl_stok');
+        $this->db->select('ds.*,mi.*,mw.*,ds.created as tgl_stok,mg.gudang');
         $this->db->order_by('ds.id', 'desc');
 
         return $this->db->get('data_stock ds');
