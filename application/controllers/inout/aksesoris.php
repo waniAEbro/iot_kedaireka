@@ -39,6 +39,35 @@ class Aksesoris extends CI_Controller
         $data['aksesoris']    = $this->m_aksesoris->getData($data['tgl_awal'], $data['tgl_akhir']);
         $this->load->view('inout/aksesoris/v_aksesoris_list_cetak', $data);
     }
+
+    public function out()
+    {
+        $this->fungsi->check_previleges('aksesoris');
+        $bulan       = date('m');
+        $tahun       = date('Y');
+        $data['tgl_awal']  = $tahun . '-' . $bulan . '-01';
+        $data['tgl_akhir'] = date("Y-m-t", strtotime($data['tgl_awal']));
+        $data['aksesoris']    = $this->m_aksesoris->getDataOut($data['tgl_awal'], $data['tgl_akhir']);
+
+        $this->load->view('inout/aksesoris/v_aksesoris_list_out', $data);
+    }
+
+    public function diSetOut($tgl_awal = '', $tgl_akhir = '', $sort = '')
+    {
+        $this->fungsi->check_previleges('aksesoris');
+        $data['tgl_awal']         = $tgl_awal;
+        $data['tgl_akhir']        = $tgl_akhir;
+        $data['aksesoris']    = $this->m_aksesoris->getDataOut($data['tgl_awal'], $data['tgl_akhir']);
+        $this->load->view('inout/aksesoris/v_aksesoris_list_out', $data);
+    }
+
+    public function diSetCetakOut($tgl_awal = '', $tgl_akhir = '')
+    {
+        $data['tgl_awal']         = $tgl_awal;
+        $data['tgl_akhir']        = $tgl_akhir;
+        $data['aksesoris']    = $this->m_aksesoris->getDataOut($data['tgl_awal'], $data['tgl_akhir']);
+        $this->load->view('inout/aksesoris/v_aksesoris_list_cetak_out', $data);
+    }
 }
 
 /* End of file aksesoris.php */

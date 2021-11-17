@@ -10,51 +10,54 @@
 <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
 
-<h1>Rekap In Aksesoris</h1>
+<h1>Rekap Out Aluminium</h1>
 <table id="example" class="display nowrap" style="width:100%">
     <thead>
         <tr bgcolor="#ffe357">
             <th width="5%">No</th>
             <th>Status</th>
-            <th>Stok Awal Bulan</th>
             <th>Tgl</th>
-            <th>Item Code</th>
-            <th width="25%">Deskripsi</th>
+            <th>Section ATA</th>
+            <th>Section Allure</th>
+            <th>Temper</th>
+            <th>Warna</th>
+            <th width="25%">Deskripsi Warna</th>
+            <th>Ukuran</th>
             <th>Satuan</th>
             <th>Qty</th>
             <th>Divisi</th>
             <th>Gudang</th>
             <th>Keranjang</th>
-            <th>Supplier</th>
             <th>NO Surat Jalan</th>
-            <th>NO PR/WO</th>
+            <th>NO FPPP</th>
             <th>Keterangan</th>
         </tr>
     </thead>
     <tbody>
         <?php
         $i = 1;
-        foreach ($aksesoris->result() as $row) {
+        foreach ($aluminium->result() as $row) {
             $qty = ($row->inout == 1) ? $row->qty_in : $row->qty_out;
             $status = ($row->inout == 1) ? 'MASUK' : 'KELUAR';
-            $awal_bulan = ($row->awal_bulan == 1) ? 'YA' : 'TIDAK';
         ?>
 
             <tr>
                 <td align="center"><?= $i++ ?></td>
                 <td><?= $status ?></td>
-                <td><?= $awal_bulan ?></td>
                 <td><?= $row->tgl_stok ?></td>
-                <td><?= $row->item_code ?></td>
-                <td><?= $row->deskripsi ?></td>
+                <td><?= $row->section_ata ?></td>
+                <td><?= $row->section_allure ?></td>
+                <td><?= $row->temper ?></td>
+                <td><?= $row->kode_warna ?></td>
+                <td><?= $row->warna ?></td>
+                <td><?= $row->ukuran ?></td>
                 <td><?= $row->satuan ?></td>
                 <td><?= $qty ?></td>
-                <td><?= $row->divisi_aksesoris ?></td>
+                <td><?= $row->divisi ?></td>
                 <td><?= $row->gudang ?></td>
                 <td><?= $row->keranjang ?></td>
-                <td><?= $row->supplier ?></td>
                 <td><?= $row->no_surat_jalan ?></td>
-                <td><?= $row->no_pr ?></td>
+                <td><?= $row->no_fppp ?></td>
                 <td><?= $row->keterangan ?></td>
             </tr>
         <?php } ?>

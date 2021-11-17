@@ -2,7 +2,7 @@
     <div class="col-lg-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Rekap In Out Aksesoris</h3>
+                <h3 class="box-title">Rekap In Aksesoris</h3>
             </div>
             <div class="box-body">
                 <?php
@@ -48,6 +48,9 @@
                                 <th>Divisi</th>
                                 <th>Gudang</th>
                                 <th>Keranjang</th>
+                                <th>Supplier</th>
+                                <th>NO Surat Jalan</th>
+                                <th>NO PR/WO</th>
                                 <th>Keterangan</th>
                             </thead>
                             <tbody>
@@ -70,6 +73,9 @@
                                         <td><?= $row->divisi_aksesoris ?></td>
                                         <td><?= $row->gudang ?></td>
                                         <td><?= $row->keranjang ?></td>
+                                        <td><?= $row->supplier ?></td>
+                                        <td><?= $row->no_surat_jalan ?></td>
+                                        <td><?= $row->no_pr ?></td>
                                         <td><?= $row->keterangan ?></td>
 
                                     </tr>
@@ -89,7 +95,7 @@
             autoclose: true
         });
         var table = $('#tableku').DataTable({
-            "ordering": false,
+            "ordering": true,
             "scrollX": true,
         });
     });

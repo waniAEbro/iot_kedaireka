@@ -2,7 +2,7 @@
     <div class="col-lg-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Rekap In Aluminium</h3>
+                <h3 class="box-title">Rekap Out Aksesoris</h3>
             </div>
             <div class="box-body">
                 <?php
@@ -39,51 +39,38 @@
                             <thead>
                                 <th width="5%">No</th>
                                 <th>Status</th>
-                                <th>Stok Awal Bulan</th>
                                 <th>Tgl</th>
-                                <th>Section ATA</th>
-                                <th>Section Allure</th>
-                                <th>Temper</th>
-                                <th>Warna</th>
-                                <th width="25%">Deskripsi Warna</th>
-                                <th>Ukuran</th>
+                                <th>Item Code</th>
+                                <th width="25%">Deskripsi</th>
                                 <th>Satuan</th>
                                 <th>Qty</th>
                                 <th>Divisi</th>
                                 <th>Gudang</th>
                                 <th>Keranjang</th>
-                                <th>Supplier</th>
                                 <th>NO Surat Jalan</th>
-                                <th>NO PR/WO</th>
+                                <th>NO FPPP</th>
                                 <th>Keterangan</th>
                             </thead>
                             <tbody>
                                 <?php
                                 $i = 1;
-                                foreach ($aluminium->result() as $row) :
+                                foreach ($aksesoris->result() as $row) :
                                     $qty = ($row->inout == 1) ? $row->qty_in : $row->qty_out;
                                     $status = ($row->inout == 1) ? 'MASUK' : 'KELUAR';
-                                    $awal_bulan = ($row->awal_bulan == 1) ? 'YA' : 'TIDAK';
                                 ?>
                                     <tr>
                                         <td align="center"><?= $i++ ?></td>
                                         <td><?= $status ?></td>
-                                        <td><?= $awal_bulan ?></td>
                                         <td><?= $row->tgl_stok ?></td>
-                                        <td><?= $row->section_ata ?></td>
-                                        <td><?= $row->section_allure ?></td>
-                                        <td><?= $row->temper ?></td>
-                                        <td><?= $row->kode_warna ?></td>
-                                        <td><?= $row->warna ?></td>
-                                        <td><?= $row->ukuran ?></td>
+                                        <td><?= $row->item_code ?></td>
+                                        <td><?= $row->deskripsi ?></td>
                                         <td><?= $row->satuan ?></td>
                                         <td><?= $qty ?></td>
-                                        <td><?= $row->divisi ?></td>
+                                        <td><?= $row->divisi_aksesoris ?></td>
                                         <td><?= $row->gudang ?></td>
                                         <td><?= $row->keranjang ?></td>
-                                        <td><?= $row->supplier ?></td>
                                         <td><?= $row->no_surat_jalan ?></td>
-                                        <td><?= $row->no_pr ?></td>
+                                        <td><?= $row->no_fppp ?></td>
                                         <td><?= $row->keterangan ?></td>
 
                                     </tr>
@@ -121,7 +108,7 @@
         } else {
             var tgl2 = '<?= $tgl_akhir ?>';
         };
-        load_silent("inout/aluminium/diSet/" + tlg1 + "/" + tgl2, "#content");
+        load_silent("inout/aksesoris/diSetOut/" + tlg1 + "/" + tgl2, "#content");
 
     }
 
@@ -139,7 +126,7 @@
             var tgl2 = '<?= $tgl_akhir ?>';
         };
 
-        var url = "<?= site_url('inout/aluminium/diSetCetak/"+tlg1+"/"+tgl2+"') ?>";
+        var url = "<?= site_url('inout/aksesoris/diSetCetakOut/"+tlg1+"/"+tgl2+"') ?>";
         window.open(url, "_blank");
     }
 </script>

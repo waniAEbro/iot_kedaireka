@@ -10,7 +10,7 @@
 <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
 
-<h1>Laporan Keuangan</h1>
+<h1>Rekap In Aluminium</h1>
 <table id="example" class="display nowrap" style="width:100%">
     <thead>
         <tr bgcolor="#ffe357">
@@ -29,6 +29,9 @@
             <th>Divisi</th>
             <th>Gudang</th>
             <th>Keranjang</th>
+            <th>Supplier</th>
+            <th>NO Surat Jalan</th>
+            <th>NO PR/WO</th>
             <th>Keterangan</th>
         </tr>
     </thead>
@@ -57,6 +60,9 @@
                 <td><?= $row->divisi ?></td>
                 <td><?= $row->gudang ?></td>
                 <td><?= $row->keranjang ?></td>
+                <td><?= $row->supplier ?></td>
+                <td><?= $row->no_surat_jalan ?></td>
+                <td><?= $row->no_pr ?></td>
                 <td><?= $row->keterangan ?></td>
             </tr>
         <?php } ?>
