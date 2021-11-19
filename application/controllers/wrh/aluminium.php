@@ -119,6 +119,7 @@ class aluminium extends CI_Controller
         $this->fungsi->check_previleges('aluminium');
         $bulan       = date('m');
         $tahun       = date('Y');
+        $data['tbl_del'] = 1;
         $data['tgl_awal']  = $tahun . '-' . $bulan . '-01';
         $data['tgl_akhir'] = date("Y-m-t", strtotime($data['tgl_awal']));
         $data['aluminium'] = $this->m_aluminium->getDataStock($data['tgl_awal'], $data['tgl_akhir']);
@@ -131,6 +132,7 @@ class aluminium extends CI_Controller
         $this->fungsi->check_previleges('aluminium');
         $data['tgl_awal']  = $tgl_awal;
         $data['tgl_akhir'] = $tgl_akhir;
+        $data['tbl_del'] = 0;
         $data['aluminium'] = $this->m_aluminium->getDataStock($data['tgl_awal'], $data['tgl_akhir']);
 
         $this->load->view('wrh/aluminium/v_aluminium_in_list', $data);

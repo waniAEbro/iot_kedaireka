@@ -118,6 +118,7 @@ class aksesoris extends CI_Controller
         $this->fungsi->check_previleges('aksesoris');
         $bulan       = date('m');
         $tahun       = date('Y');
+        $data['tbl_del'] = 1;
         $data['tgl_awal']  = $tahun . '-' . $bulan . '-01';
         $data['tgl_akhir'] = date("Y-m-t", strtotime($data['tgl_awal']));
         $data['aksesoris'] = $this->m_aksesoris->getDataStock($data['tgl_awal'], $data['tgl_akhir']);
@@ -130,6 +131,7 @@ class aksesoris extends CI_Controller
         $this->fungsi->check_previleges('aksesoris');
         $data['tgl_awal']  = $tgl_awal;
         $data['tgl_akhir'] = $tgl_akhir;
+        $data['tbl_del'] = 0;
         $data['aksesoris'] = $this->m_aksesoris->getDataStock($data['tgl_awal'], $data['tgl_akhir']);
 
         $this->load->view('wrh/aksesoris/v_aksesoris_in_list', $data);
