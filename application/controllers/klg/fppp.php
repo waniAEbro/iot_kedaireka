@@ -60,6 +60,7 @@ class Fppp extends CI_Controller
 	public function formAdd($param = '')
 	{
 		$this->fungsi->check_previleges('fppp');
+		$data['proyek']               = $this->db->get('master_proyek');
 		$data['divisi']               = get_options($this->db->get('master_divisi'), 'id', 'divisi');
 		$data['pengiriman']           = get_options($this->db->get('master_pengiriman'), 'id', 'pengiriman');
 		$data['metode_pengiriman']    = get_options($this->db->get('master_metode_pengiriman'), 'id', 'metode_pengiriman');
