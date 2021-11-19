@@ -13,6 +13,11 @@ class M_finance extends CI_Model
 
         return $this->db->get('data_fppp_finance dff');
     }
+
+    public function editRow($field = '', $value = '', $editid = '')
+    {
+        $this->db->query("UPDATE data_fppp_finance SET " . $field . "='" . $value . "' WHERE id=" . $editid);
+    }
 }
 
 /* End of file m_finance.php */
