@@ -116,7 +116,21 @@ class aksesoris extends CI_Controller
     public function stok_in()
     {
         $this->fungsi->check_previleges('aksesoris');
-        $data['aksesoris'] = $this->m_aksesoris->getDataStock();
+        $bulan       = date('m');
+        $tahun       = date('Y');
+        $data['tgl_awal']  = $tahun . '-' . $bulan . '-01';
+        $data['tgl_akhir'] = date("Y-m-t", strtotime($data['tgl_awal']));
+        $data['aksesoris'] = $this->m_aksesoris->getDataStock($data['tgl_awal'], $data['tgl_akhir']);
+
+        $this->load->view('wrh/aksesoris/v_aksesoris_in_list', $data);
+    }
+
+    public function stok_in_set($tgl_awal = '', $tgl_akhir = '')
+    {
+        $this->fungsi->check_previleges('aksesoris');
+        $data['tgl_awal']  = $tgl_awal;
+        $data['tgl_akhir'] = $tgl_akhir;
+        $data['aksesoris'] = $this->m_aksesoris->getDataStock($data['tgl_awal'], $data['tgl_akhir']);
 
         $this->load->view('wrh/aksesoris/v_aksesoris_in_list', $data);
     }
@@ -125,9 +139,7 @@ class aksesoris extends CI_Controller
     {
         $this->fungsi->check_previleges('aksesoris');
         $this->m_aksesoris->hapusTemp(2);
-        $data['aksesoris'] = $this->m_aksesoris->getDataStock();
-
-        $this->load->view('wrh/aksesoris/v_aksesoris_in_list', $data);
+        $this->stok_in();
     }
 
     public function stok_in_add()
@@ -249,6 +261,23 @@ class aksesoris extends CI_Controller
         $id_divisi = $this->m_aksesoris->getRowItemWarna($id)->id_divisi;
         $respon    = ['id_divisi' => $id_divisi];
         echo json_encode($respon);
+    }
+
+    public function deleteIn($id)
+    {
+        $this->fungsi->check_previleges('aksesoris');
+        $getRow        = $this->m_aksesoris->getRowStock($id);
+        $cekQtyCounter = $this->m_aksesoris->getDataCounter($getRow->id_item, $getRow->id_divisi, $getRow->id_gudang, $getRow->keranjang)->row()->qty;
+        $qty_jadi      = (int)$cekQtyCounter - (int)$getRow->qty_in;
+        $this->m_aksesoris->updateDataCounter($getRow->id_item, $getRow->id_divisi, $getRow->id_gudang, $getRow->keranjang, $qty_jadi);
+        sleep(2);
+        $data = array('id' => $id,);
+        $this->db->where('id', $id);
+        $this->db->delete('data_stock');
+
+        $this->fungsi->catat($data, "Menghapus Stock In aksesoris dengan data sbb:", true);
+        $this->fungsi->run_js('load_silent("wrh/aksesoris/stok_in","#content")');
+        $this->fungsi->message_box("Menghapus Stock In aksesoris", "success");
     }
 
     public function deleteItemIn()

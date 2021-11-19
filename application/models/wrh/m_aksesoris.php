@@ -337,7 +337,7 @@ class M_aksesoris extends CI_Model
     }
 
 
-    public function getDataStock()
+    public function getDataStock($tgl_awal, $tgl_akhir)
     {
         $id_jenis_item = 2;
         $this->db->join('master_divisi_stock md', 'md.id = da.id_divisi', 'left');
@@ -353,6 +353,8 @@ class M_aksesoris extends CI_Model
             $this->db->where('da.id_penginput', from_session('id'));
         }
         $this->db->order_by('da.id', 'desc');
+        $this->db->where('DATE(da.created) >=', $tgl_awal);
+        $this->db->where('DATE(da.created) <=', $tgl_akhir);
         $this->db->select('cu.nama,da.*,md.divisi,ms.supplier,mg.gudang,mi.item_code,mi.deskripsi');
 
         return $this->db->get('data_stock da');

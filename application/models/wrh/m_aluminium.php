@@ -363,7 +363,7 @@ class M_aluminium extends CI_Model
     }
 
 
-    public function getDataStock()
+    public function getDataStock($tgl_awal, $tgl_akhir)
     {
         $id_jenis_item = 1;
         $this->db->join('master_gudang mg', 'mg.id = da.id_gudang', 'left');
@@ -379,8 +379,9 @@ class M_aluminium extends CI_Model
             $this->db->where('da.id_penginput', from_session('id'));
         }
         $this->db->order_by('da.id', 'desc');
+        $this->db->where('DATE(da.created) >=', $tgl_awal);
+        $this->db->where('DATE(da.created) <=', $tgl_akhir);
         $this->db->select('cu.nama,da.*,mi.divisi,ms.supplier,mg.gudang,mwa.warna,mi.section_ata,mi.section_allure,mi.temper,mi.ukuran,mi.kode_warna');
-
         return $this->db->get('data_stock da');
     }
 

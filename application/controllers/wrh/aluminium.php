@@ -117,7 +117,21 @@ class aluminium extends CI_Controller
     public function stok_in()
     {
         $this->fungsi->check_previleges('aluminium');
-        $data['aluminium'] = $this->m_aluminium->getDataStock();
+        $bulan       = date('m');
+        $tahun       = date('Y');
+        $data['tgl_awal']  = $tahun . '-' . $bulan . '-01';
+        $data['tgl_akhir'] = date("Y-m-t", strtotime($data['tgl_awal']));
+        $data['aluminium'] = $this->m_aluminium->getDataStock($data['tgl_awal'], $data['tgl_akhir']);
+
+        $this->load->view('wrh/aluminium/v_aluminium_in_list', $data);
+    }
+
+    public function stok_in_set($tgl_awal = '', $tgl_akhir = '')
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $data['tgl_awal']  = $tgl_awal;
+        $data['tgl_akhir'] = $tgl_akhir;
+        $data['aluminium'] = $this->m_aluminium->getDataStock($data['tgl_awal'], $data['tgl_akhir']);
 
         $this->load->view('wrh/aluminium/v_aluminium_in_list', $data);
     }
@@ -126,9 +140,7 @@ class aluminium extends CI_Controller
     {
         $this->fungsi->check_previleges('aluminium');
         $this->m_aksesoris->hapusTemp(2);
-        $data['aluminium'] = $this->m_aluminium->getDataStock();
-
-        $this->load->view('wrh/aluminium/v_aluminium_in_list', $data);
+        $this->stok_in();
     }
 
     public function stok_in_add()
@@ -228,6 +240,23 @@ class aluminium extends CI_Controller
         }
         $data['msg'] = "stock Disimpan";
         echo json_encode($data);
+    }
+
+    public function deleteIn($id)
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $getRow        = $this->m_aluminium->getRowStock($id);
+        $cekQtyCounter = $this->m_aluminium->getDataCounter($getRow->id_item, $getRow->id_gudang, $getRow->keranjang)->row()->qty;
+        $qty_jadi      = (int)$cekQtyCounter - (int)$getRow->qty_in;
+        $this->m_aluminium->updateDataCounter($getRow->id_item, $getRow->id_gudang, $getRow->keranjang, $qty_jadi);
+        sleep(1);
+        $data = array('id' => $id,);
+        $this->db->where('id', $id);
+        $this->db->delete('data_stock');
+
+        $this->fungsi->catat($data, "Menghapus Stock In Aluminium dengan data sbb:", true);
+        $this->fungsi->run_js('load_silent("wrh/aluminium/stok_in","#content")');
+        $this->fungsi->message_box("Menghapus Stock In Aluminium", "success");
     }
 
 
