@@ -53,7 +53,11 @@ class proyek extends CI_Controller
         } else {
             $cek = $this->m_proyek->cekKode($this->input->post('kode_proyek'));
             if ($cek == 0) {
-                $datapost = get_post_data(array('kode_proyek', 'nama_proyek'));
+                // $datapost = get_post_data(array('kode_proyek', 'nama_proyek'));
+                $datapost = array(
+                    'kode_proyek' => str_replace(' ', '',  $this->input->post('kode_proyek')),
+                    'nama_proyek' => $this->input->post('nama_proyek'),
+                );
                 $this->m_proyek->insertData($datapost);
                 $this->fungsi->run_js('load_silent("master/proyek","#content")');
                 $this->fungsi->message_box("Data Master proyek sukses disimpan...", "success");
