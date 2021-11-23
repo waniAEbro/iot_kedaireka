@@ -81,6 +81,24 @@ class Fppp extends CI_Controller
 		$this->load->view('klg/fppp/v_fppp_add', $data);
 	}
 
+	public function deleteFPPP($id)
+	{
+		$this->fungsi->check_previleges('fppp');
+		// sleep(1);
+		$cek = $this->m_fppp->getNumRow($id);
+		if ($cek == 0) {
+			$data = array('id' => $id,);
+			$this->db->where('id', $id);
+			$this->db->delete('data_fppp');
+
+			$this->fungsi->catat($data, "Menghapus FPPP dengan data sbb:", true);
+			$this->fungsi->message_box("Menghapus FPPP", "success");
+		} else {
+			$this->fungsi->message_box("FPPP sudah pernah terkirim", "warning");
+		}
+		$this->fungsi->run_js('load_silent("klg/fppp/","#content")');
+	}
+
 	public function formEdit($id = '')
 	{
 		$this->fungsi->check_previleges('fppp');

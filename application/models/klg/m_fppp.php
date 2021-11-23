@@ -22,6 +22,12 @@ class M_fppp extends CI_Model
 		return $this->db->get('data_fppp df');
 	}
 
+	public function getNumRow($id)
+	{
+		$this->db->where('id_fppp', $id);
+		return $this->db->get('data_surat_jalan')->num_rows();
+	}
+
 	public function getDataMemo()
 	{
 		$this->db->join('master_divisi md', 'md.id = df.id_divisi', 'left');
