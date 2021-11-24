@@ -178,7 +178,7 @@ class Fppp extends CI_Controller
 		$cek_kode_proyek = $this->m_fppp->cekKodeProyek($datapost['kode_proyek'])->num_rows();
 		if ($cek_kode_proyek < 1) {
 			$obj_py = array(
-				'kode_proyek' => $datapost['kode_proyek'],
+				'kode_proyek' => str_replace(' ', '',  $datapost['kode_proyek']),
 				'created'                => date('Y-m-d H:i:s'),
 				'updated'                => date('Y-m-d H:i:s'),
 			);

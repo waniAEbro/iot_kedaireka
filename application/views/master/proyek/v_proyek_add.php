@@ -16,6 +16,24 @@
             <?php echo form_error('nama_proyek'); ?>
         </div>
     </div>
+    <div class="form-group">
+        <label class="col-sm-4 control-label">Nama Customer</label>
+        <div class="col-sm-8">
+            <?php echo form_input(array('name' => 'nama_customer', 'class' => 'form-control')); ?>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-4 control-label">Alamat</label>
+        <div class="col-sm-8">
+            <?php echo form_input(array('name' => 'alamat', 'class' => 'form-control')); ?>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-4 control-label">Keterangan</label>
+        <div class="col-sm-8">
+            <?php echo form_input(array('name' => 'keterangan', 'class' => 'form-control')); ?>
+        </div>
+    </div>
 
 
     <div class="form-group">

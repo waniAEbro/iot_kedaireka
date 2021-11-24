@@ -21,6 +21,9 @@
                         <th width="5%">No</th>
                         <th>Kode Proyek</th>
                         <th>Nama Proyek</th>
+                        <th>Nama Customer</th>
+                        <th>Alamat</th>
+                        <th>Keterangan</th>
                         <th>Act</th>
                     </thead>
                     <tbody>
@@ -31,6 +34,9 @@
                                 <td align="center"><?= $i++ ?></td>
                                 <td><?= $row->kode_proyek ?></td>
                                 <td><?= $row->nama_proyek ?></td>
+                                <td><?= $row->nama_customer ?></td>
+                                <td><?= $row->alamat ?></td>
+                                <td><?= $row->keterangan ?></td>
                                 <td align="center">
                                     <?php
                                     $sesi = from_session('level');
