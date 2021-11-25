@@ -81,7 +81,18 @@
         <div class="col-md-4">
           <div class="form-group">
             <label>Kode Proyek</label>
-            <input type="text" id="kode_proyek" value="<?= $row->kode_proyek ?>" class="form-control" readonly>
+            <?php if ($row->kode_proyek != '') { ?>
+              <input type="text" id="kode_proyek" value="<?= $row->kode_proyek ?>" class="form-control" readonly>
+            <?php } else { ?>
+              <select id="kode_proyek" name="kode_proyek" class="form-control" style="width:100%" required>
+                <option value="">-- Select Kode Proyek --</option>
+                <?php foreach ($proyek->result() as $val) : ?>
+                  <option value="<?= $val->kode_proyek ?>"><?= $val->kode_proyek ?>-<?= $val->nama_proyek ?></option>
+                <?php endforeach; ?>
+              </select>
+            <?php }
+            ?>
+
           </div>
         </div>
         <div class="col-md-4">
@@ -650,6 +661,11 @@
       });
     };
   }
+
+  $("#kode_proyek").change(function() {
+    var nm = $('#kode_proyek :selected').text();
+    $("#nama_proyek").val(nm);
+  });
 
   function hapus(i) {
     if (confirm('Lanjutkan Proses Hapus?')) {
