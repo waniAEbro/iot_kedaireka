@@ -34,7 +34,7 @@ class M_barang extends CI_Model
 
     public function deleteData($id = '')
     {
-        $obj = array('hapus' => 2);
+        $obj = array('is_del' => 2);
         $this->db->where('id', $id);
         // $this->db->delete('master_barang');
         $this->db->update('master_barang', $obj);
