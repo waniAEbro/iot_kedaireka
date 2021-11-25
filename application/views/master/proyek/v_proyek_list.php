@@ -20,6 +20,7 @@
                     <thead>
                         <th width="5%">No</th>
                         <th>Kode Proyek</th>
+                        <th>No CO/SO</th>
                         <th>Nama Proyek</th>
                         <th>Nama Customer</th>
                         <th>Alamat</th>
@@ -33,6 +34,7 @@
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
                                 <td><?= $row->kode_proyek ?></td>
+                                <td><?= $row->no_co ?></td>
                                 <td><?= $row->nama_proyek ?></td>
                                 <td><?= $row->nama_customer ?></td>
                                 <td><?= $row->alamat ?></td>

@@ -14,6 +14,13 @@ $row = fetch_single_row($edit);
         </div>
     </div>
     <div class="form-group">
+        <label class="col-sm-4 control-label">No. CO/SO</label>
+        <div class="col-sm-8">
+            <?php echo form_input(array('name' => 'no_co', 'value' => $row->no_co, 'class' => 'form-control')); ?>
+            <?php echo form_error('no_co'); ?>
+        </div>
+    </div>
+    <div class="form-group">
         <label class="col-sm-4 control-label">Nama proyek</label>
         <div class="col-sm-8">
             <?php echo form_input(array('name' => 'nama_proyek', 'value' => $row->nama_proyek, 'class' => 'form-control')); ?>
