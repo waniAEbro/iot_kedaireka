@@ -1075,6 +1075,16 @@ class Fppp extends CI_Controller
 		// die();
 		$this->load->view('klg/fppp/v_cetak', $data);
 	}
+
+	public function optionGetKodeProyek()
+	{
+		$this->fungsi->check_previleges('fppp');
+		$kode_proyek   = $this->input->post('kode_proyek');
+		$data['np'] = $this->m_fppp->getKodeProyek($kode_proyek)->nama_proyek;
+		$data['nc'] = $this->m_fppp->getKodeProyek($kode_proyek)->no_co;
+		$data['alamat'] = $this->m_fppp->getKodeProyek($kode_proyek)->alamat;
+		echo json_encode($data);
+	}
 }
 
 /* End of file fppp.php */

@@ -322,6 +322,7 @@ class M_fppp extends CI_Model
 	public function getRowFppp($id)
 	{
 		$this->db->where('df.id', $id);
+		$this->db->join('master_proyek mpr', 'mpr.kode_proyek = df.kode_proyek', 'left');
 		$this->db->join('master_logo_kaca mlk', 'mlk.id = df.id_logo_kaca', 'left');
 		$this->db->join('master_kaca mk', 'mk.id = df.id_kaca', 'left');
 		$this->db->join('master_warna mwa', 'mwa.id = df.id_warna', 'left');
@@ -331,7 +332,7 @@ class M_fppp extends CI_Model
 		$this->db->join('master_pengiriman mpe', 'mpe.id = df.id_pengiriman', 'left');
 		$this->db->join('master_penggunaan_peti mpp', 'mpp.id = df.id_penggunaan_peti', 'left');
 
-		$this->db->select('df.*,mps.penggunaan_sealant,mpp.penggunaan_peti,mpe.pengiriman,mp.metode_pengiriman,mlk.logo_kaca,mk.kaca,mwa.warna,mwal.warna as warna_lainya');
+		$this->db->select('df.*,mpr.no_co,mps.penggunaan_sealant,mpp.penggunaan_peti,mpe.pengiriman,mp.metode_pengiriman,mlk.logo_kaca,mk.kaca,mwa.warna,mwal.warna as warna_lainya');
 
 		return $this->db->get('data_fppp df');
 	}
@@ -426,6 +427,12 @@ class M_fppp extends CI_Model
 	{
 		$this->db->where('kode_proyek', $kode_proyek);
 		return $this->db->get('data_fppp_finance');
+	}
+
+	public function getKodeProyek($kode_proyek)
+	{
+		$this->db->where('kode_proyek', $kode_proyek);
+		return $this->db->get('master_proyek')->row();
 	}
 }
 

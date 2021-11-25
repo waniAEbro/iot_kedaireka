@@ -97,22 +97,29 @@
         </div>
         <div class="col-md-4">
           <div class="form-group">
+            <label>No CO/SO</label>
+            <input type="text" id="no_co" class="form-control" value="<?= $row->no_co ?>" readonly>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
             <label>Nama Proyek</label>
             <input type="text" id="nama_proyek" value="<?= $row->nama_proyek ?>" class="form-control">
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-8">
+          <div class="form-group">
+            <label>Alamat Proyek</label>
+            <input type="text" id="alamat_proyek" value="<?= $row->alamat_proyek ?>" class="form-control">
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
             <label>Tahap</label>
             <input type="text" id="tahap" value="<?= $row->tahap ?>" class="form-control">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="form-group">
-            <label>Alamat Proyek</label>
-            <input type="text" id="alamat_proyek" value="<?= $row->alamat_proyek ?>" class="form-control">
           </div>
         </div>
       </div>
@@ -663,8 +670,21 @@
   }
 
   $("#kode_proyek").change(function() {
-    var nm = $('#kode_proyek :selected').text();
-    $("#nama_proyek").val(nm);
+    // var nm = $('#kode_proyek :selected').text();
+    // $("#nama_proyek").val(nm);
+    $.ajax({
+      url: "<?= site_url('klg/fppp/optionGetKodeProyek') ?>",
+      dataType: "json",
+      type: "POST",
+      data: {
+        "kode_proyek": $('#kode_proyek').val(),
+      },
+      success: function(data) {
+        $('#nama_proyek').val(data['np']);
+        $('#no_co').val(data['nc']);
+        $('#alamat_proyek').val(data['alamat']);
+      }
+    });
   });
 
   function hapus(i) {
