@@ -98,7 +98,7 @@
         <div class="col-md-4">
           <div class="form-group">
             <label>No CO/SO</label>
-            <input type="text" id="no_co" class="form-control" value="<?= $row->no_co ?>" readonly>
+            <input type="text" id="no_co" class="form-control" value="<?= $row->no_co ?>">
           </div>
         </div>
         <div class="col-md-4">
@@ -681,7 +681,6 @@
       },
       success: function(data) {
         $('#nama_proyek').val(data['np']);
-        $('#no_co').val(data['nc']);
         $('#alamat_proyek').val(data['alamat']);
       }
     });

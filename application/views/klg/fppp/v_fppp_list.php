@@ -65,6 +65,7 @@
                         <th>DIVISI</th>
                         <th>NO. FPPP</th>
                         <th>KODE PROYEK</th>
+                        <th>NO. CO/SO</th>
                         <th>NAMA PROYEK</th>
                         <th>NAMA SALES MARKETING</th>
                         <th>NAMA SM / PIC PROJECT</th>
@@ -144,6 +145,7 @@
                                 <td><?= $row->divisi ?><input type="hidden" id="id_fppp_<?= $i ?>" value="<?= $row->id ?>"></td>
                                 <td><?= $row->no_fppp ?></td>
                                 <td><?= $row->kode_proyek ?></td>
+                                <td><?= $row->no_co ?></td>
                                 <td><?= $row->nama_proyek ?></td>
                                 <td><?= $row->sales ?></td>
                                 <td><?= $row->pic_project ?></td>

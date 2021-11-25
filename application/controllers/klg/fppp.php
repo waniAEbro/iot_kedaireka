@@ -138,6 +138,7 @@ class Fppp extends CI_Controller
 			'id_divisi'              => $this->input->post('id_divisi'),
 			'tgl_pembuatan'          => $this->input->post('tgl_pembuatan'),
 			'no_fppp'                => $nofppp,
+			'no_co'              => $this->input->post('no_co'),
 			'applicant'              => $this->input->post('applicant'),
 			'applicant_sector'       => $this->input->post('applicant_sector'),
 			'authorized_distributor' => $this->input->post('authorized_distributor'),
@@ -220,6 +221,7 @@ class Fppp extends CI_Controller
 				'applicant_sector'       => $this->input->post('applicant_sector'),
 				'authorized_distributor' => $this->input->post('authorized_distributor'),
 				'no_fppp'                => $nofppp,
+				'no_co'              => $this->input->post('no_co'),
 				'kode_proyek'            => $this->input->post('kode_proyek'),
 				'nama_proyek'            => $this->input->post('nama_proyek'),
 				'tahap'                  => $this->input->post('tahap'),
@@ -281,6 +283,7 @@ class Fppp extends CI_Controller
 			'tgl_pembuatan'          => $this->input->post('tgl_pembuatan'),
 			'no_fppp'                => $this->input->post('no_fppp'),
 			'applicant'              => $this->input->post('applicant'),
+			'no_co'              => $this->input->post('no_co'),
 			'applicant_sector'       => $this->input->post('applicant_sector'),
 			'authorized_distributor' => $this->input->post('authorized_distributor'),
 			'type_fppp'              => $this->input->post('type_fppp'),
@@ -353,6 +356,7 @@ class Fppp extends CI_Controller
 				'applicant_sector'       => $this->input->post('applicant_sector'),
 				'authorized_distributor' => $this->input->post('authorized_distributor'),
 				'no_fppp'                => $this->input->post('no_fppp'),
+				'no_co'              => $this->input->post('no_co'),
 				'kode_proyek'            => $this->input->post('kode_proyek'),
 				'nama_proyek'            => $this->input->post('nama_proyek'),
 				'tahap'                  => $this->input->post('tahap'),
@@ -1081,7 +1085,6 @@ class Fppp extends CI_Controller
 		$this->fungsi->check_previleges('fppp');
 		$kode_proyek   = $this->input->post('kode_proyek');
 		$data['np'] = $this->m_fppp->getKodeProyek($kode_proyek)->nama_proyek;
-		$data['nc'] = $this->m_fppp->getKodeProyek($kode_proyek)->no_co;
 		$data['alamat'] = $this->m_fppp->getKodeProyek($kode_proyek)->alamat;
 		echo json_encode($data);
 	}

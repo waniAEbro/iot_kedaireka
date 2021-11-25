@@ -417,6 +417,17 @@
   });
 
   function save() {
+    if ($("#kode_proyek").val() != '') {
+      save_l();
+    } else {
+      $.growl.error({
+        title: 'Peringatan',
+        message: 'Lengkapi Form dulu!'
+      });
+    };
+  }
+
+  function save_l() {
     var path = $("#lampiran").val().replace('C:\\fakepath\\', '');
     var wa = $('#id_warna').val();
     $('#finish_coating').val(wa).trigger('change');
@@ -429,6 +440,7 @@
           id_divisi: $("#id_divisi").val(),
           tgl_pembuatan: $("#tgl_pembuatan").val(),
           no_fppp: $("#no_fppp").val(),
+          no_co: $("#no_co").val(),
           applicant: $("#applicant").val(),
           applicant_sector: $("#applicant_sector").val(),
           authorized_distributor: $("#authorized_distributor").val(),
@@ -489,6 +501,7 @@
           id_divisi: $("#id_divisi").val(),
           tgl_pembuatan: $("#tgl_pembuatan").val(),
           no_fppp: $("#no_fppp").val(),
+          no_co: $("#no_co").val(),
           applicant: $("#applicant").val(),
           applicant_sector: $("#applicant_sector").val(),
           authorized_distributor: $("#authorized_distributor").val(),
@@ -654,7 +667,6 @@
       },
       success: function(data) {
         $('#nama_proyek').val(data['np']);
-        $('#no_co').val(data['nc']);
         $('#alamat_proyek').val(data['alamat']);
       }
     });
