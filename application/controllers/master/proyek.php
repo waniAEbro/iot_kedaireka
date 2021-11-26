@@ -56,7 +56,6 @@ class proyek extends CI_Controller
                 // $datapost = get_post_data(array('kode_proyek', 'nama_proyek'));
                 $datapost = array(
                     'kode_proyek' => str_replace(' ', '',  $this->input->post('kode_proyek')),
-                    'no_co' => $this->input->post('no_co'),
                     'nama_proyek' => $this->input->post('nama_proyek'),
                     'nama_proyek' => $this->input->post('nama_proyek'),
                     'nama_customer' => $this->input->post('nama_customer'),
@@ -98,7 +97,7 @@ class proyek extends CI_Controller
             $data['edit'] = $this->db->get_where('master_proyek', array('id' => $id));
             $this->load->view('master/proyek/v_proyek_edit', $data);
         } else {
-            $datapost = get_post_data(array('id', 'kode_proyek', 'no_co', 'nama_proyek', 'nama_customer', 'alamat', 'keterangan'));
+            $datapost = get_post_data(array('id', 'kode_proyek', 'nama_proyek', 'nama_customer', 'alamat', 'keterangan'));
 
             $this->m_proyek->updateData($datapost);
             $this->fungsi->run_js('load_silent("master/proyek","#content")');
