@@ -81,7 +81,7 @@
         <div class="col-md-4">
           <div class="form-group">
             <label>Kode Proyek</label>
-            <?php if ($sudah_transaksi == 0) { ?>
+            <?php if ($sudah_transaksi > 0) { ?>
               <input type="text" id="kode_proyek" value="<?= $row->kode_proyek ?>" class="form-control" readonly>
             <?php } else { ?>
               <select id="kode_proyek" name="kode_proyek" class="form-control" style="width:100%" required>
