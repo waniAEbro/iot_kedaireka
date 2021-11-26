@@ -433,6 +433,12 @@ class M_fppp extends CI_Model
 		$this->db->where('kode_proyek', $kode_proyek);
 		return $this->db->get('master_proyek')->row();
 	}
+
+	public function getNumSuratJalan($id_fppp)
+	{
+		$this->db->where('id_fppp', $id_fppp);
+		return $this->db->get('data_surat_jalan')->num_rows();
+	}
 }
 
 /* End of file m_fppp.php */

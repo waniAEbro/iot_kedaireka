@@ -122,6 +122,7 @@ class Fppp extends CI_Controller
 		$data['param']     = $param;
 		$data['row']       = $this->m_fppp->getRowFppp($id)->row();
 		$data['detail']    = $this->m_fppp->getRowFpppDetail($id);
+		$data['sudah_transaksi']    = $this->m_fppp->getNumSuratJalan($id);
 		$nama_divisi = $this->m_fppp->getRowNamaDivisi($param)->divisi_pendek;
 		$data['no_fppp']   = str_pad($this->m_fppp->getNoFppp($param), 3, '0', STR_PAD_LEFT) . '/FPPP/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
 		$this->load->view('klg/fppp/v_fppp_edit', $data);
