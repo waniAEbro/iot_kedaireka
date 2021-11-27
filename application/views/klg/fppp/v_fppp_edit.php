@@ -86,8 +86,10 @@
             <?php } else { ?>
               <select id="kode_proyek" name="kode_proyek" class="form-control" style="width:100%" required>
                 <option value="">-- Select Kode Proyek --</option>
-                <?php foreach ($proyek->result() as $val) : ?>
-                  <option value="<?= $val->kode_proyek ?>"><?= $val->kode_proyek ?>-<?= $val->nama_proyek ?></option>
+                <?php foreach ($proyek->result() as $val) :
+                  $sel_p = ($row->kode_proyek == $val->kode_proyek) ? 'selected' : '';
+                ?>
+                  <option value="<?= $val->kode_proyek ?>" <?= $sel_p ?>><?= $val->kode_proyek ?>-<?= $val->nama_proyek ?></option>
                 <?php endforeach; ?>
               </select>
             <?php }
