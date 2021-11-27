@@ -22,7 +22,7 @@
                         <th>Kode Proyek</th>
                         <th>Nama Proyek</th>
                         <th>Nama Customer</th>
-                        <th>Alamat</th>
+                        <th>Alamat Proyek</th>
                         <th>Keterangan</th>
                         <th>Act</th>
                     </thead>
