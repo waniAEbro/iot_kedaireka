@@ -55,7 +55,8 @@
                     <thead>
                         <tr>
                             <th width="15%">FPPP</th>
-                            <th width="30%">Item</th>
+                            <th width="15%">Item</th>
+                            <th width="30%">Deskripsi Warna</th>
                             <th width="15%">Divisi</th>
                             <th width="15%">Gudang</th>
                             <th width="15%">Keranjang</th>
@@ -74,7 +75,8 @@
 
                             <tr id="output_data_<?= $row->id_stock ?>" class="output_data">
                                 <td align="center"><?= $row->no_fppp ?>-<?= $row->nama_proyek ?></td>
-                                <td><?= $row->section_ata ?>-<?= $row->section_allure ?>-<?= $row->temper ?>-<?= $row->warna ?>-<?= $row->ukuran ?></td>
+                                <td><?= $row->section_ata ?>-<?= $row->section_allure ?>-<?= $row->temper ?>-<?= $row->kode_warna ?>-<?= $row->ukuran ?></td>
+                                <td align="center"><?= $row->warna ?></td>
                                 <td align="center"><?= $row->divisi_stock ?></td>
                                 <td align="center"><?= $row->gudang ?></td>
                                 <td align="center"><?= $row->keranjang ?></td>
