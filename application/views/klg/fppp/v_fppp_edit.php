@@ -418,7 +418,7 @@
         title: 'Berhasil',
         message: "Tambah Permintaan selesai!"
       });
-      load_silent("klg/fppp/hasil_finish/" + $("#id_divisi").val() + "", "#content");
+      load_silent("klg/fppp/hasil_finish_edit/" + $("#id_divisi").val() + "/" + $("#id_fppp").val() + "", "#content");
     }
   }
   $(document).ready(function() {
@@ -588,7 +588,7 @@
 
       $.ajax({
           type: "POST",
-          url: "<?= site_url('klg/fppp/savefpppDetail') ?>",
+          url: "<?= site_url('klg/fppp/savefpppDetailedit') ?>",
           dataType: 'json',
           data: {
             'id_fppp': $('#id_fppp').val(),

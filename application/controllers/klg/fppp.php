@@ -38,6 +38,18 @@ class Fppp extends CI_Controller
 		$this->load->view('klg/fppp/v_fppp_tab', $data);
 	}
 
+	public function hasil_finish_edit($param, $id_fppp)
+	{
+		$this->fungsi->check_previleges('fppp');
+		$datapost = array(
+			'tgl_modified'                => date('Y-m-d H:i:s'),
+		);
+		$this->m_fppp->updateFppp($id_fppp, $datapost);
+		$data['param_tab'] = $param;
+		$data['divisi']    = $this->db->get('master_divisi');
+		$this->load->view('klg/fppp/v_fppp_tab', $data);
+	}
+
 	public function list($param = '')
 	{
 		$this->fungsi->check_previleges('fppp');
@@ -318,6 +330,7 @@ class Fppp extends CI_Controller
 			'jumlah_unit'            => $this->input->post('jumlah_unit'),
 			'note'                   => $this->input->post('note'),
 			'updated'                => date('Y-m-d H:i:s'),
+			'tgl_modified'                => date('Y-m-d H:i:s'),
 		);
 		$this->m_fppp->updateFppp($id_fppp, $datapost);
 		$data['id'] = $id_fppp;
@@ -399,6 +412,31 @@ class Fppp extends CI_Controller
 	public function savefpppDetail($value = '')
 	{
 		$this->fungsi->check_previleges('fppp');
+		$datapost = array(
+			'id_fppp'        => $this->input->post('id_fppp'),
+			'id_brand'       => $this->input->post('id_brand'),
+			'kode_opening'   => $this->input->post('kode_opening'),
+			'kode_unit'      => $this->input->post('kode_unit'),
+			'id_item'        => $this->input->post('id_item'),
+			'glass_thick'    => $this->input->post('glass_thick'),
+			'finish_coating' => $this->input->post('finish_coating'),
+			'qty'            => $this->input->post('qty'),
+			'created'        => date('Y-m-d H:i:s'),
+		);
+
+		$this->m_fppp->insertfpppDetail($datapost);
+		$data['id'] = $this->db->insert_id();
+		echo json_encode($data);
+	}
+
+	public function savefpppDetailedit($value = '')
+	{
+		$this->fungsi->check_previleges('fppp');
+		$id_fppp = $this->input->post('id_fppp');
+		$datapost = array(
+			'tgl_modified'                => date('Y-m-d H:i:s'),
+		);
+		$this->m_fppp->updateFppp($id_fppp, $datapost);
 		$datapost = array(
 			'id_fppp'        => $this->input->post('id_fppp'),
 			'id_brand'       => $this->input->post('id_brand'),

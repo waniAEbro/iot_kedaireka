@@ -63,8 +63,8 @@
                         <th width="5%"></th>
                         <th width="5%">No</th>
                         <th>DIVISI</th>
-                        <th>NO. FPPP</th>
                         <th>KODE PROYEK</th>
+                        <th>NO. FPPP</th>
                         <th>NO. CO/SO</th>
                         <th>NAMA PROYEK</th>
                         <th>NAMA SALES MARKETING</th>
@@ -73,7 +73,9 @@
                         <th>WARNA ALUMINIUM</th>
                         <th>JUMLAH GAMBAR / OPENING</th>
                         <th>JUMLAH UNIT</th>
+                        <th>KACA</th>
                         <th>TGL PEMBUATAN</th>
+                        <th>TGL MODIFIED</th>
                         <th>DEADLINE SALES</th>
                         <th>DEADLINE WORKSHOP</th>
                         <th>ALAMAT PROYEK</th>
@@ -143,8 +145,8 @@
                                 <?php }  ?>
                                 <td align="center"><?= $i ?></td>
                                 <td><?= $row->divisi ?><input type="hidden" id="id_fppp_<?= $i ?>" value="<?= $row->id ?>"></td>
-                                <td><?= $row->no_fppp ?></td>
                                 <td><?= $row->kode_proyek ?></td>
+                                <td><?= $row->no_fppp ?></td>
                                 <td><?= $row->no_co ?></td>
                                 <td><?= $row->nama_proyek ?></td>
                                 <td><?= $row->sales ?></td>
@@ -153,7 +155,9 @@
                                 <td><?= $row->warna ?></td>
                                 <td><?= $row->jumlah_gambar ?></td>
                                 <td><?= $row->jumlah_unit ?></td>
+                                <td><?= $row->kaca ?></td>
                                 <td align="center"><?= $row->tgl_pembuatan ?></td>
+                                <td align="center"><?= $row->tgl_modified ?></td>
                                 <td align="center"><?= $row->deadline_pengiriman ?></td>
                                 <td style="background-color:#ffd45e" align="center"><span id="wrk_<?= $row->id ?>" class='edit'><?= $dw ?></span>
                                     <input type='date' class='txtedit' data-id='<?= $row->id ?>' data-field='deadline_workshop' id='<?= $row->id ?>' value='<?= $row->deadline_workshop ?>'>
