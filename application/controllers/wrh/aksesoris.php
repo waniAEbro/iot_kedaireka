@@ -937,7 +937,7 @@ class aksesoris extends CI_Controller
             $datapost      = array(
                 'inout'          => 2,
                 'id_jenis_item'  => $id_jenis_item,
-                'id_surat_jalan' => 0,
+                'id_surat_jalan' => $this->input->post('id_sj'),
                 'id_fppp'        => $this->input->post('id_fppp'),
                 'id_item'        => $this->input->post('item'),
                 'id_divisi'      => $this->input->post('id_divisi'),
