@@ -5,6 +5,7 @@
             <div class="box-header with-border">
                 <h3 class="box-title">Master Aksesoris</h3>
                 <div class="box-tools pull-right">
+                    <a class="btn btn-primary" onclick="cetakExcel()">Cetak</a>
                     <?php
                     $sesi = from_session('level');
                     if ($sesi <= 2) {
@@ -23,7 +24,6 @@
                         <th>Item code</th>
                         <th>Deskripsi</th>
                         <th>Satuan</th>
-                        <th>Barcode</th>
                         <th>Act</th>
                     </thead>
                     <tbody>
@@ -35,12 +35,11 @@
                                 <td><?= $row->item_code ?></td>
                                 <td><?= $row->deskripsi ?></td>
                                 <td><?= $row->satuan ?></td>
-                                <td><img src="<?= base_url($row->image_barcode) ?>" width="150"></td>
                                 <td align="center">
                                     <?php
                                     $sesi = from_session('level');
                                     if ($sesi <= 3) {
-                                        echo button('load_silent("master/aksesoris/form/sub/' . $row->id . '","#modal")', '', 'btn btn-info fa fa-edit', 'data-toggle="tooltip" title="Edit"');
+                                        echo button('load_silent("master/aksesoris/form/sub/' . $row->id . '","#modal")', 'Edit', 'btn btn-xs btn-info', 'data-toggle="tooltip" title="Edit"');
                                     } else {
                                         # code...
                                     }
@@ -63,4 +62,9 @@
             "scrollX": true,
         });
     });
+
+    function cetakExcel() {
+        var url = "<?= site_url('master/aksesoris/cetakExcel') ?>";
+        window.open(url, "_blank");
+    }
 </script>

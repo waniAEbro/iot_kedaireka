@@ -195,6 +195,13 @@ class Aksesoris extends CI_Controller
         $data['bcd'] = $this->db->get('master_item')->row();
         $this->load->view('master/aksesoris/v_aksesoris_cetak_barcode', $data);
     }
+
+    public function cetakExcel()
+    {
+        $this->fungsi->check_previleges('aksesoris');
+        $data['aksesoris'] = $this->m_aksesoris->getData();
+        $this->load->view('master/aksesoris/v_aksesoris_cetak', $data);
+    }
 }
 
 /* End of file aksesoris.php */

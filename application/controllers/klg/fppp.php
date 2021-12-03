@@ -760,6 +760,9 @@ class Fppp extends CI_Controller
 				$cek_item   = $this->m_fppp->getMasterAksesoris($obj['item_code']);
 				if ($cek_item->num_rows() < 1) {
 					$this->db->insert('master_item', $obj);
+				} else {
+					$this->db->where('item_code', $obj['item_code']);
+					$this->db->update('master_item', $obj);
 				}
 			} else {
 				$obj = array(
@@ -781,7 +784,7 @@ class Fppp extends CI_Controller
 		unlink($inputFileName);
 		sleep(1);
 		$data['detail'] = $this->m_fppp->getTemp($id_fppp, $jenis_bom);
-		$data['msg'] = "Data BOM Baru Disimpan....";
+		$data['msg'] = "Data Master Baru Disimpan....";
 		echo json_encode($data);
 	}
 

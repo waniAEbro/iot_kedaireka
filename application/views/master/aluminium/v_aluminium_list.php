@@ -29,7 +29,6 @@
                         <th width="25%">Deskripsi Warna</th>
                         <th>Ukuran</th>
                         <th>Satuan</th>
-                        <th>Barcode</th>
                         <th>Act</th>
                     </thead>
                     <tbody>
@@ -46,12 +45,11 @@
                                 <td><?= $row->warna ?></td>
                                 <td><?= $row->ukuran ?></td>
                                 <td><?= $row->satuan ?></td>
-                                <td><img src="<?= base_url($row->image_barcode) ?>" width="150"></td>
                                 <td align="center">
                                     <?php
                                     $sesi = from_session('level');
                                     if ($sesi <= 3) {
-                                        echo button('load_silent("master/aluminium/form/sub/' . $row->id . '","#modal")', '', 'btn btn-info fa fa-edit', 'data-toggle="tooltip" title="Edit"');
+                                        echo button('load_silent("master/aluminium/form/sub/' . $row->id . '","#modal")', 'Edit', 'btn btn-xs btn-info', 'data-toggle="tooltip" title="Edit"');
                                     } else {
                                         # code...
                                     }
