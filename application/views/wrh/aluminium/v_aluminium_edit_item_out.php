@@ -327,7 +327,7 @@
                     url: "<?= site_url('wrh/aluminium/savebonmanual') ?>",
                     dataType: 'json',
                     data: {
-                        'id_sj': 0,
+                        'id_sj': $('#id_sj').val(),
                         'id_fppp': $('#id_fppp').val(),
                         'item': $('#item').val(),
                         'id_gudang': $("#id_gudang").val(),

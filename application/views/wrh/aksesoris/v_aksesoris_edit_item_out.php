@@ -410,7 +410,7 @@
                     url: "<?= site_url('wrh/aksesoris/savebonmanual') ?>",
                     dataType: 'json',
                     data: {
-                        'id_sj': 0,
+                        'id_sj': $('#id_sj').val(),
                         'id_fppp': $('#id_fppp').val(),
                         'item': $('#item').val(),
                         'id_divisi': $("#id_divisi").val(),
