@@ -811,6 +811,27 @@ class aksesoris extends CI_Controller
         $this->load->view('wrh/aksesoris/v_aksesoris_lihat_item_out', $data);
     }
 
+    public function edit_item_stok_out($id_sj)
+    {
+        $this->fungsi->check_previleges('aksesoris');
+        $id_jenis_item = 2;
+        $id_fppp             = $this->m_aksesoris->getListItemStokOut($id_sj)->row()->id_fppp;
+        $data['fppp']        = $this->db->get('data_fppp');
+        $data['warna_awal'] = $this->db->get('master_warna');
+        $data['warna_akhir'] = $this->db->get('master_warna');
+        $data['item']        = $this->m_aksesoris->getDataItem();
+        $data['divisi']      = $this->m_aksesoris->getDivisiBom($id_jenis_item);
+        $data['id_sj']           = $id_sj;
+        $data['id_fppp']           = $id_fppp;
+        $data['no_surat_jalan']    = $this->m_aksesoris->getRowSuratJalan($id_sj)->row()->no_surat_jalan;
+        $data['penerima']          = $this->m_aksesoris->getRowSuratJalan($id_sj)->row()->penerima;
+        $data['alamat_pengiriman'] = $this->m_aksesoris->getRowSuratJalan($id_sj)->row()->alamat_pengiriman;
+        $data['sopir']             = $this->m_aksesoris->getRowSuratJalan($id_sj)->row()->sopir;
+        $data['no_kendaraan']      = $this->m_aksesoris->getRowSuratJalan($id_sj)->row()->no_kendaraan;
+        $data['list_sj']           = $this->m_aksesoris->getListItemStokOut($id_sj);
+        $this->load->view('wrh/aksesoris/v_aksesoris_edit_item_out', $data);
+    }
+
     public function simpanSuratJalanBon()
     {
         $this->fungsi->check_previleges('aksesoris');
@@ -837,6 +858,31 @@ class aksesoris extends CI_Controller
         $this->db->insert('data_surat_jalan', $obj);
         $data['id'] = $this->db->insert_id();
         $this->m_aksesoris->updateJadiSuratJalanBon($data['id']);
+        echo json_encode($data);
+    }
+
+    public function updateSuratJalanBon()
+    {
+        $this->fungsi->check_previleges('aksesoris');
+        $id_jenis_item     = 2;
+        $id_sj           = $this->input->post('id_sj');
+        $penerima          = $this->input->post('penerima');
+        $alamat_pengiriman = $this->input->post('alamat_pengiriman');
+        $sopir             = $this->input->post('sopir');
+        $no_kendaraan      = $this->input->post('no_kendaraan');
+        $obj               = array(
+            'penerima'          => $penerima,
+            'alamat_pengiriman' => $alamat_pengiriman,
+            'sopir'             => $sopir,
+            'no_kendaraan'      => $no_kendaraan,
+            'id_jenis_item'     => $id_jenis_item,
+            'tipe'              => 2,
+            'id_penginput'              => from_session('id'),
+            'updated'           => date('Y-m-d H:i:s'),
+        );
+        $this->db->where('id', $id_sj);
+        $this->db->update('data_surat_jalan', $obj);
+        $data['id'] = $id_sj;
         echo json_encode($data);
     }
 
