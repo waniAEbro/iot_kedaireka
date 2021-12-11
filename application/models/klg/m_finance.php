@@ -11,6 +11,7 @@ class M_finance extends CI_Model
 
         $this->db->select('dff.*,df.nama_proyek,df.applicant,df.alamat_proyek,df.sales,md.divisi');
         $this->db->group_by('dff.kode_proyek');
+        $this->db->order_by('dff.id', 'desc');
 
         return $this->db->get('data_fppp_finance dff');
     }
