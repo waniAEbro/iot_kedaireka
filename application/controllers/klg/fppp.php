@@ -54,6 +54,7 @@ class Fppp extends CI_Controller
 	{
 		$this->fungsi->check_previleges('fppp');
 		$data['fppp']  = $this->m_fppp->getData($param);
+		$data['get_total_hold'] = $this->m_fppp->getTotalHold();
 		$data['param'] = $param;
 		$this->load->view('klg/fppp/v_fppp_list', $data);
 	}
@@ -483,6 +484,13 @@ class Fppp extends CI_Controller
 			$datapost = array('pengiriman' => $nilai, 'pengiriman_sts' => $sts,);
 		} elseif ($kolom == 4) {
 			$datapost = array('pasang' => $nilai, 'pasang_sts' => $sts,);
+		} elseif ($kolom == 10) {
+			if ($nilai == 'hold' || $nilai == 'revisi') {
+				$sts_hold = 1;
+			} else {
+				$sts_hold = 0;
+			}
+			$datapost = array('hold' => $nilai, 'hold_sts' => $sts_hold,);
 		} else {
 			$datapost = array('bst' => $nilai,);
 		}
@@ -499,6 +507,12 @@ class Fppp extends CI_Controller
 			$jml_sts_pasang    = $this->m_fppp->getJmlStsPasang($id_fppp);
 			$txt_site          = $this->m_fppp->updatesite($id, $jml_baris, $jml_sts_pasang, $id_fppp);
 			$respon['txt_site_update'] = $txt_site;
+		}
+
+		if ($kolom == 5) {
+			$jml_sts_bst    = $this->m_fppp->getJmlStsBST($id_fppp);
+			$txt_site          = $this->m_fppp->updatesitebst($id, $jml_baris, $jml_sts_bst, $id_fppp);
+			$respon['txt_site_bst_update'] = $txt_site;
 		}
 
 

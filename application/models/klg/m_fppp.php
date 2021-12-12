@@ -132,6 +132,14 @@ class M_fppp extends CI_Model
 		return $this->db->get('data_fppp_detail')->num_rows();
 	}
 
+	public function getJmlStsBST($id_fppp)
+	{
+		$this->db->where('id_fppp', $id_fppp);
+		$this->db->where('bst_sts', 1);
+
+		return $this->db->get('data_fppp_detail')->num_rows();
+	}
+
 	public function updatews($id, $jml_baris, $jml_pengiriman, $id_fppp)
 	{
 		if ($jml_pengiriman == 0) {
@@ -166,6 +174,40 @@ class M_fppp extends CI_Model
 		$this->db->where('id', $id_fppp);
 		$this->db->update('data_fppp', $obj);
 		return $sts_txt;
+	}
+
+	public function updatesitebst($id, $jml_baris, $jml_pengiriman, $id_fppp)
+	{
+		if ($jml_pengiriman == 0) {
+			$sts = 1;
+			$sts_txt = 'PROSES';
+		} else if ($jml_pengiriman == $jml_baris) {
+			$sts = 3;
+			$sts_txt = 'LUNAS';
+		} else {
+			$sts = 2;
+			$sts_txt = 'PARSIAL';
+		}
+		$obj = array('site_update_bst' => $sts,);
+		$this->db->where('id', $id_fppp);
+		$this->db->update('data_fppp', $obj);
+		return $sts_txt;
+	}
+
+	function getTotalHold()
+	{
+		$res = $this->db->get('data_fppp_detail');
+		$data = array();
+		$nilai = 0;
+		foreach ($res->result() as $key) {
+			if (isset($data[$key->id_fppp])) {
+				$nilai = $data[$key->id_fppp];
+			} else {
+				$nilai = 0;
+			}
+			$data[$key->id_fppp] = $key->hold_sts + $nilai;
+		}
+		return $data;
 	}
 
 	public function bom_aluminium($id_fppp)

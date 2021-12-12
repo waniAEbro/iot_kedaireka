@@ -63,31 +63,39 @@
                         <th width="5%"></th>
                         <th width="5%">No</th>
                         <th>DIVISI</th>
-                        <th>KODE PROYEK</th>
+                        <th>KODE PROJECT</th>
                         <th>NO. FPPP</th>
-                        <th>NO. CO/SO</th>
-                        <th>NAMA PROYEK</th>
-                        <th>NAMA SALES MARKETING</th>
-                        <th>NAMA SM / PIC PROJECT</th>
+                        <th>NAMA PROJECT</th>
+                        <th>SALES</th>
+                        <th>SM</th>
                         <th>PENGIRIMAN</th>
-                        <th>WARNA ALUMINIUM</th>
-                        <th>JUMLAH GAMBAR / OPENING</th>
-                        <th>JUMLAH UNIT</th>
+                        <th>WARNA</th>
+                        <th>JUMLAH GAMBAR / OP</th>
+                        <th>TOTAL UNIT</th>
+                        <th>TOTAL UNIT YANG DI HOLD / CANCEL</th>
                         <th>KACA</th>
-                        <th>TGL PEMBUATAN</th>
-                        <th>TGL MODIFIED</th>
+                        <th>TGL FPPP</th>
                         <th>DEADLINE SALES</th>
                         <th>DEADLINE WORKSHOP</th>
-                        <th>ALAMAT PROYEK</th>
                         <th>STATUS ORDER</th>
-
-                        <th>ACC/FA</th>
+                        <th style="background-color:#5c0000"></th>
+                        <th>ACC PROJECT</th>
+                        <th style="background-color:#5c0000"></th>
+                        <th>ACC FINANCE (PRODUKSI)</th>
                         <th>WH ALUMINIUM</th>
                         <th>WH AKSESORIS</th>
                         <th>WH KACA</th>
+                        <th>TOTAL UNIT FG</th>
+                        <th>ACC FINANCE (PENGIRIMAN)</th>
+                        <th>TOTAL KIRIM</th>
                         <th>WS UPDATE</th>
-                        <th>SITE UPDATE</th>
-
+                        <th>SITE UPDATE (PEMASANGAN)</th>
+                        <th>SITE UPDATE (BST)</th>
+                        <?php
+                        if (from_session('level') == 1 || from_session('level') == 7) { ?>
+                            <th>STATUS PROJECT (FINANCE)</th>
+                        <?php }
+                        ?>
                         <th>Act</th>
                     </thead>
                     <tbody>
@@ -96,7 +104,10 @@
                         foreach ($fppp->result() as $row) :
                             $ada = 1;
                             $dw = ($row->deadline_workshop != '') ? $row->deadline_workshop : '-';
+                            $acc_project = ($row->acc_project != '') ? $row->acc_project : '-';
                             $acc_fa = ($row->acc_fa != '') ? $row->acc_fa : '-';
+                            $acc_fa_pengiriman = ($row->acc_fa_pengiriman != '') ? $row->acc_fa_pengiriman : '-';
+                            $status_project_finance = ($row->status_project_finance != '') ? $row->status_project_finance : '-';
                             if ($row->wh_aluminium == 1) {
                                 $wh_aluminium = "PROSES";
                             } else if ($row->wh_aluminium == 2) {
@@ -135,6 +146,18 @@
                                 $site_update = "PROSES";
                             }
 
+                            if ($row->site_update_bst == 3) {
+                                $site_update_bst = "LUNAS";
+                            } else if ($row->site_update_bst == 2) {
+                                $site_update_bst = "PARSIAL";
+                            } else {
+                                $site_update_bst = "PROSES";
+                            }
+
+                            $total_hold = @$get_total_hold[$row->id];
+                            $total_unit_fg = 0;
+                            $total_kirim = 0;
+
 
                         ?>
                             <tr>
@@ -147,32 +170,48 @@
                                 <td><?= $row->divisi ?><input type="hidden" id="id_fppp_<?= $i ?>" value="<?= $row->id ?>"></td>
                                 <td><?= $row->kode_proyek ?></td>
                                 <td><?= $row->no_fppp ?></td>
-                                <td><?= $row->no_co ?></td>
                                 <td><?= $row->nama_proyek ?></td>
                                 <td><?= $row->sales ?></td>
                                 <td><?= $row->pic_project ?></td>
-                                <td><?= $row->pengiriman ?></td>
+                                <td><?= $row->pengiriman ?><br><?= $row->alamat_proyek ?></td>
                                 <td><?= $row->warna ?></td>
                                 <td><?= $row->jumlah_gambar ?></td>
                                 <td><?= $row->jumlah_unit ?></td>
+                                <td><?= $total_hold ?></td>
                                 <td><?= $row->kaca ?></td>
                                 <td align="center"><?= $row->tgl_pembuatan ?></td>
-                                <td align="center"><?= $row->tgl_modified ?></td>
                                 <td align="center"><?= $row->deadline_pengiriman ?></td>
                                 <td style="background-color:#ffd45e" align="center"><span id="wrk_<?= $row->id ?>" class='edit'><?= $dw ?></span>
                                     <input type='date' class='txtedit' data-id='<?= $row->id ?>' data-field='deadline_workshop' id='<?= $row->id ?>' value='<?= $row->deadline_workshop ?>'>
                                 </td>
-                                <td><?= $row->alamat_proyek ?></td>
                                 <td><?= $row->status_order ?></td>
-                                <td style="background-color:#ffd45e"><span id="acc_fa_<?= $row->id ?>" class='edit'><?= $acc_fa ?></span>
-                                    <input type='text' class='txtedit' data-id='<?= $row->id ?>' data-field='acc_fa' id='<?= $row->id ?>' value='<?= $row->acc_fa ?>'>
-
+                                <td style="background-color:#5c0000"></td>
+                                <td style="background-color:#ffd45e" align="center"><span id="acc_project_<?= $row->id ?>" class='edit'><?= $acc_project ?></span>
+                                    <input type='text' class='txtedit' data-id='<?= $row->id ?>' data-field='acc_project' id='<?= $row->id ?>' value='<?= $row->acc_project ?>'>
                                 </td>
-                                <td><?= $wh_aluminium ?></td>
-                                <td><?= $wh_aksesoris ?></td>
-                                <td><?= $wh_kaca ?></td>
+                                <td style="background-color:#5c0000"></td>
+                                <td style="background-color:#ffd45e" align="center"><span id="acc_fa_<?= $row->id ?>" class='edit'><?= $acc_fa ?></span>
+                                    <input type='text' class='txtedit' data-id='<?= $row->id ?>' data-field='acc_fa' id='<?= $row->id ?>' value='<?= $row->acc_fa ?>'>
+                                </td>
+                                <td align="center"><?= $wh_aluminium ?></td>
+                                <td align="center"><?= $wh_aksesoris ?></td>
+                                <td align="center"><?= $wh_kaca ?></td>
+                                <td align="center"><?= $total_unit_fg ?></td>
+                                <td style="background-color:#ffd45e" align="center"><span id="acc_fa_pengiriman_<?= $row->id ?>" class='edit'><?= $acc_fa_pengiriman ?></span>
+                                    <input type='text' class='txtedit' data-id='<?= $row->id ?>' data-field='acc_fa_pengiriman' id='<?= $row->id ?>' value='<?= $row->acc_fa_pengiriman ?>'>
+                                </td>
+                                <td align="center"><?= $total_kirim ?></td>
                                 <td><span id="ws_update_<?= $row->id ?>"><?= $ws_update ?></span></td>
                                 <td><span id="site_update_<?= $row->id ?>"><?= $site_update ?></span></td>
+                                <td><span id="site_update_bst_<?= $row->id ?>"><?= $site_update_bst ?></span></td>
+                                <?php
+                                if (from_session('level') == 1 || from_session('level') == 7) { ?>
+                                    <td style="background-color:#ffd45e" align="center"><span id="status_project_finance_<?= $row->id ?>" class='edit'><?= $status_project_finance ?></span>
+                                        <input type='text' class='txtedit' data-id='<?= $row->id ?>' data-field='status_project_finance' id='<?= $row->id ?>' value='<?= $row->status_project_finance ?>'>
+                                    </td>
+                                <?php }
+                                ?>
+
                                 <td align="center">
                                     <a target="_blank" href="<?= base_url('klg/fppp/cetak'); ?>/<?= $row->id ?>" class="btn btn-xs btn-warning">Cetak</a>
                                     <?php if ($row->lampiran != '') { ?>
@@ -280,6 +319,7 @@
                 '<th bgcolor="#bfbfbf">Item</th>' +
                 '<th bgcolor="#bfbfbf">Glass Thick</th>' +
                 '<th bgcolor="#bfbfbf">Qty</th>' +
+                '<th bgcolor="#bfbfbf">HOLD/CANCEL/REVISI</th>' +
                 '<th bgcolor="#bfbfbf">Produksi Aluminium</th>' +
                 '<th bgcolor="#bfbfbf">QC Cek</th>' +
                 '<th bgcolor="#bfbfbf">Pengiriman</th>' +
@@ -315,6 +355,13 @@
                         var no = i + 1;
                         var color = "white";
                         var fontcolor = "black";
+
+                        if (data.detail[i].hold == null) {
+                            var hold = '';
+                        } else {
+                            var hold = data.detail[i].hold;
+                        }
+
                         if (data.detail[i].produksi_aluminium == null) {
                             var produksi_aluminium = '';
                         } else {
@@ -354,6 +401,7 @@
                             '<td><font color="' + fontcolor + '">' + data.detail[i].item + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].glass_thick + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].qty + '</font></td>' +
+                            '<td style="background-color:#9cc2ff" onclick="hold_tdclick(' + data.detail[i].id + ');"><input type="text" style="display:none;" id="hold_input_' + data.detail[i].id + '" value="' + hold + '"><a style="display:none;" id="hold_bt_' + data.detail[i].id + '" onclick="hold_saveclick(' + data.detail[i].id + ');" class="btn btn-xs btn-default">save</a><font id="hold_ft_' + data.detail[i].id + '" color="' + fontcolor + '">' + hold + '</font></td>' +
                             '<td style="background-color:#9cc2ff" onclick="pa_tdclick(' + data.detail[i].id + ');"><input type="date" style="display:none;" id="pa_input_' + data.detail[i].id + '" value="' + produksi_aluminium + '"><a style="display:none;" id="pa_bt_' + data.detail[i].id + '" onclick="pa_saveclick(' + data.detail[i].id + ');" class="btn btn-xs btn-default">save</a><font id="pa_ft_' + data.detail[i].id + '" color="' + fontcolor + '">' + produksi_aluminium + '</font></td>' +
                             '<td style="background-color:#9cc2ff" onclick="qc_tdclick(' + data.detail[i].id + ');"><input type="date" style="display:none;" id="qc_input_' + data.detail[i].id + '" value="' + qc_cek + '"><a style="display:none;" id="qc_bt_' + data.detail[i].id + '" onclick="qc_saveclick(' + data.detail[i].id + ');" class="btn btn-xs btn-default">save</a><font id="qc_ft_' + data.detail[i].id + '" color="' + fontcolor + '">' + qc_cek + '</font></td>' +
                             '<td style="background-color:#9cc2ff" onclick="p_tdclick(' + data.detail[i].id + ');"><input type="date" style="display:none;" id="p_input_' + data.detail[i].id + '" value="' + pengiriman + '"><a style="display:none;" id="p_bt_' + data.detail[i].id + '" onclick="p_saveclick(' + data.detail[i].id + ');" class="btn btn-xs btn-default">save</a><font id="p_ft_' + data.detail[i].id + '" color="' + fontcolor + '">' + pengiriman + '</font></td>' +
@@ -378,6 +426,35 @@
             return infoTable;
         }
     });
+
+    function hold_tdclick(id) {
+        $("#hold_input_" + id + "").removeAttr("style");
+        $("#hold_bt_" + id + "").removeAttr("style");
+        $("#hold_ft_" + id + "").hide();
+    }
+
+    function hold_saveclick(id) {
+        $.ajax({
+                type: "POST",
+                url: "<?= site_url('klg/fppp/updateDetail') ?>",
+                dataType: 'json',
+                data: {
+                    'id': id,
+                    'kolom': 10,
+                    'nilai': $("#hold_input_" + id + "").val(),
+                }
+            })
+            .success(function(datasaved) {
+                $.growl.notice({
+                    title: 'Sukses',
+                    message: datasaved.msg
+                });
+                $("#hold_input_" + id + "").hide();
+                $("#hold_bt_" + id + "").hide();
+                $("#hold_ft_" + id + "").show();
+                $("#hold_ft_" + id + "").html(datasaved.nilai);
+            });
+    }
 
     function pa_tdclick(id) {
         $("#pa_input_" + id + "").removeAttr("style");
@@ -498,6 +575,7 @@
                 if (datasaved.txt_site_update != '-') {
                     $("#site_update_" + datasaved.id_fppp + "").html(datasaved.txt_site_update);
                 }
+
             });
     }
 
@@ -527,6 +605,9 @@
                 $("#bst_bt_" + id + "").hide();
                 $("#bst_ft_" + id + "").show();
                 $("#bst_ft_" + id + "").html(datasaved.nilai);
+                if (datasaved.txt_site_update != '-') {
+                    $("#site_update_bst_" + datasaved.id_fppp + "").html(datasaved.txt_site_bst_update);
+                }
             });
     }
 </script>
