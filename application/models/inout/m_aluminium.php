@@ -14,6 +14,7 @@ class M_aluminium extends CI_Model
         $this->db->where('DATE(ds.created) >=', $tgl_awal);
         $this->db->where('DATE(ds.created) <=', $tgl_akhir);
         $this->db->where('ds.inout', 1);
+        $this->db->where('ds.awal_bulan', 0);
         $this->db->select('ds.*,mi.*,mw.*,ds.created as tgl_stok,mg.gudang,ms.supplier');
         $this->db->order_by('ds.id', 'desc');
 
