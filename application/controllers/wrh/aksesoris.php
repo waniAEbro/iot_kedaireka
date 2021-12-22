@@ -825,6 +825,7 @@ class aksesoris extends CI_Controller
         $data['id_fppp']           = $id_fppp;
         $data['no_surat_jalan']    = $this->m_aksesoris->getRowSuratJalan($id_sj)->row()->no_surat_jalan;
         $data['penerima']          = $this->m_aksesoris->getRowSuratJalan($id_sj)->row()->penerima;
+        $data['tgl_aktual']          = $this->m_aksesoris->getRowSuratJalan($id_sj)->row()->tgl_aktual;
         $data['alamat_pengiriman'] = $this->m_aksesoris->getRowSuratJalan($id_sj)->row()->alamat_pengiriman;
         $data['sopir']             = $this->m_aksesoris->getRowSuratJalan($id_sj)->row()->sopir;
         $data['no_kendaraan']      = $this->m_aksesoris->getRowSuratJalan($id_sj)->row()->no_kendaraan;
@@ -838,6 +839,7 @@ class aksesoris extends CI_Controller
         $id_jenis_item     = 2;
         $id_fppp           = $this->input->post('id_fppp');
         $penerima          = $this->input->post('penerima');
+        $tgl_aktual          = $this->input->post('tgl_aktual');
         $alamat_pengiriman = $this->input->post('alamat_pengiriman');
         $sopir             = $this->input->post('sopir');
         $no_kendaraan      = $this->input->post('no_kendaraan');
@@ -847,6 +849,7 @@ class aksesoris extends CI_Controller
             'id_fppp'           => $id_fppp,
             'no_surat_jalan'    => $no_surat_jalan,
             'penerima'          => $penerima,
+            'tgl_aktual'          => $tgl_aktual,
             'alamat_pengiriman' => $alamat_pengiriman,
             'sopir'             => $sopir,
             'no_kendaraan'      => $no_kendaraan,
@@ -867,11 +870,13 @@ class aksesoris extends CI_Controller
         $id_jenis_item     = 2;
         $id_sj           = $this->input->post('id_sj');
         $penerima          = $this->input->post('penerima');
+        $tgl_aktual          = $this->input->post('tgl_aktual');
         $alamat_pengiriman = $this->input->post('alamat_pengiriman');
         $sopir             = $this->input->post('sopir');
         $no_kendaraan      = $this->input->post('no_kendaraan');
         $obj               = array(
             'penerima'          => $penerima,
+            'tgl_aktual'          => $tgl_aktual,
             'alamat_pengiriman' => $alamat_pengiriman,
             'sopir'             => $sopir,
             'no_kendaraan'      => $no_kendaraan,

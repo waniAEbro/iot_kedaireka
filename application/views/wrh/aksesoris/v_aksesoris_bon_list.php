@@ -20,6 +20,7 @@
                     <thead>
                         <th width="5%">No</th>
                         <th>Tgl</th>
+                        <th>Tgl Aktual</th>
                         <th>No Surat Jalan</th>
                         <th>Penerima</th>
                         <th>Alamat Pengiriman</th>
@@ -38,6 +39,7 @@
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
                                 <td align="center"><?= $row->created ?></td>
+                                <td align="center"><?= $row->tgl_aktual ?></td>
                                 <td><?= $row->no_surat_jalan ?></td>
                                 <td><?= $row->penerima ?></td>
                                 <td><?= $row->alamat_pengiriman ?></td>

@@ -23,25 +23,33 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label>Penerima</label>
                                 <input type="text" class="form-control" id="penerima">
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Tgl Aktual</label>
+                                <input type="text" data-date-format="yyyy-mm-dd" class="form-control datepicker" id="tgl_aktual">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>Alamat Pengiriman</label>
                                 <input type="text" class="form-control" id="alamat_pengiriman">
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>Sopir</label>
                                 <input type="text" class="form-control" id="sopir">
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>No Kendaraan</label>
                                 <input type="text" class="form-control" id="no_kendaraan">
@@ -108,6 +116,9 @@
             scrollX: true,
         });
         $("select").select2();
+        $('.datepicker').datepicker({
+        autoclose: true
+        });
     });
 
     $(".checkbox").change(function() {
@@ -133,6 +144,7 @@
                 "id_fppp": $("#id_fppp").val(),
                 "no_surat_jalan": $("#no_surat_jalan").val(),
                 "penerima": $("#penerima").val(),
+                "tgl_aktual": $("#tgl_aktual").val(),
                 "alamat_pengiriman": $("#alamat_pengiriman").val(),
                 "sopir": $("#sopir").val(),
                 "no_kendaraan": $("#no_kendaraan").val(),
