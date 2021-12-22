@@ -139,6 +139,7 @@
                 "id_fppp": $("#id_fppp").val(),
                 "no_surat_jalan": $("#no_surat_jalan").val(),
                 "penerima": $("#penerima").val(),
+                "tgl_aktual": $("#tgl_aktual").val(),
                 "alamat_pengiriman": $("#alamat_pengiriman").val(),
                 "sopir": $("#sopir").val(),
                 "no_kendaraan": $("#no_kendaraan").val(),
