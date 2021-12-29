@@ -44,7 +44,7 @@ $row = fetch_single_row($edit);
           <div class="form-group">
             <label class="col-sm-2 control-label">Level</label>
             <div class="col-sm-8">
-              <select id="selector_level" name="selector_level" class="form-control" onchange="show_menu()" style="width:100%" required>
+              <select id="selector_level" name="selector_level" class="form-control" style="width:100%" required>
                 <?php foreach ($level->result() as $val) :
                   if ($val->id == $row->level) {
                     $sel = "selected";
@@ -59,7 +59,7 @@ $row = fetch_single_row($edit);
           <div class="form-group">
             <label class="col-sm-2 control-label">Store</label>
             <div class="col-sm-8">
-              <select id="id_store" name="id_store" class="form-control" onchange="show_menu()" style="width:100%" required>
+              <select id="id_store" name="id_store" class="form-control" style="width:100%" required>
                 <?php foreach ($store->result() as $val) :
                   if ($val->id == $row->id_store) {
                     $sel = "selected";
