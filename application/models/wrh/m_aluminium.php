@@ -816,13 +816,14 @@ class M_aluminium extends CI_Model
         $this->db->join('master_item mi', 'mi.id = ds.id_item', 'left');
         $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
         $this->db->join('master_warna mwab', 'mwab.id = ds.id_warna_akhir', 'left');
+        $this->db->join('master_brand mb', 'mb.id = ds.id_multi_brand', 'left');
 
         $this->db->where('ds.id_surat_jalan', 0);
         $this->db->where('ds.is_bom', 0);
         $this->db->where('ds.inout', 2);
         $this->db->where('ds.id_penginput', from_session('id'));
         $this->db->where('ds.id_jenis_item', $id_jenis_item);
-        $this->db->select('ds.id as id_stock,ds.*,mwab.warna as warna_akhir,mwa.warna,df.no_fppp,df.nama_proyek,mi.divisi as divisi_stock,mg.gudang,mi.*');
+        $this->db->select('ds.id as id_stock,ds.*,mwab.warna as warna_akhir,mwa.warna,df.no_fppp,df.nama_proyek,mi.divisi as divisi_stock,mg.gudang,mi.*,mb.brand');
 
         return $this->db->get('data_stock ds');
     }
@@ -835,11 +836,12 @@ class M_aluminium extends CI_Model
         $this->db->join('master_item mi', 'mi.id = ds.id_item', 'left');
         $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
         $this->db->join('master_warna mwab', 'mwab.id = ds.id_warna_akhir', 'left');
+        $this->db->join('master_brand mb', 'mb.id = ds.id_multi_brand', 'left');
 
         $this->db->where('ds.id_surat_jalan', $id_sj);
         $this->db->where('ds.inout', 2);
         $this->db->where('ds.id_jenis_item', $id_jenis_item);
-        $this->db->select('ds.id as id_stock,ds.*,mwab.warna as warna_akhir,mwa.warna,df.no_fppp,df.nama_proyek,mi.divisi as divisi_stock,mg.gudang,mi.*');
+        $this->db->select('ds.id as id_stock,ds.*,mwab.warna as warna_akhir,mwa.warna,df.no_fppp,df.nama_proyek,mi.divisi as divisi_stock,mg.gudang,mi.*,mb.brand');
 
         return $this->db->get('data_stock ds');
     }

@@ -67,6 +67,7 @@
                         <thead>
                             <tr>
                                 <th width="15%">FPPP</th>
+                                <th width="15%">Brand</th>
                                 <th width="25%">Item</th>
                                 <th width="15%">Divisi</th>
                                 <th width="15%">Gudang</th>
@@ -88,6 +89,7 @@
 
                                 <tr id="output_data_<?= $row->id_stock ?>" class="output_data">
                                     <td align="center"><?= $row->no_fppp ?>-<?= $row->nama_proyek ?></td>
+                                    <td align="center"><?= $row->brand ?></td>
                                     <td><?= $row->item_code ?>-<?= $row->deskripsi ?></td>
                                     <td align="center"><?= $row->divisi_stock ?></td>
                                     <td align="center"><?= $row->gudang ?></td>
@@ -111,6 +113,9 @@
                                         <?php endforeach; ?>
                                     </select>
                                 </td>
+                                <td><select style="width: 100px;" id="id_multi_brand" name="id_multi_brand" class="form-control" style="width:100%" required>
+                                        <option value="">-- Select --</option>
+                                    </select></td>
                                 <td><select style="width: 120px;" id="item" name="item" class="form-control" style="width:100%" required>
                                         <option value="">-- Select --</option>
                                         <?php foreach ($item->result() as $valap) : ?>
@@ -165,6 +170,7 @@
                         <thead>
                             <tr>
                                 <th width="15%">FPPP</th>
+                                <th width="15%">Brand</th>
                                 <th width="30%">Item</th>
                                 <th width="15%">Divisi</th>
                                 <th width="15%">Gudang</th>
@@ -186,6 +192,7 @@
 
                                 <tr id="output_data_<?= $row->id_stock ?>" class="output_data">
                                     <td align="center"><?= $row->no_fppp ?>-<?= $row->nama_proyek ?></td>
+                                    <td align="center"><?= $row->brand ?></td>
                                     <td><?= $row->item_code ?>-<?= $row->deskripsi ?></td>
                                     <td align="center"><?= $row->divisi_stock ?></td>
                                     <td align="center"><?= $row->gudang ?></td>
@@ -215,7 +222,7 @@
         $("select").select2();
         $("#stock").val(0);
         $('.datepicker').datepicker({
-        autoclose: true
+            autoclose: true
         });
     });
 
@@ -268,6 +275,32 @@
     //     $('#produksi').prop('checked', false);
     //     $('#lapangan').prop('checked', false);
     // });
+    $("select[name=id_fppp]").change(function() {
+        $('#id_multi_brand').val('').trigger('change');
+        var x = $("select[name=id_multi_brand]");
+        if ($(this).val() == "") {
+            x.html("<option>-- Select --</option>");
+        } else {
+            z = "<option>-- Select --</option>";
+            $.ajax({
+                url: "<?= site_url('wrh/aksesoris/optionGetMultibrandFppp') ?>",
+                dataType: "json",
+                type: "POST",
+                data: {
+                    "id_fppp": $(this).val()
+                },
+                success: function(data) {
+
+                    var z = "<option value=''>-- Select --</option>";
+                    for (var i = 0; i < data.length; i++) {
+                        z += '<option value=' + data[i].id + '>' + data[i].brand + '</option>';
+                    }
+                    x.html(z);
+                }
+            });
+
+        }
+    });
 
     $("select[name=item]").change(function() {
         $('#id_divisi').val('').trigger('change');
@@ -424,6 +457,7 @@
                     data: {
                         'id_sj': $('#id_sj').val(),
                         'id_fppp': $('#id_fppp').val(),
+                        'id_multi_brand': $('#id_multi_brand').val(),
                         'item': $('#item').val(),
                         'id_divisi': $("#id_divisi").val(),
                         'id_gudang': $("#id_gudang").val(),

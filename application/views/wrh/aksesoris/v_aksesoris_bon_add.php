@@ -66,6 +66,7 @@
                     <thead>
                         <tr>
                             <th width="15%">FPPP</th>
+                            <th width="15%">Brand</th>
                             <th width="30%">Item</th>
                             <th width="15%">Divisi</th>
                             <th width="15%">Gudang</th>
@@ -87,6 +88,7 @@
 
                             <tr id="output_data_<?= $row->id_stock ?>" class="output_data">
                                 <td align="center"><?= $row->no_fppp ?>-<?= $row->nama_proyek ?></td>
+                                <td align="center"><?= $row->brand ?></td>
                                 <td><?= $row->item_code ?>-<?= $row->deskripsi ?></td>
                                 <td align="center"><?= $row->divisi_stock ?></td>
                                 <td align="center"><?= $row->gudang ?></td>
@@ -117,7 +119,7 @@
         });
         $("select").select2();
         $('.datepicker').datepicker({
-        autoclose: true
+            autoclose: true
         });
     });
 

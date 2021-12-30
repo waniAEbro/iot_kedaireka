@@ -944,6 +944,7 @@ class aksesoris extends CI_Controller
                 'id_jenis_item'  => $id_jenis_item,
                 'id_surat_jalan' => $this->input->post('id_sj'),
                 'id_fppp'        => $this->input->post('id_fppp'),
+                'id_multi_brand'        => $this->input->post('id_multi_brand'),
                 'id_item'        => $this->input->post('item'),
                 'id_divisi'      => $this->input->post('id_divisi'),
                 'id_gudang'      => $this->input->post('id_gudang'),
@@ -1012,6 +1013,23 @@ class aksesoris extends CI_Controller
         $data['divisi2']      = $this->db->get_where('master_divisi_stock', array('id_jenis_item' => $id_jenis_item));
         $data['gudang']      = $this->db->get_where('master_gudang', array('id_jenis_item' => $id_jenis_item));
         $this->load->view('wrh/aksesoris/v_aksesoris_mutasi_stock_add', $data);
+    }
+
+    public function optionGetMultibrandFppp()
+    {
+        $id_fppp  = $this->input->post('id_fppp');
+        $this->db->where('id', $id_fppp);
+
+        $mb = $this->db->get('data_fppp')->row()->multi_brand;
+
+        $mbq = explode("-", $mb);
+        $this->db->where_in('id', $mbq);
+        $get_data = $this->db->get('master_brand')->result();
+        $data     = array();
+        foreach ($get_data as $val) {
+            $data[] = $val;
+        }
+        echo json_encode($data, JSON_PRETTY_PRINT);
     }
 
     public function optionGetDivisiItem()

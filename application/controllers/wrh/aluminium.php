@@ -914,6 +914,7 @@ class aluminium extends CI_Controller
                 'id_jenis_item'  => $id_jenis_item,
                 'id_surat_jalan' => $this->input->post('id_sj'),
                 'id_fppp'        => $this->input->post('id_fppp'),
+                'id_multi_brand'        => $this->input->post('id_multi_brand'),
                 'id_item'        => $this->input->post('item'),
                 'id_gudang'      => $this->input->post('id_gudang'),
                 'keranjang'      => str_replace(" ", "", $this->input->post('keranjang')),

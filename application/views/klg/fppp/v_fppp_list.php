@@ -174,8 +174,8 @@
                                     <?php
                                     $mbq = explode("-", $row->multi_brand);
                                     $this->db->where_in('id', $mbq);
-                                    $res_warna = $this->db->get('master_brand');
-                                    foreach ($res_warna->result() as $keyq) {
+                                    $res_brand = $this->db->get('master_brand');
+                                    foreach ($res_brand->result() as $keyq) {
                                         echo '*' . $keyq->brand . '<br>';
                                     }
                                     ?>
