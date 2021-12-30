@@ -64,6 +64,7 @@
                         <th width="5%">No</th>
                         <th>DIVISI</th>
                         <th>KODE PROJECT</th>
+                        <th>BRAND</th>
                         <th>NO. FPPP</th>
                         <th>NAMA PROJECT</th>
                         <th>SALES</th>
@@ -169,6 +170,16 @@
                                 <td align="center"><?= $i ?></td>
                                 <td><?= $row->divisi ?><input type="hidden" id="id_fppp_<?= $i ?>" value="<?= $row->id ?>"></td>
                                 <td><?= $row->kode_proyek ?></td>
+                                <td>
+                                    <?php
+                                    $mbq = explode("-", $row->multi_brand);
+                                    $this->db->where_in('id', $mbq);
+                                    $res_warna = $this->db->get('master_brand');
+                                    foreach ($res_warna->result() as $keyq) {
+                                        echo '*' . $keyq->brand . '<br>';
+                                    }
+                                    ?>
+                                </td>
                                 <td><?= $row->no_fppp ?></td>
                                 <td><?= $row->nama_proyek ?></td>
                                 <td><?= $row->sales ?></td>

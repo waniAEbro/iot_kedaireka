@@ -42,7 +42,7 @@ class Fppp extends CI_Controller
 	{
 		$this->fungsi->check_previleges('fppp');
 		$datapost = array(
-			'tgl_modified'                => date('Y-m-d H:i:s'),
+			'tgl_modified' => date('Y-m-d H:i:s'),
 		);
 		$this->m_fppp->updateFppp($id_fppp, $datapost);
 		$data['param_tab'] = $param;
@@ -53,9 +53,9 @@ class Fppp extends CI_Controller
 	public function list($param = '')
 	{
 		$this->fungsi->check_previleges('fppp');
-		$data['fppp']  = $this->m_fppp->getData($param);
+		$data['fppp']           = $this->m_fppp->getData($param);
 		$data['get_total_hold'] = $this->m_fppp->getTotalHold();
-		$data['param'] = $param;
+		$data['param']          = $param;
 		$this->load->view('klg/fppp/v_fppp_list', $data);
 	}
 
@@ -73,24 +73,25 @@ class Fppp extends CI_Controller
 	public function formAdd($param = '')
 	{
 		$this->fungsi->check_previleges('fppp');
-		$data['proyek']               = $this->db->get('master_proyek');
-		$data['divisi']               = get_options($this->db->get('master_divisi'), 'id', 'divisi');
-		$data['pengiriman']           = get_options($this->db->get('master_pengiriman'), 'id', 'pengiriman');
-		$data['metode_pengiriman']    = get_options($this->db->get('master_metode_pengiriman'), 'id', 'metode_pengiriman');
-		$data['penggunaan_peti']      = get_options($this->db->get('master_penggunaan_peti'), 'id', 'penggunaan_peti');
-		$data['penggunaan_sealant']   = get_options($this->db->get('master_penggunaan_sealant'), 'id', 'penggunaan_sealant');
-		$data['warna']      = get_options($this->db->get('master_warna'), 'id', 'warna');
-		$data['warna_lainya']         = get_options($this->db->get('master_warna'), 'id', 'warna');
-		$data['logo_kaca']            = get_options($this->db->get('master_logo_kaca'), 'id', 'logo_kaca');
-		$data['kaca']                 = get_options($this->db->get('master_kaca'), 'id', 'kaca');
-		$data['brand']                = get_options($this->db->get('master_brand'), 'id', 'brand', true);
-		$data['item']                 = get_options($this->db->get('master_barang'), 'id', 'barang', true);
-		$data['brand_edit']           = $this->db->get('master_brand');
-		$data['warna_edit'] = $this->db->get('master_warna');
-		$data['item_edit']            = $this->db->get('master_barang');
-		$data['param']                = $param;
-		$nama_divisi            = $this->m_fppp->getRowNamaDivisi($param)->divisi_pendek;
-		$data['no_fppp']              = str_pad($this->m_fppp->getNoFppp($param), 3, '0', STR_PAD_LEFT) . '/FPPP/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
+		$data['proyek']             = $this->db->get('master_proyek');
+		$data['divisi']             = get_options($this->db->get('master_divisi'), 'id', 'divisi');
+		$data['pengiriman']         = get_options($this->db->get('master_pengiriman'), 'id', 'pengiriman');
+		$data['metode_pengiriman']  = get_options($this->db->get('master_metode_pengiriman'), 'id', 'metode_pengiriman');
+		$data['penggunaan_peti']    = get_options($this->db->get('master_penggunaan_peti'), 'id', 'penggunaan_peti');
+		$data['penggunaan_sealant'] = get_options($this->db->get('master_penggunaan_sealant'), 'id', 'penggunaan_sealant');
+		$data['warna']              = get_options($this->db->get('master_warna'), 'id', 'warna');
+		$data['warna_lainya']       = get_options($this->db->get('master_warna'), 'id', 'warna');
+		$data['logo_kaca']          = get_options($this->db->get('master_logo_kaca'), 'id', 'logo_kaca');
+		$data['kaca']               = get_options($this->db->get('master_kaca'), 'id', 'kaca');
+		$data['brand']              = get_options($this->db->get('master_brand'), 'id', 'brand', true);
+		$data['item']               = get_options($this->db->get('master_barang'), 'id', 'barang', true);
+		$data['brand_edit']         = $this->db->get('master_brand');
+		$data['multi_brand']        = get_options($this->db->get('master_brand'), 'id', 'brand');
+		$data['warna_edit']         = $this->db->get('master_warna');
+		$data['item_edit']          = $this->db->get('master_barang');
+		$data['param']              = $param;
+		$nama_divisi          = $this->m_fppp->getRowNamaDivisi($param)->divisi_pendek;
+		$data['no_fppp']            = str_pad($this->m_fppp->getNoFppp($param), 3, '0', STR_PAD_LEFT) . '/FPPP/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
 		$this->load->view('klg/fppp/v_fppp_add', $data);
 	}
 
@@ -115,29 +116,30 @@ class Fppp extends CI_Controller
 	public function formEdit($id = '')
 	{
 		$this->fungsi->check_previleges('fppp');
-		$param                  = $this->m_fppp->getRowFppp($id)->row()->id_divisi;
-		$data['proyek']               = $this->db->get('master_proyek');
-		$data['divisi']               = get_options($this->db->get('master_divisi'), 'id', 'divisi');
-		$data['pengiriman']           = get_options($this->db->get('master_pengiriman'), 'id', 'pengiriman');
-		$data['metode_pengiriman']    = get_options($this->db->get('master_metode_pengiriman'), 'id', 'metode_pengiriman');
-		$data['penggunaan_peti']      = get_options($this->db->get('master_penggunaan_peti'), 'id', 'penggunaan_peti');
-		$data['penggunaan_sealant']   = get_options($this->db->get('master_penggunaan_sealant'), 'id', 'penggunaan_sealant');
-		$data['warna']      = get_options($this->db->get('master_warna'), 'id', 'warna');
-		$data['warna_lainya']         = get_options($this->db->get('master_warna'), 'id', 'warna');
-		$data['logo_kaca']            = get_options($this->db->get('master_logo_kaca'), 'id', 'logo_kaca');
-		$data['kaca']                 = get_options($this->db->get('master_kaca'), 'id', 'kaca');
-		$data['brand']                = get_options($this->db->get('master_brand'), 'id', 'brand', true);
-		$data['item']                 = get_options($this->db->get('master_barang'), 'id', 'barang', true);
-		$data['brand_edit']           = $this->db->get('master_brand');
-		$data['warna_edit'] = $this->db->get('master_warna');
-		$data['item_edit']            = $this->db->get('master_barang');
+		$param                = $this->m_fppp->getRowFppp($id)->row()->id_divisi;
+		$data['proyek']             = $this->db->get('master_proyek');
+		$data['divisi']             = get_options($this->db->get('master_divisi'), 'id', 'divisi');
+		$data['pengiriman']         = get_options($this->db->get('master_pengiriman'), 'id', 'pengiriman');
+		$data['metode_pengiriman']  = get_options($this->db->get('master_metode_pengiriman'), 'id', 'metode_pengiriman');
+		$data['penggunaan_peti']    = get_options($this->db->get('master_penggunaan_peti'), 'id', 'penggunaan_peti');
+		$data['penggunaan_sealant'] = get_options($this->db->get('master_penggunaan_sealant'), 'id', 'penggunaan_sealant');
+		$data['warna']              = get_options($this->db->get('master_warna'), 'id', 'warna');
+		$data['warna_lainya']       = get_options($this->db->get('master_warna'), 'id', 'warna');
+		$data['logo_kaca']          = get_options($this->db->get('master_logo_kaca'), 'id', 'logo_kaca');
+		$data['kaca']               = get_options($this->db->get('master_kaca'), 'id', 'kaca');
+		$data['brand']              = get_options($this->db->get('master_brand'), 'id', 'brand', true);
+		$data['item']               = get_options($this->db->get('master_barang'), 'id', 'barang', true);
+		$data['brand_edit']         = $this->db->get('master_brand');
+		$data['multi_brand']        = get_options($this->db->get('master_brand'), 'id', 'brand');
+		$data['warna_edit']         = $this->db->get('master_warna');
+		$data['item_edit']          = $this->db->get('master_barang');
 		// $this->db->get_where('mytable', array('id' => $id), $limit, $offset);
-		$data['param']     = $param;
-		$data['row']       = $this->m_fppp->getRowFppp($id)->row();
-		$data['detail']    = $this->m_fppp->getRowFpppDetail($id);
-		$data['sudah_transaksi']    = $this->m_fppp->getNumSuratJalan($id);
-		$nama_divisi = $this->m_fppp->getRowNamaDivisi($param)->divisi_pendek;
-		$data['no_fppp']   = str_pad($this->m_fppp->getNoFppp($param), 3, '0', STR_PAD_LEFT) . '/FPPP/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
+		$data['param']           = $param;
+		$data['row']             = $this->m_fppp->getRowFppp($id)->row();
+		$data['detail']          = $this->m_fppp->getRowFpppDetail($id);
+		$data['sudah_transaksi'] = $this->m_fppp->getNumSuratJalan($id);
+		$nama_divisi       = $this->m_fppp->getRowNamaDivisi($param)->divisi_pendek;
+		$data['no_fppp']         = str_pad($this->m_fppp->getNoFppp($param), 3, '0', STR_PAD_LEFT) . '/FPPP/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
 		$this->load->view('klg/fppp/v_fppp_edit', $data);
 	}
 
@@ -151,8 +153,9 @@ class Fppp extends CI_Controller
 		$datapost = array(
 			'id_divisi'              => $this->input->post('id_divisi'),
 			'tgl_pembuatan'          => $this->input->post('tgl_pembuatan'),
+			'multi_brand'            => $this->input->post('multi_brand'),
 			'no_fppp'                => $nofppp,
-			'no_co'              => $this->input->post('no_co'),
+			'no_co'                  => $this->input->post('no_co'),
 			'applicant'              => $this->input->post('applicant'),
 			'applicant_sector'       => $this->input->post('applicant_sector'),
 			'authorized_distributor' => $this->input->post('authorized_distributor'),
@@ -170,7 +173,7 @@ class Fppp extends CI_Controller
 			'id_metode_pengiriman'   => $this->input->post('id_metode_pengiriman'),
 			'id_penggunaan_peti'     => $this->input->post('id_penggunaan_peti'),
 			'id_penggunaan_sealant'  => $this->input->post('id_penggunaan_sealant'),
-			'id_warna'     => $this->input->post('id_warna'),
+			'id_warna'               => $this->input->post('id_warna'),
 			'id_warna_lainya'        => $this->input->post('id_warna_lainya'),
 			'warna_sealant'          => $this->input->post('warna_sealant'),
 			'ditujukan_kepada'       => $this->input->post('ditujukan_kepada'),
@@ -190,13 +193,13 @@ class Fppp extends CI_Controller
 			'updated'                => date('Y-m-d H:i:s'),
 		);
 		$this->m_fppp->insertfppp($datapost);
-		$data['id'] = $this->db->insert_id();
+		$data['id']            = $this->db->insert_id();
 		$cek_kode_proyek = $this->m_fppp->cekKodeProyek($datapost['kode_proyek'])->num_rows();
 		if ($cek_kode_proyek < 1) {
 			$obj_py = array(
 				'kode_proyek' => str_replace(' ', '',  $datapost['kode_proyek']),
-				'created'                => date('Y-m-d H:i:s'),
-				'updated'                => date('Y-m-d H:i:s'),
+				'created'     => date('Y-m-d H:i:s'),
+				'updated'     => date('Y-m-d H:i:s'),
 			);
 			$this->db->insert('data_fppp_finance', $obj_py);
 		}
@@ -234,8 +237,9 @@ class Fppp extends CI_Controller
 				'applicant'              => $this->input->post('applicant'),
 				'applicant_sector'       => $this->input->post('applicant_sector'),
 				'authorized_distributor' => $this->input->post('authorized_distributor'),
+				'multi_brand'            => $this->input->post('multi_brand'),
 				'no_fppp'                => $nofppp,
-				'no_co'              => $this->input->post('no_co'),
+				'no_co'                  => $this->input->post('no_co'),
 				'kode_proyek'            => $this->input->post('kode_proyek'),
 				'nama_proyek'            => $this->input->post('nama_proyek'),
 				'tahap'                  => $this->input->post('tahap'),
@@ -247,7 +251,7 @@ class Fppp extends CI_Controller
 				'id_metode_pengiriman'   => $this->input->post('id_metode_pengiriman'),
 				'id_penggunaan_peti'     => $this->input->post('id_penggunaan_peti'),
 				'id_penggunaan_sealant'  => $this->input->post('id_penggunaan_sealant'),
-				'id_warna'     => $this->input->post('id_warna'),
+				'id_warna'               => $this->input->post('id_warna'),
 				'id_warna_lainya'        => $this->input->post('id_warna_lainya'),
 				'warna_sealant'          => $this->input->post('warna_sealant'),
 				'ditujukan_kepada'       => $this->input->post('ditujukan_kepada'),
@@ -268,13 +272,13 @@ class Fppp extends CI_Controller
 				'updated'                => date('Y-m-d H:i:s'),
 			);
 			$this->m_fppp->insertfppp($datapost);
-			$data['id'] = $this->db->insert_id();
+			$data['id']            = $this->db->insert_id();
 			$cek_kode_proyek = $this->m_fppp->cekKodeProyek($datapost['kode_proyek'])->num_rows();
 			if ($cek_kode_proyek < 1) {
 				$obj_py = array(
 					'kode_proyek' => $datapost['kode_proyek'],
-					'created'                => date('Y-m-d H:i:s'),
-					'updated'                => date('Y-m-d H:i:s'),
+					'created'     => date('Y-m-d H:i:s'),
+					'updated'     => date('Y-m-d H:i:s'),
 				);
 				$this->db->insert('data_fppp_finance', $obj_py);
 			}
@@ -296,8 +300,9 @@ class Fppp extends CI_Controller
 			'id_divisi'              => $this->input->post('id_divisi'),
 			'tgl_pembuatan'          => $this->input->post('tgl_pembuatan'),
 			'no_fppp'                => $this->input->post('no_fppp'),
+			'multi_brand'            => $this->input->post('multi_brand'),
 			'applicant'              => $this->input->post('applicant'),
-			'no_co'              => $this->input->post('no_co'),
+			'no_co'                  => $this->input->post('no_co'),
 			'applicant_sector'       => $this->input->post('applicant_sector'),
 			'authorized_distributor' => $this->input->post('authorized_distributor'),
 			'type_fppp'              => $this->input->post('type_fppp'),
@@ -314,7 +319,7 @@ class Fppp extends CI_Controller
 			'id_metode_pengiriman'   => $this->input->post('id_metode_pengiriman'),
 			'id_penggunaan_peti'     => $this->input->post('id_penggunaan_peti'),
 			'id_penggunaan_sealant'  => $this->input->post('id_penggunaan_sealant'),
-			'id_warna'     => $this->input->post('id_warna'),
+			'id_warna'               => $this->input->post('id_warna'),
 			'id_warna_lainya'        => $this->input->post('id_warna_lainya'),
 			'warna_sealant'          => $this->input->post('warna_sealant'),
 			'ditujukan_kepada'       => $this->input->post('ditujukan_kepada'),
@@ -331,7 +336,7 @@ class Fppp extends CI_Controller
 			'jumlah_unit'            => $this->input->post('jumlah_unit'),
 			'note'                   => $this->input->post('note'),
 			'updated'                => date('Y-m-d H:i:s'),
-			'tgl_modified'                => date('Y-m-d H:i:s'),
+			'tgl_modified'           => date('Y-m-d H:i:s'),
 		);
 		$this->m_fppp->updateFppp($id_fppp, $datapost);
 		$data['id'] = $id_fppp;
@@ -370,8 +375,9 @@ class Fppp extends CI_Controller
 				'applicant'              => $this->input->post('applicant'),
 				'applicant_sector'       => $this->input->post('applicant_sector'),
 				'authorized_distributor' => $this->input->post('authorized_distributor'),
+				'multi_brand'            => $this->input->post('multi_brand'),
 				'no_fppp'                => $this->input->post('no_fppp'),
-				'no_co'              => $this->input->post('no_co'),
+				'no_co'                  => $this->input->post('no_co'),
 				'kode_proyek'            => $this->input->post('kode_proyek'),
 				'nama_proyek'            => $this->input->post('nama_proyek'),
 				'tahap'                  => $this->input->post('tahap'),
@@ -383,7 +389,7 @@ class Fppp extends CI_Controller
 				'id_metode_pengiriman'   => $this->input->post('id_metode_pengiriman'),
 				'id_penggunaan_peti'     => $this->input->post('id_penggunaan_peti'),
 				'id_penggunaan_sealant'  => $this->input->post('id_penggunaan_sealant'),
-				'id_warna'     => $this->input->post('id_warna'),
+				'id_warna'               => $this->input->post('id_warna'),
 				'id_warna_lainya'        => $this->input->post('id_warna_lainya'),
 				'warna_sealant'          => $this->input->post('warna_sealant'),
 				'ditujukan_kepada'       => $this->input->post('ditujukan_kepada'),
@@ -433,9 +439,9 @@ class Fppp extends CI_Controller
 	public function savefpppDetailedit($value = '')
 	{
 		$this->fungsi->check_previleges('fppp');
-		$id_fppp = $this->input->post('id_fppp');
+		$id_fppp  = $this->input->post('id_fppp');
 		$datapost = array(
-			'tgl_modified'                => date('Y-m-d H:i:s'),
+			'tgl_modified' => date('Y-m-d H:i:s'),
 		);
 		$this->m_fppp->updateFppp($id_fppp, $datapost);
 		$datapost = array(
@@ -510,8 +516,8 @@ class Fppp extends CI_Controller
 		}
 
 		if ($kolom == 5) {
-			$jml_sts_bst    = $this->m_fppp->getJmlStsBST($id_fppp);
-			$txt_site          = $this->m_fppp->updatesitebst($id, $jml_baris, $jml_sts_bst, $id_fppp);
+			$jml_sts_bst           = $this->m_fppp->getJmlStsBST($id_fppp);
+			$txt_site              = $this->m_fppp->updatesitebst($id, $jml_baris, $jml_sts_bst, $id_fppp);
 			$respon['txt_site_bst_update'] = $txt_site;
 		}
 
@@ -524,9 +530,9 @@ class Fppp extends CI_Controller
 
 	public function uploadbom($id = '')
 	{
-		$data['id'] = $id;
+		$data['id']        = $id;
 		$data['id_divisi'] = $this->m_fppp->getRowFppp($id)->row()->id_divisi;
-		$data['rowFppp'] = $this->m_fppp->getRowFppp($id)->row();
+		$data['rowFppp']   = $this->m_fppp->getRowFppp($id)->row();
 		$this->load->view('klg/fppp/v_uploadbom', $data);
 	}
 
@@ -595,9 +601,9 @@ class Fppp extends CI_Controller
 				$cek_item   = $this->m_fppp->getMasterAluminium($obj['section_ata'], $obj['section_allure'], $obj['temper'], $obj['kode_warna'], $obj['ukuran']);
 				if ($cek_item->num_rows() < 1) {
 					$temp = array(
-						"item_code" => $rowData[0][0] . '-' . $rowData[0][1] . '-' . $rowData[0][2] . '-' . str_pad($rowData[0][3], 2, '0', STR_PAD_LEFT) . '-' . $rowData[0][4],
-						"id_penginput" => from_session('id'),
-						"id_fppp" => $id_fppp,
+						"item_code"     => $rowData[0][0] . '-' . $rowData[0][1] . '-' . $rowData[0][2] . '-' . str_pad($rowData[0][3], 2, '0', STR_PAD_LEFT) . '-' . $rowData[0][4],
+						"id_penginput"  => from_session('id'),
+						"id_fppp"       => $id_fppp,
 						"id_jenis_item" => $jenis_bom,
 					);
 					$this->db->insert('data_temp', $temp);
@@ -615,8 +621,8 @@ class Fppp extends CI_Controller
 					$this->db->insert('data_stock', $obj_bom);
 				}
 				$dt = array(
-					'bom_aluminium'  => 1,
-					'tgl_upload_bom_aluminium'  => date('Y-m-d H:i:s'),
+					'bom_aluminium'            => 1,
+					'tgl_upload_bom_aluminium' => date('Y-m-d H:i:s'),
 				);
 				$this->m_fppp->updateStatusUploadBom($id_fppp, $dt);
 			} else if ($jenis_bom == 2) {
@@ -632,9 +638,9 @@ class Fppp extends CI_Controller
 				$cek_item   = $this->m_fppp->getMasterAksesoris($obj['item_code']);
 				if ($cek_item->num_rows() < 1) {
 					$temp = array(
-						"item_code" => $rowData[0][0],
-						"id_penginput" => from_session('id'),
-						"id_fppp" => $id_fppp,
+						"item_code"     => $rowData[0][0],
+						"id_penginput"  => from_session('id'),
+						"id_fppp"       => $id_fppp,
 						"id_jenis_item" => $jenis_bom,
 					);
 					$this->db->insert('data_temp', $temp);
@@ -652,8 +658,8 @@ class Fppp extends CI_Controller
 					$this->db->insert('data_stock', $obj_bom);
 				}
 				$dt = array(
-					'bom_aksesoris'  => 1,
-					'tgl_upload_bom_aksesoris'  => date('Y-m-d H:i:s'),
+					'bom_aksesoris'            => 1,
+					'tgl_upload_bom_aksesoris' => date('Y-m-d H:i:s'),
 				);
 				$this->m_fppp->updateStatusUploadBom($id_fppp, $dt);
 			} else {
@@ -672,9 +678,9 @@ class Fppp extends CI_Controller
 				$cek_item   = $this->m_fppp->getMasterLembaran($obj['nama_barang']);
 				if ($cek_item->num_rows() < 1) {
 					$temp = array(
-						"item_code" => $rowData[0][1],
-						"id_penginput" => from_session('id'),
-						"id_fppp" => $id_fppp,
+						"item_code"     => $rowData[0][1],
+						"id_penginput"  => from_session('id'),
+						"id_fppp"       => $id_fppp,
 						"id_jenis_item" => $jenis_bom,
 					);
 					$this->db->insert('data_temp', $temp);
@@ -692,8 +698,8 @@ class Fppp extends CI_Controller
 					$this->db->insert('data_stock', $obj_bom);
 				}
 				$dt = array(
-					'bom_lembaran'  => 1,
-					'tgl_upload_bom_lembaran'  => date('Y-m-d H:i:s'),
+					'bom_lembaran'            => 1,
+					'tgl_upload_bom_lembaran' => date('Y-m-d H:i:s'),
 				);
 				$this->m_fppp->updateStatusUploadBom($id_fppp, $dt);
 			}
@@ -701,7 +707,7 @@ class Fppp extends CI_Controller
 		unlink($inputFileName);
 		sleep(1);
 		$data['detail'] = $this->m_fppp->getTemp($id_fppp, $jenis_bom);
-		$data['msg'] = "Data BOM Baru Disimpan....";
+		$data['msg']    = "Data BOM Baru Disimpan....";
 		echo json_encode($data);
 	}
 
@@ -737,8 +743,8 @@ class Fppp extends CI_Controller
 		$sheet         = $objPHPExcel->getSheet(0);
 		$highestRow    = $sheet->getHighestRow();
 		$highestColumn = $sheet->getHighestColumn();
-		$id_fppp   = $this->input->post('id');
-		$jenis_bom = $this->input->post('jenis_bom');
+		$id_fppp       = $this->input->post('id');
+		$jenis_bom     = $this->input->post('jenis_bom');
 
 		for ($row = 2; $row <= $highestRow; $row++) {                  //  Read a row of data into an array
 			$rowData = $sheet->rangeToArray(
@@ -759,7 +765,7 @@ class Fppp extends CI_Controller
 					'satuan'         => $rowData[0][5],
 					'created'        => date('Y-m-d H:i:s'),
 				);
-				$cek_item   = $this->m_fppp->getMasterAluminium($obj['section_ata'], $obj['section_allure'], $obj['temper'], $obj['kode_warna'], $obj['ukuran']);
+				$cek_item = $this->m_fppp->getMasterAluminium($obj['section_ata'], $obj['section_allure'], $obj['temper'], $obj['kode_warna'], $obj['ukuran']);
 				if ($cek_item->num_rows() < 1) {
 					$this->db->insert('master_item', $obj);
 				}
@@ -771,7 +777,7 @@ class Fppp extends CI_Controller
 					'satuan'        => $rowData[0][2],
 					'created'       => date('Y-m-d H:i:s'),
 				);
-				$cek_item   = $this->m_fppp->getMasterAksesoris($obj['item_code']);
+				$cek_item = $this->m_fppp->getMasterAksesoris($obj['item_code']);
 				if ($cek_item->num_rows() < 1) {
 					$this->db->insert('master_item', $obj);
 				} else {
@@ -789,7 +795,7 @@ class Fppp extends CI_Controller
 					'warna'          => $rowData[0][5],
 					'created'        => date('Y-m-d H:i:s'),
 				);
-				$cek_item   = $this->m_fppp->getMasterLembaran($obj['nama_barang']);
+				$cek_item = $this->m_fppp->getMasterLembaran($obj['nama_barang']);
 				if ($cek_item->num_rows() < 1) {
 					$this->db->insert('master_item', $obj);
 				}
@@ -798,7 +804,7 @@ class Fppp extends CI_Controller
 		unlink($inputFileName);
 		sleep(1);
 		$data['detail'] = $this->m_fppp->getTemp($id_fppp, $jenis_bom);
-		$data['msg'] = "Data Master Baru Disimpan....";
+		$data['msg']    = "Data Master Baru Disimpan....";
 		echo json_encode($data);
 	}
 
@@ -901,7 +907,7 @@ class Fppp extends CI_Controller
 		$data['bom_aksesoris'] = $this->m_fppp->bom_aksesoris($id_fppp);
 		$data['bom_lembaran']  = $this->m_fppp->bom_lembaran($id_fppp);
 		$data['param']         = $param;
-		$data['rowFppp'] = $this->m_fppp->getRowFppp($id_fppp)->row();
+		$data['rowFppp']       = $this->m_fppp->getRowFppp($id_fppp)->row();
 		$this->load->view('klg/fppp/v_fppp_bom_list', $data);
 	}
 
@@ -920,7 +926,7 @@ class Fppp extends CI_Controller
 		$data['metode_pengiriman']  = get_options($this->db->get('master_metode_pengiriman'), 'id', 'metode_pengiriman');
 		$data['penggunaan_peti']    = get_options($this->db->get('master_penggunaan_peti'), 'id', 'penggunaan_peti');
 		$data['penggunaan_sealant'] = get_options($this->db->get('master_penggunaan_sealant'), 'id', 'penggunaan_sealant');
-		$data['warna']    = get_options($this->db->get('master_warna'), 'id', 'warna');
+		$data['warna']              = get_options($this->db->get('master_warna'), 'id', 'warna');
 		$data['warna_lainya']       = get_options($this->db->get('master_warna'), 'id', 'warna');
 		$data['logo_kaca']          = get_options($this->db->get('master_logo_kaca'), 'id', 'logo_kaca');
 		$data['kaca']               = get_options($this->db->get('master_kaca'), 'id', 'kaca');
@@ -971,7 +977,7 @@ class Fppp extends CI_Controller
 			'id_metode_pengiriman'  => $this->input->post('id_metode_pengiriman'),
 			'id_penggunaan_peti'    => $this->input->post('id_penggunaan_peti'),
 			'id_penggunaan_sealant' => $this->input->post('id_penggunaan_sealant'),
-			'id_warna'    => $this->input->post('id_warna'),
+			'id_warna'              => $this->input->post('id_warna'),
 			'id_warna_lainya'       => $this->input->post('id_warna_lainya'),
 			'warna_sealant'         => $this->input->post('warna_sealant'),
 			'ditujukan_kepada'      => $this->input->post('ditujukan_kepada'),
@@ -1043,7 +1049,7 @@ class Fppp extends CI_Controller
 				'id_metode_pengiriman'  => $this->input->post('id_metode_pengiriman'),
 				'id_penggunaan_peti'    => $this->input->post('id_penggunaan_peti'),
 				'id_penggunaan_sealant' => $this->input->post('id_penggunaan_sealant'),
-				'id_warna'    => $this->input->post('id_warna'),
+				'id_warna'              => $this->input->post('id_warna'),
 				'id_warna_lainya'       => $this->input->post('id_warna_lainya'),
 				'warna_sealant'         => $this->input->post('warna_sealant'),
 				'ditujukan_kepada'      => $this->input->post('ditujukan_kepada'),
@@ -1139,9 +1145,9 @@ class Fppp extends CI_Controller
 	public function optionGetKodeProyek()
 	{
 		$this->fungsi->check_previleges('fppp');
-		$kode_proyek   = $this->input->post('kode_proyek');
-		$data['np'] = $this->m_fppp->getKodeProyek($kode_proyek)->nama_proyek;
-		$data['alamat'] = $this->m_fppp->getKodeProyek($kode_proyek)->alamat;
+		$kode_proyek = $this->input->post('kode_proyek');
+		$data['np']        = $this->m_fppp->getKodeProyek($kode_proyek)->nama_proyek;
+		$data['alamat']    = $this->m_fppp->getKodeProyek($kode_proyek)->alamat;
 		echo json_encode($data);
 	}
 }

@@ -10,20 +10,29 @@
   <div class="box-body">
     <form method="post" class="form-vertical form_faktur" role="form">
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
           <div class="form-group">
             <label>Divisi</label>
             <?= form_dropdown('id_divisi_tampil', $divisi, $param, 'id="id_divisi_tampil" class="form-control" disabled') ?>
             <input type="hidden" id="id_divisi" value="<?= $param ?>" class="form-control" autocomplete="off">
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>BRAND</label>
+            <?php $multi_brand_saved = explode('-', $row->multi_brand); ?>
+            <?php echo form_multiselect('multi_brand[]', $multi_brand, $multi_brand_saved, 'id="multi_brand" class="form-control"'); ?>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
           <div class="form-group">
             <label>No FPPP</label>
             <input type="text" id="no_fppp" class="form-control" value="<?= $row->no_fppp ?>" autocomplete="off" readonly>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
           <div class="form-group">
             <label>Tanggal Pembuatan</label>
             <input type="text" id="tgl_pembuatan" value="<?= $row->tgl_pembuatan ?>" class="form-control" autocomplete="off" readonly>
@@ -445,6 +454,10 @@
   });
 
   function save() {
+    var m_brand = $('#multi_brand').val();
+    var mb = m_brand.toString();
+    var m_brand_x = mb.replace(/\,/g, '-');
+
     var path = $("#lampiran").val().replace('C:\\fakepath\\', '');
     var wa = $('#id_warna').val();
     $('#finish_coating').val(wa).trigger('change');
@@ -457,6 +470,7 @@
           id_fppp: $("#id_fppp").val(),
           id_divisi: $("#id_divisi").val(),
           tgl_pembuatan: $("#tgl_pembuatan").val(),
+          multi_brand: m_brand_x,
           no_fppp: $("#no_fppp").val(),
           applicant: $("#applicant").val(),
           applicant_sector: $("#applicant_sector").val(),
@@ -518,6 +532,7 @@
           id_fppp: $("#id_fppp").val(),
           id_divisi: $("#id_divisi").val(),
           tgl_pembuatan: $("#tgl_pembuatan").val(),
+          multi_brand: m_brand_x,
           no_fppp: $("#no_fppp").val(),
           applicant: $("#applicant").val(),
           applicant_sector: $("#applicant_sector").val(),
