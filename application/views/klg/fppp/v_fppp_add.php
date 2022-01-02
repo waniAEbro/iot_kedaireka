@@ -24,7 +24,7 @@
             ?>
             <select id="multi_brand" name="multi_brand" multiple="multiple" class="form-control">
               <option value="">-- Select Multiple Brand --</option>
-              <option value="14" selected>ALL</option>
+              <option value="1" selected>ALL</option>
               <?php foreach ($brand_edit->result() as $valap) : ?>
                 <option value="<?= $valap->id ?>"><?= $valap->brand ?></option>
               <?php endforeach; ?>
