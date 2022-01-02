@@ -207,7 +207,7 @@
 
     $("select[name=id_gudang]").change(function() {
         $('#keranjang').val('').trigger('change');
-        $('#warna_akhir').val('').trigger('change');
+        // $('#warna_akhir').val('').trigger('change');
         $('#stock').val(0);
         $('#qty').val('');
         $('#txt_qty_gudang').html("<b> " + 0 + "</b>");
@@ -240,7 +240,7 @@
     });
 
     $("select[name=keranjang]").change(function() {
-        $('#warna_akhir').val('').trigger('change');
+        // $('#warna_akhir').val('').trigger('change');
         $('#stock').val(0);
         $('#qty').val('');
         $('#txt_qty_gudang').html("<b> " + 0 + "</b>");

@@ -928,10 +928,14 @@ class aluminium extends CI_Controller
             );
             $this->db->insert('data_stock', $datapost);
             $data['id']         = $this->db->insert_id();
-            $qtyin        = $this->m_aluminium->getQtyInDetailTabel($id_item,  $id_gudang, $keranjang);
-            $qtyout       = $this->m_aluminium->getQtyOutDetailTabel($id_item, $id_gudang, $keranjang);
-            $data['qty_gudang'] = $qtyin - $qtyout;
-            $this->m_aluminium->updateDataCounter($id_item, $id_gudang, $keranjang, $data['qty_gudang']);
+            $cekQtyCounter = $this->m_aluminium->getDataCounter($id_item,  $id_gudang, $keranjang)->row()->qty;
+            $qty_jadi      = (int)$cekQtyCounter - (int)$qty_out;
+            $this->m_aluminium->updateDataCounter($id_item,  $id_gudang, $keranjang, $qty_jadi);
+
+            // $qtyin        = $this->m_aluminium->getQtyInDetailTabel($id_item,  $id_gudang, $keranjang);
+            // $qtyout       = $this->m_aluminium->getQtyOutDetailTabel($id_item, $id_gudang, $keranjang);
+            // $data['qty_gudang'] = $qtyin - $qtyout;
+            // $this->m_aluminium->updateDataCounter($id_item, $id_gudang, $keranjang, $data['qty_gudang']);
 
             $this->fungsi->catat($datapost, "Menyimpan detail BON Manual sbb:", true);
             $data['msg'] = "BON Disimpan";
@@ -948,11 +952,17 @@ class aluminium extends CI_Controller
         $id_item   = $this->db->get_where('data_stock', array('id' => $id))->row()->id_item;
         $id_gudang = $this->db->get_where('data_stock', array('id' => $id))->row()->id_gudang;
         $keranjang = $this->db->get_where('data_stock', array('id' => $id))->row()->keranjang;
+        $qty_out = $this->db->get_where('data_stock', array('id' => $id))->row()->qty_out;
+
+        $cekQtyCounter = $this->m_aluminium->getDataCounter($id_item,  $id_gudang, $keranjang)->row()->qty;
+        $qty_jadi      = (int)$cekQtyCounter + (int)$qty_out;
+        $this->m_aluminium->updateDataCounter($id_item,  $id_gudang, $keranjang, $qty_jadi);
+        sleep(1);
         $this->m_aluminium->deleteItemBonManual($id);
-        $qtyin        = $this->m_aluminium->getQtyInDetailTabel($id_item, $id_gudang, $keranjang);
-        $qtyout       = $this->m_aluminium->getQtyOutDetailTabel($id_item, $id_gudang, $keranjang);
-        $data['qty_gudang'] = $qtyin - $qtyout;
-        $this->m_aluminium->updateDataCounter($id_item, $id_gudang, $keranjang, $data['qty_gudang']);
+        // $qtyin        = $this->m_aluminium->getQtyInDetailTabel($id_item, $id_gudang, $keranjang);
+        // $qtyout       = $this->m_aluminium->getQtyOutDetailTabel($id_item, $id_gudang, $keranjang);
+        // $data['qty_gudang'] = $qtyin - $qtyout;
+        // $this->m_aluminium->updateDataCounter($id_item, $id_gudang, $keranjang, $data['qty_gudang']);
 
         $data = array('id' => $id,);
         $this->fungsi->catat($data, "Menghapus BON manual Detail dengan data sbb:", true);
