@@ -16,13 +16,19 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="box-header with-border">
-            <h3 class="box-title">List FPPP</h3>
+            <h3 class="box-title">List <?= $is_memo ?></h3>
 
             <div class="box-tools pull-right">
                 <?php
                 $sesi = from_session('level');
                 if ($sesi <= 5 || $sesi == 8) {
-                    echo button('load_silent("klg/fppp/formAdd/' . $param . '","#content")', 'Tambah FPPP', 'btn btn-success');
+                    if ($is_memo == 'fppp') {
+                        # code...
+                        echo button('load_silent("klg/fppp/formAdd/' . $param . '","#content")', 'Tambah FPPP', 'btn btn-success');
+                    } else {
+                        echo button('load_silent("klg/memo/formAdd/' . $param . '","#content")', 'Tambah Memo', 'btn btn-success');
+                        # code...
+                    }
                 }
                 ?>
             </div>

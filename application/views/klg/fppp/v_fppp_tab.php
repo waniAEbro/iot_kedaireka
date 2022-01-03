@@ -1,14 +1,17 @@
 <?php
-$t1 = 'load_silent("klg/fppp/list/1/",".tab-content")';
-$t2 = 'load_silent("klg/fppp/list/2/",".tab-content")';
-$t3 = 'load_silent("klg/fppp/list/3/",".tab-content")';
-$t4 = 'load_silent("klg/fppp/list/4/",".tab-content")';
-$t5 = 'load_silent("klg/fppp/list/5/",".tab-content")';
-$t6 = 'load_silent("klg/fppp/list/6/",".tab-content")';
-$t7 = 'load_silent("klg/fppp/list/7/",".tab-content")';
-$t8 = 'load_silent("klg/fppp/list/8/",".tab-content")';
-$t9 = 'load_silent("klg/fppp/list/9/",".tab-content")';
-$t10 = 'load_silent("klg/fppp/list/10/",".tab-content")';
+$uri_1 = $is_memo;
+
+
+$t1 = 'load_silent("klg/' . $uri_1 . '/list/1/",".tab-content")';
+$t2 = 'load_silent("klg/' . $uri_1 . '/list/2/",".tab-content")';
+$t3 = 'load_silent("klg/' . $uri_1 . '/list/3/",".tab-content")';
+$t4 = 'load_silent("klg/' . $uri_1 . '/list/4/",".tab-content")';
+$t5 = 'load_silent("klg/' . $uri_1 . '/list/5/",".tab-content")';
+$t6 = 'load_silent("klg/' . $uri_1 . '/list/6/",".tab-content")';
+$t7 = 'load_silent("klg/' . $uri_1 . '/list/7/",".tab-content")';
+$t8 = 'load_silent("klg/' . $uri_1 . '/list/8/",".tab-content")';
+$t9 = 'load_silent("klg/' . $uri_1 . '/list/9/",".tab-content")';
+$t10 = 'load_silent("klg/' . $uri_1 . '/list/10/",".tab-content")';
 if ($param_tab == '1') {
     $this->fungsi->run_js($t1);
     $tab_1 = 'active';

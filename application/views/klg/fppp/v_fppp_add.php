@@ -1,6 +1,6 @@
 <div class="box box-default">
   <div class="box-header with-border">
-    <h3 class="box-title">Form FPPP</h3>
+    <h3 class="box-title">Form <?= $is_memo ?></h3>
 
     <div class="box-tools pull-right">
       <button type="button" id="tutup" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -390,7 +390,15 @@
         </table>
       </div>
       <div class="box-footer">
-        <a onclick="finish()" class="btn btn-success pull-right"> Finish</a>
+        <?php
+        if ($is_memo == 'fppp') { ?>
+          <a onclick="finish()" class="btn btn-success pull-right"> Finish</a>
+        <?php } else { ?>
+          <a onclick="finish_memo()" class="btn btn-success pull-right"> Finish</a>
+        <?php }
+
+        ?>
+
       </div>
     </div>
   </div>
@@ -405,9 +413,19 @@
     if (confirm('Anda yakin ingin menyelesaikan?')) {
       $.growl.notice({
         title: 'Berhasil',
-        message: "Tambah Permintaan selesai!"
+        message: "Tambah FPPP selesai!"
       });
-      load_silent("klg/fppp/hasil_finish/" + $("#id_divisi").val() + "", "#content");
+      load_silent("klg/fppp/hasil_finish_edit/" + $("#id_divisi").val() + "/" + $("#id_fppp").val() + "", "#content");
+    }
+  }
+
+  function finish_memo() {
+    if (confirm('Anda yakin ingin menyelesaikan?')) {
+      $.growl.notice({
+        title: 'Berhasil',
+        message: "Tambah Memo selesai!"
+      });
+      load_silent("klg/memo/hasil_finish_edit/" + $("#id_divisi").val() + "/" + $("#id_fppp").val() + "", "#content");
     }
   }
   $(document).ready(function() {
@@ -455,7 +473,7 @@
     if (path == '') {
       $.ajax({
         type: "POST",
-        url: site + 'klg/fppp/savefppp',
+        url: site + 'klg/memo/savefppp',
         dataType: 'json',
         data: {
           id_divisi: $("#id_divisi").val(),
@@ -515,7 +533,7 @@
       });
     } else {
       $.ajaxFileUpload({
-        url: site + 'klg/fppp/savefpppImage',
+        url: site + 'klg/memo/savefpppImage',
         secureuri: false,
         fileElementId: 'lampiran',
         dataType: 'json',
@@ -648,7 +666,7 @@
           // $('#id_item').val('').trigger('change');
           $.growl.notice({
             title: 'Sukses',
-            message: "Berhasil menyimpan FPPP"
+            message: "Berhasil menyimpan"
           });
           $('#add_item').show();
         })

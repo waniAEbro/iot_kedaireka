@@ -11,7 +11,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 // if (!in_array($_SERVER['REMOTE_ADDR'], $whitelist)) {
 // 	require '/var/www/html/alphamax/vendor/autoload.php';
 // }
-class Fppp extends CI_Controller
+class Memo extends CI_Controller
 {
 
 	public function __construct()
@@ -27,7 +27,7 @@ class Fppp extends CI_Controller
 		$this->fungsi->check_previleges('fppp');
 		$data['param_tab'] = '1';
 		$data['divisi']    = $this->db->get('master_divisi');
-		$data['is_memo']          = 'fppp';
+		$data['is_memo']          = 'memo';
 		$this->load->view('klg/fppp/v_fppp_tab', $data);
 	}
 
@@ -36,7 +36,7 @@ class Fppp extends CI_Controller
 		$this->fungsi->check_previleges('fppp');
 		$data['param_tab'] = $param;
 		$data['divisi']    = $this->db->get('master_divisi');
-		$data['is_memo']          = 'fppp';
+		$data['is_memo']          = 'memo';
 		$this->load->view('klg/fppp/v_fppp_tab', $data);
 	}
 
@@ -49,18 +49,17 @@ class Fppp extends CI_Controller
 		$this->m_fppp->updateFppp($id_fppp, $datapost);
 		$data['param_tab'] = $param;
 		$data['divisi']    = $this->db->get('master_divisi');
-		$data['is_memo']          = 'fppp';
+		$data['is_memo']          = 'memo';
 		$this->load->view('klg/fppp/v_fppp_tab', $data);
 	}
 
 	public function list($param = '')
 	{
 		$this->fungsi->check_previleges('fppp');
-		$data['fppp']           = $this->m_fppp->getData($param);
+		$data['fppp']           = $this->m_fppp->getDataMemo($param);
 		$data['get_total_hold'] = $this->m_fppp->getTotalHold();
 		$data['param']          = $param;
-		$data['memo']          = 1;
-		$data['is_memo']          = 'fppp';
+		$data['is_memo']          = 'memo';
 		$this->load->view('klg/fppp/v_fppp_list', $data);
 	}
 
@@ -95,9 +94,9 @@ class Fppp extends CI_Controller
 		$data['warna_edit']         = $this->db->get('master_warna');
 		$data['item_edit']          = $this->db->get('master_barang');
 		$data['param']              = $param;
-		$data['is_memo']              = 'fppp';
+		$data['is_memo']              = 'memo';
 		$nama_divisi          = $this->m_fppp->getRowNamaDivisi($param)->divisi_pendek;
-		$data['no_fppp']            = str_pad($this->m_fppp->getNoFppp($param), 3, '0', STR_PAD_LEFT) . '/FPPP/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
+		$data['no_fppp']            = str_pad($this->m_fppp->getNoMemo($param), 3, '0', STR_PAD_LEFT) . '/MEMO/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
 		$this->load->view('klg/fppp/v_fppp_add', $data);
 	}
 
@@ -141,12 +140,12 @@ class Fppp extends CI_Controller
 		$data['item_edit']          = $this->db->get('master_barang');
 		// $this->db->get_where('mytable', array('id' => $id), $limit, $offset);
 		$data['param']           = $param;
-		$data['is_memo']              = 'fppp';
+		$data['is_memo']              = 'memo';
 		$data['row']             = $this->m_fppp->getRowFppp($id)->row();
 		$data['detail']          = $this->m_fppp->getRowFpppDetail($id);
 		$data['sudah_transaksi'] = $this->m_fppp->getNumSuratJalan($id);
 		$nama_divisi       = $this->m_fppp->getRowNamaDivisi($param)->divisi_pendek;
-		$data['no_fppp']         = str_pad($this->m_fppp->getNoFppp($param), 3, '0', STR_PAD_LEFT) . '/FPPP/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
+		$data['no_fppp']         = str_pad($this->m_fppp->getNoMemo($param), 3, '0', STR_PAD_LEFT) . '/MEMO/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
 		$this->load->view('klg/fppp/v_fppp_edit', $data);
 	}
 
@@ -155,9 +154,10 @@ class Fppp extends CI_Controller
 		$this->fungsi->check_previleges('fppp');
 		$param       = $this->input->post('id_divisi');
 		$nama_divisi = $this->m_fppp->getRowNamaDivisi($param)->divisi_pendek;
-		$nofppp      = str_pad($this->m_fppp->getNoFppp($param), 3, '0', STR_PAD_LEFT) . '/FPPP/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
+		$nofppp      = str_pad($this->m_fppp->getNoMemo($param), 3, '0', STR_PAD_LEFT) . '/MEMO/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
 
 		$datapost = array(
+			'is_memo'              => 2,
 			'id_divisi'              => $this->input->post('id_divisi'),
 			'tgl_pembuatan'          => $this->input->post('tgl_pembuatan'),
 			'multi_brand'            => $this->input->post('multi_brand'),
@@ -210,8 +210,8 @@ class Fppp extends CI_Controller
 			);
 			$this->db->insert('data_fppp_finance', $obj_py);
 		}
-		$this->fungsi->catat($datapost, "Menyimpan fppp sbb:", true);
-		$data['msg'] = "fppp Disimpan";
+		$this->fungsi->catat($datapost, "Menyimpan memo sbb:", true);
+		$data['msg'] = "memo Disimpan";
 		echo json_encode($data);
 	}
 
@@ -236,9 +236,10 @@ class Fppp extends CI_Controller
 			$data        = $this->upload->data();
 			$param       = $this->input->post('id_divisi');
 			$nama_divisi = $this->m_fppp->getRowNamaDivisi($param)->divisi_pendek;
-			$nofppp      = str_pad($this->m_fppp->getNoFppp($param), 3, '0', STR_PAD_LEFT) . '/FPPP/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
+			$nofppp      = str_pad($this->m_fppp->getNoMemo($param), 3, '0', STR_PAD_LEFT) . '/MEMO/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
 
 			$datapost = array(
+				'is_memo'              => 2,
 				'id_divisi'              => $this->input->post('id_divisi'),
 				'tgl_pembuatan'          => $this->input->post('tgl_pembuatan'),
 				'applicant'              => $this->input->post('applicant'),
@@ -289,8 +290,8 @@ class Fppp extends CI_Controller
 				);
 				$this->db->insert('data_fppp_finance', $obj_py);
 			}
-			$this->fungsi->catat($datapost, "Menyimpan fppp sbb:", true);
-			$data['msg'] = "fppp Disimpan";
+			$this->fungsi->catat($datapost, "Menyimpan memo sbb:", true);
+			$data['msg'] = "memo Disimpan";
 			echo json_encode($data);
 		}
 	}
@@ -301,7 +302,7 @@ class Fppp extends CI_Controller
 		$id_fppp     = $this->input->post('id_fppp');
 		$param       = $this->input->post('id_divisi');
 		$nama_divisi = $this->m_fppp->getRowNamaDivisi($param)->divisi_pendek;
-		$nofppp      = str_pad($this->m_fppp->getNoFppp($param), 3, '0', STR_PAD_LEFT) . '/FPPP/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
+		$nofppp      = str_pad($this->m_fppp->getNoMemo($param), 3, '0', STR_PAD_LEFT) . '/MEMO/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
 
 		$datapost = array(
 			'id_divisi'              => $this->input->post('id_divisi'),
@@ -347,8 +348,8 @@ class Fppp extends CI_Controller
 		);
 		$this->m_fppp->updateFppp($id_fppp, $datapost);
 		$data['id'] = $id_fppp;
-		$this->fungsi->catat($datapost, "Menyimpan fppp sbb:", true);
-		$data['msg'] = "fppp Disimpan";
+		$this->fungsi->catat($datapost, "mengupdate memo sbb:", true);
+		$data['msg'] = "memo diupdate";
 		echo json_encode($data);
 	}
 
@@ -374,7 +375,7 @@ class Fppp extends CI_Controller
 			$data        = $this->upload->data();
 			$param       = $this->input->post('id_divisi');
 			$nama_divisi = $this->m_fppp->getRowNamaDivisi($param)->divisi_pendek;
-			$nofppp      = str_pad($this->m_fppp->getNoFppp($param), 3, '0', STR_PAD_LEFT) . '/FPPP/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
+			$nofppp      = str_pad($this->m_fppp->getNoMemo($param), 3, '0', STR_PAD_LEFT) . '/MEMO/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
 
 			$datapost = array(
 				'id_divisi'              => $this->input->post('id_divisi'),
@@ -417,8 +418,8 @@ class Fppp extends CI_Controller
 			);
 			$this->m_fppp->updateFppp($id_fppp, $datapost);
 			$data['id'] = $id_fppp;
-			$this->fungsi->catat($datapost, "Menyimpan fppp sbb:", true);
-			$data['msg'] = "fppp Disimpan";
+			$this->fungsi->catat($datapost, "mengupdate memo sbb:", true);
+			$data['msg'] = "memo diupdate";
 			echo json_encode($data);
 		}
 	}
