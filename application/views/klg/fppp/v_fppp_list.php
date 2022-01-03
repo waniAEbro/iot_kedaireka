@@ -21,7 +21,7 @@
             <div class="box-tools pull-right">
                 <?php
                 $sesi = from_session('level');
-                if ($sesi <= 5) {
+                if ($sesi <= 5 || $sesi == 8) {
                     echo button('load_silent("klg/fppp/formAdd/' . $param . '","#content")', 'Tambah FPPP', 'btn btn-success');
                 }
                 ?>
@@ -230,11 +230,11 @@
                                     <?php } ?>
 
                                     <?php
-                                    if ($sesi <= 5) {
+                                    if ($sesi <= 5 || $sesi == 8) {
                                         echo button('load_silent("klg/fppp/formEdit/' . $row->id . '","#content")', 'Edit', 'btn btn-xs btn-info', 'data-toggle="tooltip" title="Edit"');
                                         echo button_confirm("Apakah anda yakin menghapus FPPP ini?", "klg/fppp/deleteFppp/" . $row->id, "#content", "Hapus", "btn btn-xs btn-danger", "");
                                     }
-                                    if ($sesi <= 5) {
+                                    if ($sesi <= 5 || $sesi == 8) {
                                         echo button('load_silent("klg/fppp/uploadbom/' . $row->id . '","#content")', 'Upload BOM', 'btn btn-xs btn-success', 'data-toggle="tooltip" title="Upload"');
                                         echo button('load_silent("klg/fppp/lihatbom/' . $row->id . '/' . $param . '","#content")', 'Lihat BOM', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Upload"');
                                     }
