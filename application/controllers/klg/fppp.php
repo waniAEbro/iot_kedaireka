@@ -768,6 +768,13 @@ class Fppp extends CI_Controller
 				$cek_item = $this->m_fppp->getMasterAluminium($obj['section_ata'], $obj['section_allure'], $obj['temper'], $obj['kode_warna'], $obj['ukuran']);
 				if ($cek_item->num_rows() < 1) {
 					$this->db->insert('master_item', $obj);
+				} else {
+					$this->db->where('section_ata', $obj['section_ata']);
+					$this->db->where('section_allure', $obj['section_allure']);
+					$this->db->where('temper', $obj['temper']);
+					$this->db->where('kode_warna', $obj['kode_warna']);
+					$this->db->where('ukuran', $obj['ukuran']);
+					$this->db->update('master_item', $obj);
 				}
 			} else if ($jenis_bom == 2) {
 				$obj = array(
@@ -801,7 +808,7 @@ class Fppp extends CI_Controller
 				}
 			}
 		}
-		unlink($inputFileName);
+		// unlink($inputFileName);
 		sleep(1);
 		$data['detail'] = $this->m_fppp->getTemp($id_fppp, $jenis_bom);
 		$data['msg']    = "Data Master Baru Disimpan....";
@@ -895,7 +902,7 @@ class Fppp extends CI_Controller
 				$this->m_fppp->updateDataCounter($obj['id_item'], $obj['id_divisi'], $obj['id_gudang'], $obj['keranjang'], $qty_jadi);
 			}
 		}
-		unlink($inputFileName);
+		// unlink($inputFileName);
 		$data['msg'] = "Data BOM Baru Disimpan....";
 		echo json_encode($data);
 	}
