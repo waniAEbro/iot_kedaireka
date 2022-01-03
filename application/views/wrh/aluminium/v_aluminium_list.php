@@ -73,6 +73,7 @@
                             <th>Kode Warna</th>
                             <th>Warna</th>
                             <th>Ukuran</th>
+                            <th>Satuan</th>
                             <th>Stock Awal Bulan</th>
                             <th>Total In Per Bulan</th>
                             <th>Total Out Per Bulan</th>
@@ -109,6 +110,7 @@
                                     <td align="center"><?= $row->kode_warna ?></td>
                                     <td align="center"><?= $row->warna ?></td>
                                     <td align="center"><?= $row->ukuran ?></td>
+                                    <td align="center"><?= $row->satuan ?></td>
                                     <td align="center"><?= $tampil_stock_awal_bulan ?></td>
                                     <td align="center"><?= $tampil_total_in_per_bulan ?></td>
                                     <td align="center"><?= $tampil_total_out_per_bulan ?></td>

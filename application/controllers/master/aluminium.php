@@ -54,7 +54,19 @@ class aluminium extends CI_Controller
             $data['warna'] = $this->db->get('master_warna');
             $this->load->view('master/aluminium/v_aluminium_add', $data);
         } else {
-            $datapost = get_post_data(array('id_jenis_item', 'section_ata', 'section_allure', 'temper', 'kode_warna', 'ukuran', 'satuan', 'divisi'));
+            // $datapost = get_post_data(array('id_jenis_item', 'section_ata', 'section_allure', 'temper', 'kode_warna', 'ukuran', 'satuan', 'divisi'));
+            $datapost = array(
+                'id_jenis_item' => $this->input->post('id_jenis_item'),
+                'section_ata' => $this->input->post('section_ata'),
+                'section_allure' => $this->input->post('section_allure'),
+                'temper' => $this->input->post('temper'),
+                'kode_warna' => $this->input->post('kode_warna'),
+                'ukuran' => $this->input->post('ukuran'),
+                'satuan' => $this->input->post('satuan'),
+                'divisi' => $this->input->post('divisi'),
+                'item_code' => $this->input->post('section_ata') . '-' . $this->input->post('section_allure') . '-' . $this->input->post('temper') . '-' . $this->input->post('kode_warna') . '-' . $this->input->post('ukuran'),
+                'created'        => date('Y-m-d H:i:s'),
+            );
             $cek = $this->m_aluminium->cekMaster($datapost);
             if ($cek > 0) {
                 $this->fungsi->message_box("Data Master aluminium sudah ada!", "warning");

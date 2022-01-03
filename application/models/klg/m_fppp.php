@@ -263,6 +263,16 @@ class M_fppp extends CI_Model
 		return $this->db->get('master_item');
 	}
 
+	public function cekmasteraluminium($section_ata = '', $section_allure = '', $temper = '', $kode_warna = '', $ukuran = '')
+	{
+		$this->db->where('section_ata', $section_ata);
+		$this->db->where('section_allure', $section_allure);
+		$this->db->where('temper', $temper);
+		$this->db->where('kode_warna', $kode_warna);
+		$this->db->where('ukuran', $ukuran);
+		return $this->db->get('master_item');
+	}
+
 	public function getMasterAksesoris($item_code = '')
 	{
 		$this->db->where('item_code', $item_code);

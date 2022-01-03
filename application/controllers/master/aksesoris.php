@@ -53,7 +53,14 @@ class Aksesoris extends CI_Controller
             $data['status'] = '';
             $this->load->view('master/aksesoris/v_aksesoris_add', $data);
         } else {
-            $datapost = get_post_data(array('item_code', 'deskripsi', 'satuan'));
+            // $datapost = get_post_data(array('item_code', 'deskripsi', 'satuan'));
+            $datapost = array(
+                'item_code' => $this->input->post('item_code'),
+                'deskripsi' => $this->input->post('deskripsi'),
+                'satuan' => $this->input->post('satuan'),
+                'created'        => date('Y-m-d H:i:s'),
+
+            );
             $cek = $this->m_aksesoris->cekMaster($datapost);
             if ($cek > 0) {
                 $this->fungsi->message_box("Data Master aksesoris sudah ada!", "warning");

@@ -153,6 +153,7 @@
                 } else {
                     load_silent("klg/fppp/hasil_finish/" + $('#id_divisi').val() + "", "#content");
                 }
+                $('#loading').hide();
                 // load_silent("klg/fppp/", "#content");
             },
             error: function(data, e) {
@@ -180,6 +181,7 @@
                     message: data['msg']
                 });
                 // load_silent("klg/fppp/", "#content");
+                $('#loading').hide();
 
             },
             error: function(data, e) {
@@ -207,6 +209,7 @@
                     message: data['msg']
                 });
                 // load_silent("klg/fppp/", "#content");
+                $('#loading').hide();
 
             },
             error: function(data, e) {
