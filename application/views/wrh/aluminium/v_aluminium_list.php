@@ -86,7 +86,6 @@
                             <?php
                             $i = 1;
                             foreach ($aluminium->result() as $row) :
-                                $ada                     = 1;
                                 $stock_awal_bulan        = @$s_awal_bulan[$row->id];
                                 $tampil_stock_awal_bulan = ($stock_awal_bulan != '') ? $stock_awal_bulan : 0;
 
@@ -150,88 +149,12 @@
         });
     })
 
-    function printDiv(divName) {
-        // var printContents = document.getElementById(divName).innerHTML;
-        // var originalContents = document.body.innerHTML;
 
-        // document.body.innerHTML = printContents;
-        // window.print();
-
-        // document.body.innerHTML = originalContents;
-
-        var mywindow = window.open('', 'PRINT', 'height=400,width=600');
-
-        mywindow.document.write('<html><head><title>' + document.title + '</title>');
-        mywindow.document.write('</head><body >');
-        mywindow.document.write('<h1>' + document.title + '</h1>');
-        mywindow.document.write(document.getElementById(divName).innerHTML);
-        mywindow.document.write('</body></html>');
-
-        mywindow.document.close(); // necessary for IE >= 10
-        mywindow.focus(); // necessary for IE >= 10*/
-
-        mywindow.print();
-        mywindow.close();
-
-        return true;
-    }
-
-
-    function setFilter() {
-        var store = $('#store').val();
-        if (store != '') {
-            var id_store = store;
-        } else {
-            var id_store = 'x';
-        };
-        var bulan = $('#bulan').val();
-        if (bulan != '') {
-            var id_bulan = bulan;
-        } else {
-            var id_bulan = 'x';
-        };
-        var tahun = $('#tahun').val();
-        if (tahun != '') {
-            var id_tahun = tahun;
-        } else {
-            var id_tahun = 'x';
-        };
-        var status = $('#status').val();
-        var jne = $('#jne').val();
-        load_silent("wrh/aluminium/filter/" + id_store + "/" + id_bulan + "/" + id_tahun + "/" + status + "/" + jne + "/", "#content");
-
-    }
-
-    function cetakExcel() {
-        var left = (screen.width / 2) - (640 / 2);
-        var top = (screen.height / 2) - (480 / 2);
-        var store = $('#store').val();
-        if (store != '') {
-            var id_store = store;
-        } else {
-            var id_store = 'x';
-        };
-        var bulan = $('#bulan').val();
-        if (bulan != '') {
-            var id_bulan = bulan;
-        } else {
-            var id_bulan = 'x';
-        };
-        var tahun = $('#tahun').val();
-        if (tahun != '') {
-            var id_tahun = tahun;
-        } else {
-            var id_tahun = 'x';
-        };
-        var status = $('#status').val();
-        var url = "<?= site_url('wrh/aluminium/excel/"+id_store+"/"+id_bulan+"/"+id_tahun+"/"+status+"') ?>";
-        window.open(url, "", "width=640, height=480, scrollbars=yes, left=" + left + ", top=" + top);
-    }
 
     $(document).ready(function() {
         $("select").select2();
         var table = $('#tableku').DataTable({
-            "ordering": true,
+            // "ordering": true,
             // "scrollX": true,
         });
 
