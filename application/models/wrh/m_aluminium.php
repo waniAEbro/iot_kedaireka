@@ -154,13 +154,15 @@ class M_aluminium extends CI_Model
         $res = $this->db->get('data_stock');
         $data = array();
         $nilai = 0;
+        $nilaiitem = 0;
         foreach ($res->result() as $key) {
             if (isset($data[$key->id_item])) {
-                $nilai = 1;
+                $nilai = $key->qty_bom;
             } else {
                 $nilai = 0;
             }
-            $data[$key->id_item] = $key->qty_bom + $nilai;
+            $data[$key->id_item] = $nilaiitem + $nilai;
+            $nilaiitem = $data[$key->id_item];
         }
         return $data;
     }
