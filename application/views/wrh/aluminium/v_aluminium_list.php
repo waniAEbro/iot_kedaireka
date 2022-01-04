@@ -75,8 +75,8 @@
                             $i = 1;
                             foreach ($aluminium_list as $row) {
                                 $ada                     = 1;
-                                $stock_awal_bulan        = 0;
-                                // $stock_awal_bulan        = @$s_awal_bulan[$row->id];
+                                // $stock_awal_bulan        = 0;
+                                $stock_awal_bulan        = @$s_awal_bulan[$row->id];
                                 $tampil_stock_awal_bulan = ($stock_awal_bulan != '') ? $stock_awal_bulan : 0;
 
                                 // $tot_in_per_bulan          = @$total_in_per_bulan[$row->id];
