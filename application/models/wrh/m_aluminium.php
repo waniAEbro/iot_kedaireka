@@ -14,7 +14,7 @@ class M_aluminium extends CI_Model
 
         $this->db->select('mwa.warna,mi.*');
 
-        return $this->db->get('master_item mi');
+        return $this->db->get('master_item mi')->result();
     }
 
     public function getdatapaging($num = false, $keyword = '', $perpage = '', $offset = '')
