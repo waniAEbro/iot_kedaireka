@@ -12,7 +12,7 @@ class M_aluminium extends CI_Model
         $this->db->where('mi.kode_warna !=', '01');
         $this->db->select('mi.*,mwa.warna');
 
-        return $this->db->get('aster_item mi');
+        return $this->db->get('master_item mi');
     }
 
     public function getdatapaging($num = false, $keyword = '', $perpage = '', $offset = '')
