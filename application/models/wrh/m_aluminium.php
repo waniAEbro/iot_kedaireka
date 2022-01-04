@@ -140,6 +140,9 @@ class M_aluminium extends CI_Model
         $nilaiqty = 0;
         foreach ($res->result() as $key) {
 
+            if (!isset($data[$key->id_item])) {
+                $data[$key->id_item] = 0;
+            }
             $data[$key->id_item] = $data[$key->id_item] + $key->id_item;
         }
         return $data;
