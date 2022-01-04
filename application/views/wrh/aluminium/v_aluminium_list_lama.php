@@ -13,45 +13,14 @@
         background: url("<?= base_url('assets/img/details_close.png') ?>") no-repeat center center;
     }
 </style>
-
-<script type='text/javascript'>
-    $(function() {
-        convert_paging('#content');
-        $('#keyword').focus().setCursorPosition($('#keyword').val().length);
-        nicetable();
-        $('#keyword').keyup(function() {
-            if ($(this).val().length > 3) {
-                search();
-            } else {
-                if ($(this).val().length == 0) {
-                    load_silent('wrh/aluminium/list/', '#content');
-                }
-            }
-        });
-    });
-
-    function search() {
-        send_form(document.fsearch, 'wrh/aluminium/search/', '#content');
-    }
-</script>
 <div class="row">
     <div class="col-lg-12">
         <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title">Monitoring aluminium <?= $warna ?></h3>
 
-                <div class='pull-right'>
-                    <?php
-                    echo form_open('', array('name' => 'fsearch'));
-                    $key = "";
-                    if (isset($search)) $key = from_session('keyword');
-                    ?>
-                    <div class="input-group">
-                        <?php echo "<input type='text' name='keyword' id='keyword' value='$key' class='form-control' placeholder='Cari Item Code'>" ?>
-                    </div>
-                    <?php
-                    echo form_close();
-                    ?>
+                <div class="box-tools pull-right">
+
                 </div>
             </div>
             <div class="box-body" id="printableArea">
@@ -91,7 +60,7 @@
                             <th width="5%">No</th>
                             <th>Divisi</th>
                             <th>Item Code</th>
-                            <th>Warna</th>
+                            <th>Deskripsi</th>
                             <th>Satuan</th>
                             <th>Stock Awal Bulan</th>
                             <th>Total In Per Bulan</th>
@@ -124,7 +93,7 @@
                                     <td align="center"><?= $i ?></td>
                                     <td align="center"><?= $row->divisi ?></td>
                                     <td align="center"><?= $row->item_code ?></td>
-                                    <td align="center"><?= $row->warna ?></td>
+                                    <td align="center"><?= $row->deskripsi ?></td>
                                     <td align="center"><?= $row->satuan ?></td>
                                     <td align="center"><?= $tampil_stock_awal_bulan ?></td>
                                     <td align="center"><?= $tampil_total_in_per_bulan ?></td>
@@ -141,19 +110,6 @@
                             } ?>
                         </tbody>
                     </table>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class='pull-left'>
-                                <div class='dataTables_info'>
-                                    <?php if (isset($datainfo)) echo $datainfo; ?>
-                                </div>
-                            </div>
-                            <div class='pull-right'>
-                                <?php echo $paging; ?>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
                 </div>
             </div>
 
@@ -259,11 +215,8 @@
     $(document).ready(function() {
         $("select").select2();
         var table = $('#tableku').DataTable({
-            "ordering": false,
-            "scrollX": false,
-            "paging": false,
-            "info": false,
-            "searching": false,
+            "ordering": true,
+            // "scrollX": true,
         });
 
 

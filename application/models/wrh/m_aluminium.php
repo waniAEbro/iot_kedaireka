@@ -23,12 +23,13 @@ class M_aluminium extends CI_Model
         $this->db->where('mi.kode_warna !=', '01');
         $this->db->select('mi.*,mwa.warna');
         if ($keyword != '') {
-            $this->db->like('mi.section_ata', $keyword);
-            $this->db->like('mi.section_allure', $keyword);
-            $this->db->like('mi.temper', $keyword);
-            $this->db->like('mi.ukuran', $keyword);
-            $this->db->like('mi.kode_warna', $keyword);
-            $this->db->like('mwa.warna', $keyword);
+            // $this->db->like('mi.section_ata', $keyword);
+            // $this->db->like('mi.section_allure', $keyword);
+            // $this->db->like('mi.temper', $keyword);
+            // $this->db->like('mi.ukuran', $keyword);
+            // $this->db->like('mi.kode_warna', $keyword);
+            $this->db->like('mi.item_code', $keyword);
+            // $this->db->like('mwa.warna', $keyword);
         }
         if ($num) {
             $r = $this->db->get('master_item mi');
