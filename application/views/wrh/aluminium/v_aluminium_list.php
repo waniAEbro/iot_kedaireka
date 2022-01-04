@@ -103,7 +103,7 @@
                                     <td align="center"><?= $tampil_total_out_per_bulan ?></td>
                                     <td align="center"><?= $stock_akhir_bulan ?></td>
                                     <td align="center"><?= $free_stock ?></td>
-                                    <td align="center"><?= @$total_bom[$row->id] ?> - <?= $tampil_total_out_per_bulan ?></td>
+                                    <td align="center"></td>
                                     <td align="center">
                                         <?= button('load_silent("wrh/aluminium/mutasi_stock_add/' . $row->id . '","#content")', 'mutasi', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Mutasi"'); ?>
                                         <?= button('load_silent("wrh/aluminium/mutasi_stock_history/' . $row->id . '","#content")', 'history mutasi', 'btn btn-xs btn-default', 'data-toggle="tooltip" title="History Mutasi"'); ?></td>
