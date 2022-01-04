@@ -17,13 +17,14 @@ class Aluminium extends CI_Controller
     {
         $this->fungsi->check_previleges('aluminium');
         $data['aluminium_list']           = $this->m_aluminium->getData();
+        print_r($data);
+        die();
         $data['s_awal_bulan']    = $this->m_aluminium->getStockAwalBulan();
         $data['total_bom']           = $this->m_aluminium->getTotalBOM();
         $data['total_in_per_bulan']  = $this->m_aluminium->getTotalInPerBulan();
         $data['total_out_per_bulan'] = $this->m_aluminium->getTotalOutPerBulan();
         $data['warna']               = 'Warna';
-        print_r($data);
-        die();
+
         // $this->load->view('wrh/aluminium/v_aluminium_list', $data);
         // echo "coba";
     }
