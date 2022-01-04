@@ -26,7 +26,7 @@
               <option value="">-- Select Multiple Brand --</option>
               <?php foreach ($brand_edit->result() as $valap) :
               ?>
-                <option value="<?= $valap->id ?>" <?= $sb ?>><?= $valap->brand ?></option>
+                <option value="<?= $valap->id ?>"><?= $valap->brand ?></option>
               <?php endforeach; ?>
             </select>
           </div>
