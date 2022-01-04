@@ -136,8 +136,7 @@ class M_aluminium extends CI_Model
 
         $res = $this->db->get('data_stock ds');
         $data = array();
-        $nilai = 0;
-        $nilaiqty = 0;
+
         foreach ($res->result() as $key) {
 
             if (!isset($data[$key->id_item])) {
@@ -164,16 +163,12 @@ class M_aluminium extends CI_Model
         $this->db->where('status_fppp', 0);
         $res = $this->db->get('data_stock');
         $data = array();
-        $nilai = 0;
-        $nilaiitem = 0;
         foreach ($res->result() as $key) {
-            if (isset($data[$key->id_item])) {
-                $nilai = $key->qty_bom;
-            } else {
-                $nilai = 0;
+
+            if (!isset($data[$key->id_item])) {
+                $data[$key->id_item] = 0;
             }
-            $data[$key->id_item] = $nilaiitem + $nilai;
-            $nilaiitem = $data[$key->id_item];
+            $data[$key->id_item] = $data[$key->id_item] + $key->qty_bom;
         }
         return $data;
     }
@@ -190,14 +185,12 @@ class M_aluminium extends CI_Model
 
         $res = $this->db->get('data_stock');
         $data = array();
-        $nilai = 0;
         foreach ($res->result() as $key) {
-            if (isset($data[$key->id_item])) {
-                $nilai = $data[$key->id_item];
-            } else {
-                $nilai = 0;
+
+            if (!isset($data[$key->id_item])) {
+                $data[$key->id_item] = 0;
             }
-            $data[$key->id_item] = $key->qty_in + $nilai;
+            $data[$key->id_item] = $data[$key->id_item] + $key->qty_in;
         }
         return $data;
     }
@@ -211,14 +204,12 @@ class M_aluminium extends CI_Model
 
         $res = $this->db->get('data_stock');
         $data = array();
-        $nilai = 0;
         foreach ($res->result() as $key) {
-            if (isset($data[$key->id_item])) {
-                $nilai = $data[$key->id_item];
-            } else {
-                $nilai = 0;
+
+            if (!isset($data[$key->id_item])) {
+                $data[$key->id_item] = 0;
             }
-            $data[$key->id_item] = $key->qty_out + $nilai;
+            $data[$key->id_item] = $data[$key->id_item] + $key->qty_out;
         }
         return $data;
     }
