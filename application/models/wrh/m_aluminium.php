@@ -11,9 +11,8 @@ class M_aluminium extends CI_Model
         $this->db->where('mi.id_jenis_item', $id_jenis_item);
         $this->db->where('mi.kode_warna !=', '01');
         $this->db->select('mi.*,mwa.warna');
-        $this->db->limit(300);
 
-        return $this->db->get('master_item mi');
+        return $this->db->get('aster_item mi');
     }
 
     public function getdatapaging($num = false, $keyword = '', $perpage = '', $offset = '')

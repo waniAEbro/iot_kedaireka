@@ -20,15 +20,7 @@
                 <h3 class="box-title">Monitoring aluminium <?= $warna ?></h3>
 
                 <div class="box-tools pull-right">
-                    <?php
-                    $sesi = from_session('level');
-                    if ($sesi <= 3) {
-                        //echo button('load_silent("wrh/aluminium/formAdd","#content")', 'Input Stock', 'btn btn-success');
-                    } else {
-                        # code...
-                    }
-                    ?>
-                    <input type="button" target="_blank" class="btn btn-default" onclick="printDiv('printableArea')" value="Print Page" />
+
                 </div>
             </div>
             <div class="box-body" id="printableArea">
