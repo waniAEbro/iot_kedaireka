@@ -27,7 +27,7 @@ class Aluminium extends CI_Controller
         // $data['total_out_per_bulan'] = $this->m_aluminium->getTotalOutPerBulan();
         $data['warna']               = 'Warna';
 
-        // $this->load->view('wrh/aluminium/v_aluminium_list', $data);
+        $this->load->view('wrh/aluminium/v_aluminium_list', $data);
         // echo "coba";
     }
 
