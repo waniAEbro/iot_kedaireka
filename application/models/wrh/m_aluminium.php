@@ -143,9 +143,20 @@ class M_aluminium extends CI_Model
             if (!isset($data[$key->id_item])) {
                 $data[$key->id_item] = 0;
             }
-            $data[$key->id_item] = $data[$key->id_item] + $key->id_item;
+            $data[$key->id_item] = $data[$key->id_item] + $key->qty_in;
         }
         return $data;
+
+        // $nilai = 0;
+        // foreach ($res->result() as $key) {
+        //     if (isset($data[$key->id_item])) {
+        //         $nilai = $data[$key->id_item];
+        //     } else {
+        //         $nilai = 0;
+        //     }
+        //     $data[$key->id_item] = $key->qty_in + $nilai;
+        // }
+        // return $data;
     }
 
     public function getTotalBOM()
