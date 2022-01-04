@@ -16,13 +16,14 @@ class aluminium extends CI_Controller
     public function index()
     {
         $this->fungsi->check_previleges('aluminium');
-        $data['aluminium']           = $this->m_aluminium->getData();
-        $data['s_awal_bulan']    = $this->m_aluminium->getStockAwalBulan();
-        $data['total_bom']           = $this->m_aluminium->getTotalBOM();
-        $data['total_in_per_bulan']  = $this->m_aluminium->getTotalInPerBulan();
-        $data['total_out_per_bulan'] = $this->m_aluminium->getTotalOutPerBulan();
-        $data['warna']               = 'Warna';
-        $this->load->view('wrh/aluminium/v_aluminium_list', $data);
+        // $data['aluminium']           = $this->m_aluminium->getData();
+        // $data['s_awal_bulan']    = $this->m_aluminium->getStockAwalBulan();
+        // $data['total_bom']           = $this->m_aluminium->getTotalBOM();
+        // $data['total_in_per_bulan']  = $this->m_aluminium->getTotalInPerBulan();
+        // $data['total_out_per_bulan'] = $this->m_aluminium->getTotalOutPerBulan();
+        // $data['warna']               = 'Warna';
+        // $this->load->view('wrh/aluminium/v_aluminium_list', $data);
+        echo "coba";
     }
 
     public function list()
