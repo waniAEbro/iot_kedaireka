@@ -458,7 +458,7 @@
   });
 
   function save() {
-    if ($("#kode_proyek").val() != '' && ("#multi_brand").val() != '') {
+    if ($("#kode_proyek").val() != '' && $("#multi_brand").val() != '') {
       save_l();
     } else {
       $.growl.error({
@@ -602,7 +602,7 @@
   }
 
   function save_memo() {
-    if ($("#kode_proyek").val() != '' && ("#multi_brand").val() != '') {
+    if ($("#kode_proyek").val() != '' && $("#multi_brand").val() != '') {
       save_l_m();
     } else {
       $.growl.error({
