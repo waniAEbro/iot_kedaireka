@@ -32,7 +32,7 @@ class Aluminium extends CI_Controller
         $offset  = $this->uri->segment(4, 0);
         $perpage = 10;
         // $data['user'] = $this->m_catatan->get_user(false,'',$perpage,$offset);
-        $data['aluminium'] = $this->m_aluminium->getdatapaging(false, '', $perpage, $offset);
+        $data['aluminium_list'] = $this->m_aluminium->getdatapaging(false, '', $perpage, $offset);
         $total_rows  = $this->m_aluminium->getdatapaging(true, '');
         $data['paging']    = $this->fungsi->create_paging('wrh/aluminium/list', $total_rows, $perpage, 4);
         $data['datainfo']  = parse_infotable($offset, $perpage, $total_rows);
@@ -58,7 +58,7 @@ class Aluminium extends CI_Controller
         }
 
         $perpage     = 10;
-        $data['aluminium'] = $this->m_aluminium->getdatapaging(false, $keyword, $perpage, $offset);
+        $data['aluminium_list'] = $this->m_aluminium->getdatapaging(false, $keyword, $perpage, $offset);
         $total_rows  = $this->m_aluminium->getdatapaging(true, $keyword);
         $data['paging']    = $this->fungsi->create_paging('wrh/aluminium/list', $total_rows, $perpage, 4);
         $data['datainfo']  = parse_infotable($offset, $perpage, $total_rows);

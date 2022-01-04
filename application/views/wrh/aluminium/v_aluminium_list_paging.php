@@ -103,7 +103,7 @@
                         <tbody>
                             <?php
                             $i = 1;
-                            foreach ($aluminium->result() as $row) {
+                            foreach ($aluminium_list->result() as $row) {
                                 $ada                     = 1;
                                 $stock_awal_bulan        = @$s_awal_bulan[$row->id];
                                 // $tampil_stock_awal_bulan = ($stock_awal_bulan != '') ? $stock_awal_bulan : 0;
