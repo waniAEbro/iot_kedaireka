@@ -20,7 +20,7 @@ class M_aluminium extends CI_Model
         $id_jenis_item = 1;
         $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
         $this->db->where('mi.id_jenis_item', $id_jenis_item);
-        // $this->db->where('mi.kode_warna !=', '01');
+        $this->db->where('mi.id_warna !=', '01');
         $this->db->select('mwa.warna,mi.*');
         if ($keyword != '') {
             // $this->db->like('mi.section_ata', $keyword);

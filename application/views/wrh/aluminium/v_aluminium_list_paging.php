@@ -105,17 +105,17 @@
                             $i = 1;
                             foreach ($aluminium->result() as $row) {
                                 $ada                     = 1;
-                                $stock_awal_bulan        = 0;
-                                // $stock_awal_bulan        = @$s_awal_bulan[$row->id];
-                                $tampil_stock_awal_bulan = ($stock_awal_bulan != '') ? $stock_awal_bulan : 0;
+                                $stock_awal_bulan        = @$s_awal_bulan[$row->id];
+                                // $tampil_stock_awal_bulan = ($stock_awal_bulan != '') ? $stock_awal_bulan : 0;
+                                $tampil_stock_awal_bulan = $stock_awal_bulan;
 
-                                $tot_in_per_bulan          = 0;
-                                // $tot_in_per_bulan          = @$total_in_per_bulan[$row->id];
-                                $tampil_total_in_per_bulan = ($tot_in_per_bulan != '') ? $tot_in_per_bulan : 0;
+                                $tot_in_per_bulan          = @$total_in_per_bulan[$row->id];
+                                $tampil_total_in_per_bulan = $tot_in_per_bulan;
+                                // $tampil_total_in_per_bulan = ($tot_in_per_bulan != '') ? $tot_in_per_bulan : 0;
 
-                                $tot_out_per_bulan          = 0;
-                                // $tot_out_per_bulan          = @$total_out_per_bulan[$row->id];
-                                $tampil_total_out_per_bulan = ($tot_out_per_bulan != '') ? $tot_out_per_bulan : 0;
+                                $tot_out_per_bulan          = @$total_out_per_bulan[$row->id];
+                                $tampil_total_out_per_bulan =  $tot_out_per_bulan;
+                                // $tampil_total_out_per_bulan = ($tot_out_per_bulan != '') ? $tot_out_per_bulan : 0;
 
                                 $stock_akhir_bulan = ($tampil_stock_awal_bulan + $tampil_total_in_per_bulan) - $tampil_total_out_per_bulan;
                                 $ots_persiapan = 0;
