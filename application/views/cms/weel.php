@@ -148,10 +148,6 @@
         <strong>Copyright &copy; 2019 PT. Allure Alluminio.</strong>
       </footer>
 
-      <!-- Control Sidebar -->
-
-      <!-- Add the sidebar's background. This div must be placed
-           immediately after the control sidebar -->
     </div><!-- ./wrapper -->
 
     <!-- jQuery 2.1.4 -->
