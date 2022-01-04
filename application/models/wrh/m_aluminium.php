@@ -156,7 +156,7 @@ class M_aluminium extends CI_Model
         $nilai = 0;
         foreach ($res->result() as $key) {
             if (isset($data[$key->id_item])) {
-                $nilai = $data[$key->id_item];
+                $nilai = 1;
             } else {
                 $nilai = 0;
             }
