@@ -11,7 +11,7 @@ class M_aluminium extends CI_Model
         $this->db->where('mi.id_jenis_item', $id_jenis_item);
         $this->db->where('mi.kode_warna !=', '01');
         $this->db->select('mi.*,mwa.warna');
-        // $this->db->limit(10);
+        $this->db->limit(300);
 
         return $this->db->get('master_item mi');
     }
@@ -21,7 +21,7 @@ class M_aluminium extends CI_Model
         $id_jenis_item = 1;
         $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
         $this->db->where('mi.id_jenis_item', $id_jenis_item);
-        $this->db->where('mi.id_warna >', '2');
+        $this->db->where('mi.kode_warna !=', '01');
         $this->db->select('mi.*,mwa.warna');
         if ($keyword != '') {
             $this->db->like('mi.section_ata', $keyword);
@@ -56,6 +56,7 @@ class M_aluminium extends CI_Model
         $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
         $this->db->where('mi.id_jenis_item', $id_jenis_item);
         $this->db->select('mi.*,mwa.warna');
+        $this->db->limit(300);
         return $this->db->get('master_item mi');
     }
 
