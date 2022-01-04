@@ -30,7 +30,7 @@ class Aluminium extends CI_Controller
     {
         $this->fungsi->check_previleges('aluminium');
         $offset  = $this->uri->segment(4, 0);
-        $perpage = 100;
+        $perpage = 50;
         // $data['user'] = $this->m_catatan->get_user(false,'',$perpage,$offset);
         $data['aluminium'] = $this->m_aluminium->getdatapaging(false, '', $perpage, $offset);
         $total_rows  = $this->m_aluminium->getdatapaging(true, '');
@@ -57,7 +57,7 @@ class Aluminium extends CI_Controller
             $keyword = from_session('keyword');
         }
 
-        $perpage     = 100;
+        $perpage     = 50;
         $data['aluminium'] = $this->m_aluminium->getdatapaging(false, $keyword, $perpage, $offset);
         $total_rows  = $this->m_aluminium->getdatapaging(true, $keyword);
         $data['paging']    = $this->fungsi->create_paging('wrh/aluminium/list', $total_rows, $perpage, 4);
