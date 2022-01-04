@@ -17,7 +17,7 @@
     <div class="col-lg-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Monitoring Aluminium <?= $warna ?></h3>
+                <h3 class="box-title">Monitoring aluminium <?= $warna ?></h3>
 
                 <div class="box-tools pull-right">
                     <?php
@@ -67,12 +67,8 @@
                             <th width="5%"></th>
                             <th width="5%">No</th>
                             <th>Divisi</th>
-                            <th>Section ATA</th>
-                            <th>Section Allure</th>
-                            <th>Temper</th>
-                            <th>Kode Warna</th>
-                            <th>Warna</th>
-                            <th>Ukuran</th>
+                            <th>Item Code</th>
+                            <th>Deskripsi</th>
                             <th>Satuan</th>
                             <th>Stock Awal Bulan</th>
                             <th>Total In Per Bulan</th>
@@ -85,7 +81,8 @@
                         <tbody>
                             <?php
                             $i = 1;
-                            foreach ($aluminium->result() as $row) :
+                            foreach ($aluminium->result() as $row) {
+                                $ada                     = 1;
                                 $stock_awal_bulan        = @$s_awal_bulan[$row->id];
                                 $tampil_stock_awal_bulan = ($stock_awal_bulan != '') ? $stock_awal_bulan : 0;
 
@@ -103,12 +100,8 @@
                                     <td class="details-control" id="<?= $i ?>"><input type="hidden" id="id_<?= $i ?>" value="<?= $row->id ?>"></td>
                                     <td align="center"><?= $i ?></td>
                                     <td align="center"><?= $row->divisi ?></td>
-                                    <td align="center"><?= $row->section_ata ?></td>
-                                    <td align="center"><?= $row->section_allure ?></td>
-                                    <td align="center"><?= $row->temper ?></td>
-                                    <td align="center"><?= $row->kode_warna ?></td>
-                                    <td align="center"><?= $row->warna ?></td>
-                                    <td align="center"><?= $row->ukuran ?></td>
+                                    <td align="center"><?= $row->item_code ?></td>
+                                    <td align="center"><?= $row->deskripsi ?></td>
                                     <td align="center"><?= $row->satuan ?></td>
                                     <td align="center"><?= $tampil_stock_awal_bulan ?></td>
                                     <td align="center"><?= $tampil_total_in_per_bulan ?></td>
@@ -122,7 +115,7 @@
                                 </tr>
 
                             <?php $i++;
-                            endforeach; ?>
+                            } ?>
                         </tbody>
                     </table>
                 </div>
@@ -149,12 +142,88 @@
         });
     })
 
+    function printDiv(divName) {
+        // var printContents = document.getElementById(divName).innerHTML;
+        // var originalContents = document.body.innerHTML;
 
+        // document.body.innerHTML = printContents;
+        // window.print();
+
+        // document.body.innerHTML = originalContents;
+
+        var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+
+        mywindow.document.write('<html><head><title>' + document.title + '</title>');
+        mywindow.document.write('</head><body >');
+        mywindow.document.write('<h1>' + document.title + '</h1>');
+        mywindow.document.write(document.getElementById(divName).innerHTML);
+        mywindow.document.write('</body></html>');
+
+        mywindow.document.close(); // necessary for IE >= 10
+        mywindow.focus(); // necessary for IE >= 10*/
+
+        mywindow.print();
+        mywindow.close();
+
+        return true;
+    }
+
+
+    function setFilter() {
+        var store = $('#store').val();
+        if (store != '') {
+            var id_store = store;
+        } else {
+            var id_store = 'x';
+        };
+        var bulan = $('#bulan').val();
+        if (bulan != '') {
+            var id_bulan = bulan;
+        } else {
+            var id_bulan = 'x';
+        };
+        var tahun = $('#tahun').val();
+        if (tahun != '') {
+            var id_tahun = tahun;
+        } else {
+            var id_tahun = 'x';
+        };
+        var status = $('#status').val();
+        var jne = $('#jne').val();
+        load_silent("wrh/aluminium/filter/" + id_store + "/" + id_bulan + "/" + id_tahun + "/" + status + "/" + jne + "/", "#content");
+
+    }
+
+    function cetakExcel() {
+        var left = (screen.width / 2) - (640 / 2);
+        var top = (screen.height / 2) - (480 / 2);
+        var store = $('#store').val();
+        if (store != '') {
+            var id_store = store;
+        } else {
+            var id_store = 'x';
+        };
+        var bulan = $('#bulan').val();
+        if (bulan != '') {
+            var id_bulan = bulan;
+        } else {
+            var id_bulan = 'x';
+        };
+        var tahun = $('#tahun').val();
+        if (tahun != '') {
+            var id_tahun = tahun;
+        } else {
+            var id_tahun = 'x';
+        };
+        var status = $('#status').val();
+        var url = "<?= site_url('wrh/aluminium/excel/"+id_store+"/"+id_bulan+"/"+id_tahun+"/"+status+"') ?>";
+        window.open(url, "", "width=640, height=480, scrollbars=yes, left=" + left + ", top=" + top);
+    }
 
     $(document).ready(function() {
         $("select").select2();
         var table = $('#tableku').DataTable({
-            // "ordering": true,
+            "ordering": true,
             // "scrollX": true,
         });
 
@@ -177,7 +246,7 @@
                 '<tr>' +
                 '<th bgcolor="#bfbfbf">No</th>' +
                 '<th bgcolor="#bfbfbf">Gudang</th>' +
-                '<th bgcolor="#bfbfbf">Keranjang</th>' +
+                '<th bgcolor="#bfbfbf">Keranjang/Rak</th>' +
                 '<th bgcolor="#bfbfbf">Stock Awal Bulan</th>' +
                 '<th bgcolor="#bfbfbf">Total In Per Bulan</th>' +
                 '<th bgcolor="#bfbfbf">Total Out Per Bulan</th>' +
