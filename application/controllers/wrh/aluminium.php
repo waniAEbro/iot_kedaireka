@@ -30,7 +30,7 @@ class Aluminium extends CI_Controller
     {
         $this->fungsi->check_previleges('aluminium');
         $offset  = $this->uri->segment(4, 0);
-        $perpage = 50;
+        $perpage = 10;
         // $data['user'] = $this->m_catatan->get_user(false,'',$perpage,$offset);
         $data['aluminium'] = $this->m_aluminium->getdatapaging(false, '', $perpage, $offset);
         $total_rows  = $this->m_aluminium->getdatapaging(true, '');
@@ -42,7 +42,7 @@ class Aluminium extends CI_Controller
         $data['total_in_per_bulan']  = $this->m_aluminium->getTotalInPerBulan();
         $data['total_out_per_bulan'] = $this->m_aluminium->getTotalOutPerBulan();
         $data['warna']               = 'Warna';
-        $this->load->view('wrh/aluminium/v_aluminium_list', $data);
+        $this->load->view('wrh/aluminium/v_aluminium_list_paging', $data);
     }
 
     public function search()
@@ -57,7 +57,7 @@ class Aluminium extends CI_Controller
             $keyword = from_session('keyword');
         }
 
-        $perpage     = 50;
+        $perpage     = 10;
         $data['aluminium'] = $this->m_aluminium->getdatapaging(false, $keyword, $perpage, $offset);
         $total_rows  = $this->m_aluminium->getdatapaging(true, $keyword);
         $data['paging']    = $this->fungsi->create_paging('wrh/aluminium/list', $total_rows, $perpage, 4);
@@ -69,7 +69,7 @@ class Aluminium extends CI_Controller
         $data['total_in_per_bulan']  = $this->m_aluminium->getTotalInPerBulan();
         $data['total_out_per_bulan'] = $this->m_aluminium->getTotalOutPerBulan();
         $data['warna']               = 'Warna';
-        $this->load->view('wrh/aluminium/v_aluminium_list', $data);
+        $this->load->view('wrh/aluminium/v_aluminium_list_paging', $data);
     }
 
     public function monitoring_mf()
