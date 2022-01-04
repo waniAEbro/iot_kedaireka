@@ -155,7 +155,8 @@
     </div><!-- ./wrapper -->
 
     <!-- jQuery 2.1.4 -->
-    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <?php echo js('assets/js/jquery-ui.min.js') ?>
     <?php echo js('assets/plugins/pace/pace.min.js') ?>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
