@@ -30,7 +30,7 @@ class Aluminium extends CI_Controller
     {
         $this->fungsi->check_previleges('aluminium');
         $offset  = $this->uri->segment(4, 0);
-        $perpage = 10;
+        $perpage = 100;
         // $data['user'] = $this->m_catatan->get_user(false,'',$perpage,$offset);
         $data['aluminium'] = $this->m_aluminium->getdatapaging(false, '', $perpage, $offset);
         $total_rows  = $this->m_aluminium->getdatapaging(true, '');

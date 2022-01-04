@@ -1,4 +1,3 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
 <style>
     td.details-control {
         background: url("<?= base_url('assets/img/details_open.png') ?>") no-repeat center center;
