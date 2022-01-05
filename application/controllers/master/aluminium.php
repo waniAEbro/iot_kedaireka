@@ -222,6 +222,55 @@ class aluminium extends CI_Controller
         $data['aluminium'] = $this->m_aluminium->getData();
         $this->load->view('master/aluminium/v_aluminium_cetak', $data);
     }
+
+    public function deletexxxx($id)
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $this->db->where('id', $id);
+        $res = $this->db->get('master_item')->result();
+        $obj = array(
+            'id_penghapus' => from_session('id'),
+            'id_tabel' => $id,
+            'tabel' => 'master_item',
+            'keterangan' => json_encode($res),
+            'created' => date('Y-m-d H:i:s'),
+        );
+        $this->db->insert('data_delete', $obj);
+
+        sleep(1);
+        $data = array('id' => $id,);
+        // $this->db->where('id', $id);
+        // $this->db->delete('master_item');
+
+        $this->fungsi->catat($data, "Menghapus Master Aluminium dengan data sbb:", true);
+        // $this->fungsi->run_js('load_silent("master/aluminium/","#content")');
+        $this->fungsi->message_box("Menghapus Master Aluminium", "success");
+    }
+
+    public function delete()
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $id   = $this->input->post('id');
+        $this->db->where('id', $id);
+        $res = $this->db->get('master_item')->result();
+        $obj = array(
+            'id_penghapus' => from_session('id'),
+            'id_tabel' => $id,
+            'tabel' => 'master_item',
+            'keterangan' => json_encode($res),
+            'created' => date('Y-m-d H:i:s'),
+        );
+        $this->db->insert('data_delete', $obj);
+
+        sleep(1);
+        $data = array('id' => $id,);
+        $this->db->where('id', $id);
+        $this->db->delete('master_item');
+
+        $this->fungsi->catat($data, "Menghapus Master Aluminium dengan data sbb:", true);
+        $respon = ['msg' => 'Data Berhasil Dihapus'];
+        echo json_encode($respon);
+    }
 }
 
 /* End of file aluminium.php */

@@ -35,7 +35,7 @@
                         <?php
                         $i = 1;
                         foreach ($aluminium->result() as $row) : ?>
-                            <tr>
+                            <tr id="output_data_<?= $row->id ?>" class="output_data">
                                 <td align="center"><?= $i++ ?></td>
                                 <td><?= $row->divisi ?></td>
                                 <td><?= $row->section_ata ?></td>
@@ -50,10 +50,17 @@
                                     $sesi = from_session('level');
                                     if ($sesi <= 3) {
                                         echo button('load_silent("master/aluminium/form/sub/' . $row->id . '","#modal")', 'Edit', 'btn btn-xs btn-info', 'data-toggle="tooltip" title="Edit"');
-                                    } else {
-                                        # code...
                                     }
+                                    if ($sesi <= 2) {
+                                        //echo button_confirm("Anda yakin menghapus. " . $row->item_code . "?", "master/aluminium/delete/" . $row->id, "#content", 'delete', 'btn btn-xs btn-danger', 'data-toggle="tooltip" title="delete"');
                                     ?>
+                                        <a class="btn btn-xs btn-danger" href="javascript:void(0)" onClick="hapus(<?= $row->id ?>)">
+                                            hapus
+                                        </a>
+                                    <?php }
+
+                                    ?>
+
                                     <a target="_blank" href="<?= base_url('master/aluminium/cetak_barcode/' . $row->id); ?>" class="btn btn-xs btn-primary">Cetak Barcode</a>
                                 </td>
                             </tr>
@@ -76,5 +83,25 @@
     function cetakExcel() {
         var url = "<?= site_url('master/aluminium/cetakExcel') ?>";
         window.open(url, "_blank");
+    }
+
+    function hapus(i) {
+        if (confirm('Lanjutkan Proses Hapus?')) {
+            $.ajax({
+                    type: "POST",
+                    url: "<?= site_url('master/aluminium/delete') ?>",
+                    dataType: 'json',
+                    data: {
+                        'id': i
+                    }
+                })
+                .success(function(datasaved) {
+                    $.growl.notice({
+                        title: 'Sukses',
+                        message: datasaved.msg
+                    });
+                    $('#output_data_' + i).remove();
+                });
+        }
     }
 </script>
