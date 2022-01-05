@@ -86,51 +86,40 @@ class M_aksesoris extends CI_Model
 
         $res = $this->db->get('data_stock ds');
         $data = array();
-        $nilai = 0;
-        foreach ($res->result() as $key) {
-            if (isset($data[$key->id_item])) {
-                $nilai = $data[$key->id_item];
-            } else {
-                $nilai = 0;
-            }
-            $data[$key->id_item] = $key->qty_in + $nilai;
-        }
-        return $data;
-    }
 
-    function getTerkirim()
-    {
-        $this->db->join('data_invoice di', 'di.id = dsd.id_invoice', 'left');
-        $this->db->where('di.id_status', 1);
-        $this->db->where('dsd.inout', 2);
-        // $this->db->where('dsd.deleted', 1);
-        $res = $this->db->get('data_stok_detail dsd');
-        $data = array();
-        $nilai = 0;
         foreach ($res->result() as $key) {
-            if (isset($data[$key->id_item][$key->id_warna][$key->bukaan])) {
-                $nilai = $data[$key->id_item][$key->id_warna][$key->bukaan];
-            } else {
-                $nilai = 0;
+
+            if (!isset($data[$key->id_item])) {
+                $data[$key->id_item] = 0;
             }
-            $data[$key->id_item][$key->id_warna][$key->bukaan] = $key->qty_out + $nilai;
+            $data[$key->id_item] = $data[$key->id_item] + $key->qty_in;
         }
         return $data;
+
+        // $nilai = 0;
+        // foreach ($res->result() as $key) {
+        //     if (isset($data[$key->id_item])) {
+        //         $nilai = $data[$key->id_item];
+        //     } else {
+        //         $nilai = 0;
+        //     }
+        //     $data[$key->id_item] = $key->qty_in + $nilai;
+        // }
+        // return $data;
     }
 
     public function getTotalBOM()
     {
+        $this->db->where('id_fppp !=', 0);
         $this->db->where('status_fppp', 0);
         $res = $this->db->get('data_stock');
         $data = array();
-        $nilai = 0;
         foreach ($res->result() as $key) {
-            if (isset($data[$key->id_item])) {
-                $nilai = $data[$key->id_item];
-            } else {
-                $nilai = 0;
+
+            if (!isset($data[$key->id_item])) {
+                $data[$key->id_item] = 0;
             }
-            $data[$key->id_item] = $key->qty_bom + $nilai;
+            $data[$key->id_item] = $data[$key->id_item] + $key->qty_bom;
         }
         return $data;
     }
@@ -147,14 +136,12 @@ class M_aksesoris extends CI_Model
 
         $res = $this->db->get('data_stock');
         $data = array();
-        $nilai = 0;
         foreach ($res->result() as $key) {
-            if (isset($data[$key->id_item])) {
-                $nilai = $data[$key->id_item];
-            } else {
-                $nilai = 0;
+
+            if (!isset($data[$key->id_item])) {
+                $data[$key->id_item] = 0;
             }
-            $data[$key->id_item] = $key->qty_in + $nilai;
+            $data[$key->id_item] = $data[$key->id_item] + $key->qty_in;
         }
         return $data;
     }
@@ -168,14 +155,12 @@ class M_aksesoris extends CI_Model
 
         $res = $this->db->get('data_stock');
         $data = array();
-        $nilai = 0;
         foreach ($res->result() as $key) {
-            if (isset($data[$key->id_item])) {
-                $nilai = $data[$key->id_item];
-            } else {
-                $nilai = 0;
+
+            if (!isset($data[$key->id_item])) {
+                $data[$key->id_item] = 0;
             }
-            $data[$key->id_item] = $key->qty_out + $nilai;
+            $data[$key->id_item] = $data[$key->id_item] + $key->qty_out;
         }
         return $data;
     }
@@ -194,18 +179,15 @@ class M_aksesoris extends CI_Model
 
         $res = $this->db->get('data_stock');
         $data = array();
-        $nilai = 0;
         foreach ($res->result() as $key) {
-            if (isset($data[$key->id_item])) {
-                $nilai = $data[$key->id_item];
-            } else {
-                $nilai = 0;
+
+            if (!isset($data[$key->id_item])) {
+                $data[$key->id_item] = 0;
             }
-            $data[$key->id_item] = $key->qty_out + $nilai;
+            $data[$key->id_item] = $data[$key->id_item] + $key->qty_out;
         }
         return $data;
     }
-
 
 
     public function getDataDetailTabel($id_item = '')
