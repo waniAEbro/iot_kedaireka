@@ -80,7 +80,7 @@ class Aluminium extends CI_Controller
     public function monitoring_mf()
     {
         $this->fungsi->check_previleges('aluminium');
-        $data['aluminium']           = $this->m_aluminium->getdataMf();
+        $data['aluminium_list']           = $this->m_aluminium->getdataMf();
         $data['s_awal_bulan']    = $this->m_aluminium->getStockAwalBulan();
         $data['total_bom']           = $this->m_aluminium->getTotalBOM();
         $data['total_in_per_bulan']  = $this->m_aluminium->getTotalInPerBulan();
