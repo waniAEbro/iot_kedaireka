@@ -209,7 +209,7 @@ class M_aksesoris extends CI_Model
         $this->db->join('master_gudang mg', 'mg.id = dc.id_gudang', 'left');
         $this->db->join('master_divisi_stock md', 'md.id = dc.id_divisi', 'left');
         $this->db->where('dc.id_item', $id_item);
-        $this->db->select('dc.*,mi.divisi,mg.gudang');
+        $this->db->select('dc.*,md.divisi,mg.gudang');
 
         return $this->db->get('data_counter dc')->result();
     }
