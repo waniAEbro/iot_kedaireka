@@ -58,9 +58,8 @@
                         <thead>
                             <th width="5%"></th>
                             <th width="5%">No</th>
-                            <th>Divisi</th>
                             <th>Item Code</th>
-                            <th>Deskripsi</th>
+                            <th>Warna</th>
                             <th>Satuan</th>
                             <th>Stock Awal Bulan</th>
                             <th>Total In Per Bulan</th>
@@ -97,9 +96,8 @@
                                 <tr>
                                     <td class="details-control" id="<?= $i ?>"><button class="btn-xs btn-primary">+</button><input type="hidden" id="id_<?= $i ?>" value="<?= $row->id ?>"></td>
                                     <td align="center"><?= $i ?></td>
-                                    <td align="center"><?= $row->divisi ?></td>
                                     <td align="center"><?= $row->item_code ?></td>
-                                    <td align="center"><?= $row->deskripsi ?></td>
+                                    <td align="center"><?= $row->warna ?></td>
                                     <td align="center"><?= $row->satuan ?></td>
                                     <td align="center"><?= $tampil_stock_awal_bulan ?></td>
                                     <td align="center"><?= $tampil_total_in_per_bulan ?></td>
