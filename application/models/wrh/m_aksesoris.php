@@ -192,20 +192,26 @@ class M_aksesoris extends CI_Model
 
     public function getDataDetailTabel($id_item = '')
     {
-        $this->db->join('master_divisi_stock md', 'md.id = da.id_divisi', 'left');
-        $this->db->join('master_gudang mg', 'mg.id = da.id_gudang', 'left');
-        $this->db->where('da.inout', 1);
-        $this->db->where('da.id_item', $id_item);
-        $this->db->where('da.id_surat_jalan', 0);
-        $this->db->where('da.awal_bulan', 0);
-        $this->db->group_by('da.id_divisi');
-        $this->db->group_by('da.id_gudang');
-        $this->db->group_by('da.keranjang');
-        $this->db->group_by(array('da.id_divisi', 'da.id_gudang', 'da.keranjang'));
+        // $this->db->join('master_divisi_stock md', 'md.id = da.id_divisi', 'left');
+        // $this->db->join('master_gudang mg', 'mg.id = da.id_gudang', 'left');
+        // $this->db->where('da.inout', 1);
+        // $this->db->where('da.id_item', $id_item);
+        // $this->db->group_by('da.id_divisi');
+        // $this->db->group_by('da.id_gudang');
+        // $this->db->group_by('da.keranjang');
+        // $this->db->group_by(array('da.id_divisi', 'da.id_gudang', 'da.keranjang'));
 
-        $this->db->select('da.*,mg.gudang,md.divisi');
+        // $this->db->select('da.*,mg.gudang,md.divisi');
 
-        return $this->db->get('data_stock da')->result();
+        // return $this->db->get('data_stock da')->result();
+
+        $this->db->join('master_item mi', 'mi.id = dc.id_item', 'left');
+        $this->db->join('master_gudang mg', 'mg.id = dc.id_gudang', 'left');
+        $this->db->join('master_divisi_stock md', 'md.id = dc.id_divisi', 'left');
+        $this->db->where('dc.id_item', $id_item);
+        $this->db->select('dc.*,mi.divisi,mg.gudang');
+
+        return $this->db->get('data_counter dc')->result();
     }
 
     public function getAwalBulanDetailTabel($id, $id_divisi, $id_gudang, $keranjang)

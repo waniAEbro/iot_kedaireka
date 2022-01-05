@@ -88,6 +88,7 @@ class aksesoris extends CI_Controller
     {
         $this->fungsi->check_previleges('aksesoris');
         $id                = $this->input->post('id');
+
         $data_aksesoris_in = $this->m_aksesoris->getDataDetailTabel($id);
         $arr               = array();
         foreach ($data_aksesoris_in as $key) {
