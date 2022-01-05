@@ -160,6 +160,7 @@ class M_aluminium extends CI_Model
 
     public function getTotalBOM()
     {
+        $this->db->where('id_fppp !=', 0);
         $this->db->where('status_fppp', 0);
         $res = $this->db->get('data_stock');
         $data = array();

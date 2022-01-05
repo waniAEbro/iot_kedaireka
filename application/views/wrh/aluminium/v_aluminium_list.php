@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
 <style>
-    td.details-control {
+    td.details-controla {
         background: url("<?= base_url('assets/img/details_open.png') ?>") no-repeat center center;
         cursor: pointer;
     }
@@ -9,7 +9,7 @@
         background: #edffb3;
     }
 
-    tr.shown td.details-control {
+    tr.shown td.details-controla {
         background: url("<?= base_url('assets/img/details_close.png') ?>") no-repeat center center;
     }
 </style>
@@ -92,7 +92,7 @@
                                 $free_stock    = $stock_akhir_bulan - $ots_persiapan;
                             ?>
                                 <tr>
-                                    <td class="details-control" id="<?= $i ?>"><input type="hidden" id="id_<?= $i ?>" value="<?= $row->id ?>"></td>
+                                    <td class="details-control" id="<?= $i ?>"><button class="btn-xs btn-primary">+</button><input type="hidden" id="id_<?= $i ?>" value="<?= $row->id ?>"></td>
                                     <td align="center"><?= $i ?></td>
                                     <td align="center"><?= $row->divisi ?></td>
                                     <td align="center"><?= $row->item_code ?></td>
@@ -103,7 +103,7 @@
                                     <td align="center"><?= $tampil_total_out_per_bulan ?></td>
                                     <td align="center"><?= $stock_akhir_bulan ?></td>
                                     <td align="center"><?= $free_stock ?></td>
-                                    <td align="center"></td>
+                                    <td align="center"><?= @$total_bom[$row->id] ?> - <?= $tampil_total_out_per_bulan ?></td>
                                     <td align="center">
                                         <?= button('load_silent("wrh/aluminium/mutasi_stock_add/' . $row->id . '","#content")', 'mutasi', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Mutasi"'); ?>
                                         <?= button('load_silent("wrh/aluminium/mutasi_stock_history/' . $row->id . '","#content")', 'history mutasi', 'btn btn-xs btn-default', 'data-toggle="tooltip" title="History Mutasi"'); ?></td>
