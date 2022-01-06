@@ -25,8 +25,11 @@
                     if ($is_memo == 'fppp') {
                         # code...
                         echo button('load_silent("klg/fppp/formAdd/' . $param . '","#content")', 'Tambah FPPP', 'btn btn-success');
-                    } else {
+                    } elseif ($is_memo == 'memo') {
                         echo button('load_silent("klg/memo/formAdd/' . $param . '","#content")', 'Tambah Memo', 'btn btn-success');
+                        # code...
+                    } else {
+                        echo button('load_silent("klg/mockup/formAdd/' . $param . '","#content")', 'Tambah Mockup', 'btn btn-success');
                         # code...
                     }
                 }
@@ -117,21 +120,21 @@
                             $status_project_finance = ($row->status_project_finance != '') ? $row->status_project_finance : '-';
                             if ($row->wh_aluminium == 1) {
                                 $wh_aluminium = "PROSES";
-                            } else if ($row->wh_aluminium == 2) {
+                            } elseif ($row->wh_aluminium == 2) {
                                 $wh_aluminium = "PARSIAL";
                             } else {
                                 $wh_aluminium = "LUNAS";
                             }
                             if ($row->wh_aksesoris == 3) {
                                 $wh_aksesoris = "LUNAS";
-                            } else if ($row->wh_aksesoris == 2) {
+                            } elseif ($row->wh_aksesoris == 2) {
                                 $wh_aksesoris = "PARSIAL";
                             } else {
                                 $wh_aksesoris = "PROSES";
                             }
                             if ($row->wh_kaca == 3) {
                                 $wh_kaca = "LUNAS";
-                            } else if ($row->wh_kaca == 2) {
+                            } elseif ($row->wh_kaca == 2) {
                                 $wh_kaca = "PARSIAL";
                             } else {
                                 $wh_kaca = "PROSES";
@@ -139,7 +142,7 @@
 
                             if ($row->ws_update == 3) {
                                 $ws_update = "LUNAS";
-                            } else if ($row->ws_update == 2) {
+                            } elseif ($row->ws_update == 2) {
                                 $ws_update = "PARSIAL";
                             } else {
                                 $ws_update = "PROSES";
@@ -147,7 +150,7 @@
 
                             if ($row->site_update == 3) {
                                 $site_update = "LUNAS";
-                            } else if ($row->site_update == 2) {
+                            } elseif ($row->site_update == 2) {
                                 $site_update = "PARSIAL";
                             } else {
                                 $site_update = "PROSES";
@@ -155,7 +158,7 @@
 
                             if ($row->site_update_bst == 3) {
                                 $site_update_bst = "LUNAS";
-                            } else if ($row->site_update_bst == 2) {
+                            } elseif ($row->site_update_bst == 2) {
                                 $site_update_bst = "PARSIAL";
                             } else {
                                 $site_update_bst = "PROSES";
@@ -231,10 +234,26 @@
                                     <?php } ?>
 
                                     <?php
-                                    if ($sesi <= 5 || $sesi == 8) {
-                                        echo button('load_silent("klg/fppp/formEdit/' . $row->id . '","#content")', 'Edit', 'btn btn-xs btn-info', 'data-toggle="tooltip" title="Edit"');
-                                        echo button_confirm("Apakah anda yakin menghapus FPPP ini?", "klg/fppp/deleteFppp/" . $row->id, "#content", "Hapus", "btn btn-xs btn-danger", "");
+                                    if ($is_memo == 'fppp') {
+                                        if ($sesi <= 5 || $sesi == 8) {
+                                            echo button('load_silent("klg/fppp/formEdit/' . $row->id . '","#content")', 'Edit', 'btn btn-xs btn-info', 'data-toggle="tooltip" title="Edit"');
+                                            echo button_confirm("Apakah anda yakin menghapus FPPP ini?", "klg/fppp/deleteFppp/" . $row->id, "#content", "Hapus", "btn btn-xs btn-danger", "");
+                                        }
+                                    } elseif ($is_memo == 'memo') {
+                                        if ($sesi <= 5 || $sesi == 8) {
+                                            echo button('load_silent("klg/memo/formEdit/' . $row->id . '","#content")', 'Edit', 'btn btn-xs btn-info', 'data-toggle="tooltip" title="Edit"');
+                                            echo button_confirm("Apakah anda yakin menghapus Memo ini?", "klg/fppp/deleteFppp/" . $row->id, "#content", "Hapus", "btn btn-xs btn-danger", "");
+                                        }
+                                    } else {
+                                        if ($sesi <= 5 || $sesi == 8) {
+                                            echo button('load_silent("klg/mockup/formEdit/' . $row->id . '","#content")', 'Edit', 'btn btn-xs btn-info', 'data-toggle="tooltip" title="Edit"');
+                                            echo button_confirm("Apakah anda yakin menghapus Mockup ini?", "klg/fppp/deleteFppp/" . $row->id, "#content", "Hapus", "btn btn-xs btn-danger", "");
+                                        }
                                     }
+
+
+
+
                                     if ($sesi <= 5 || $sesi == 8) {
                                         echo button('load_silent("klg/fppp/uploadbom/' . $row->id . '","#content")', 'Upload BOM', 'btn btn-xs btn-success', 'data-toggle="tooltip" title="Upload"');
                                         echo button('load_silent("klg/fppp/lihatbom/' . $row->id . '/' . $param . '","#content")', 'Lihat BOM', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Upload"');

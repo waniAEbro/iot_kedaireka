@@ -40,6 +40,24 @@ class M_fppp extends CI_Model
 		return $this->db->get('data_fppp df');
 	}
 
+	public function getDataMockup($param)
+	{
+		$this->db->join('master_divisi md', 'md.id = df.id_divisi', 'left');
+		$this->db->join('master_kaca mk', 'mk.id = df.id_kaca', 'left');
+		$this->db->join('master_pengiriman mp', 'mp.id = df.id_pengiriman', 'left');
+		$this->db->join('master_metode_pengiriman mpp', 'mpp.id = df.id_metode_pengiriman', 'left');
+		$this->db->join('master_warna mwa', 'mwa.id = df.id_warna', 'left');
+		$this->db->join('master_status ms', 'ms.id = df.id_status', 'left');
+
+		$this->db->where('df.id_divisi', $param);
+		$this->db->where('df.is_memo', 3);
+		$this->db->order_by('df.id', 'desc');
+
+		$this->db->select('df.*,md.divisi,mk.kaca,mp.pengiriman,metode_pengiriman,mwa.warna,ms.status');
+
+		return $this->db->get('data_fppp df');
+	}
+
 	public function getNumRow($id)
 	{
 		$this->db->where('id_fppp', $id);
@@ -103,6 +121,29 @@ class M_fppp extends CI_Model
 		$this->db->where('DATE_FORMAT(created,"%m")', $month);
 		$this->db->where('id_divisi', $id_divisi);
 		$this->db->where('is_memo', 2);
+		$this->db->order_by('id', 'desc');
+		$this->db->limit(1);
+		$hasil = $this->db->get('data_fppp');
+		if ($hasil->num_rows() > 0) {
+
+			$string = $hasil->row()->no_fppp;
+			$arr    = explode("/", $string, 2);
+			$first  = $arr[0];
+			$no     = $first + 1;
+			return $no;
+		} else {
+			return '1';
+		}
+	}
+
+	public function getNoMockup($id_divisi = '')
+	{
+		$year  = date('Y');
+		$month = date('m');
+		$this->db->where('DATE_FORMAT(created,"%Y")', $year);
+		$this->db->where('DATE_FORMAT(created,"%m")', $month);
+		$this->db->where('id_divisi', $id_divisi);
+		$this->db->where('is_memo', 3);
 		$this->db->order_by('id', 'desc');
 		$this->db->limit(1);
 		$hasil = $this->db->get('data_fppp');

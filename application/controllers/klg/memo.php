@@ -201,6 +201,18 @@ class Memo extends CI_Controller
 		);
 		$this->m_fppp->insertfppp($datapost);
 		$data['id']            = $this->db->insert_id();
+
+		$mbq = explode("-", $this->input->post('multi_brand'));
+		$this->db->where_in('id', $mbq);
+		$res_brand = $this->db->get('master_brand')->result();
+		$b = array();
+		foreach ($res_brand as $keyq) {
+			$b[] = '*' . $keyq->brand . '<br>';
+		};
+		$data_multi_brand_string = array('multi_brand_string' => implode($b));
+		$this->m_fppp->updateFppp($data['id'], $data_multi_brand_string);
+
+
 		$cek_kode_proyek = $this->m_fppp->cekKodeProyek($datapost['kode_proyek'])->num_rows();
 		if ($cek_kode_proyek < 1) {
 			$obj_py = array(
@@ -281,6 +293,17 @@ class Memo extends CI_Controller
 			);
 			$this->m_fppp->insertfppp($datapost);
 			$data['id']            = $this->db->insert_id();
+
+			$mbq = explode("-", $this->input->post('multi_brand'));
+			$this->db->where_in('id', $mbq);
+			$res_brand = $this->db->get('master_brand')->result();
+			$b = array();
+			foreach ($res_brand as $keyq) {
+				$b[] = '*' . $keyq->brand . '<br>';
+			};
+			$data_multi_brand_string = array('multi_brand_string' => implode($b));
+			$this->m_fppp->updateFppp($data['id'], $data_multi_brand_string);
+
 			$cek_kode_proyek = $this->m_fppp->cekKodeProyek($datapost['kode_proyek'])->num_rows();
 			if ($cek_kode_proyek < 1) {
 				$obj_py = array(
@@ -348,6 +371,17 @@ class Memo extends CI_Controller
 		);
 		$this->m_fppp->updateFppp($id_fppp, $datapost);
 		$data['id'] = $id_fppp;
+
+		$mbq = explode("-", $this->input->post('multi_brand'));
+		$this->db->where_in('id', $mbq);
+		$res_brand = $this->db->get('master_brand')->result();
+		$b = array();
+		foreach ($res_brand as $keyq) {
+			$b[] = '*' . $keyq->brand . '<br>';
+		};
+		$data_multi_brand_string = array('multi_brand_string' => implode($b));
+		$this->m_fppp->updateFppp($data['id'], $data_multi_brand_string);
+
 		$this->fungsi->catat($datapost, "mengupdate memo sbb:", true);
 		$data['msg'] = "memo diupdate";
 		echo json_encode($data);
@@ -418,6 +452,18 @@ class Memo extends CI_Controller
 			);
 			$this->m_fppp->updateFppp($id_fppp, $datapost);
 			$data['id'] = $id_fppp;
+
+			$mbq = explode("-", $this->input->post('multi_brand'));
+			$this->db->where_in('id', $mbq);
+			$res_brand = $this->db->get('master_brand')->result();
+			$b = array();
+			foreach ($res_brand as $keyq) {
+				$b[] = '*' . $keyq->brand . '<br>';
+			};
+			$data_multi_brand_string = array('multi_brand_string' => implode($b));
+			$this->m_fppp->updateFppp($data['id'], $data_multi_brand_string);
+
+
 			$this->fungsi->catat($datapost, "mengupdate memo sbb:", true);
 			$data['msg'] = "memo diupdate";
 			echo json_encode($data);

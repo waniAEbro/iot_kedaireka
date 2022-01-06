@@ -314,8 +314,10 @@
     <?php
     if ($is_memo == 'fppp') { ?>
       <button type="submit" onclick="save()" id="proses" class="btn btn-success">Process</button>
-    <?php } else { ?>
+    <?php } elseif ($is_memo == 'memo') { ?>
       <button type="submit" onclick="save_memo()" id="proses" class="btn btn-success">Process</button>
+    <?php } else { ?>
+      <button type="submit" onclick="save_mockup()" id="proses" class="btn btn-success">Process</button>
     <?php }
 
     ?>
@@ -399,8 +401,10 @@
         <?php
         if ($is_memo == 'fppp') { ?>
           <a onclick="finish()" class="btn btn-success pull-right"> Finish</a>
-        <?php } else { ?>
+        <?php } elseif ($is_memo == 'memo') { ?>
           <a onclick="finish_memo()" class="btn btn-success pull-right"> Finish</a>
+        <?php } else { ?>
+          <a onclick="finish_mockup()" class="btn btn-success pull-right"> Finish</a>
         <?php }
 
         ?>
@@ -434,6 +438,18 @@
       load_silent("klg/memo/hasil_finish_edit/" + $("#id_divisi").val() + "/" + $("#id_fppp").val() + "", "#content");
     }
   }
+
+  function finish_mockup() {
+    if (confirm('Anda yakin ingin menyelesaikan?')) {
+      $.growl.notice({
+        title: 'Berhasil',
+        message: "Tambah Mock Up selesai!"
+      });
+      load_silent("klg/mockup/hasil_finish_edit/" + $("#id_divisi").val() + "/" + $("#id_fppp").val() + "", "#content");
+    }
+  }
+
+
   $(document).ready(function() {
 
     $('.datepicker').datepicker({
@@ -684,6 +700,151 @@
     } else {
       $.ajaxFileUpload({
         url: site + 'klg/memo/savefpppImage',
+        secureuri: false,
+        fileElementId: 'lampiran',
+        dataType: 'json',
+        data: {
+          id_divisi: $("#id_divisi").val(),
+          tgl_pembuatan: $("#tgl_pembuatan").val(),
+          multi_brand: m_brand_x,
+          no_fppp: $("#no_fppp").val(),
+          no_co: $("#no_co").val(),
+          applicant: $("#applicant").val(),
+          applicant_sector: $("#applicant_sector").val(),
+          authorized_distributor: $("#authorized_distributor").val(),
+          type_fppp: $("#type_fppp").val(),
+          tahap_produksi: $("#tahap_produksi").val(),
+          nama_aplikator: $("#nama_aplikator").val(),
+          nama_proyek: $("#nama_proyek").val(),
+          kode_proyek: $("#kode_proyek").val(),
+          tahap: $("#tahap").val(),
+          alamat_proyek: $("#alamat_proyek").val(),
+          status_order: $("#status_order").val(),
+          note_ncr: $("#note_ncr").val(),
+          id_pengiriman: $("#id_pengiriman").val(),
+          deadline_pengiriman: $("#deadline_pengiriman").val(),
+          id_metode_pengiriman: $("#id_metode_pengiriman").val(),
+          id_penggunaan_peti: $("#id_penggunaan_peti").val(),
+          id_penggunaan_sealant: $("#id_penggunaan_sealant").val(),
+          id_warna: $("#id_warna").val(),
+          id_warna_lainya: $("#id_warna_lainya").val(),
+          warna_sealant: $("#warna_sealant").val(),
+          ditujukan_kepada: $("#ditujukan_kepada").val(),
+          no_telp_tujuan: $("#no_telp_tujuan").val(),
+          pengiriman_ekspedisi: $("#pengiriman_ekspedisi").val(),
+          alamat_ekspedisi: $("#alamat_ekspedisi").val(),
+          sales: $("#sales").val(),
+          pic_project: $("#pic_project").val(),
+          admin_koordinator: $("#admin_koordinator").val(),
+          id_kaca: $("#id_kaca").val(),
+          jenis_kaca: $("#jenis_kaca").val(),
+          id_logo_kaca: $("#id_logo_kaca").val(),
+          jumlah_gambar: $("#jumlah_gambar").val(),
+          jumlah_unit: $("#jumlah_unit").val(),
+          note: CKEDITOR.instances.keterangan.getData(),
+        },
+        success: function(data) {
+          $('#id_fppp').val(data['id']);
+          $.growl.notice({
+            title: 'Sukses',
+            message: data['msg']
+          });
+          $('#tutup').click();
+          $('#form_pembelian').show(1000);
+        },
+        error: function(data, e) {
+          $("#info").html(e);
+        }
+      })
+      return false;
+    };
+
+  }
+
+
+  function save_mockup() {
+    if ($("#kode_proyek").val() != '' && $("#multi_brand").val() != '') {
+      save_l_mo();
+    } else {
+      $.growl.error({
+        title: 'Peringatan',
+        message: 'Lengkapi Form dulu!'
+      });
+    };
+  }
+
+  function save_l_mo() {
+    var m_brand = $('#multi_brand').val();
+    var mb = m_brand.toString();
+    var m_brand_x = mb.replace(/\,/g, '-');
+
+    var path = $("#lampiran").val().replace('C:\\fakepath\\', '');
+    var wa = $('#id_warna').val();
+    $('#finish_coating').val(wa).trigger('change');
+    if (path == '') {
+      $.ajax({
+        type: "POST",
+        url: site + 'klg/mockup/savefppp',
+        dataType: 'json',
+        data: {
+          id_divisi: $("#id_divisi").val(),
+          tgl_pembuatan: $("#tgl_pembuatan").val(),
+          multi_brand: m_brand_x,
+          no_fppp: $("#no_fppp").val(),
+          no_co: $("#no_co").val(),
+          applicant: $("#applicant").val(),
+          applicant_sector: $("#applicant_sector").val(),
+          authorized_distributor: $("#authorized_distributor").val(),
+          type_fppp: $("#type_fppp").val(),
+          tahap_produksi: $("#tahap_produksi").val(),
+          nama_aplikator: $("#nama_aplikator").val(),
+          nama_proyek: $("#nama_proyek").val(),
+          kode_proyek: $("#kode_proyek").val(),
+          tahap: $("#tahap").val(),
+          alamat_proyek: $("#alamat_proyek").val(),
+          status_order: $("#status_order").val(),
+          note_ncr: $("#note_ncr").val(),
+          id_pengiriman: $("#id_pengiriman").val(),
+          deadline_pengiriman: $("#deadline_pengiriman").val(),
+          id_metode_pengiriman: $("#id_metode_pengiriman").val(),
+          id_penggunaan_peti: $("#id_penggunaan_peti").val(),
+          id_penggunaan_sealant: $("#id_penggunaan_sealant").val(),
+          id_warna: $("#id_warna").val(),
+          id_warna_lainya: $("#id_warna_lainya").val(),
+          warna_sealant: $("#warna_sealant").val(),
+          ditujukan_kepada: $("#ditujukan_kepada").val(),
+          no_telp_tujuan: $("#no_telp_tujuan").val(),
+          pengiriman_ekspedisi: $("#pengiriman_ekspedisi").val(),
+          alamat_ekspedisi: $("#alamat_ekspedisi").val(),
+          sales: $("#sales").val(),
+          pic_project: $("#pic_project").val(),
+          admin_koordinator: $("#admin_koordinator").val(),
+          id_kaca: $("#id_kaca").val(),
+          jenis_kaca: $("#jenis_kaca").val(),
+          id_logo_kaca: $("#id_logo_kaca").val(),
+          jumlah_gambar: $("#jumlah_gambar").val(),
+          jumlah_unit: $("#jumlah_unit").val(),
+          note: CKEDITOR.instances.keterangan.getData(),
+
+        },
+        success: function(data) {
+
+          $('#id_fppp').val(data['id']);
+          $.growl.notice({
+            title: 'Sukses',
+            message: data['msg']
+          });
+          $('#tutup').click();
+          $('#form_pembelian').show(1000);
+
+        },
+        error: function(data, e) {
+          $("#info").html(e);
+        }
+      });
+    } else {
+      $.ajaxFileUpload({
+        url: site + 'klg/mockup/savefpppImage',
         secureuri: false,
         fileElementId: 'lampiran',
         dataType: 'json',
