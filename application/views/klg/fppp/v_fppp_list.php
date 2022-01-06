@@ -178,12 +178,7 @@
                                 <td><?= $row->kode_proyek ?></td>
                                 <td>
                                     <?php
-                                    $mbq = explode("-", $row->multi_brand);
-                                    $this->db->where_in('id', $mbq);
-                                    $res_brand = $this->db->get('master_brand');
-                                    foreach ($res_brand->result() as $keyq) {
-                                        echo '*' . $keyq->brand . '<br>';
-                                    }
+                                    echo $row->multi_brand_string;
                                     ?>
                                 </td>
                                 <td><?= $row->no_fppp ?></td>

@@ -201,6 +201,18 @@ class Fppp extends CI_Controller
 		);
 		$this->m_fppp->insertfppp($datapost);
 		$data['id']            = $this->db->insert_id();
+
+
+		$mbq = explode("-", $this->input->post('multi_brand'));
+		$this->db->where_in('id', $mbq);
+		$res_brand = $this->db->get('master_brand')->result();
+		$b = array();
+		foreach ($res_brand as $keyq) {
+			$b[] = '*' . $keyq->brand . '<br>';
+		};
+		$data_multi_brand_string = array('multi_brand_string' => implode($b));
+		$this->m_fppp->updateFppp($data['id'], $data_multi_brand_string);
+
 		$cek_kode_proyek = $this->m_fppp->cekKodeProyek($datapost['kode_proyek'])->num_rows();
 		if ($cek_kode_proyek < 1) {
 			$obj_py = array(
@@ -280,6 +292,17 @@ class Fppp extends CI_Controller
 			);
 			$this->m_fppp->insertfppp($datapost);
 			$data['id']            = $this->db->insert_id();
+
+			$mbq = explode("-", $this->input->post('multi_brand'));
+			$this->db->where_in('id', $mbq);
+			$res_brand = $this->db->get('master_brand')->result();
+			$b = array();
+			foreach ($res_brand as $keyq) {
+				$b[] = '*' . $keyq->brand . '<br>';
+			};
+			$data_multi_brand_string = array('multi_brand_string' => implode($b));
+			$this->m_fppp->updateFppp($data['id'], $data_multi_brand_string);
+
 			$cek_kode_proyek = $this->m_fppp->cekKodeProyek($datapost['kode_proyek'])->num_rows();
 			if ($cek_kode_proyek < 1) {
 				$obj_py = array(
@@ -303,10 +326,14 @@ class Fppp extends CI_Controller
 		$nama_divisi = $this->m_fppp->getRowNamaDivisi($param)->divisi_pendek;
 		$nofppp      = str_pad($this->m_fppp->getNoFppp($param), 3, '0', STR_PAD_LEFT) . '/FPPP/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
 
+
+
 		$datapost = array(
 			'id_divisi'              => $this->input->post('id_divisi'),
 			'tgl_pembuatan'          => $this->input->post('tgl_pembuatan'),
-			'no_fppp'                => $this->input->post('no_fppp'),
+			'applicant'              => $this->input->post('applicant'),
+			'applicant_sector'       => $this->input->post('applicant_sector'),
+			'authorized_distributor' => $this->input->post('authorized_distributor'),
 			'multi_brand'            => $this->input->post('multi_brand'),
 			'applicant'              => $this->input->post('applicant'),
 			'no_co'                  => $this->input->post('no_co'),
@@ -347,6 +374,17 @@ class Fppp extends CI_Controller
 		);
 		$this->m_fppp->updateFppp($id_fppp, $datapost);
 		$data['id'] = $id_fppp;
+
+		$mbq = explode("-", $this->input->post('multi_brand'));
+		$this->db->where_in('id', $mbq);
+		$res_brand = $this->db->get('master_brand')->result();
+		$b = array();
+		foreach ($res_brand as $keyq) {
+			$b[] = '*' . $keyq->brand . '<br>';
+		};
+		$data_multi_brand_string = array('multi_brand_string' => implode($b));
+		$this->m_fppp->updateFppp($data['id'], $data_multi_brand_string);
+
 		$this->fungsi->catat($datapost, "Menyimpan fppp sbb:", true);
 		$data['msg'] = "fppp Disimpan";
 		echo json_encode($data);
@@ -375,6 +413,8 @@ class Fppp extends CI_Controller
 			$param       = $this->input->post('id_divisi');
 			$nama_divisi = $this->m_fppp->getRowNamaDivisi($param)->divisi_pendek;
 			$nofppp      = str_pad($this->m_fppp->getNoFppp($param), 3, '0', STR_PAD_LEFT) . '/FPPP/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
+
+
 
 			$datapost = array(
 				'id_divisi'              => $this->input->post('id_divisi'),
@@ -417,6 +457,17 @@ class Fppp extends CI_Controller
 			);
 			$this->m_fppp->updateFppp($id_fppp, $datapost);
 			$data['id'] = $id_fppp;
+
+			$mbq = explode("-", $this->input->post('multi_brand'));
+			$this->db->where_in('id', $mbq);
+			$res_brand = $this->db->get('master_brand')->result();
+			$b = array();
+			foreach ($res_brand as $keyq) {
+				$b[] = '*' . $keyq->brand . '<br>';
+			};
+			$data_multi_brand_string = array('multi_brand_string' => implode($b));
+			$this->m_fppp->updateFppp($data['id'], $data_multi_brand_string);
+
 			$this->fungsi->catat($datapost, "Menyimpan fppp sbb:", true);
 			$data['msg'] = "fppp Disimpan";
 			echo json_encode($data);
@@ -472,6 +523,22 @@ class Fppp extends CI_Controller
 	{
 		$this->fungsi->check_previleges('fppp');
 		$id_fppp  = $this->input->post('id_fppp');
+
+		$multi_brand = $this->m_fppp->getRowFppp($id_fppp)->row()->multi_brand;
+		$multi_brand_string = $this->m_fppp->getRowFppp($id_fppp)->row()->multi_brand_string;
+
+		if ($multi_brand != '' && $multi_brand_string == '') {
+			$mbq = explode("-", $multi_brand);
+			$this->db->where_in('id', $mbq);
+			$res_brand = $this->db->get('master_brand')->result();
+			$b = array();
+			foreach ($res_brand as $keyq) {
+				$b[] = '*' . $keyq->brand . '<br>';
+			};
+			$data_multi_brand_string = array('multi_brand_string' => implode($b));
+			$this->m_fppp->updateFppp($id_fppp, $data_multi_brand_string);
+		}
+
 		$data['detail'] = $this->m_fppp->getDataDetailTabel($id_fppp);
 		echo json_encode($data);
 	}
