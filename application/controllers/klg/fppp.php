@@ -958,9 +958,13 @@ class Fppp extends CI_Controller
 			// if ($obj['inout'] == 1) {
 			// 	$cekada = $this->m_fppp->getCounter($obj['id_item'], $obj['id_divisi'], $obj['id_gudang'], $obj['keranjang'])->num_rows();
 			// 	if ($cekada < 1) {
+			$this->db->where('item_code', $obj['itm_code']);
+
+			$id_item = $this->db->get('master_item')->row()->id;
+
 			$simpan = array(
 				'id_jenis_item' => $obj['id_jenis_item'],
-				'id_item'       => $obj['id_item'],
+				'id_item'       => $id_item,
 				'id_divisi'     => $obj['id_divisi'],
 				'id_gudang'     => $obj['id_gudang'],
 				'keranjang'     => $obj['keranjang'],
@@ -969,6 +973,19 @@ class Fppp extends CI_Controller
 				'itm_code'       => $obj['itm_code'],
 			);
 			$this->db->insert('data_counter', $simpan);
+
+			$obj = array(
+				'awal_bulan' => 1,
+				'inout' => 1,
+				'id_item' => $id_item,
+				'id_divisi' => $obj['id_divisi'],
+				'id_gudang' => $obj['id_gudang'],
+				'keranjang' => $obj['keranjang'],
+				'id_jenis_item' => 2,
+				'qty_in' => $obj['qty'],
+				'created' => date('Y-m-d H:i:s')
+			);
+			$this->db->insert('data_stock', $obj);
 			// } else {
 			// 	$cekQtyCounter = $this->m_fppp->getCounter($obj['id_item'], $obj['id_divisi'], $obj['id_gudang'], $obj['keranjang'])->row()->qty;
 			// 	$qty_jadi      = (int)$obj['qty_in'] + (int)$cekQtyCounter;
