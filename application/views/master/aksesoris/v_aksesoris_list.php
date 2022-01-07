@@ -30,7 +30,7 @@
                         <?php
                         $i = 1;
                         foreach ($aksesoris->result() as $row) : ?>
-                            <tr>
+                            <tr id="output_data_<?= $row->id ?>" class="output_data">
                                 <td align="center"><?= $i++ ?></td>
                                 <td><?= $row->item_code ?></td>
                                 <td><?= $row->deskripsi ?></td>
@@ -44,6 +44,9 @@
                                         # code...
                                     }
                                     ?>
+                                    <a class="btn btn-xs btn-danger" href="javascript:void(0)" onClick="hapus(<?= $row->id ?>)">
+                                        hapus
+                                    </a>
                                     <a target="_blank" href="<?= base_url('master/aksesoris/cetak_barcode/' . $row->id); ?>" class="btn btn-xs btn-primary">Cetak Barcode</a>
                                 </td>
                             </tr>
@@ -66,5 +69,25 @@
     function cetakExcel() {
         var url = "<?= site_url('master/aksesoris/cetakExcel') ?>";
         window.open(url, "_blank");
+    }
+
+    function hapus(i) {
+        if (confirm('Lanjutkan Proses Hapus?')) {
+            $.ajax({
+                    type: "POST",
+                    url: "<?= site_url('master/aksesoris/delete') ?>",
+                    dataType: 'json',
+                    data: {
+                        'id': i
+                    }
+                })
+                .success(function(datasaved) {
+                    $.growl.notice({
+                        title: 'Sukses',
+                        message: datasaved.msg
+                    });
+                    $('#output_data_' + i).remove();
+                });
+        }
     }
 </script>

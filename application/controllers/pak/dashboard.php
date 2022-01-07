@@ -18,7 +18,20 @@ class Dashboard extends CI_Controller
 
 	public function status_pak()
 	{
-		// $this->db->where('id_jenis_item', 2);
+		$this->db->where('qty <', 1);
+		$this->db->delete('data_counter');
+
+
+		// $this->db->where('id_jenis_item', 1);
+		// $this->db->where('cek_double', 1);
+		// $this->db->delete('master_item');
+		// $res = $this->db->get('master_item');
+		// foreach ($res->result() as $key) {
+		// 	$this->db->where('id_item', $key->id);
+		// }
+
+
+		// $this->db->where('id_jenis_item', 1);
 		// $counter = $this->db->get('master_item');
 		// foreach ($counter->result() as $key) {
 		// 	$object = array('id_item' => $key->id);
@@ -28,7 +41,7 @@ class Dashboard extends CI_Controller
 
 		// $year  = date('Y');
 		// $this->db->where('DATE_FORMAT(created,"%Y")', $year);
-		// // $this->db->where('id_jenis_item', 2);
+		// $this->db->where('id_jenis_item', 1);
 		// $this->db->where('awal_bulan', 1);
 		// $this->db->delete('data_stock');
 
@@ -93,6 +106,7 @@ class Dashboard extends CI_Controller
 				$this->db->insert('data_stock', $obj);
 			}
 		}
+
 		//inti
 
 

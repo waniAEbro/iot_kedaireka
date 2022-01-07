@@ -209,6 +209,31 @@ class Aksesoris extends CI_Controller
         $data['aksesoris'] = $this->m_aksesoris->getData();
         $this->load->view('master/aksesoris/v_aksesoris_cetak', $data);
     }
+
+    public function delete()
+    {
+        $this->fungsi->check_previleges('aksesoris');
+        $id   = $this->input->post('id');
+        $this->db->where('id', $id);
+        $res = $this->db->get('master_item')->result();
+        $obj = array(
+            'id_penghapus' => from_session('id'),
+            'id_tabel' => $id,
+            'tabel' => 'master_item',
+            'keterangan' => json_encode($res),
+            'created' => date('Y-m-d H:i:s'),
+        );
+        $this->db->insert('data_delete', $obj);
+
+        sleep(1);
+        $data = array('id' => $id,);
+        $this->db->where('id', $id);
+        $this->db->delete('master_item');
+
+        $this->fungsi->catat($data, "Menghapus Master Aksesoris dengan data sbb:", true);
+        $respon = ['msg' => 'Data Berhasil Dihapus'];
+        echo json_encode($respon);
+    }
 }
 
 /* End of file aksesoris.php */

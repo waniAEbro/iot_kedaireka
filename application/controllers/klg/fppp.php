@@ -841,13 +841,36 @@ class Fppp extends CI_Controller
 					'perimeter_mf'         => $rowData[0][7],
 					'perimeter_coating'         => $rowData[0][8],
 					'item_code'         => $rowData[0][0] . '-' . $rowData[0][1] . '-' . $rowData[0][2] . '-' . str_pad($rowData[0][3], 2, '0', STR_PAD_LEFT) . '-' . $rowData[0][4],
+					// 'item_code_ata'         => $rowData[0][0] . '--' . $rowData[0][2] . '-' . str_pad($rowData[0][3], 2, '0', STR_PAD_LEFT) . '-' . $rowData[0][4],
 					'created'        => date('Y-m-d H:i:s'),
 				);
+
+				// section_ata
+				// $this->db->where('id_jenis_item', 1);
+				// $this->db->where('item_code', $obj['item_code']);
+				// $res = $this->db->get('master_item')->num_rows();
+
+				// $this->db->where('id_jenis_item', 1);
+				// $this->db->where('item_code', $obj['item_code_ata']);
+				// $res2 = $this->db->get('master_item')->num_rows();
+
+				// if ($res > 0 && $res > 0) {
+				// 	$cd = array('cek_double' => 1);
+				// 	$this->db->where('id_jenis_item', 1);
+				// 	$this->db->where('item_code', $obj['item_code_ata']);
+
+				// 	$this->db->update('master_item', $cd);
+				// }
+
+
+
+
+
 				$obj_stock = array(
 					'itm_code'         => $rowData[0][0] . '-' . $rowData[0][1] . '-' . $rowData[0][2] . '-' . str_pad($rowData[0][3], 2, '0', STR_PAD_LEFT) . '-' . $rowData[0][4],
 					'id_jenis_item'          => 1,
 					'id_gudang'          => $rowData[0][9],
-					'keranjang'          => $rowData[0][10],
+					'keranjang'          => str_replace(' ', '_', $rowData[0][10]),
 					'qty'          => $rowData[0][11],
 					'created'        => date('Y-m-d H:i:s'),
 				);
