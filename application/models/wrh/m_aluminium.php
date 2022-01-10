@@ -77,7 +77,7 @@ class M_aluminium extends CI_Model
         $this->db->where('DATE_FORMAT(created,"%Y")', $year);
         $this->db->where('DATE_FORMAT(created,"%m")', $month);
         $this->db->where('awal_bulan', 1);
-
+        $this->db->where('id_jenis_item', 1);
         return $this->db->get('data_stock');
     }
 
@@ -91,7 +91,7 @@ class M_aluminium extends CI_Model
         // $this->db->select('da.*');
 
         // return $this->db->get('data_stock da');
-        // $this->db->where('id_jenis_item', 1);
+        $this->db->where('id_jenis_item', 1);
 
         return $this->db->get('data_counter');
     }

@@ -53,8 +53,6 @@ class Dashboard extends CI_Controller
 		// $this->db->where('awal_bulan', 1);
 		// $this->db->delete('data_stock');
 
-
-
 		// $this->db->where('id_jenis_item', 1);
 		// $this->db->delete('data_counter');
 

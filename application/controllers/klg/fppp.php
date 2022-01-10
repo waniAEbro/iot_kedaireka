@@ -841,8 +841,8 @@ class Fppp extends CI_Controller
 					'perimeter_mf'         => $rowData[0][7],
 					'perimeter_coating'         => $rowData[0][8],
 					'item_code'         => $rowData[0][0] . '-' . $rowData[0][1] . '-' . $rowData[0][2] . '-' . str_pad($rowData[0][3], 2, '0', STR_PAD_LEFT) . '-' . $rowData[0][4],
-					'code_ata'         => $rowData[0][0] . '-z-' . $rowData[0][2] . '-' . str_pad($rowData[0][3], 2, '0', STR_PAD_LEFT) . '-' . $rowData[0][4],
-					'code_allure'         => 'z-' . $rowData[0][1] . '-' . $rowData[0][2] . '-' . str_pad($rowData[0][3], 2, '0', STR_PAD_LEFT) . '-' . $rowData[0][4],
+					'code_ata'         => $rowData[0][0] . '--' . $rowData[0][2] . '-' . str_pad($rowData[0][3], 2, '0', STR_PAD_LEFT) . '-' . $rowData[0][4],
+					'code_allure'         => '-' . $rowData[0][1] . '-' . $rowData[0][2] . '-' . str_pad($rowData[0][3], 2, '0', STR_PAD_LEFT) . '-' . $rowData[0][4],
 					'created'        => date('Y-m-d H:i:s'),
 				);
 
@@ -851,44 +851,41 @@ class Fppp extends CI_Controller
 				// $this->db->where('item_code', $obj['item_code']);
 				// $res = $this->db->get('master_item')->num_rows();
 
-				$this->db->where('id_jenis_item', 1);
-				$this->db->where('item_code', $obj['item_code']);
-				$res2 = $this->db->get('master_item')->num_rows();
+				// $this->db->where('id_jenis_item', 1);
+				// $this->db->where('item_code', $obj['item_code']);
+				// $res2 = $this->db->get('master_item')->num_rows();
 
-				if ($res2 > 1) {
-					$cd = array('cek_double' => $res2);
-					$this->db->where('id_jenis_item', 1);
-					$this->db->where('item_code', $obj['item_code']);
+				// if ($res2 > 1) {
+				// 	$cd = array('cek_double' => $res2);
+				// 	$this->db->where('id_jenis_item', 1);
+				// 	$this->db->where('item_code', $obj['item_code']);
 
-					$this->db->update('master_item', $cd);
-				}
-
-
-
-
-
-				// $obj_stock = array(
-				// 	'itm_code'         => $rowData[0][0] . '-' . $rowData[0][1] . '-' . $rowData[0][2] . '-' . str_pad($rowData[0][3], 2, '0', STR_PAD_LEFT) . '-' . $rowData[0][4],
-				// 	'id_jenis_item'          => 1,
-				// 	'id_gudang'          => $rowData[0][9],
-				// 	'keranjang'          => str_replace(' ', '_', $rowData[0][10]),
-				// 	'qty'          => $rowData[0][11],
-				// 	'created'        => date('Y-m-d H:i:s'),
-				// );
-
-				// $this->db->insert('data_counter', $obj_stock);
-
-				// $cek_item = $this->m_fppp->cekmasteraluminium($obj['section_ata'], $obj['section_allure'], $obj['temper'], $obj['kode_warna'], $obj['ukuran']);
-				// if ($cek_item->num_rows() < 1) {
-				// 	$this->db->insert('master_item', $obj);
-				// } else {
-				// 	$this->db->where('section_ata', $obj['section_ata']);
-				// 	$this->db->where('section_allure', $obj['section_allure']);
-				// 	$this->db->where('temper', $obj['temper']);
-				// 	$this->db->where('kode_warna', $obj['kode_warna']);
-				// 	$this->db->where('ukuran', $obj['ukuran']);
-				// 	$this->db->update('master_item', $obj);
+				// 	$this->db->update('master_item', $cd);
 				// }
+
+
+
+
+
+				$obj_stock = array(
+					'itm_code'         => $rowData[0][0] . '-' . $rowData[0][1] . '-' . $rowData[0][2] . '-' . str_pad($rowData[0][3], 2, '0', STR_PAD_LEFT) . '-' . $rowData[0][4],
+					'id_jenis_item'          => 1,
+					'id_gudang'          => $rowData[0][9],
+					'keranjang'          => str_replace(' ', '_', $rowData[0][10]),
+					'qty'          => $rowData[0][11],
+					'created'        => date('Y-m-d H:i:s'),
+				);
+
+				$this->db->insert('data_counter', $obj_stock);
+
+				$cek_item = $this->m_fppp->cekItemCodeAluminium($obj['item_code']);
+				if ($cek_item->num_rows() < 1) {
+					$this->db->insert('master_item', $obj);
+				} else {
+					$this->db->where('item_code', $obj['item_code']);
+					$this->db->where('id_jenis_item', 1);
+					$this->db->update('master_item', $obj);
+				}
 			} else if ($jenis_bom == 2) {
 				$obj = array(
 					'id_jenis_item' => 2,

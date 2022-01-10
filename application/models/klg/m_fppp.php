@@ -340,6 +340,13 @@ class M_fppp extends CI_Model
 		return $this->db->get('master_item');
 	}
 
+	public function cekItemCodeAluminium($item_code)
+	{
+		$this->db->where('id_jenis_item', 1);
+		$this->db->where('item_code', $item_code);
+		return $this->db->get('master_item');
+	}
+
 	public function getMasterAksesoris($item_code = '')
 	{
 		$this->db->where('item_code', $item_code);
