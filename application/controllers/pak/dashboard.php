@@ -21,6 +21,14 @@ class Dashboard extends CI_Controller
 		$this->db->where('qty <', 1);
 		$this->db->delete('data_counter');
 
+		// $this->db->where('cek_double', 1);
+		// $res = $this->db->get('master_item');
+		// foreach ($res->result() as $key) {
+		// 	$obja = array('cek_double' => 1);
+		// 	$this->db->where('id_item', $key->id);
+		// 	$this->db->update('data_counter', $obja);
+		// }
+
 
 		// $this->db->where('id_jenis_item', 1);
 		// $this->db->where('cek_double', 1);
@@ -47,7 +55,7 @@ class Dashboard extends CI_Controller
 
 
 
-		// $this->db->where('id_jenis_item', 2);
+		// $this->db->where('id_jenis_item', 1);
 		// $this->db->delete('data_counter');
 
 
