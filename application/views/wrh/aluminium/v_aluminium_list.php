@@ -20,7 +20,14 @@
                 <h3 class="box-title">Monitoring aluminium <?= $warna ?></h3>
 
                 <div class="box-tools pull-right">
+                    <?php
+                    if ($warna == 'MF') { ?>
+                        <a class="btn btn-primary" onclick="cetakExcelmf()">Cetak</a>
+                    <?php } else { ?>
+                        <a class="btn btn-primary" onclick="cetakExcelwarna()">Cetak</a>
+                    <?php }
 
+                    ?>
                 </div>
             </div>
             <div class="box-body" id="printableArea">
@@ -138,6 +145,16 @@
         });
     })
 
+    function cetakExcelmf() {
+        var url = "<?= site_url('wrh/aluminium/cetakExcelMonitoringMf') ?>";
+        window.open(url, "_blank");
+    }
+
+    function cetakExcelwarna() {
+        var url = "<?= site_url('wrh/aluminium/cetakExcelMonitoring') ?>";
+        window.open(url, "_blank");
+    }
+
     function printDiv(divName) {
         // var printContents = document.getElementById(divName).innerHTML;
         // var originalContents = document.body.innerHTML;
@@ -190,31 +207,7 @@
 
     }
 
-    function cetakExcel() {
-        var left = (screen.width / 2) - (640 / 2);
-        var top = (screen.height / 2) - (480 / 2);
-        var store = $('#store').val();
-        if (store != '') {
-            var id_store = store;
-        } else {
-            var id_store = 'x';
-        };
-        var bulan = $('#bulan').val();
-        if (bulan != '') {
-            var id_bulan = bulan;
-        } else {
-            var id_bulan = 'x';
-        };
-        var tahun = $('#tahun').val();
-        if (tahun != '') {
-            var id_tahun = tahun;
-        } else {
-            var id_tahun = 'x';
-        };
-        var status = $('#status').val();
-        var url = "<?= site_url('wrh/aluminium/excel/"+id_store+"/"+id_bulan+"/"+id_tahun+"/"+status+"') ?>";
-        window.open(url, "", "width=640, height=480, scrollbars=yes, left=" + left + ", top=" + top);
-    }
+
 
     $(document).ready(function() {
         $("select").select2();

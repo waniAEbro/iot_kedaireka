@@ -29,7 +29,7 @@ class aksesoris extends CI_Controller
         $this->fungsi->check_previleges('aksesoris');
         $offset  = $this->uri->segment(4, 0);
         $perpage = 10;
-        // $data['user'] = $this->m_catatan->get_user(false,'',$perpage,$offset);
+
         $data['aksesoris'] = $this->m_aksesoris->getData(false, '', $perpage, $offset);
         $total_rows  = $this->m_aksesoris->getData(true, '');
         $data['paging']    = $this->fungsi->create_paging('wrh/aksesoris/list', $total_rows, $perpage, 4);
@@ -72,16 +72,11 @@ class aksesoris extends CI_Controller
         $this->load->view('wrh/aksesoris/v_aksesoris_list', $data);
     }
 
-    public function monitoring_mf()
+    public function cetakExcelMonitoring()
     {
-        $this->fungsi->check_previleges('aksesoris');
-        $data['aksesoris']           = $this->m_aksesoris->getdataMf();
-        $data['stock_awal_bulan']    = $this->m_aksesoris->getStockAwalBulan();
-        $data['total_bom']           = $this->m_aksesoris->getTotalBOM();
-        $data['total_in_per_bulan']  = $this->m_aksesoris->getTotalInPerBulan();
-        $data['total_out_per_bulan'] = $this->m_aksesoris->getTotalOutPerBulan();
-        $data['warna']               = 'MF';
-        $this->load->view('wrh/aksesoris/v_aksesoris_list', $data);
+        $data['aksesoris'] = $this->m_aksesoris->getCetakMonitoring(2);
+        $data['jenis_barang'] = "Aksesoris";
+        $this->load->view('wrh/aksesoris/v_aksesoris_cetak_monitoring', $data);
     }
 
     public function getDetailTabel()
@@ -235,6 +230,7 @@ class aksesoris extends CI_Controller
                 'keranjang'     => str_replace(" ", "", $this->input->post('keranjang')),
                 'qty'           => $this->input->post('qty'),
                 'created'       => date('Y-m-d H:i:s'),
+                'itm_code'           => $this->m_aksesoris->getRowItem($this->input->post('item'))->item_code,
             );
             $this->db->insert('data_counter', $simpan);
         } else {
@@ -1155,6 +1151,7 @@ class aksesoris extends CI_Controller
                 'keranjang'     => $datapost_in['keranjang'],
                 'qty'           => $datapost_in['qty_in'],
                 'created'       => date('Y-m-d H:i:s'),
+                'itm_code'           => $this->m_aksesoris->getRowItem($this->input->post('item'))->item_code,
             );
             $this->db->insert('data_counter', $simpan);
         } else {

@@ -47,6 +47,14 @@ class Dashboard extends CI_Controller
 		// 	$this->db->update('data_counter', $object);
 		// }
 
+		// $this->db->where('id_jenis_item', 2);
+		// $counter = $this->db->get('master_item');
+		// foreach ($counter->result() as $key) {
+		// 	$object = array('itm_code' => $key->item_code);
+		// 	$this->db->where('id_item', $key->id);
+		// 	$this->db->update('data_counter', $object);
+		// }
+
 		// $year  = date('Y');
 		// $this->db->where('DATE_FORMAT(created,"%Y")', $year);
 		// $this->db->where('id_jenis_item', 1);

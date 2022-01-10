@@ -89,6 +89,20 @@ class Aluminium extends CI_Controller
         $this->load->view('wrh/aluminium/v_aluminium_list', $data);
     }
 
+    public function cetakExcelMonitoring()
+    {
+        $data['aksesoris'] = $this->m_aluminium->getCetakMonitoring(1);
+        $data['jenis_barang'] = "Aluminium";
+        $this->load->view('wrh/aksesoris/v_aksesoris_cetak_monitoring', $data);
+    }
+
+    public function cetakExcelMonitoringMf()
+    {
+        $data['aksesoris'] = $this->m_aluminium->getCetakMonitoringMf(1);
+        $data['jenis_barang'] = "Aluminium";
+        $this->load->view('wrh/aksesoris/v_aksesoris_cetak_monitoring', $data);
+    }
+
     public function getDetailTabel()
     {
         $this->fungsi->check_previleges('aluminium');
@@ -237,6 +251,7 @@ class Aluminium extends CI_Controller
                 'keranjang'     => str_replace(" ", "", $this->input->post('keranjang')),
                 'qty'           => $this->input->post('qty'),
                 'created'       => date('Y-m-d H:i:s'),
+                'itm_code'           => $this->m_aksesoris->getRowItem($this->input->post('item'))->item_code,
             );
             $this->db->insert('data_counter', $simpan);
         } else {
@@ -1097,6 +1112,7 @@ class Aluminium extends CI_Controller
                 'keranjang'     => $datapost_in['keranjang'],
                 'qty'           => $datapost_in['qty_in'],
                 'created'       => date('Y-m-d H:i:s'),
+                'itm_code'           => $this->m_aksesoris->getRowItem($this->input->post('item'))->item_code,
             );
             $this->db->insert('data_counter', $simpan);
         } else {

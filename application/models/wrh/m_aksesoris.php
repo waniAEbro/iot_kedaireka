@@ -8,10 +8,16 @@ class M_aksesoris extends CI_Model
     {
         $id_jenis_item = 2;
         $this->db->where('mi.id_jenis_item', $id_jenis_item);
-
         $this->db->select('mi.*');
-
         return $this->db->get('master_item mi');
+
+        // $this->db->join('master_item mi', 'mi.id = dc.id_item', 'left');
+        // $this->db->where('dc.id_jenis_item', $id_jenis_item);
+
+        // $this->db->group_by('dc.id_item');
+        // $this->db->select('mi.*');
+
+        // return $this->db->get('data_counter dc');
     }
     public function getdataItem()
     {
@@ -42,6 +48,16 @@ class M_aksesoris extends CI_Model
 
         // return $this->db->get('data_stock da');
         return $this->db->get('data_counter');
+    }
+
+    public function getCetakMonitoring($id_jenis_barang)
+    {
+        $this->db->join('master_divisi_stock md', 'md.id = dc.id_divisi', 'left');
+        $this->db->join('master_gudang mg', 'mg.id = dc.id_gudang', 'left');
+        $this->db->select('dc.*,md.divisi,mg.gudang');
+
+        $this->db->where('dc.id_jenis_item', $id_jenis_barang);
+        return $this->db->get('data_counter dc');
     }
 
     public function getStockBulanSebelum($id, $id_divisi, $id_gudang, $keranjang)
@@ -407,6 +423,12 @@ class M_aksesoris extends CI_Model
     {
         $this->db->where('id', $id_stock);
         return $this->db->get('data_stock')->row();
+    }
+
+    public function getRowItem($id)
+    {
+        $this->db->where('id', $id);
+        return $this->db->get('master_item')->row();
     }
 
     public function hapusParsial($id_stock)

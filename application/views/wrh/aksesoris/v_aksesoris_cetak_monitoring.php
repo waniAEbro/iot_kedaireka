@@ -10,37 +10,30 @@
 <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
 
-<h1>List Master Aluminium</h1>
+<h1>Monitoring <?= $jenis_barang ?></h1>
 <table id="example" class="display nowrap" style="width:100%">
     <thead>
         <tr bgcolor="#ffe357">
             <th width="5%">No</th>
+            <th>Item Code</th>
             <th>Divisi</th>
-            <th>Section ATA</th>
-            <th>Section Allure</th>
-            <th>Temper</th>
-            <th>Warna</th>
-            <th width="25%">Deskripsi Warna</th>
-            <th>Ukuran</th>
-            <th>Satuan</th>
+            <th>Gudang</th>
+            <th>Keranjang</th>
+            <th>Qty</th>
         </tr>
     </thead>
     <tbody>
         <?php
         $i = 1;
-        $all_item = 0;
-        foreach ($aluminium->result() as $row) {
+        foreach ($aksesoris->result() as $row) {
         ?>
             <tr>
                 <td align="center"><?= $i++ ?></td>
+                <td><?= $row->itm_code ?></td>
                 <td><?= $row->divisi ?></td>
-                <td><?= $row->section_ata ?></td>
-                <td><?= $row->section_allure ?></td>
-                <td><?= $row->temper ?></td>
-                <td><?= $row->kode_warna ?></td>
-                <td><?= $row->warna ?></td>
-                <td><?= $row->ukuran ?></td>
-                <td><?= $row->satuan ?></td>
+                <td><?= $row->gudang ?></td>
+                <td><?= $row->keranjang ?></td>
+                <td align="center"><?= $row->qty ?></td>
             </tr>
         <?php } ?>
     </tbody>
