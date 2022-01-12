@@ -88,6 +88,7 @@
                         <th>DEADLINE SALES</th>
                         <th>DEADLINE WORKSHOP</th>
                         <th>STATUS ORDER</th>
+                        <th>NOTE</th>
                         <th style="background-color:#5c0000"></th>
                         <th>ACC PROJECT</th>
                         <th style="background-color:#5c0000"></th>
@@ -200,6 +201,7 @@
                                     <input type='date' class='txtedit' data-id='<?= $row->id ?>' data-field='deadline_workshop' id='<?= $row->id ?>' value='<?= $row->deadline_workshop ?>'>
                                 </td>
                                 <td><?= $row->status_order ?></td>
+                                <td><?= $row->note ?></td>
                                 <td style="background-color:#5c0000"></td>
                                 <td style="background-color:#ffd45e" align="center"><span id="acc_project_<?= $row->id ?>" class='edit'><?= $acc_project ?></span>
                                     <input type='text' class='txtedit' data-id='<?= $row->id ?>' data-field='acc_project' id='<?= $row->id ?>' value='<?= $row->acc_project ?>'>
