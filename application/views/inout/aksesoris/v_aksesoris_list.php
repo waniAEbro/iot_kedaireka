@@ -38,6 +38,7 @@
                         <table width="100%" id="tableku" class="table table-striped">
                             <thead>
                                 <th width="5%">No</th>
+                                <th>Tgl Aktual</th>
                                 <th>Status</th>
                                 <th>Stok Awal Bulan</th>
                                 <th>Tgl</th>
@@ -63,6 +64,7 @@
                                 ?>
                                     <tr>
                                         <td align="center"><?= $i++ ?></td>
+                                        <td><?= $row->aktual ?></td>
                                         <td><?= $status ?></td>
                                         <td><?= $awal_bulan ?></td>
                                         <td><?= $row->tgl_stok ?></td>
