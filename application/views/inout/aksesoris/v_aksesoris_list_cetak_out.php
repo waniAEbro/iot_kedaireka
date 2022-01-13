@@ -15,8 +15,9 @@
     <thead>
         <tr bgcolor="#ffe357">
             <th width="5%">No</th>
+            <th>Tgl Aktual</th>
+            <th>Tgl Input</th>
             <th>Status</th>
-            <th>Tgl</th>
             <th>Item Code</th>
             <th width="25%">Deskripsi</th>
             <th>Satuan</th>
@@ -39,8 +40,9 @@
 
             <tr>
                 <td align="center"><?= $i++ ?></td>
-                <td><?= $status ?></td>
+                <td><?= $row->tgl_aktual ?></td>
                 <td><?= $row->tgl_stok ?></td>
+                <td><?= $status ?></td>
                 <td><?= $row->item_code ?></td>
                 <td><?= $row->deskripsi ?></td>
                 <td><?= $row->satuan ?></td>
