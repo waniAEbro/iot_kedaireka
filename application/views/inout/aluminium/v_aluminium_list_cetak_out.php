@@ -15,8 +15,9 @@
     <thead>
         <tr bgcolor="#ffe357">
             <th width="5%">No</th>
+            <th>Tgl Aktual</th>
+            <th>Tgl Input</th>
             <th>Status</th>
-            <th>Tgl</th>
             <th>Section ATA</th>
             <th>Section Allure</th>
             <th>Temper</th>
@@ -43,8 +44,9 @@
 
             <tr>
                 <td align="center"><?= $i++ ?></td>
-                <td><?= $status ?></td>
+                <td><?= $row->tgl_aktual ?></td>
                 <td><?= $row->tgl_stok ?></td>
+                <td><?= $status ?></td>
                 <td><?= $row->section_ata ?></td>
                 <td><?= $row->section_allure ?></td>
                 <td><?= $row->temper ?></td>
