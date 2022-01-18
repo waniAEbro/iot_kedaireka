@@ -1151,7 +1151,7 @@ class aksesoris extends CI_Controller
                 'keranjang'     => $datapost_in['keranjang'],
                 'qty'           => $datapost_in['qty_in'],
                 'created'       => date('Y-m-d H:i:s'),
-                'itm_code'           => $this->m_aksesoris->getRowItem($this->input->post('item'))->item_code,
+                'itm_code'           => $this->m_aksesoris->getRowItem($this->input->post('id_item'))->item_code,
             );
             $this->db->insert('data_counter', $simpan);
         } else {
