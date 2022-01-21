@@ -8,6 +8,7 @@ class Dashboard extends CI_Controller
 		parent::__construct();
 		$this->fungsi->restrict();
 		$this->load->model('wrh/m_aluminium');
+		$this->load->model('wrh/m_aksesoris');
 		// $this->load->model('master/m_aluminium');
 	}
 
@@ -21,12 +22,64 @@ class Dashboard extends CI_Controller
 		$this->db->where('qty <', 1);
 		$this->db->delete('data_counter');
 
+
+		// $year  = date('Y');
+		// $this->db->where('DATE_FORMAT(created,"%Y")', $year);
+		// $this->db->where('id_jenis_item', 1);
+		// $this->db->where('awal_bulan', 0);
+		// $this->db->where('inout', 2);
+		// $hsl = $this->db->get('data_stock');
+		// foreach ($hsl->result() as $key) {
+		// $cekDataCounter = $this->m_aluminium->getDataCounter($key->id_item,  $key->id_gudang, $key->keranjang)->num_rows();
+		// if ($cekDataCounter == 0) {
+		// 	$simpan = array(
+		// 		'id_jenis_item' => 1,
+		// 		'id_item'       => $key->id_item,
+		// 		'id_gudang'     => $key->id_gudang,
+		// 		'keranjang'     => $key->keranjang,
+		// 		'qty'           => $key->qty_in,
+		// 		'created'       => date('Y-m-d H:i:s'),
+		// 		'itm_code'           => $this->m_aksesoris->getRowItem($key->id_item)->item_code,
+		// 	);
+		// 	$this->db->insert('data_counter', $simpan);
+		// } else {
+		// 	$cekQtyCounter = $this->m_aluminium->getDataCounter($key->id_item,  $key->id_gudang, $key->keranjang)->row()->qty;
+		// 	$qty_jadi      = (int)$key->qty_in + (int)$cekQtyCounter;
+		// 	$this->m_aluminium->updateDataCounter($key->id_item,  $key->id_gudang, $key->keranjang, $qty_jadi);
+		// }
+
+		// $cekQtyCounter = $this->m_aluminium->getDataCounter($key->id_item,  $key->id_gudang, $key->keranjang)->row()->qty;
+		// $qty_jadi      = (int)$cekQtyCounter - (int)$key->qty_out;
+		// $this->m_aluminium->updateDataCounter($key->id_item,  $key->id_gudang, $key->keranjang, $qty_jadi);
+		// }
+
+
 		// $this->db->where('cek_double', 1);
 		// $res = $this->db->get('master_item');
 		// foreach ($res->result() as $key) {
 		// 	$obja = array('cek_double' => 1);
 		// 	$this->db->where('id_item', $key->id);
 		// 	$this->db->update('data_counter', $obja);
+		// }
+
+
+		// $this->db->where('susulan', 1);
+		// $awal_susulan = $this->db->get('data_counter');
+
+
+		// foreach ($awal_susulan->result() as $key) {
+		// 	$obj = array(
+		// 		'awal_bulan' => 1,
+		// 		'inout' => 1,
+		// 		'id_item' => $key->id_item,
+		// 		'id_divisi' => $key->id_divisi,
+		// 		'id_gudang' => $key->id_gudang,
+		// 		'keranjang' => $key->keranjang,
+		// 		'id_jenis_item' => $key->id_jenis_item,
+		// 		'qty_in' => $key->qty,
+		// 		'created' => date('Y-m-d H:i:s')
+		// 	);
+		// 	$this->db->insert('data_stock', $obj);
 		// }
 
 
@@ -43,6 +96,7 @@ class Dashboard extends CI_Controller
 		// $counter = $this->db->get('master_item');
 		// foreach ($counter->result() as $key) {
 		// 	$object = array('id_item' => $key->id);
+		// 	$this->db->where('id_jenis_item', 1);
 		// 	$this->db->where('itm_code', $key->item_code);
 		// 	$this->db->update('data_counter', $object);
 		// }

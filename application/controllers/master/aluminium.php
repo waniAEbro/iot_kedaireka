@@ -105,7 +105,19 @@ class aluminium extends CI_Controller
             $data['edit'] = $this->db->get_where('master_item', array('id' => $id));
             $this->load->view('master/aluminium/v_aluminium_edit', $data);
         } else {
-            $datapost = get_post_data(array('id', 'id_jenis_item', 'section_ata', 'section_allure', 'temper', 'kode_warna', 'ukuran', 'satuan', 'divisi'));
+            // $datapost = get_post_data(array('id', 'id_jenis_item', 'section_ata', 'section_allure', 'temper', 'kode_warna', 'ukuran', 'satuan', 'divisi'));
+            $datapost = array(
+                'id' => $this->input->post('id'),
+                'id_jenis_item' => $this->input->post('id_jenis_item'),
+                'section_ata' => $this->input->post('section_ata'),
+                'section_allure' => $this->input->post('section_allure'),
+                'temper' => $this->input->post('temper'),
+                'kode_warna' => $this->input->post('kode_warna'),
+                'ukuran' => $this->input->post('ukuran'),
+                'satuan' => $this->input->post('satuan'),
+                'divisi' => $this->input->post('divisi'),
+                'item_code' => $this->input->post('section_ata') . '-' . $this->input->post('section_allure') . '-' . $this->input->post('temper') . '-' . $this->input->post('kode_warna') . '-' . $this->input->post('ukuran'),
+            );
             $this->m_aluminium->updateData($datapost);
             $id_warna = $this->m_aluminium->getRowIdWarna($this->input->post('kode_warna'));
             $datax = array(
