@@ -19,16 +19,19 @@ class Dashboard extends CI_Controller
 
 	public function status_pak()
 	{
-		$this->db->where('qty <', 1);
-		$this->db->delete('data_counter');
+		// $this->db->where('qty <', 1);
+		// $this->db->delete('data_counter');
 
 
 		// $year  = date('Y');
-		// $this->db->where('DATE_FORMAT(created,"%Y")', $year);
-		// $this->db->where('id_jenis_item', 1);
-		// $this->db->where('awal_bulan', 0);
-		// $this->db->where('inout', 2);
-		// $hsl = $this->db->get('data_stock');
+		// $this->db->join('master_item mi', 'mi.id = ds.id_item', 'left');
+		// $this->db->where('mi.id_jenis_item', 1);
+
+		// $this->db->where('DATE_FORMAT(ds.created,"%Y")', $year);
+		// $this->db->where('ds.mutasi', 1);
+		// $this->db->where('ds.awal_bulan', 0);
+		// $this->db->where('ds.inout', 2);
+		// $hsl = $this->db->get('data_stock_20-2-2022 ds');
 		// foreach ($hsl->result() as $key) {
 		// $cekDataCounter = $this->m_aluminium->getDataCounter($key->id_item,  $key->id_gudang, $key->keranjang)->num_rows();
 		// if ($cekDataCounter == 0) {
