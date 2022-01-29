@@ -4,7 +4,7 @@
     <div class="col-lg-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">List Item Stock Out aluminium</h3>
+                <h3 class="box-title">List Item Stock Out Aluminium</h3>
                 <div class="box-tools pull-right">
                     <?php //echo button('load_silent("wrh/aluminium/bon_manual","#content")', 'Kembali', 'btn btn-success');
                     ?>

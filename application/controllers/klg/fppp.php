@@ -145,8 +145,6 @@ class Fppp extends CI_Controller
 		$data['row']             = $this->m_fppp->getRowFppp($id)->row();
 		$data['detail']          = $this->m_fppp->getRowFpppDetail($id);
 		$data['sudah_transaksi'] = $this->m_fppp->getNumSuratJalan($id);
-		$nama_divisi       = $this->m_fppp->getRowNamaDivisi($param)->divisi_pendek;
-		$data['no_fppp']         = str_pad($this->m_fppp->getNoFppp($param), 3, '0', STR_PAD_LEFT) . '/FPPP/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
 		$this->load->view('klg/fppp/v_fppp_edit', $data);
 	}
 
@@ -322,9 +320,6 @@ class Fppp extends CI_Controller
 	{
 		$this->fungsi->check_previleges('fppp');
 		$id_fppp     = $this->input->post('id_fppp');
-		$param       = $this->input->post('id_divisi');
-		$nama_divisi = $this->m_fppp->getRowNamaDivisi($param)->divisi_pendek;
-		$nofppp      = str_pad($this->m_fppp->getNoFppp($param), 3, '0', STR_PAD_LEFT) . '/FPPP/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
 
 
 
@@ -335,6 +330,7 @@ class Fppp extends CI_Controller
 			'applicant_sector'       => $this->input->post('applicant_sector'),
 			'authorized_distributor' => $this->input->post('authorized_distributor'),
 			'multi_brand'            => $this->input->post('multi_brand'),
+			'no_fppp'                => $this->input->post('no_fppp'),
 			'applicant'              => $this->input->post('applicant'),
 			'no_co'                  => $this->input->post('no_co'),
 			'applicant_sector'       => $this->input->post('applicant_sector'),
@@ -410,11 +406,6 @@ class Fppp extends CI_Controller
 			$err = $this->upload->display_errors('<span class="error_string">', '</span>');
 		} else {
 			$data        = $this->upload->data();
-			$param       = $this->input->post('id_divisi');
-			$nama_divisi = $this->m_fppp->getRowNamaDivisi($param)->divisi_pendek;
-			$nofppp      = str_pad($this->m_fppp->getNoFppp($param), 3, '0', STR_PAD_LEFT) . '/FPPP/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
-
-
 
 			$datapost = array(
 				'id_divisi'              => $this->input->post('id_divisi'),

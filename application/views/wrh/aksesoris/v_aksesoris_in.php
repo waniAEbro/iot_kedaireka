@@ -2,7 +2,7 @@
     <div class="col-lg-3">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Input Stock</h3>
+                <h3 class="box-title">Input Stock Aksesoris</h3>
             </div>
             <div class="div-pembelian">
                 <form method="post" class="form-vertical form" role="form" id="formid">

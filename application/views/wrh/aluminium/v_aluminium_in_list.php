@@ -3,7 +3,7 @@
     <div class="col-lg-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Stok IN Bulan Ini</h3>
+                <h3 class="box-title">Stok IN Bulan Ini Aluminium</h3>
                 <div class="box-tools pull-right">
                     <?php
                     $sesi = from_session('level');
