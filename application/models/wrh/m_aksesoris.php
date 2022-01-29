@@ -814,9 +814,11 @@ class M_aksesoris extends CI_Model
         $this->db->where('ds.id_surat_jalan', 0);
         $this->db->where('ds.is_bom', 0);
         $this->db->where('ds.inout', 2);
+        $this->db->where('ds.mutasi', 0);
         $this->db->where('ds.id_penginput', from_session('id'));
         $this->db->where('ds.id_jenis_item', $id_jenis_item);
         $this->db->select('mw2.warna as warna_awal,mw.warna as warna_akhir,ds.id as id_stock,ds.*,df.no_fppp,df.nama_proyek,mds.divisi as divisi_stock,mg.gudang,mi.*,mb.brand');
+        $this->db->order_by('ds.id', 'desc');
 
         return $this->db->get('data_stock ds');
     }
