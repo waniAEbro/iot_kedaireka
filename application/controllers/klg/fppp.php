@@ -123,6 +123,8 @@ class Fppp extends CI_Controller
 	{
 		$this->fungsi->check_previleges('fppp');
 		$param                = $this->m_fppp->getRowFppp($id)->row()->id_divisi;
+		$cek_id_terakhir = $this->m_fppp->cekIdTerakhir($param)->row()->id;
+		$data['is_edit'] = ($cek_id_terakhir == $id) ? '' : 'readonly';
 		$data['proyek']             = $this->db->get('master_proyek');
 		$data['divisi']             = get_options($this->db->get('master_divisi'), 'id', 'divisi');
 		$data['pengiriman']         = get_options($this->db->get('master_pengiriman'), 'id', 'pengiriman');
