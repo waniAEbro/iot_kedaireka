@@ -3,7 +3,7 @@
     <div class="col-lg-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Stok Point Aksesoris</h3>
+                <h3 class="box-title">Stok Point Aluminium</h3>
             </div>
             <div class="box-body">
                 <div class="row">
