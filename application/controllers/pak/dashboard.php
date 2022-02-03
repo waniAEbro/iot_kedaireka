@@ -19,10 +19,7 @@ class Dashboard extends CI_Controller
 
 	public function status_pak()
 	{
-		$this->db->where('qty <', 1);
-		$this->db->delete('data_counter');
-		$this->m_aksesoris->cekAdaStockPoint(1);
-		$this->m_aksesoris->cekAdaStockPoint(2);
+
 
 
 		// $year  = date('Y');
@@ -224,6 +221,14 @@ class Dashboard extends CI_Controller
 
 
 		$this->load->view('v_dashboard');
+	}
+
+	public function cron_stock_point()
+	{
+		$this->db->where('qty <', 1);
+		$this->db->delete('data_counter');
+		$this->m_aksesoris->cekAdaStockPoint(1);
+		$this->m_aksesoris->cekAdaStockPoint(2);
 	}
 
 	public function insertbarcode($code, $id)
