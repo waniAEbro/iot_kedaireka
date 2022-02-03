@@ -64,7 +64,7 @@ class M_aksesoris extends CI_Model
     {
         $hit_tgl = date('Y-m-d', strtotime(date('Y-m-d') . '- 1 month'));
 
-        $year = date('Y', strtotime($hit_tgl));
+        $year  = date('Y', strtotime($hit_tgl));
         $month = date('m', strtotime($hit_tgl));
         $this->db->where('DATE_FORMAT(created,"%Y")', $year);
         $this->db->where('DATE_FORMAT(created,"%m")', $month);
@@ -74,7 +74,7 @@ class M_aksesoris extends CI_Model
         $this->db->select('sum(qty_in) as stock_in');
         $this->db->where('inout', 1);
         $this->db->where('id_item', $id);
-        $res_in = $this->db->get('data_stock');
+        $res_in   = $this->db->get('data_stock');
         $stock_in = ($res_in->num_rows() < 1) ? 0 : $res_in->row()->stock_in;
 
         $this->db->where('DATE_FORMAT(created,"%Y")', $year);
@@ -85,7 +85,7 @@ class M_aksesoris extends CI_Model
         $this->db->select('sum(qty_out) as stock_out');
         $this->db->where('inout', 2);
         $this->db->where('id_item', $id);
-        $res_out = $this->db->get('data_stock');
+        $res_out   = $this->db->get('data_stock');
         $stock_out = ($res_out->num_rows() < 1) ? 0 : $res_out->row()->stock_out;
 
         return $stock_in - $stock_out;
@@ -100,7 +100,7 @@ class M_aksesoris extends CI_Model
         $this->db->where('ds.awal_bulan', 1);
         $this->db->select('*');
 
-        $res = $this->db->get('data_stock ds');
+        $res  = $this->db->get('data_stock ds');
         $data = array();
 
         foreach ($res->result() as $key) {
@@ -128,7 +128,7 @@ class M_aksesoris extends CI_Model
     {
         $this->db->where('id_fppp !=', 0);
         $this->db->where('status_fppp', 0);
-        $res = $this->db->get('data_stock');
+        $res  = $this->db->get('data_stock');
         $data = array();
         foreach ($res->result() as $key) {
 
@@ -150,7 +150,7 @@ class M_aksesoris extends CI_Model
         $this->db->where('awal_bulan', 0);
         $this->db->where('mutasi', 0);
 
-        $res = $this->db->get('data_stock');
+        $res  = $this->db->get('data_stock');
         $data = array();
         foreach ($res->result() as $key) {
 
@@ -169,7 +169,7 @@ class M_aksesoris extends CI_Model
         // $this->db->where('is_bom', 1);
         $this->db->where('status_fppp', 0);
 
-        $res = $this->db->get('data_stock');
+        $res  = $this->db->get('data_stock');
         $data = array();
         foreach ($res->result() as $key) {
 
@@ -193,7 +193,7 @@ class M_aksesoris extends CI_Model
         // $this->db->where('status_fppp', 0);
         // $this->db->where('id_surat_jalan !=', 0);
 
-        $res = $this->db->get('data_stock');
+        $res  = $this->db->get('data_stock');
         $data = array();
         foreach ($res->result() as $key) {
 
@@ -236,7 +236,7 @@ class M_aksesoris extends CI_Model
 
         // $year = date('Y', strtotime($hit_tgl));
         // $month = date('m', strtotime($hit_tgl));
-        $year = date('Y');
+        $year  = date('Y');
         $month = date('m');
         $this->db->where('DATE_FORMAT(created,"%Y")', $year);
         $this->db->where('DATE_FORMAT(created,"%m")', $month);
@@ -246,7 +246,7 @@ class M_aksesoris extends CI_Model
         $this->db->where('keranjang', $keranjang);
         $this->db->where('awal_bulan', 1);
 
-        $res = $this->db->get('data_stock');
+        $res   = $this->db->get('data_stock');
         $stock = ($res->num_rows() < 1) ? 0 : $res->row()->qty_in;
 
         return $stock;
@@ -254,7 +254,7 @@ class M_aksesoris extends CI_Model
 
     public function getQtyInDetailTabelMonth($id, $id_divisi, $id_gudang, $keranjang)
     {
-        $year = date('Y');
+        $year  = date('Y');
         $month = date('m');
         $this->db->where('DATE_FORMAT(created,"%Y")', $year);
         $this->db->where('DATE_FORMAT(created,"%m")', $month);
@@ -265,13 +265,13 @@ class M_aksesoris extends CI_Model
         $this->db->select('sum(qty_in) as stock_in');
         $this->db->where('inout', 1);
         $this->db->where('awal_bulan', 0);
-        $res = $this->db->get('data_stock');
+        $res   = $this->db->get('data_stock');
         $stock = ($res->num_rows() < 1) ? 0 : $res->row()->stock_in;
         return $stock;
     }
     public function getQtyInDetailTabelMonitoring($id, $id_divisi, $id_gudang, $keranjang)
     {
-        $year = date('Y');
+        $year  = date('Y');
         $month = date('m');
         $this->db->where('DATE_FORMAT(created,"%Y")', $year);
         $this->db->where('DATE_FORMAT(created,"%m")', $month);
@@ -283,13 +283,13 @@ class M_aksesoris extends CI_Model
         $this->db->where('inout', 1);
         $this->db->where('awal_bulan', 0);
         // $this->db->where('mutasi', 0);
-        $res = $this->db->get('data_stock');
+        $res   = $this->db->get('data_stock');
         $stock = ($res->num_rows() < 1) ? 0 : $res->row()->stock_in;
         return $stock;
     }
     public function getQtyInDetailTabel($id, $id_divisi, $id_gudang, $keranjang)
     {
-        $year = date('Y');
+        $year  = date('Y');
         $month = date('m');
         $this->db->where('DATE_FORMAT(created,"%Y")', $year);
         $this->db->where('DATE_FORMAT(created,"%m")', $month);
@@ -299,14 +299,14 @@ class M_aksesoris extends CI_Model
         $this->db->where('keranjang', $keranjang);
         $this->db->select('sum(qty_in) as stock_in');
         $this->db->where('inout', 1);
-        $res = $this->db->get('data_stock');
+        $res   = $this->db->get('data_stock');
         $stock = ($res->num_rows() < 1) ? 0 : $res->row()->stock_in;
         return $stock;
     }
 
     public function getQtyOutDetailTabel($id, $id_divisi, $id_gudang, $keranjang)
     {
-        $year = date('Y');
+        $year  = date('Y');
         $month = date('m');
         $this->db->where('DATE_FORMAT(updated,"%Y")', $year);
         $this->db->where('DATE_FORMAT(updated,"%m")', $month);
@@ -317,14 +317,14 @@ class M_aksesoris extends CI_Model
         $this->db->select('sum(qty_out) as stock_out');
         $this->db->where('inout', 2);
 
-        $res = $this->db->get('data_stock');
+        $res   = $this->db->get('data_stock');
         $stock = ($res->num_rows() < 1) ? 0 : $res->row()->stock_out;
         return $stock;
     }
 
     public function getQtyOutDetailTabelMonitoring($id, $id_divisi, $id_gudang, $keranjang)
     {
-        $year = date('Y');
+        $year  = date('Y');
         $month = date('m');
         $this->db->where('DATE_FORMAT(updated,"%Y")', $year);
         $this->db->where('DATE_FORMAT(updated,"%m")', $month);
@@ -336,7 +336,7 @@ class M_aksesoris extends CI_Model
         $this->db->where('inout', 2);
         // $this->db->where('mutasi', 0);
 
-        $res = $this->db->get('data_stock');
+        $res   = $this->db->get('data_stock');
         $stock = ($res->num_rows() < 1) ? 0 : $res->row()->stock_out;
         return $stock;
     }
@@ -404,7 +404,7 @@ class M_aksesoris extends CI_Model
     public function updateDataCounter($item, $divisi, $gudang, $keranjang, $qty)
     {
         $id_jenis_item = 2;
-        $object = array('qty' => $qty,);
+        $object        = array('qty' => $qty,);
         $this->db->where('id_jenis_item', $id_jenis_item);
         $this->db->where('id_item', $item);
         $this->db->where('id_divisi', $divisi);
@@ -453,8 +453,8 @@ class M_aksesoris extends CI_Model
     {
         $this->db->where('is_bom', 1);
         $this->db->where('id_jenis_item', $jenis_item);
-        $res = $this->db->get('data_stock');
-        $data = array();
+        $res   = $this->db->get('data_stock');
+        $data  = array();
         $nilai = 0;
         foreach ($res->result() as $key) {
             if (isset($data[$key->id_fppp])) {
@@ -471,8 +471,8 @@ class M_aksesoris extends CI_Model
     {
         $this->db->where('is_bom', 1);
         $this->db->where('id_jenis_item', $jenis_item);
-        $res = $this->db->get('data_stock');
-        $data = array();
+        $res   = $this->db->get('data_stock');
+        $data  = array();
         $nilai = 0;
         foreach ($res->result() as $key) {
             if (isset($data[$key->id_fppp])) {
@@ -682,8 +682,8 @@ class M_aksesoris extends CI_Model
     public function getKeterangan()
     {
         $this->db->where('lapangan', 1);
-        $res = $this->db->get('data_stock');
-        $data = array();
+        $res   = $this->db->get('data_stock');
+        $data  = array();
         $nilai = 0;
         foreach ($res->result() as $key) {
             if (isset($data[$key->id_surat_jalan])) {
@@ -698,8 +698,8 @@ class M_aksesoris extends CI_Model
 
     public function getNoSuratJalan()
     {
-        $year  = date('Y');
-        $month = date('m');
+        $year          = date('Y');
+        $month         = date('m');
         $id_jenis_item = 2;
         $this->db->where('DATE_FORMAT(created,"%Y")', $year);
         $this->db->where('DATE_FORMAT(created,"%m")', $month);
@@ -1144,6 +1144,41 @@ class M_aksesoris extends CI_Model
         $dt = array('in_temp' => 0);
         $this->db->where('id_penginput', from_session('id'));
         $this->db->update('data_stock', $dt);
+    }
+
+    public function cekAdaStockPoint($id_jenis_item)
+    {
+        $this->db->where('DATE(created)', date('Y-m-d'));
+        $this->db->where('id_jenis_item', $id_jenis_item);
+        $cek = $this->db->get('data_stok_poin')->num_rows();
+        if ($cek < 1) {
+            $this->db->where('dc.id_jenis_item', $id_jenis_item);
+            $counter = $this->db->get('data_counter dc');
+            foreach ($counter->result() as $key) {
+                $masuk = array(
+                    'id_jenis_item' => $id_jenis_item,
+                    'id_item'       => $key->id_item,
+                    'id_divisi'     => $key->id_divisi,
+                    'id_gudang'     => $key->id_gudang,
+                    'keranjang'     => $key->keranjang,
+                    'qty'           => $key->qty,
+                    'created'       => date('Y-m-d H:i:s'),
+                    'itm_code'      => $key->itm_code,
+                );
+                $this->db->insert('data_stok_poin', $masuk);
+            }
+        }
+    }
+
+    public function getListStockPoint($tgl = '')
+    {
+        $this->db->join('master_item mi', 'mi.id = ds.id_item', 'left');
+        $this->db->join('master_divisi_stock mds', 'mds.id = ds.id_divisi', 'left');
+        $this->db->join('master_gudang mg', 'mg.id = ds.id_gudang', 'left');
+        $this->db->where('ds.id_jenis_item', 2);
+        $this->db->where('DATE(ds.created)', $tgl);
+        $this->db->select('ds.*,mds.divisi,mg.gudang,mi.item_code,mi.deskripsi');
+        return $this->db->get('data_stok_poin ds');
     }
 }
 

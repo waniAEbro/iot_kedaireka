@@ -1171,6 +1171,22 @@ class aksesoris extends CI_Controller
 
         $this->load->view('wrh/aksesoris/v_aksesoris_mutasi_stock_history', $data);
     }
+
+    public function stockPointList($tgl = '')
+    {
+        $this->fungsi->check_previleges('aksesoris');
+        $tgl_def = date('Y-m-d');
+
+        if ($tgl == '') {
+            $data['tgl']  = $tgl_def;
+        } else {
+            $data['tgl']  = $tgl;
+        }
+
+        $data['list_data']   = $this->m_aksesoris->getListStockPoint($data['tgl']);
+
+        $this->load->view('wrh/aksesoris/v_aksesoris_stock_point', $data);
+    }
 }
 
 /* End of file aksesoris.php */

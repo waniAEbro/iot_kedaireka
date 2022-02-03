@@ -1131,6 +1131,22 @@ class Aluminium extends CI_Controller
         $data['mutasi'] = $this->m_aluminium->getMutasiHistory($id);
         $this->load->view('wrh/aluminium/v_aluminium_mutasi_stock_history', $data);
     }
+
+    public function stockPointList($tgl = '')
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $tgl_def = date('Y-m-d');
+
+        if ($tgl == '') {
+            $data['tgl']  = $tgl_def;
+        } else {
+            $data['tgl']  = $tgl;
+        }
+
+        $data['list_data']   = $this->m_aluminium->getListStockPoint($data['tgl']);
+
+        $this->load->view('wrh/aluminium/v_aluminium_stock_point', $data);
+    }
 }
 
 /* End of file aluminium.php */

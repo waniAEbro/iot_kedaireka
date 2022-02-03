@@ -19,8 +19,10 @@ class Dashboard extends CI_Controller
 
 	public function status_pak()
 	{
-		// $this->db->where('qty <', 1);
-		// $this->db->delete('data_counter');
+		$this->db->where('qty <', 1);
+		$this->db->delete('data_counter');
+		$this->m_aksesoris->cekAdaStockPoint(1);
+		$this->m_aksesoris->cekAdaStockPoint(2);
 
 
 		// $year  = date('Y');

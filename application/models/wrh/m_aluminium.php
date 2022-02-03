@@ -1286,6 +1286,17 @@ class M_aluminium extends CI_Model
 
         return $this->db->get('data_counter')->num_rows();
     }
+
+    public function getListStockPoint($tgl = '')
+    {
+        $this->db->join('master_item mi', 'mi.id = ds.id_item', 'left');
+        $this->db->join('master_gudang mg', 'mg.id = ds.id_gudang', 'left');
+        $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
+        $this->db->where('ds.id_jenis_item', 1);
+        $this->db->where('DATE(ds.created)', $tgl);
+        $this->db->select('ds.*,mg.gudang,mi.item_code,mwa.warna');
+        return $this->db->get('data_stok_poin ds');
+    }
 }
 
 /* End of file m_aluminium.php */
