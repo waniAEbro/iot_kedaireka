@@ -19,21 +19,7 @@ class Dashboard extends CI_Controller
 
 	public function status_pak()
 	{
-		$this->db->where('ds.mutasi', 1);
-		$this->db->where('ds.id_jenis_item', 0);
 
-		$this->db->join('master_item mi', 'mi.id = ds.id_item', 'left');
-		$this->db->select('mi.id,mi.id_jenis_item');
-
-		$r = $this->db->get('data_stock ds');
-		foreach ($r->result() as $key) {
-			$ss = array(
-				'id_jenis_item' => $key->id_jenis_item,
-			);
-			$this->db->where('mutasi', 1);
-			$this->db->where('id_item', $key->id);
-			$this->db->update('data_stock', $ss);
-		}
 
 
 		// $year  = date('Y');
