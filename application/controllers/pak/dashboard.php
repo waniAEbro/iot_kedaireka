@@ -223,12 +223,35 @@ class Dashboard extends CI_Controller
 		$this->load->view('v_dashboard');
 	}
 
-	public function cron_stock_point()
+	public function setJenisItemA()
 	{
-		$this->db->where('qty <', 1);
-		$this->db->delete('data_counter');
-		$this->m_aksesoris->cekAdaStockPoint(1);
-		$this->m_aksesoris->cekAdaStockPoint(2);
+		$this->db->where('id_jenis_item', 1);
+		$r = $this->db->get('master_item');
+		foreach ($r->result() as $key) {
+			$ss = array(
+				'id_jenis_item' => 1,
+			);
+			$this->db->where('mutasi', 1);
+			$this->db->where('id_item', $key->id);
+			$this->db->update('data_stock', $ss);
+		}
+		echo "ok";
+	}
+
+	public function setJenisItemB()
+	{
+
+		$this->db->where('id_jenis_item', 2);
+		$r = $this->db->get('master_item');
+		foreach ($r->result() as $key) {
+			$ss = array(
+				'id_jenis_item' => 2,
+			);
+			$this->db->where('mutasi', 1);
+			$this->db->where('id_item', $key->id);
+			$this->db->update('data_stock', $ss);
+		}
+		echo "ok";
 	}
 
 	public function insertbarcode($code, $id)

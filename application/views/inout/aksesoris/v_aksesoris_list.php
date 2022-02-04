@@ -40,7 +40,6 @@
                                 <th width="5%">No</th>
                                 <th>Tgl Aktual</th>
                                 <th>Tgl Input</th>
-                                <th>Status</th>
                                 <th>Stok Awal Bulan</th>
                                 <th>Item Code</th>
                                 <th width="25%">Deskripsi</th>
@@ -53,20 +52,20 @@
                                 <th>NO Surat Jalan</th>
                                 <th>NO PR/WO</th>
                                 <th>Keterangan</th>
+                                <th>Status</th>
                             </thead>
                             <tbody>
                                 <?php
                                 $i = 1;
                                 foreach ($aksesoris->result() as $row) :
+                                    $sts = ($row->mutasi == 0) ? "Stock" : "Mutasi";
                                     $qty = ($row->inout == 1) ? $row->qty_in : $row->qty_out;
-                                    $status = ($row->inout == 1) ? 'MASUK' : 'KELUAR';
                                     $awal_bulan = ($row->awal_bulan == 1) ? 'YA' : 'TIDAK';
                                 ?>
                                     <tr>
                                         <td align="center"><?= $i++ ?></td>
                                         <td><?= $row->aktual ?></td>
                                         <td><?= $row->tgl_stok ?></td>
-                                        <td><?= $status ?></td>
                                         <td><?= $awal_bulan ?></td>
                                         <td><?= $row->item_code ?></td>
                                         <td><?= $row->deskripsi ?></td>
@@ -79,6 +78,8 @@
                                         <td><?= $row->no_surat_jalan ?></td>
                                         <td><?= $row->no_pr ?></td>
                                         <td><?= $row->keterangan ?></td>
+                                        <td><?= $row->keterangan ?></td>
+                                        <td><?= $sts ?></td>
 
                                     </tr>
 

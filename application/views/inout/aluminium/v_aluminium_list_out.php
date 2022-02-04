@@ -40,7 +40,6 @@
                                 <th width="5%">No</th>
                                 <th>Tgl Aktual</th>
                                 <th>Tgl Input</th>
-                                <th>Status</th>
                                 <th>Section ATA</th>
                                 <th>Section Allure</th>
                                 <th>Temper</th>
@@ -56,19 +55,19 @@
                                 <th>NO FPPP</th>
                                 <th>Nama Proyek</th>
                                 <th>Keterangan</th>
+                                <th>Status</th>
                             </thead>
                             <tbody>
                                 <?php
                                 $i = 1;
                                 foreach ($aluminium->result() as $row) :
+                                    $sts = ($row->mutasi == 0) ? "Stock" : "Mutasi";
                                     $qty = ($row->inout == 1) ? $row->qty_in : $row->qty_out;
-                                    $status = ($row->inout == 1) ? 'MASUK' : 'KELUAR';
                                 ?>
                                     <tr>
                                         <td align="center"><?= $i++ ?></td>
                                         <td><?= $row->tgl_aktual ?></td>
                                         <td><?= $row->tgl_stok ?></td>
-                                        <td><?= $status ?></td>
                                         <td><?= $row->section_ata ?></td>
                                         <td><?= $row->section_allure ?></td>
                                         <td><?= $row->temper ?></td>
@@ -84,6 +83,7 @@
                                         <td><?= $row->no_fppp ?></td>
                                         <td><?= $row->nama_proyek ?></td>
                                         <td><?= $row->keterangan ?></td>
+                                        <td><?= $sts ?></td>
 
                                     </tr>
 
