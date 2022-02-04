@@ -50,6 +50,7 @@
                                 <th>Keranjang</th>
                                 <th>NO Surat Jalan</th>
                                 <th>NO FPPP</th>
+                                <th>Nama Proyek</th>
                                 <th>Keterangan</th>
                             </thead>
                             <tbody>
@@ -73,6 +74,7 @@
                                         <td><?= $row->keranjang ?></td>
                                         <td><?= $row->no_surat_jalan ?></td>
                                         <td><?= $row->no_fppp ?></td>
+                                        <td><?= $row->nama_proyek ?></td>
                                         <td><?= $row->keterangan ?></td>
 
                                     </tr>
