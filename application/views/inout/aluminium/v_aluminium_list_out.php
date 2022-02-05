@@ -54,6 +54,8 @@
                                 <th>NO Surat Jalan</th>
                                 <th>NO FPPP</th>
                                 <th>Nama Proyek</th>
+                                <th>Nama Penerima</th>
+                                <th>Alamat Pengiriman</th>
                                 <th>Keterangan</th>
                                 <th>Status</th>
                             </thead>
@@ -66,7 +68,7 @@
                                 ?>
                                     <tr>
                                         <td align="center"><?= $i++ ?></td>
-                                        <td><?= $row->tgl_aktual ?></td>
+                                        <td><?= $row->tgl_aktual_sj ?></td>
                                         <td><?= $row->tgl_stok ?></td>
                                         <td><?= $row->section_ata ?></td>
                                         <td><?= $row->section_allure ?></td>
@@ -82,6 +84,8 @@
                                         <td><?= $row->no_surat_jalan ?></td>
                                         <td><?= $row->no_fppp ?></td>
                                         <td><?= $row->nama_proyek ?></td>
+                                        <td><?= $row->penerima ?></td>
+                                        <td><?= $row->alamat_pengiriman ?></td>
                                         <td><?= $row->keterangan ?></td>
                                         <td><?= $sts ?></td>
 
