@@ -78,7 +78,6 @@
                                         <td><?= $row->no_surat_jalan ?></td>
                                         <td><?= $row->no_pr ?></td>
                                         <td><?= $row->keterangan ?></td>
-                                        <td><?= $row->keterangan ?></td>
                                         <td><?= $sts ?></td>
 
                                     </tr>
