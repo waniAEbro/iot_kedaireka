@@ -9,7 +9,7 @@
                     <div class="box-body">
                         <div class="form-group">
                             <label class="control-label">Tgl Aktual:</label>
-                            <input type="text" class="form-control datepicker" data-date-format="yyyy-mm-dd" id="aktual" placeholder="Tgl Aktual" autocomplete="off">
+                            <input type="text" class="form-control datepicker" data-date-format="yyyy-mm-dd" id="aktual" placeholder="Tgl Aktual" value="<?= date('Y-m-d') ?>" autocomplete="off">
                         </div>
                         <div class="form-group">
                             <label class="control-label">Supplier:</label>

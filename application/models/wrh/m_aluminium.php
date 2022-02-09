@@ -156,7 +156,7 @@ class M_aluminium extends CI_Model
         $this->db->where('DATE_FORMAT(ds.created,"%Y")', $year);
         $this->db->where('DATE_FORMAT(ds.created,"%m")', $month);
         $this->db->where('ds.awal_bulan', 1);
-        $this->db->select('*');
+        $this->db->where('ds.inout', 1);
 
         $res = $this->db->get('data_stock ds');
         $data = array();

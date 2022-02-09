@@ -1063,6 +1063,7 @@ class Aluminium extends CI_Controller
     {
         $this->fungsi->check_previleges('aluminium');
         $id_jenis_item = 1;
+        $tgl_aktual       = $this->input->post('tgl_aktual');
         $id_item       = $this->input->post('id_item');
         $id_gudang     = $this->input->post('id_gudang');
         $keranjang     = str_replace(" ", "", $this->input->post('keranjang'));
@@ -1083,6 +1084,7 @@ class Aluminium extends CI_Controller
             'keterangan'    => 'Mutasi Out',
             'created'       => date('Y-m-d H:i:s'),
             'updated'       => date('Y-m-d H:i:s'),
+            'aktual'       => $tgl_aktual,
         );
         $this->m_aluminium->insertstokin($datapost_out);
         $this->fungsi->catat($datapost_out, "Mutasi OUT sbb:", true);
@@ -1101,6 +1103,7 @@ class Aluminium extends CI_Controller
             'keterangan'    => 'Mutasi IN',
             'created'       => date('Y-m-d H:i:s'),
             'updated'       => date('Y-m-d H:i:s'),
+            'aktual'       => $tgl_aktual,
         );
         $this->m_aluminium->insertstokin($datapost_in);
         $this->fungsi->catat($datapost_in, "Mutasi IN sbb:", true);

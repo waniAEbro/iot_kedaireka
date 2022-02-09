@@ -12,6 +12,14 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
+                        <label>Tgl Aktual</label>
+                        <input type="text" class="form-control datepicker" data-date-format="yyyy-mm-dd" id="tgl_aktual" value="<?= date('Y-m-d') ?>">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
                         <label>Item</label>
                         <input type="hidden" class="form-control" id="item" value="<?= $id_item ?>" readonly>
                         <select id="itemx" name="itemx" class="form-control" style="width:100%" disabled>
@@ -130,6 +138,7 @@
                 dataType: "json",
                 type: "POST",
                 data: {
+                    "tgl_aktual": $('#tgl_aktual').val(),
                     "id_item": $('#item').val(),
                     "id_divisi": $('#id_divisi').val(),
                     "id_gudang": $('#id_gudang').val(),
