@@ -127,7 +127,7 @@ class M_fppp extends CI_Model
 
 		$this->db->order_by('id', 'desc');
 		$this->db->limit(1);
-		$hasil = $this->db->get('ata_fppp');
+		$hasil = $this->db->get('data_fppp');
 		return $hasil;
 	}
 
