@@ -1164,7 +1164,13 @@ class M_aluminium extends CI_Model
 
     public function updateJadiSuratJalan($id_fppp, $id_sj)
     {
-        $object = array('id_surat_jalan' => $id_sj);
+        $this->db->where('id', $id_sj);
+        $aktual = $this->db->get('data_surat_jalan')->row()->tgl_aktual;
+        
+        $object = array(
+            'aktual' => $aktual,
+            'id_surat_jalan' => $id_sj
+        );
         $this->db->where('id_fppp', $id_fppp);
         $this->db->where('inout', 2);
         // $this->db->where('lapangan', 1);
@@ -1178,7 +1184,13 @@ class M_aluminium extends CI_Model
 
     public function updateJadiSuratJalanBon($id_sj)
     {
-        $object = array('id_surat_jalan' => $id_sj);
+        $this->db->where('id', $id_sj);
+        $aktual = $this->db->get('data_surat_jalan')->row()->tgl_aktual;
+        
+        $object = array(
+            'aktual' => $aktual,
+            'id_surat_jalan' => $id_sj
+        );
         $this->db->where('inout', 2);
         $this->db->where('id_surat_jalan', 0);
         $this->db->where('sj_mf', 0);
@@ -1191,7 +1203,13 @@ class M_aluminium extends CI_Model
 
     public function updateJadiSuratJalanMf($id_fppp, $id_sj)
     {
-        $object = array('id_surat_jalan' => $id_sj);
+        $this->db->where('id', $id_sj);
+        $aktual = $this->db->get('data_surat_jalan')->row()->tgl_aktual;
+        
+        $object = array(
+            'aktual' => $aktual,
+            'id_surat_jalan' => $id_sj
+        );
         $this->db->where('id_fppp', $id_fppp);
         $this->db->where('inout', 2);
         // $this->db->where('lapangan', 1);
