@@ -126,7 +126,7 @@
                                     <td align="center"><span id="qty_bom_<?= $row->id_stock ?>"><?= $qtyBOM ?></span></td>
                                     <td align="center"><span id="qty_kurang_<?= $row->id_stock ?>"><?= $kurang ?></span></td>
                                     <td align="center">
-                                        <span style="display:none;"  id="qty_gudang_asli_<?= $row->id_stock ?>"><?= $totalgudang ?></span>
+                                        <span style="display:none;" id="qty_gudang_asli_<?= $row->id_stock ?>"><?= $totalgudang ?></span>
                                         <span id="qty_gudang_<?= $row->id_stock ?>"><?= $totalgudang ?></span>
                                     </td>
                                     <td style="background-color:#ffd45e" align="center"><span id="qty_aktual_<?= $row->id_stock ?>" class='edit'><?= $qty_aktual ?></span>
@@ -398,6 +398,10 @@
                 $(element).hide();
                 $(element).prev('.edit').show();
                 $(element).prev('.edit').text(value);
+            } else if (value == '') {
+                $(element).hide();
+                $(element).prev('.edit').show();
+                $(element).prev('.edit').text(0);
             } else {
                 $.ajax({
                     url: "<?= site_url('wrh/aluminium/saveout/') ?>",
