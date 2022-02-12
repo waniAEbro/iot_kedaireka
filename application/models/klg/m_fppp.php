@@ -561,8 +561,9 @@ class M_fppp extends CI_Model
 	{
 		$this->db->join('master_jenis_item mji', 'mji.id = dt.id_jenis_item', 'left');
 		$this->db->join('data_fppp df', 'df.id = dt.id_fppp', 'left');
-		$this->db->select('dt.*,mji.jenis_item,df.no_fppp');
-
+		$this->db->select('dt.*,mji.jenis_item,df.no_fppp,df.nama_proyek');
+		$this->db->order_by('dt.id', 'desc');
+		
 		return $this->db->get('data_temp dt');
 	}
 

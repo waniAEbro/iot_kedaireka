@@ -665,33 +665,38 @@ class Fppp extends CI_Controller
 				);
 				$qty        = $rowData[0][6];
 				$keterangan = $rowData[0][7];
-				$cek_item   = $this->m_fppp->getMasterAluminium($obj['section_ata'], $obj['section_allure'], $obj['temper'], $obj['kode_warna'], $obj['ukuran']);
-				if ($cek_item->num_rows() < 1) {
-					$temp = array(
-						"item_code"     => $rowData[0][0] . '-' . $rowData[0][1] . '-' . $rowData[0][2] . '-' . str_pad($rowData[0][3], 2, '0', STR_PAD_LEFT) . '-' . $rowData[0][4],
-						"id_penginput"  => from_session('id'),
-						"id_fppp"       => $id_fppp,
-						"id_jenis_item" => $jenis_bom,
+
+				if ($obj['ukuran'] != '') {
+
+					$cek_item   = $this->m_fppp->getMasterAluminium($obj['section_ata'], $obj['section_allure'], $obj['temper'], $obj['kode_warna'], $obj['ukuran']);
+					if ($cek_item->num_rows() < 1) {
+						$temp = array(
+							"item_code"     => $rowData[0][0] . '-' . $rowData[0][1] . '-' . $rowData[0][2] . '-' . str_pad($rowData[0][3], 2, '0', STR_PAD_LEFT) . '-' . $rowData[0][4],
+							"id_penginput"  => from_session('id'),
+							"id_fppp"       => $id_fppp,
+							"id_jenis_item" => $jenis_bom,
+						);
+						$this->db->insert('data_temp', $temp);
+					} else {
+						$id_item = $cek_item->row()->id;
+						$obj_bom = array(
+							'is_bom'        => 1,
+							'inout'       => 0,
+							'id_fppp'       => $id_fppp,
+							'id_jenis_item' => $jenis_bom,
+							'id_item'       => $id_item,
+							'qty_bom'       => $qty,
+							'keterangan'    => $keterangan,
+							'created'       => date('Y-m-d H:i:s'),
+						);
+						$this->db->insert('data_stock', $obj_bom);
+					}
+					$dt = array(
+						'bom_aluminium'            => 1,
+						'tgl_upload_bom_aluminium' => date('Y-m-d H:i:s'),
 					);
-					$this->db->insert('data_temp', $temp);
-				} else {
-					$id_item = $cek_item->row()->id;
-					$obj_bom = array(
-						'is_bom'        => 1,
-						'id_fppp'       => $id_fppp,
-						'id_jenis_item' => $jenis_bom,
-						'id_item'       => $id_item,
-						'qty_bom'       => $qty,
-						'keterangan'    => $keterangan,
-						'created'       => date('Y-m-d H:i:s'),
-					);
-					$this->db->insert('data_stock', $obj_bom);
+					$this->m_fppp->updateStatusUploadBom($id_fppp, $dt);
 				}
-				$dt = array(
-					'bom_aluminium'            => 1,
-					'tgl_upload_bom_aluminium' => date('Y-m-d H:i:s'),
-				);
-				$this->m_fppp->updateStatusUploadBom($id_fppp, $dt);
 			} else if ($jenis_bom == 2) {
 				$obj = array(
 					'id_jenis_item' => 2,
@@ -702,33 +707,35 @@ class Fppp extends CI_Controller
 				);
 				$qty        = $rowData[0][3];
 				$keterangan = $rowData[0][4];
-				$cek_item   = $this->m_fppp->getMasterAksesoris($obj['item_code']);
-				if ($cek_item->num_rows() < 1) {
-					$temp = array(
-						"item_code"     => $rowData[0][0],
-						"id_penginput"  => from_session('id'),
-						"id_fppp"       => $id_fppp,
-						"id_jenis_item" => $jenis_bom,
+				if ($obj['item_code'] != '') {
+					$cek_item   = $this->m_fppp->getMasterAksesoris($obj['item_code']);
+					if ($cek_item->num_rows() < 1) {
+						$temp = array(
+							"item_code"     => $rowData[0][0],
+							"id_penginput"  => from_session('id'),
+							"id_fppp"       => $id_fppp,
+							"id_jenis_item" => $jenis_bom,
+						);
+						$this->db->insert('data_temp', $temp);
+					} else {
+						$id_item = $cek_item->row()->id;
+						$obj_bom = array(
+							'is_bom'        => 1,
+							'id_fppp'       => $id_fppp,
+							'id_jenis_item' => $jenis_bom,
+							'id_item'       => $id_item,
+							'qty_bom'       => $qty,
+							'keterangan'    => $keterangan,
+							'created'       => date('Y-m-d H:i:s'),
+						);
+						$this->db->insert('data_stock', $obj_bom);
+					}
+					$dt = array(
+						'bom_aksesoris'            => 1,
+						'tgl_upload_bom_aksesoris' => date('Y-m-d H:i:s'),
 					);
-					$this->db->insert('data_temp', $temp);
-				} else {
-					$id_item = $cek_item->row()->id;
-					$obj_bom = array(
-						'is_bom'        => 1,
-						'id_fppp'       => $id_fppp,
-						'id_jenis_item' => $jenis_bom,
-						'id_item'       => $id_item,
-						'qty_bom'       => $qty,
-						'keterangan'    => $keterangan,
-						'created'       => date('Y-m-d H:i:s'),
-					);
-					$this->db->insert('data_stock', $obj_bom);
+					$this->m_fppp->updateStatusUploadBom($id_fppp, $dt);
 				}
-				$dt = array(
-					'bom_aksesoris'            => 1,
-					'tgl_upload_bom_aksesoris' => date('Y-m-d H:i:s'),
-				);
-				$this->m_fppp->updateStatusUploadBom($id_fppp, $dt);
 			} else {
 				$obj = array(
 					'id_jenis_item'  => 3,

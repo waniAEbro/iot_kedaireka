@@ -75,7 +75,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
         var table = $('#tableku').DataTable({
-            "ordering": false,
+            "ordering": true,
             "scrollX": true,
         });
     });

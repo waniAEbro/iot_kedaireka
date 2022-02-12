@@ -263,6 +263,8 @@ class aluminium extends CI_Controller
     {
         $this->fungsi->check_previleges('aluminium');
         $id   = $this->input->post('id');
+        $jum_counter = $this->db->get_where('data_counter', array('id_item' => $id))->num_rows();
+        $jum_transaksi = $this->db->get_where('data_stock', array('id_item' => $id))->num_rows();
         $this->db->where('id', $id);
         $res = $this->db->get('master_item')->result();
         $obj = array(
@@ -271,6 +273,8 @@ class aluminium extends CI_Controller
             'tabel' => 'master_item',
             'keterangan' => json_encode($res),
             'created' => date('Y-m-d H:i:s'),
+            'jum_counter' => $jum_counter,
+            'jum_transaksi' => $jum_transaksi,
         );
         $this->db->insert('data_delete', $obj);
 

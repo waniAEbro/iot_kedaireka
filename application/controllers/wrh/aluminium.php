@@ -785,15 +785,6 @@ class Aluminium extends CI_Controller
         $this->load->view('wrh/aluminium/v_aluminium_bon_add', $data);
     }
 
-    // public function bon_manual_add()
-    // {
-    //     $this->fungsi->check_previleges('aluminium');
-    //     $data['no_fppp']        = $this->db->get_where('data_fppp', array('id_status' => 1));
-    //     $data['no_surat_jalan'] = str_pad($this->m_aluminium->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJ/AL/' . date('m') . '/' . date('Y');
-
-    //     $this->load->view('wrh/aluminium/v_aluminium_bon_add', $data);
-    // }
-
     public function lihat_item_stok_out($id_sj)
     {
         $this->fungsi->check_previleges('aluminium');
@@ -885,24 +876,6 @@ class Aluminium extends CI_Controller
         echo json_encode($data);
     }
 
-    // public function edit_bon_manual($id_sj = '')
-    // {
-    //     $this->fungsi->check_previleges('aluminium');
-    //     $id_jenis_item = 1;
-
-    //     $data['id_sj']             = $id_sj;
-    //     $data['fppp']              = $this->db->get('data_fppp');
-    //     $data['item']              = $this->m_aluminium->getDataItem();
-    //     $data['no_surat_jalan']    = $this->m_aluminium->getRowSj($id_sj)->row()->no_surat_jalan;
-    //     $data['penerima']          = $this->m_aluminium->getRowSj($id_sj)->row()->penerima;
-    //     $data['alamat_pengiriman'] = $this->m_aluminium->getRowSj($id_sj)->row()->alamat_pengiriman;
-    //     $data['sopir']             = $this->m_aluminium->getRowSj($id_sj)->row()->sopir;
-    //     $data['no_kendaraan']      = $this->m_aluminium->getRowSj($id_sj)->row()->no_kendaraan;
-    //     $data['divisi']            = $this->m_aluminium->getDivisiBom($id_jenis_item);
-    //     $data['list_sj']           = $this->m_aluminium->getListItemBonManual($id_sj);
-    //     $this->load->view('wrh/aluminium/v_aluminium_bon_item', $data);
-    // }
-
     public function getQtyRowGudangBon()
     {
         $id_item      = $this->input->post('item');
@@ -951,11 +924,6 @@ class Aluminium extends CI_Controller
             $qty_jadi      = (int)$cekQtyCounter - (int)$qty_out;
             $this->m_aluminium->updateDataCounter($id_item,  $id_gudang, $keranjang, $qty_jadi);
 
-            // $qtyin        = $this->m_aluminium->getQtyInDetailTabel($id_item,  $id_gudang, $keranjang);
-            // $qtyout       = $this->m_aluminium->getQtyOutDetailTabel($id_item, $id_gudang, $keranjang);
-            // $data['qty_gudang'] = $qtyin - $qtyout;
-            // $this->m_aluminium->updateDataCounter($id_item, $id_gudang, $keranjang, $data['qty_gudang']);
-
             $this->fungsi->catat($datapost, "Menyimpan detail BON Manual sbb:", true);
             $data['msg'] = "BON Disimpan";
             $data['sts'] = "sukses";
@@ -978,26 +946,12 @@ class Aluminium extends CI_Controller
         $this->m_aluminium->updateDataCounter($id_item,  $id_gudang, $keranjang, $qty_jadi);
         sleep(1);
         $this->m_aluminium->deleteItemBonManual($id);
-        // $qtyin        = $this->m_aluminium->getQtyInDetailTabel($id_item, $id_gudang, $keranjang);
-        // $qtyout       = $this->m_aluminium->getQtyOutDetailTabel($id_item, $id_gudang, $keranjang);
-        // $data['qty_gudang'] = $qtyin - $qtyout;
-        // $this->m_aluminium->updateDataCounter($id_item, $id_gudang, $keranjang, $data['qty_gudang']);
-
         $data = array('id' => $id,);
         $this->fungsi->catat($data, "Menghapus BON manual Detail dengan data sbb:", true);
         $respon = ['msg' => 'Data Berhasil Dihapus'];
         echo json_encode($respon);
     }
 
-    // public function finishdetailbon($id_sj)
-    // {
-    //     $this->fungsi->check_previleges('aluminium');
-    //     // $this->m_aluminium->finishdetailbom($id_sj);
-    //     $datapost = array('id_sj' => $id_sj,);
-    //     $this->fungsi->message_box("Fisnish BON Manual", "success");
-    //     $this->fungsi->catat($datapost, "Finish BON Manual dengan id:", true);
-    //     $this->bon_manual();
-    // }
 
     public function mutasi_stock_add($id = '')
     {

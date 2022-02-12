@@ -14,6 +14,7 @@
                         <th>Jenis Item</th>
                         <th>Item Code</th>
                         <th>FPPP</th>
+                        <th>Nama Proyek</th>
                         <th>Act</th>
                     </thead>
                     <tbody>
@@ -26,6 +27,7 @@
                                 <td><?= $row->jenis_item ?></td>
                                 <td><?= $row->item_code ?></td>
                                 <td><?= $row->no_fppp ?></td>
+                                <td><?= $row->nama_proyek ?></td>
                                 <td><?php echo button_confirm("Anda yakin menghapus " . $row->item_code . "?", "klg/bom_temp/hapus/" . $row->id, "#content", 'Delete', 'btn btn-danger btn-block', 'data-toggle="tooltip" title="Delete"'); ?></td>
                             </tr>
 
