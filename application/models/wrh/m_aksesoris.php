@@ -499,7 +499,7 @@ class M_aksesoris extends CI_Model
         $this->db->where('ds.ke_mf', 0);
         $this->db->select('ds.*,ds.id as id_stock,mi.*,mds.divisi,mg.gudang');
 
-        $this->db->order_by('ds.id', 'asc');
+        $this->db->order_by('ds.id', 'desc');
 
         return $this->db->get('data_stock ds');
     }
@@ -1073,7 +1073,7 @@ class M_aksesoris extends CI_Model
     {
         $this->db->where('id', $id_sj);
         $aktual = $this->db->get('data_surat_jalan')->row()->tgl_aktual;
-        
+
         $object = array(
             'aktual' => $aktual,
             'id_surat_jalan' => $id_sj
@@ -1094,7 +1094,7 @@ class M_aksesoris extends CI_Model
     {
         $this->db->where('id', $id_sj);
         $aktual = $this->db->get('data_surat_jalan')->row()->tgl_aktual;
-        
+
         $object = array(
             'aktual' => $aktual,
             'id_surat_jalan' => $id_sj

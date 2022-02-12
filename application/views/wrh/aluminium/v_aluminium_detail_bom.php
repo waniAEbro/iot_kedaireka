@@ -70,6 +70,8 @@
                         <th>Keranjang</th>
                         <th>Produksi</th>
                         <th>Lapangan</th>
+                        <th>created</th>
+                        <th>updated</th>
                     </thead>
                     <tbody>
                         <?php
@@ -152,6 +154,8 @@
                                     </td>
                                     <td style="background-color:#ffd45e" align="center"><input type="checkbox" id="produksi_<?= $row->id_stock ?>" data-id='<?= $row->id_stock ?>' data-field='produksi_<?= $row->id_stock ?>' class="checkbox" <?= $cekproduksi ?>></td>
                                     <td style="background-color:#ffd45e" align="center"><input type="checkbox" id="lapangan_<?= $row->id_stock ?>" data-id='<?= $row->id_stock ?>' data-field='lapangan_<?= $row->id_stock ?>' class="checkbox" <?= $ceklapangan ?>></td>
+                                    <td><?= $row->created_ ?></td>
+                                    <td><?= $row->updated_ ?></td>
                                 </tr>
                             <?php
                             } else { ?>
@@ -175,6 +179,8 @@
                                     <td align="center"><?= $row->keranjang ?></td>
                                     <td align="center"><input type="checkbox" onclick="return false;" class="checkbox" <?= $cekproduksi ?>></td>
                                     <td align="center"><input type="checkbox" onclick="return false;" class="checkbox" <?= $ceklapangan ?>></td>
+                                    <td><?= $row->created_ ?></td>
+                                    <td><?= $row->updated_ ?></td>
                                 </tr>
                             <?php } ?>
                         <?php endforeach; ?>

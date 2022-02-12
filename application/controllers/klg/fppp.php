@@ -721,6 +721,7 @@ class Fppp extends CI_Controller
 						$id_item = $cek_item->row()->id;
 						$obj_bom = array(
 							'is_bom'        => 1,
+							'inout'       => 0,
 							'id_fppp'       => $id_fppp,
 							'id_jenis_item' => $jenis_bom,
 							'id_item'       => $id_item,

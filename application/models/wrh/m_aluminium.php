@@ -549,9 +549,9 @@ class M_aluminium extends CI_Model
         $this->db->where('ds.is_bom', 1);
         // $this->db->where('ds.id_surat_jalan', 0);
         $this->db->where('ds.ke_mf', 0);
-        $this->db->select('ds.*,ds.id as id_stock,mi.*,mwa.warna,mi.divisi,mg.gudang');
+        $this->db->select('ds.*,ds.id as id_stock,mi.*,mwa.warna,mi.divisi,mg.gudang,ds.created as created_,ds.updated as updated_');
 
-        $this->db->order_by('ds.id', 'asc');
+        $this->db->order_by('ds.id', 'desc');
 
         return $this->db->get('data_stock ds');
     }
@@ -569,7 +569,7 @@ class M_aluminium extends CI_Model
         // $this->db->where('ds.is_bom', 1);
         // $this->db->where('ds.id_surat_jalan', 0);
         $this->db->where('ds.ke_mf', 1);
-        $this->db->select('ds.*,ds.id as id_stock,mi.*,mwa.warna,mi.divisi,mg.gudang');
+        $this->db->select('ds.*,ds.id as id_stock,mi.*,mwa.warna,mi.divisi,mg.gudang,ds.created as created_,ds.updated as updated_');
 
         $this->db->order_by('ds.id', 'asc');
 
@@ -1166,7 +1166,7 @@ class M_aluminium extends CI_Model
     {
         $this->db->where('id', $id_sj);
         $aktual = $this->db->get('data_surat_jalan')->row()->tgl_aktual;
-        
+
         $object = array(
             'aktual' => $aktual,
             'id_surat_jalan' => $id_sj
@@ -1186,7 +1186,7 @@ class M_aluminium extends CI_Model
     {
         $this->db->where('id', $id_sj);
         $aktual = $this->db->get('data_surat_jalan')->row()->tgl_aktual;
-        
+
         $object = array(
             'aktual' => $aktual,
             'id_surat_jalan' => $id_sj
@@ -1205,7 +1205,7 @@ class M_aluminium extends CI_Model
     {
         $this->db->where('id', $id_sj);
         $aktual = $this->db->get('data_surat_jalan')->row()->tgl_aktual;
-        
+
         $object = array(
             'aktual' => $aktual,
             'id_surat_jalan' => $id_sj
