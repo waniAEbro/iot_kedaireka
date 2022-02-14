@@ -487,6 +487,9 @@
                   <td width = "15%">\
                     ' + $('#id_fppp :selected').text() + '\
                   </td>\
+                  <td width = "15%">\
+                    ' + $('#id_multi_brand :selected').text() + '\
+                  </td>\
                   <td width = "25%">\
                     ' + $('#item :selected').text() + '\
                   </td>\

@@ -22,6 +22,7 @@
             <th width="25%">Deskripsi</th>
             <th>Satuan</th>
             <th>Qty</th>
+            <th>Brand</th>
             <th>Divisi</th>
             <th>Gudang</th>
             <th>Keranjang</th>
@@ -47,6 +48,7 @@
                 <td><?= $row->deskripsi ?></td>
                 <td><?= $row->satuan ?></td>
                 <td><?= $qty ?></td>
+                <td><?= $row->brand ?></td>
                 <td><?= $row->divisi_aksesoris ?></td>
                 <td><?= $row->gudang ?></td>
                 <td><?= $row->keranjang ?></td>
