@@ -56,6 +56,7 @@
                 <table width="100%" id="tableku" class="table">
                     <thead>
                         <th width="5%">No</th>
+                        <th>Brand</th>
                         <th>Section ATA</th>
                         <th>Section Allure</th>
                         <th>Temper</th>
@@ -109,6 +110,7 @@
                         ?>
                                 <tr bgcolor="<?= $bgrow ?>">
                                     <td align="center"><?= $i++ ?></td>
+                                    <td><?= $row->brand ?></td>
                                     <td><?= $row->section_ata ?>
                                         <br><?php echo button_confirm("Anda yakin mengirim parsial item " . $row->section_ata . "-" . $row->section_allure . "?", "wrh/aluminium/kirim_parsial/" . $id_fppp . "/" . $row->id_stock, "#content", 'Kirim Parsial', 'btn btn-xs btn-default', 'data-toggle="tooltip" title="Kirim Parsial"'); ?>
                                         <br><?php //echo button_confirm("Anda yakin membuat di MF item " . $row->section_ata . "-" . $row->section_allure . "?", "wrh/aluminium/buat_mf/" . $id_fppp . "/" . $row->id_stock, "#content", 'Buat di MF', 'btn btn-xs btn-info', 'data-toggle="tooltip" title="Buat di MF"'); 
@@ -161,6 +163,7 @@
                             } else { ?>
                                 <tr bgcolor="#8bb0c9">
                                     <td align="center"><?= $i++ ?></td>
+                                    <td><?= $row->brand ?></td>
                                     <td><?= $row->section_ata ?>
                                         <br><?php echo button_confirm("Anda yakin mengirim parsial item " . $row->section_ata . "-" . $row->section_allure . "?", "wrh/aluminium/kirim_parsial/" . $id_fppp . "/" . $row->id_stock, "#content", 'Kirim Parsial', 'btn btn-xs btn-default', 'data-toggle="tooltip" title="Kirim Parsial"'); ?>
                                         <br><?php //echo button_confirm("Anda yakin membuat di MF item " . $row->section_ata . "-" . $row->section_allure . "?", "wrh/aluminium/buat_mf/" . $id_fppp . "/" . $row->id_stock, "#content", 'Buat di MF', 'btn btn-xs btn-info', 'data-toggle="tooltip" title="Buat di MF"'); 
