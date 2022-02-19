@@ -655,24 +655,24 @@ class Fppp extends CI_Controller
 			if ($jenis_bom == 1) {
 				$obj = array(
 					'id_jenis_item'  => 1,
-					'section_ata'    => $rowData[0][0],
-					'section_allure' => $rowData[0][1],
-					'temper'         => $rowData[0][2],
-					'kode_warna'     => str_pad($rowData[0][3], 2, '0', STR_PAD_LEFT),
-					'ukuran'         => $rowData[0][4],
-					'satuan'         => $rowData[0][5],
-					'id_multi_brand'         => $rowData[0][8],
+					'id_multi_brand'         => $rowData[0][0],
+					'section_ata'    => $rowData[0][1],
+					'section_allure' => $rowData[0][2],
+					'temper'         => $rowData[0][3],
+					'kode_warna'     => str_pad($rowData[0][4], 2, '0', STR_PAD_LEFT),
+					'ukuran'         => $rowData[0][5],
+					'satuan'         => $rowData[0][6],
 					'created'        => date('Y-m-d H:i:s'),
 				);
-				$qty        = $rowData[0][6];
-				$keterangan = $rowData[0][7];
+				$qty        = $rowData[0][7];
+				$keterangan = $rowData[0][8];
 
 				if ($obj['ukuran'] != '') {
 
 					$cek_item   = $this->m_fppp->getMasterAluminium($obj['section_ata'], $obj['section_allure'], $obj['temper'], $obj['kode_warna'], $obj['ukuran']);
 					if ($cek_item->num_rows() < 1) {
 						$temp = array(
-							"item_code"     => $rowData[0][0] . '-' . $rowData[0][1] . '-' . $rowData[0][2] . '-' . str_pad($rowData[0][3], 2, '0', STR_PAD_LEFT) . '-' . $rowData[0][4],
+							"item_code"     => $obj['section_ata'] . '-' . $obj['section_allure'] . '-' . $obj['temper'] . '-' . str_pad($obj['kode_warna'], 2, '0', STR_PAD_LEFT) . '-' . $obj['ukuran'],
 							"id_penginput"  => from_session('id'),
 							"id_fppp"       => $id_fppp,
 							"id_jenis_item" => $jenis_bom,

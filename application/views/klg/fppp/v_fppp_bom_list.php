@@ -50,6 +50,7 @@
                 <table width="100%" id="tableku" class="table table-striped">
                     <thead>
                         <th width="5%">No</th>
+                        <th>Brand</th>
                         <th>Nama Proyek</th>
                         <th>Section ATA</th>
                         <th>Section Allure</th>
@@ -59,7 +60,6 @@
                         <th>Ukuran</th>
                         <th>Qty</th>
                         <th>Keterangan</th>
-                        <th>Brand</th>
                     </thead>
                     <tbody>
                         <?php
@@ -67,6 +67,7 @@
                         foreach ($bom_aluminium->result() as $row) : ?>
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
+                                <td><?= $row->brand ?></td>
                                 <td><?= $row->nama_proyek ?></td>
                                 <td><?= $row->section_ata ?></td>
                                 <td><?= $row->section_allure ?></td>
@@ -76,7 +77,6 @@
                                 <td><?= $row->ukuran ?></td>
                                 <td><?= $row->qty_bom ?></td>
                                 <td><?= $row->keterangan ?></td>
-                                <td><?= $row->brand ?></td>
                             </tr>
 
                         <?php endforeach; ?>
@@ -95,12 +95,12 @@
                 <table width="100%" id="tableku" class="table table-striped">
                     <thead>
                         <th width="5%">No</th>
+                        <th>Brand</th>
                         <th>Nama Proyek</th>
                         <th>Item Code</th>
                         <th>Deskripsi</th>
                         <th>Qty</th>
                         <th>Keterangan</th>
-                        <th>Brand</th>
                     </thead>
                     <tbody>
                         <?php
@@ -108,12 +108,12 @@
                         foreach ($bom_aksesoris->result() as $row) : ?>
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
+                                <td><?= $row->brand ?></td>
                                 <td><?= $row->nama_proyek ?></td>
                                 <td><?= $row->item_code ?></td>
                                 <td><?= $row->deskripsi ?></td>
                                 <td><?= $row->qty_bom ?></td>
                                 <td><?= $row->keterangan ?></td>
-                                <td><?= $row->brand ?></td>
                             </tr>
 
                         <?php endforeach; ?>
@@ -132,6 +132,7 @@
                 <table width="100%" id="tableku" class="table table-striped">
                     <thead>
                         <th width="5%">No</th>
+                        <th>Brand</th>
                         <th>Nama Proyek</th>
                         <th>Jenis Material</th>
                         <th>Nama Barang</th>
@@ -141,7 +142,6 @@
                         <th>Warna</th>
                         <th>Qty</th>
                         <th>Keterangan</th>
-                        <th>Brand</th>
                     </thead>
                     <tbody>
                         <?php
@@ -149,6 +149,7 @@
                         foreach ($bom_lembaran->result() as $row) : ?>
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
+                                <td><?= $row->brand ?></td>
                                 <td><?= $row->nama_proyek ?></td>
                                 <td><?= $row->jenis_material ?></td>
                                 <td><?= $row->nama_barang ?></td>
@@ -158,7 +159,6 @@
                                 <td><?= $row->warna ?></td>
                                 <td><?= $row->qty_bom ?></td>
                                 <td><?= $row->keterangan ?></td>
-                                <td><?= $row->brand ?></td>
                             </tr>
 
                         <?php endforeach; ?>
