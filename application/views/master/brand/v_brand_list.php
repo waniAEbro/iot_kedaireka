@@ -3,12 +3,12 @@
     <div class="col-lg-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Master supplier</h3>
+                <h3 class="box-title">Master brand</h3>
                 <div class="box-tools pull-right">
                     <?php
                     $sesi = from_session('level');
                     if ($sesi <= 3) {
-                        echo button('load_silent("master/supplier/form/base","#modal")', 'Add Supplier', 'btn btn-info', 'data-toggle="tooltip" title="Add"');
+                        echo button('load_silent("master/brand/form/base","#modal")', 'Add brand', 'btn btn-info', 'data-toggle="tooltip" title="Add"');
                     } else {
                         # code...
                     }
@@ -19,25 +19,23 @@
                 <table width="100%" id="tableku" class="table table-striped">
                     <thead>
                         <th width="5%">No</th>
-                        <th>Kode</th>
-                        <th>Supplier</th>
-                        <th>Alamat</th>
+                        <th>ID</th>
+                        <th>brand</th>
                         <th>Act</th>
                     </thead>
                     <tbody>
                         <?php
                         $i = 1;
-                        foreach ($supplier->result() as $row) : ?>
+                        foreach ($brand->result() as $row) : ?>
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
-                                <td><?= $row->kode ?></td>
-                                <td><?= $row->supplier ?></td>
-                                <td><?= $row->alamat ?></td>
+                                <td><?= $row->id ?></td>
+                                <td><?= $row->brand ?></td>
                                 <td align="center">
                                     <?php
                                     $sesi = from_session('level');
                                     if ($sesi <= 3) {
-                                        echo button('load_silent("master/supplier/form/sub/' . $row->id . '","#modal")', '', 'btn btn-info fa fa-edit', 'data-toggle="tooltip" title="Edit"');
+                                        echo button('load_silent("master/brand/form/sub/' . $row->id . '","#modal")', '', 'btn btn-info fa fa-edit', 'data-toggle="tooltip" title="Edit"');
                                     } else {
                                         # code...
                                     }
