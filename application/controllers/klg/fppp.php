@@ -661,6 +661,7 @@ class Fppp extends CI_Controller
 					'kode_warna'     => str_pad($rowData[0][3], 2, '0', STR_PAD_LEFT),
 					'ukuran'         => $rowData[0][4],
 					'satuan'         => $rowData[0][5],
+					'id_multi_brand'         => $rowData[0][8],
 					'created'        => date('Y-m-d H:i:s'),
 				);
 				$qty        = $rowData[0][6];
@@ -687,6 +688,7 @@ class Fppp extends CI_Controller
 							'id_item'       => $id_item,
 							'qty_bom'       => $qty,
 							'keterangan'    => $keterangan,
+							'id_multi_brand'    => $obj['id_multi_brand'],
 							'created'       => date('Y-m-d H:i:s'),
 						);
 						$this->db->insert('data_stock', $obj_bom);
@@ -703,6 +705,7 @@ class Fppp extends CI_Controller
 					'item_code'     => $rowData[0][0],
 					'deskripsi'     => $rowData[0][1],
 					'satuan'        => $rowData[0][2],
+					'id_multi_brand'         => $rowData[0][5],
 					'created'       => date('Y-m-d H:i:s'),
 				);
 				$qty        = $rowData[0][3];
@@ -727,6 +730,7 @@ class Fppp extends CI_Controller
 							'id_item'       => $id_item,
 							'qty_bom'       => $qty,
 							'keterangan'    => $keterangan,
+							'id_multi_brand'    => $obj['id_multi_brand'],
 							'created'       => date('Y-m-d H:i:s'),
 						);
 						$this->db->insert('data_stock', $obj_bom);

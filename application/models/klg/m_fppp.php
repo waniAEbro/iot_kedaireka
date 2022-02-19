@@ -300,6 +300,8 @@ class M_fppp extends CI_Model
 		$this->db->join('data_fppp df', 'df.id = db.id_fppp', 'left');
 		$this->db->join('master_item mi', 'mi.id = db.id_item', 'left');
 		$this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
+		$this->db->join('master_brand mb', 'mb.id = db.id_multi_brand', 'left');
+		
 		$this->db->where('db.id_jenis_item', 1);
 		$this->db->where('db.is_bom', 1);
 		$this->db->where('db.ke_mf', 0);
@@ -312,6 +314,7 @@ class M_fppp extends CI_Model
 	{
 		$this->db->join('data_fppp df', 'df.id = db.id_fppp', 'left');
 		$this->db->join('master_item mi', 'mi.id = db.id_item', 'left');
+		$this->db->join('master_brand mb', 'mb.id = db.id_multi_brand', 'left');
 		$this->db->where('db.id_jenis_item', 2);
 		$this->db->where('db.is_bom', 1);
 		$this->db->where('db.ke_mf', 0);
@@ -324,6 +327,7 @@ class M_fppp extends CI_Model
 	{
 		$this->db->join('data_fppp df', 'df.id = db.id_fppp', 'left');
 		$this->db->join('master_item mi', 'mi.id = db.id_item', 'left');
+		$this->db->join('master_brand mb', 'mb.id = db.id_multi_brand', 'left');
 		$this->db->where('db.id_jenis_item', 3);
 		$this->db->where('db.is_bom', 1);
 		$this->db->where('db.ke_mf', 0);

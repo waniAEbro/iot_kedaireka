@@ -59,6 +59,7 @@
                         <th>Ukuran</th>
                         <th>Qty</th>
                         <th>Keterangan</th>
+                        <th>Brand</th>
                     </thead>
                     <tbody>
                         <?php
@@ -75,6 +76,7 @@
                                 <td><?= $row->ukuran ?></td>
                                 <td><?= $row->qty_bom ?></td>
                                 <td><?= $row->keterangan ?></td>
+                                <td><?= $row->brand ?></td>
                             </tr>
 
                         <?php endforeach; ?>
@@ -98,6 +100,7 @@
                         <th>Deskripsi</th>
                         <th>Qty</th>
                         <th>Keterangan</th>
+                        <th>Brand</th>
                     </thead>
                     <tbody>
                         <?php
@@ -110,6 +113,7 @@
                                 <td><?= $row->deskripsi ?></td>
                                 <td><?= $row->qty_bom ?></td>
                                 <td><?= $row->keterangan ?></td>
+                                <td><?= $row->brand ?></td>
                             </tr>
 
                         <?php endforeach; ?>
@@ -137,6 +141,7 @@
                         <th>Warna</th>
                         <th>Qty</th>
                         <th>Keterangan</th>
+                        <th>Brand</th>
                     </thead>
                     <tbody>
                         <?php
@@ -153,6 +158,7 @@
                                 <td><?= $row->warna ?></td>
                                 <td><?= $row->qty_bom ?></td>
                                 <td><?= $row->keterangan ?></td>
+                                <td><?= $row->brand ?></td>
                             </tr>
 
                         <?php endforeach; ?>
