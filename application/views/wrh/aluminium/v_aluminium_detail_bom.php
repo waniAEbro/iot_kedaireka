@@ -193,6 +193,7 @@
             <div class="box-footer">
                 <?= button_confirm("Anda yakin menyelesaikan stock out?", "wrh/aluminium/buat_surat_jalan/" . $id_fppp, "#content", 'Buat Surat Jalan', 'btn btn-success', 'data-toggle="tooltip" title="Buat Surat Jalan"'); ?>
                 <?= button_confirm("Anda yakin lanjut ke gudang MF?", "wrh/aluminium/stok_out_make_mf/" . $id_fppp, "#content", 'ke Gudang MF', 'btn btn-primary', 'data-toggle="tooltip" title="ke Gudang MF"'); ?>
+                <?php echo button_confirm("Anda yakin menambahkan item stock out?", "wrh/aluminium/additemdetailbom/" . $id_fppp, "#modal", 'Add Item', 'btn btn-info', 'data-toggle="tooltip" title="Add Item"'); ?>
             </div>
             <?php // echo button_confirm("Anda yakin menambahkan item stock out?", "wrh/aluminium/additemdetailbom/" . $id_fppp, "#modal", 'Add Item', 'btn btn-info', 'data-toggle="tooltip" title="Add Item"'); 
             ?>

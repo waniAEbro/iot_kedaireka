@@ -3,6 +3,19 @@
 <div class="box-body big">
     <?php echo form_open('', array('name' => 'faddmenugrup', 'class' => 'form-horizontal', 'role' => 'form')); ?>
     <div class="form-group">
+        <label class="col-sm-4 control-label">Brand</label>
+        <div class="col-sm-8">
+            <select name="id_brand" class="form-control">
+                <option>Pilih</option>
+                <?php foreach ($brand->result() as $valap) : ?>
+                    <option value="<?= $valap->id ?>">
+                        <?= $valap->brand ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
         <label class="col-sm-4 control-label">Item</label>
         <div class="col-sm-8">
             <select name="id_item" class="form-control">
@@ -12,7 +25,7 @@
                         <?= $valap->section_ata ?> -
                         <?= $valap->section_allure ?> -
                         <?= $valap->temper ?> -
-                        <?= $valap->warna ?> -
+                        <?= $valap->kode_warna ?> -
                         <?= $valap->ukuran ?>
                     </option>
                 <?php endforeach; ?>
@@ -25,7 +38,6 @@
         <div class="col-sm-8">
             <input type="text" class="form-control" name="qty">
             <input type="hidden" class="form-control" name="id_fppp" value="<?= $id_fppp ?>">
-            <input type="hidden" class="form-control" name="id_sj" value="<?= $id_sj ?>">
         </div>
     </div>
 
