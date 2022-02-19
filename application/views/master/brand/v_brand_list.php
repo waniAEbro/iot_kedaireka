@@ -30,7 +30,7 @@
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
                                 <td><?= $row->id ?></td>
-                                <td><?= $row->brand ?></td>
+                                <td align="center"><b><?= $row->brand ?></b></td>
                                 <td align="center">
                                     <?php
                                     $sesi = from_session('level');
