@@ -504,6 +504,25 @@ class M_aluminium extends CI_Model
         return $this->db->get('data_stock ds');
     }
 
+    public function getQtyOutProses($jenis_item)
+    {
+        $this->db->where('is_bom', 1);
+        $this->db->where('id_jenis_item', $jenis_item);
+        $this->db->where('id_surat_jalan', 0);
+        $res = $this->db->get('data_stock');
+        $data = array();
+        $nilai = 0;
+        foreach ($res->result() as $key) {
+            if (isset($data[$key->id_fppp])) {
+                $nilai = $data[$key->id_fppp];
+            } else {
+                $nilai = 0;
+            }
+            $data[$key->id_fppp] = $key->qty_out + $nilai;
+        }
+        return $data;
+    }
+
     public function getTotQtyBomFppp($jenis_item)
     {
         $this->db->where('is_bom', 1);

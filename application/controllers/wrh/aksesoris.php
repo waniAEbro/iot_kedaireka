@@ -304,6 +304,7 @@ class aksesoris extends CI_Controller
         $id_jenis_item = 2;
         $data['qty_bom']     = $this->m_aksesoris->getTotQtyBomFppp($id_jenis_item);
         $data['qty_out']     = $this->m_aksesoris->getTotQtyOutFppp($id_jenis_item);
+        $data['qty_out_proses']     = $this->m_aksesoris->getQtyOutProses($id_jenis_item);
         $data['dataFpppOut'] = $this->m_aksesoris->getFpppStockOut($id_jenis_item);
         $this->load->view('wrh/aksesoris/v_aksesoris_out_list', $data);
     }

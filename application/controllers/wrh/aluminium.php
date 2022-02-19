@@ -306,6 +306,7 @@ class Aluminium extends CI_Controller
         $id_jenis_item = 1;
         $data['qty_bom']     = $this->m_aluminium->getTotQtyBomFppp($id_jenis_item);
         $data['qty_out']     = $this->m_aluminium->getTotQtyOutFppp($id_jenis_item);
+        $data['qty_out_proses']     = $this->m_aluminium->getQtyOutProses($id_jenis_item);
         $data['dataFpppOut'] = $this->m_aluminium->getFpppStockOut($id_jenis_item);
         $this->load->view('wrh/aluminium/v_aluminium_out_list', $data);
     }
