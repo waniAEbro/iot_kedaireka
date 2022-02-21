@@ -337,6 +337,7 @@ class M_aksesoris extends CI_Model
         $this->db->select('sum(qty_out) as stock_out');
         $this->db->where('inout', 2);
         // $this->db->where('mutasi', 0);
+        $this->db->where('id_surat_jalan !=', 0);
 
         $res   = $this->db->get('data_stock');
         $stock = ($res->num_rows() < 1) ? 0 : $res->row()->stock_out;
@@ -891,6 +892,13 @@ class M_aksesoris extends CI_Model
     public function editStatusInOut($id)
     {
         $object = array('inout' => 2,);
+        $this->db->where('id', $id);
+        $this->db->update('data_stock', $object);
+    }
+
+    public function editStatusInOutCancel($id)
+    {
+        $object = array('inout' => 0,);
         $this->db->where('id', $id);
         $this->db->update('data_stock', $object);
     }

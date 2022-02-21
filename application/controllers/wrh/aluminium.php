@@ -363,7 +363,11 @@ class Aluminium extends CI_Controller
             $this->m_aluminium->editQtyOut($editid, $obj);
         }
         if ($field == 'qty_out') {
-            $this->m_aluminium->editStatusInOut($editid);
+            if ($value > 0) {
+                $this->m_aluminium->editStatusInOut($editid);
+            } else {
+                $this->m_aluminium->editStatusInOutCancel($editid);
+            }
         }
         $id_item      = $this->db->get_where('data_stock', array('id' => $editid))->row()->id_item;
         $id_gudang    = $this->input->post('gudang');

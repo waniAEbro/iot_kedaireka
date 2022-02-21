@@ -369,7 +369,11 @@ class aksesoris extends CI_Controller
             $this->m_aksesoris->editQtyOut($editid, $obj);
         }
         if ($field == 'qty_out') {
-            $this->m_aksesoris->editStatusInOut($editid);
+            if ($value > 0) {
+                $this->m_aksesoris->editStatusInOut($editid);
+            } else {
+                $this->m_aksesoris->editStatusInOutCancel($editid);
+            }
         }
         $id_item      = $this->db->get_where('data_stock', array('id' => $editid))->row()->id_item;
         $id_divisi    = $this->input->post('divisi');
