@@ -14,6 +14,27 @@
     }
 </style>
 <div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <label>Tanggal Awal</label>
+            <input type="text" data-date-format="yyyy-mm-dd" value="<?= $tgl_awal ?>" class="form-control datepicker" autocomplete="off" id="tgl_awal">
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <label>Tanggal Akhir</label>
+            <input type="text" data-date-format="yyyy-mm-dd" value="<?= $tgl_akhir ?>" class="form-control datepicker" autocomplete="off" id="tgl_akhir">
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <label><br><br><br></label>
+            <a class="btn btn-primary" onclick="setFilter()">Set Filter</a>
+        </div>
+    </div>
+
+</div>
+<div class="row">
     <div class="col-lg-12">
         <div class="box-header with-border">
             <h3 class="box-title">List <?= $is_memo ?></h3>
@@ -291,32 +312,12 @@
     })
 
 
-    // function cetak (id) {
-    //   var win = window.open("<?php echo base_url('klg/fppp/cetak/'); ?>/"+id, "_blank");
-    //             if (win) {
-    //                 //Browser has allowed it to be opened
-    //                 win.focus();
-    //             } else {
-    //                 //Browser has blocked it
-    //                 alert('Please allow popups for this website');
-    //             }
-    // }
-
     function setFilter() {
-        var store = $('#store').val();
-        if (store != '') {
-            var id_store = store;
-        } else {
-            var id_store = 'x';
-        };
-        var bulan = $('#bulan').val();
-        if (bulan != '') {
-            var id_bulan = bulan;
-        } else {
-            var id_bulan = 'x';
-        };
-        var tahun = $('#tahun').val();
-        load_silent("klg/fppp/filter/" + id_store + "/" + id_bulan + "/" + tahun + "/", "#content");
+
+        var tgl_awal = $('#tgl_awal').val();
+        var tgl_akhir = $('#tgl_akhir').val();
+        var param = <?= $param ?>;
+        load_silent("klg/fppp/filter/" + param + "/" + tgl_awal + "/" + tgl_akhir + "/", "#content");
 
     }
 
@@ -325,6 +326,10 @@
         var table = $('#tableku').DataTable({
             "ordering": true,
             // "scrollX": true,
+        });
+
+        $('.datepicker').datepicker({
+            autoclose: true
         });
 
 

@@ -25,7 +25,29 @@ class Fppp extends CI_Controller
 	public function index()
 	{
 		$this->fungsi->check_previleges('fppp');
+		$bulan       = date('m');
+		$tahun       = date('Y');
+		$tgl['tgl_awal']  = $tahun . '-' . $bulan . '-01';
+		$tgl['tgl_akhir'] = date("Y-m-t", strtotime($tgl['tgl_awal']));
+
+		$this->session->set_userdata($tgl);
+
 		$data['param_tab'] = '1';
+		$data['divisi']    = $this->db->get('master_divisi');
+		$data['is_memo']          = 'fppp';
+		$this->load->view('klg/fppp/v_fppp_tab', $data);
+	}
+
+	public function filter($param,$tgl_awal,$tgl_akhir)
+	{
+		$this->fungsi->check_previleges('fppp');
+		
+		$tgl['tgl_awal']  = $tgl_awal;
+		$tgl['tgl_akhir'] = $tgl_akhir;
+
+		$this->session->set_userdata($tgl);
+
+		$data['param_tab'] = $param;
 		$data['divisi']    = $this->db->get('master_divisi');
 		$data['is_memo']          = 'fppp';
 		$this->load->view('klg/fppp/v_fppp_tab', $data);
@@ -56,6 +78,8 @@ class Fppp extends CI_Controller
 	public function list($param = '')
 	{
 		$this->fungsi->check_previleges('fppp');
+		$data['tgl_awal']  = $this->session->userdata('tgl_awal');
+		$data['tgl_akhir'] = $this->session->userdata('tgl_akhir');
 		$data['fppp']           = $this->m_fppp->getData($param);
 		$data['get_total_hold'] = $this->m_fppp->getTotalHold();
 		$data['param']          = $param;

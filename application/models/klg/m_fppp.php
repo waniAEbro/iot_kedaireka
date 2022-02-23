@@ -15,6 +15,8 @@ class M_fppp extends CI_Model
 
 		$this->db->where('df.id_divisi', $param);
 		$this->db->where('df.is_memo', 1);
+		$this->db->where('DATE(df.tgl_pembuatan) >=', $this->session->userdata('tgl_awal'));
+		$this->db->where('DATE(df.tgl_pembuatan) <=', $this->session->userdata('tgl_akhir'));
 		$this->db->order_by('df.id', 'desc');
 
 		$this->db->select('df.*,md.divisi,mk.kaca,mp.pengiriman,metode_pengiriman,mwa.warna,ms.status');
@@ -301,7 +303,7 @@ class M_fppp extends CI_Model
 		$this->db->join('master_item mi', 'mi.id = db.id_item', 'left');
 		$this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
 		$this->db->join('master_brand mb', 'mb.id = db.id_multi_brand', 'left');
-		
+
 		$this->db->where('db.id_jenis_item', 1);
 		$this->db->where('db.is_bom', 1);
 		$this->db->where('db.ke_mf', 0);
@@ -567,7 +569,7 @@ class M_fppp extends CI_Model
 		$this->db->join('data_fppp df', 'df.id = dt.id_fppp', 'left');
 		$this->db->select('dt.*,mji.jenis_item,df.no_fppp,df.nama_proyek');
 		$this->db->order_by('dt.id', 'desc');
-		
+
 		return $this->db->get('data_temp dt');
 	}
 
