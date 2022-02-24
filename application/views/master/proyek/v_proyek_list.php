@@ -7,7 +7,7 @@
                 <div class="box-tools pull-right">
                     <?php
                     $sesi = from_session('level');
-                    if ($sesi <= 3) {
+                    if ($sesi <= 4) {
                         echo button('load_silent("master/proyek/form/base","#modal")', 'Add proyek', 'btn btn-info', 'data-toggle="tooltip" title="Add"');
                     } else {
                         # code...
