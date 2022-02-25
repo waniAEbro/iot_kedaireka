@@ -145,6 +145,8 @@ class M_fppp extends CI_Model
 		$this->db->where('DATE_FORMAT(created,"%m")', $month);
 		$this->db->where('id_divisi', $id_divisi);
 		$this->db->where('is_memo', 2);
+		$this->db->like('no_fppp', '/' . $month . '/' . $year);
+
 		$this->db->order_by('id', 'desc');
 		$this->db->limit(1);
 		$hasil = $this->db->get('data_fppp');
