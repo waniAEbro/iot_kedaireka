@@ -27,10 +27,20 @@ class Fppp extends CI_Controller
 		$this->fungsi->check_previleges('fppp');
 		$bulan       = date('m');
 		$tahun       = date('Y');
-		$tgl['tgl_awal'] = date('Y-m-d', strtotime('-3 month', strtotime($tahun . '-' . $bulan . '-01')));
+		if($this->session->userdata('tgl_awal') !=''){
+			$tgl['tgl_awal'] = $this->session->userdata('tgl_awal');
+		}else{
+			$tgl['tgl_awal'] = date('Y-m-d', strtotime('-3 month', strtotime($tahun . '-' . $bulan . '-01')));
+		}
 
+		if($this->session->userdata('tgl_akhir') !=''){
+			$tgl['tgl_akhir'] = $this->session->userdata('tgl_akhir');
+		}else{
+			$tgl['tgl_akhir'] = date("Y-m-t", strtotime($tahun . '-' . $bulan . '-01'));
+		}
+		
 		// $tgl['tgl_awal']  = $tahun . '-' . $bulan . '-01';
-		$tgl['tgl_akhir'] = date("Y-m-t", strtotime($tahun . '-' . $bulan . '-01'));
+		
 
 		$this->session->set_userdata($tgl);
 

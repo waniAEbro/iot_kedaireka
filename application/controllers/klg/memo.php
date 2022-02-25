@@ -28,10 +28,17 @@ class Memo extends CI_Controller
 
 		$bulan       = date('m');
 		$tahun       = date('Y');
-		$tgl['tgl_awal'] = date('Y-m-d', strtotime('-3 month', strtotime($tahun . '-' . $bulan . '-01')));
+		if ($this->session->userdata('tgl_awal') != '') {
+			$tgl['tgl_awal'] = $this->session->userdata('tgl_awal');
+		} else {
+			$tgl['tgl_awal'] = date('Y-m-d', strtotime('-3 month', strtotime($tahun . '-' . $bulan . '-01')));
+		}
 
-		// $tgl['tgl_awal']  = $tahun . '-' . $bulan . '-01';
-		$tgl['tgl_akhir'] = date("Y-m-t", strtotime($tahun . '-' . $bulan . '-01'));
+		if ($this->session->userdata('tgl_akhir') != '') {
+			$tgl['tgl_akhir'] = $this->session->userdata('tgl_akhir');
+		} else {
+			$tgl['tgl_akhir'] = date("Y-m-t", strtotime($tahun . '-' . $bulan . '-01'));
+		}
 
 		$this->session->set_userdata($tgl);
 
@@ -52,7 +59,7 @@ class Memo extends CI_Controller
 
 		$data['param_tab'] = $param;
 		$data['divisi']    = $this->db->get('master_divisi');
-		$data['is_memo']          = 'fppp';
+		$data['is_memo']          = 'memo';
 		$this->load->view('klg/fppp/v_fppp_tab', $data);
 	}
 

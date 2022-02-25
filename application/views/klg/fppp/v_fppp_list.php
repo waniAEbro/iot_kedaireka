@@ -29,7 +29,14 @@
     <div class="col-md-4">
         <div class="form-group">
             <label><br><br><br></label>
-            <a class="btn btn-primary" onclick="setFilter()">Set Filter</a>
+            <?php
+            if ($is_memo == 'fppp') { ?>
+                <a class="btn btn-primary" onclick="setFilter()">Set Filter</a>
+            <?php } else { ?>
+                <a class="btn btn-primary" onclick="setFilterMemo()">Set Filter Memo</a>
+            <?php }
+
+            ?>
         </div>
     </div>
 
@@ -318,6 +325,15 @@
         var tgl_akhir = $('#tgl_akhir').val();
         var param = <?= $param ?>;
         load_silent("klg/fppp/filter/" + param + "/" + tgl_awal + "/" + tgl_akhir + "/", "#content");
+
+    }
+
+    function setFilterMemo() {
+
+        var tgl_awal = $('#tgl_awal').val();
+        var tgl_akhir = $('#tgl_akhir').val();
+        var param = <?= $param ?>;
+        load_silent("klg/memo/filter/" + param + "/" + tgl_awal + "/" + tgl_akhir + "/", "#content");
 
     }
 
