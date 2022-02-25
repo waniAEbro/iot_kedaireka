@@ -1079,10 +1079,7 @@ class M_aluminium extends CI_Model
 
     public function updatekeMf($id_stock, $id_fppp)
     {
-        $this->db->where('id_fppp', $id_fppp);
-        $this->db->where('inout', 0);
-        $this->db->where('ke_mf', 1);
-        $this->db->delete('data_stock');
+
 
 
 

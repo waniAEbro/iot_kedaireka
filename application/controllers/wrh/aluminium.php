@@ -327,6 +327,10 @@ class Aluminium extends CI_Controller
 
         $id_jenis_item = 1;
         $data['id_fppp']     = $id_fppp;
+        $this->db->where('id_fppp', $id_fppp);
+        $this->db->where('inout', 0);
+        $this->db->where('ke_mf', 1);
+        $this->db->delete('data_stock');
         $list          = $this->m_aluminium->getListBomKurang($id_fppp);
         foreach ($list->result() as $key) {
             $this->m_aluminium->updatekeMf($key->id, $id_fppp);
