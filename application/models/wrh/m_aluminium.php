@@ -1135,7 +1135,8 @@ class M_aluminium extends CI_Model
         $this->db->where('id_fppp', $id_fppp);
         $this->db->where('ke_mf', 1);
         $cek_ada = $this->db->get('data_stock')->num_rows();
-        if ($cek_ada == 0) {
+        $qty_kurang = $qty_bom - $tot_terkirim;
+        if ($cek_ada == 0 && $qty_kurang > 0) {
             $object = array(
                 'is_bom' => '1',
                 'id_stock_sblm' => $id_stock,
@@ -1144,7 +1145,7 @@ class M_aluminium extends CI_Model
                 'id_fppp' => $id_fppp,
                 'id_jenis_item' => $id_jenis_item,
                 'id_item' => $get_id,
-                'qty_bom' => $qty_bom - $tot_terkirim,
+                'qty_bom' => $qty_kurang,
                 'created' => date('Y-m-d H:i:s'),
             );
             $this->db->insert('data_stock', $object);

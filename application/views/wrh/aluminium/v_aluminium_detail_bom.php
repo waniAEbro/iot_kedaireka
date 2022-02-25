@@ -410,11 +410,8 @@
                 $(element).hide();
                 $(element).prev('.edit').show();
                 $(element).prev('.edit').text(0);
-            } else if (value == '') {
-                $(element).hide();
-                $(element).prev('.edit').show();
-                $(element).prev('.edit').text(0);
             } else {
+
                 $.ajax({
                     url: "<?= site_url('wrh/aluminium/saveout/') ?>",
                     dataType: "json",
