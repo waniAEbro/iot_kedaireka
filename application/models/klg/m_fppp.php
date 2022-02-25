@@ -35,6 +35,8 @@ class M_fppp extends CI_Model
 
 		$this->db->where('df.id_divisi', $param);
 		$this->db->where('df.is_memo', 2);
+		$this->db->where('DATE(df.tgl_pembuatan) >=', $this->session->userdata('tgl_awal'));
+		$this->db->where('DATE(df.tgl_pembuatan) <=', $this->session->userdata('tgl_akhir'));
 		$this->db->order_by('df.id', 'desc');
 
 		$this->db->select('df.*,md.divisi,mk.kaca,mp.pengiriman,metode_pengiriman,mwa.warna,ms.status');
@@ -53,6 +55,8 @@ class M_fppp extends CI_Model
 
 		$this->db->where('df.id_divisi', $param);
 		$this->db->where('df.is_memo', 3);
+		$this->db->where('DATE(df.tgl_pembuatan) >=', $this->session->userdata('tgl_awal'));
+		$this->db->where('DATE(df.tgl_pembuatan) <=', $this->session->userdata('tgl_akhir'));
 		$this->db->order_by('df.id', 'desc');
 
 		$this->db->select('df.*,md.divisi,mk.kaca,mp.pengiriman,metode_pengiriman,mwa.warna,ms.status');
