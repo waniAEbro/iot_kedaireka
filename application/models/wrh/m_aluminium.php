@@ -501,7 +501,7 @@ class M_aluminium extends CI_Model
         $this->db->select('df.*');
         $this->db->group_by('ds.id_fppp');
         $this->db->order_by('ds.created', 'desc');
-        
+
         return $this->db->get('data_stock ds');
     }
 
@@ -568,7 +568,7 @@ class M_aluminium extends CI_Model
         $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
         $this->db->join('master_gudang mg', 'mg.id = ds.id_gudang', 'left');
         $this->db->join('master_brand mb', 'mb.id = ds.id_multi_brand', 'left');
-        
+
 
         $this->db->where('ds.id_fppp', $id_fppp);
         $this->db->where('ds.id_jenis_item', $id_jenis_item);
@@ -939,7 +939,11 @@ class M_aluminium extends CI_Model
 
     public function editStatusInOutCancel($id)
     {
-        $object = array('inout' => 0,);
+        $object = array(
+            'keranjang' => '',
+            'id_gudang' => '',
+            'inout' => 0,
+        );
         $this->db->where('id', $id);
         $this->db->update('data_stock', $object);
     }
@@ -1076,6 +1080,8 @@ class M_aluminium extends CI_Model
     public function updatekeMf($id_stock, $id_fppp)
     {
         $id_item      = $this->db->get_where('data_stock', array('id' => $id_stock))->row()->id_item;
+        $keranjang      = $this->db->get_where('data_stock', array('id' => $id_stock))->row()->keranjang;
+        $id_gudang      = $this->db->get_where('data_stock', array('id' => $id_stock))->row()->id_gudang;
         $qty_bom      = $this->db->get_where('data_stock', array('id' => $id_stock))->row()->qty_bom;
         $id_jenis_item = 1;
         $section_ata = $this->db->get_where('master_item', array('id' => $id_item))->row()->section_ata;
@@ -1107,13 +1113,17 @@ class M_aluminium extends CI_Model
         } else {
             $get_id = $hasil->row()->id;
         }
-        $this->db->where('id_fppp', $id_fppp);
-        $this->db->where('id_item', $id_item);
-        $this->db->select('sum(qty_bom) as tot_bom');
-        $tot_bom = $this->db->get('data_stock')->row()->tot_bom;
+        // $this->db->where('id_fppp', $id_fppp);
+        // $this->db->where('id_item', $id_item);
+        // $this->db->where('inout', 1);
+        // $this->db->select('sum(qty_bom) as tot_bom');
+        // $tot_bom = $this->db->get('data_stock')->row()->tot_bom;
 
         $this->db->where('id_fppp', $id_fppp);
         $this->db->where('id_item', $id_item);
+        $this->db->where('keranjang', $keranjang);
+        $this->db->where('id_gudang', $id_gudang);
+        $this->db->where('inout', 2);
         $this->db->select('sum(qty_out) as tot');
         $tot_terkirim = $this->db->get('data_stock')->row()->tot;
 
@@ -1130,7 +1140,7 @@ class M_aluminium extends CI_Model
                 'id_fppp' => $id_fppp,
                 'id_jenis_item' => $id_jenis_item,
                 'id_item' => $get_id,
-                'qty_bom' => $tot_bom - $tot_terkirim,
+                'qty_bom' => $qty_bom - $tot_terkirim,
                 'created' => date('Y-m-d H:i:s'),
             );
             $this->db->insert('data_stock', $object);

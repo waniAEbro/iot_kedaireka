@@ -101,7 +101,7 @@
                             $qty_aktual = $row->qty_out;
 
                             $bgrow = ($qty_gudang == 0) ? "#ffb6a3" : "";
-                            if ($qty_gudang < $qtyBOM) {
+                            if ($qty_aktual < $qtyBOM) {
                                 $this->m_aluminium->updateIsKurang($row->id_stock);
                                 // $this->m_aluminium->updatekeMf($row->id_stock, $id_fppp);
                             }
@@ -138,7 +138,12 @@
                                         <select style="width: 100px;" id="id_gudang_<?= $row->id_stock ?>" onchange="gudang(<?= $row->id_stock ?>)" data-id="<?= $row->id_stock ?>" data-field="id_gudang" class="form-control">
                                             <option id="">Pilih</option>
                                             <?php foreach ($gudang->result() as $key) {
-                                                $selected2 = ($key->id == $id_gudang_stock) ? "selected" : "";
+                                                if ($qty_aktual > 0) {
+                                                    $selected2 = ($key->id == $row->id_gudang) ? "selected" : "";
+                                                } else {
+                                                    $selected2 = ($key->id == $id_gudang_stock) ? "selected" : "";
+                                                }
+
                                             ?>
                                                 <option value="<?= $key->id ?>" <?= $selected2 ?>><?= $key->gudang ?></option>
                                             <?php } ?>
@@ -148,7 +153,11 @@
                                         <select style="width: 100px;" id="keranjang_<?= $row->id_stock ?>" onchange="keranjang(<?= $row->id_stock ?>)" data-id="<?= $row->id_stock ?>" data-field="keranjang" class="form-control">
                                             <option id="">Pilih</option>
                                             <?php foreach ($keranjang->result() as $key) {
-                                                $selected2 = ($key->keranjang == $keranjang_stock) ? "selected" : "";
+                                                if ($qty_aktual > 0) {
+                                                    $selected2 = ($key->keranjang == $row->keranjang) ? "selected" : "";
+                                                } else {
+                                                    $selected2 = ($key->keranjang == $keranjang_stock) ? "selected" : "";
+                                                }
                                             ?>
                                                 <option value="<?= $key->keranjang ?>" <?= $selected2 ?>><?= $key->keranjang ?></option>
                                             <?php } ?>
@@ -437,6 +446,9 @@
                         }
                         $('#qty_gudang_' + edit_id).html(qtygdg);
                         $('#qty_kurang_' + edit_id).html(qtybom - value);
+                        if (value == 0) {
+                            load_silent("wrh/aluminium/stok_out_make/" + id_fppp, "#content");
+                        }
                         // console.log(qtybom);
                         // console.log(value);
                         // gudang(edit_id);
