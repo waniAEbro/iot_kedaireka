@@ -410,6 +410,7 @@
                 $(element).hide();
                 $(element).prev('.edit').show();
                 $(element).prev('.edit').text(0);
+                $(this).val(0);
             } else {
 
                 $.ajax({
