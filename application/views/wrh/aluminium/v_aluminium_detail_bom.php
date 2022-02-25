@@ -409,7 +409,7 @@
                 alert("Tidak boleh melebihi Qty Gudang!");
                 $(element).hide();
                 $(element).prev('.edit').show();
-                $(element).prev('.edit').text(value);
+                $(element).prev('.edit').text(0);
             } else if (value == '') {
                 $(element).hide();
                 $(element).prev('.edit').show();
