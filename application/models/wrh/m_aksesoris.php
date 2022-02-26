@@ -345,6 +345,25 @@ class M_aksesoris extends CI_Model
         return $stock;
     }
 
+    public function getQtyOutDetailTabelMonitoringMutasi($id, $id_divisi, $id_gudang, $keranjang)
+    {
+        $year  = date('Y');
+        $month = date('m');
+        $this->db->where('DATE_FORMAT(updated,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(updated,"%m")', $month);
+        $this->db->where('id_item', $id);
+        $this->db->where('id_divisi', $id_divisi);
+        $this->db->where('id_gudang', $id_gudang);
+        $this->db->where('keranjang', $keranjang);
+        $this->db->select('sum(qty_out) as stock_out');
+        $this->db->where('inout', 2);
+        $this->db->where('mutasi', 1);
+
+        $res   = $this->db->get('data_stock');
+        $stock = ($res->num_rows() < 1) ? 0 : $res->row()->stock_out;
+        return $stock;
+    }
+
 
     public function getDataStock($tgl_awal, $tgl_akhir)
     {

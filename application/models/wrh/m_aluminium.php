@@ -264,6 +264,30 @@ class M_aluminium extends CI_Model
         return $data;
     }
 
+    public function getTotalOutPerBulanMutasi()
+    {
+        $year  = date('Y');
+        $month = date('m');
+        $this->db->where('DATE_FORMAT(updated,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(updated,"%m")', $month);
+        $this->db->where('mutasi', 1);
+        $this->db->where('inout', 2);
+        // $this->db->where('is_bom', 1);
+        // $this->db->where('status_fppp', 0);
+        $this->db->where('id_surat_jalan !=', 0);
+
+        $res = $this->db->get('data_stock');
+        $data = array();
+        foreach ($res->result() as $key) {
+
+            if (!isset($data[$key->id_item])) {
+                $data[$key->id_item] = 0;
+            }
+            $data[$key->id_item] = $data[$key->id_item] + $key->qty_out;
+        }
+        return $data;
+    }
+
 
 
     public function getDataDetailTabel($id_item = '')
@@ -391,6 +415,24 @@ class M_aluminium extends CI_Model
         $this->db->where('inout', 2);
         $this->db->where('id_surat_jalan !=', 0);
         // $this->db->where('mutasi', 0);
+
+        $res = $this->db->get('data_stock');
+        $stock = ($res->num_rows() < 1) ? 0 : $res->row()->stock_out;
+        return $stock;
+    }
+
+    public function getQtyOutDetailTabelMonitoringMutasi($id, $id_gudang, $keranjang)
+    {
+        $year = date('Y');
+        $month = date('m');
+        $this->db->where('DATE_FORMAT(updated,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(updated,"%m")', $month);
+        $this->db->where('id_item', $id);
+        $this->db->where('id_gudang', $id_gudang);
+        $this->db->where('keranjang', $keranjang);
+        $this->db->select('sum(qty_out) as stock_out');
+        $this->db->where('inout', 2);
+        $this->db->where('mutasi', 1);
 
         $res = $this->db->get('data_stock');
         $stock = ($res->num_rows() < 1) ? 0 : $res->row()->stock_out;

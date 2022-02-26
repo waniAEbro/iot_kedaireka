@@ -113,6 +113,7 @@ class Aluminium extends CI_Controller
             $stok_awal_bulan = $this->m_aluminium->getAwalBulanDetailTabel($key->id_item, $key->id_gudang, $key->keranjang);
             $qtyin           = $this->m_aluminium->getQtyInDetailTabelMonitoring($key->id_item, $key->id_gudang, $key->keranjang);
             $qtyout          = $this->m_aluminium->getQtyOutDetailTabelMonitoring($key->id_item, $key->id_gudang, $key->keranjang);
+            $qtyoutmutasi          = $this->m_aluminium->getQtyOutDetailTabelMonitoringMutasi($key->id_item, $key->id_gudang, $key->keranjang);
             $temp            = array(
                 "divisi"           => $key->divisi,
                 "gudang"           => $key->gudang,
@@ -120,7 +121,7 @@ class Aluminium extends CI_Controller
                 "stok_awal_bulan"  => $stok_awal_bulan,
                 "tot_in"           => $qtyin,
                 "tot_out"          => $qtyout,
-                "stok_akhir_bulan" => ($stok_awal_bulan + $qtyin) - $qtyout,
+                "stok_akhir_bulan" => ($stok_awal_bulan + $qtyin) - $qtyout - $qtyoutmutasi,
                 "rata_pemakaian"   => '0',
                 "min_stock"        => '0',
             );
