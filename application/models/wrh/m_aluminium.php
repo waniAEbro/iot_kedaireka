@@ -619,7 +619,7 @@ class M_aluminium extends CI_Model
         $this->db->where('ds.ke_mf', 0);
         $this->db->select('ds.*,ds.id as id_stock,mi.*,mwa.warna,mi.divisi,mg.gudang,ds.created as created_,ds.updated as updated_,mb.brand');
 
-        $this->db->order_by('ds.id', 'desc');
+        $this->db->order_by('ds.is_kurang', 'desc');
 
         return $this->db->get('data_stock ds');
     }
@@ -1107,6 +1107,13 @@ class M_aluminium extends CI_Model
     public function updateIsKurang($id_stock)
     {
         $obj = array('is_kurang' => 1,);
+        $this->db->where('id', $id_stock);
+        $this->db->update('data_stock', $obj);
+    }
+
+    public function updateIsKurang0($id_stock)
+    {
+        $obj = array('is_kurang' => 0,);
         $this->db->where('id', $id_stock);
         $this->db->update('data_stock', $obj);
     }

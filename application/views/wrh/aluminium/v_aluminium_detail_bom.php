@@ -100,10 +100,19 @@
 
                             $qty_aktual = $row->qty_out;
 
-                            $bgrow = ($qty_gudang == 0) ? "#ffb6a3" : "";
-                            if ($qty_aktual < $qtyBOM) {
+                            // $bgrow = ($qty_gudang < $qtyBOM && $qty_aktual == 0) ? "#ffb6a3" : "";
+                            if ($qty_gudang < $qtyBOM && $qty_aktual == 0) {
+                                $bgrow = '#ffb6a3';
+                            } else {
+                                $bgrow = ($qty_aktual > 0) ? "#82ff80" : "";
+                            }
+
+                            // if ($qty_aktual < $qtyBOM) {
+                            if ($kurang > 0) {
                                 $this->m_aluminium->updateIsKurang($row->id_stock);
                                 // $this->m_aluminium->updatekeMf($row->id_stock, $id_fppp);
+                            } else {
+                                $this->m_aluminium->updateIsKurang0($row->id_stock);
                             }
 
                             if ($row->id_surat_jalan == 0) {
@@ -444,9 +453,9 @@
                         }
                         $('#qty_gudang_' + edit_id).html(qtygdg);
                         $('#qty_kurang_' + edit_id).html(qtybom - value);
-                        if (value == 0) {
-                            load_silent("wrh/aluminium/stok_out_make/" + id_fppp, "#content");
-                        }
+                        // if (value == 0) {
+                        load_silent("wrh/aluminium/stok_out_make/" + id_fppp, "#content");
+                        // }
                         // console.log(qtybom);
                         // console.log(value);
                         // gudang(edit_id);
