@@ -94,11 +94,11 @@ class Dashboard extends CI_Controller
 		// }
 
 
-		// $this->db->where('id_jenis_item', 1);
+		// $this->db->where('id_jenis_item', 2);
 		// $counter = $this->db->get('master_item');
 		// foreach ($counter->result() as $key) {
 		// 	$object = array('id_item' => $key->id);
-		// 	$this->db->where('id_jenis_item', 1);
+		// 	$this->db->where('id_jenis_item', 2);
 		// 	$this->db->where('itm_code', $key->item_code);
 		// 	$this->db->update('data_counter', $object);
 		// }

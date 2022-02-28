@@ -27,20 +27,20 @@ class Fppp extends CI_Controller
 		$this->fungsi->check_previleges('fppp');
 		$bulan       = date('m');
 		$tahun       = date('Y');
-		if($this->session->userdata('tgl_awal') !=''){
+		if ($this->session->userdata('tgl_awal') != '') {
 			$tgl['tgl_awal'] = $this->session->userdata('tgl_awal');
-		}else{
+		} else {
 			$tgl['tgl_awal'] = date('Y-m-d', strtotime('-3 month', strtotime($tahun . '-' . $bulan . '-01')));
 		}
 
-		if($this->session->userdata('tgl_akhir') !=''){
+		if ($this->session->userdata('tgl_akhir') != '') {
 			$tgl['tgl_akhir'] = $this->session->userdata('tgl_akhir');
-		}else{
+		} else {
 			$tgl['tgl_akhir'] = date("Y-m-t", strtotime($tahun . '-' . $bulan . '-01'));
 		}
-		
+
 		// $tgl['tgl_awal']  = $tahun . '-' . $bulan . '-01';
-		
+
 
 		$this->session->set_userdata($tgl);
 
@@ -937,11 +937,17 @@ class Fppp extends CI_Controller
 					'item_code'     => $rowData[0][0],
 					'deskripsi'     => $rowData[0][1],
 					'satuan'        => $rowData[0][2],
+				);
+				$obj_new = array(
+					'id_jenis_item' => 2,
+					'item_code'     => $rowData[0][0],
+					'deskripsi'     => $rowData[0][1],
+					'satuan'        => $rowData[0][2],
 					'created'       => date('Y-m-d H:i:s'),
 				);
 				$cek_item = $this->m_fppp->getMasterAksesoris($obj['item_code']);
 				if ($cek_item->num_rows() < 1) {
-					$this->db->insert('master_item', $obj);
+					$this->db->insert('master_item', $obj_new);
 				} else {
 					$this->db->where('item_code', $obj['item_code']);
 					$this->db->update('master_item', $obj);
@@ -1011,13 +1017,12 @@ class Fppp extends CI_Controller
 				FALSE
 			);
 			$obj = array(
-				'id_jenis_item'          => $rowData[0][0],
-				'id_item'          => str_replace(' ', '', $rowData[0][1]),
-				'id_divisi'          => str_replace(' ', '', $rowData[0][2]),
-				'id_gudang'          => str_replace(' ', '', $rowData[0][3]),
-				'keranjang'          => str_replace(' ', '_', $rowData[0][4]),
-				'qty'          => $rowData[0][5],
-				'itm_code'          => $rowData[0][6],
+				'id_jenis_item'          => $rowData[0][3],
+				'id_divisi'          => str_replace(' ', '', $rowData[0][4]),
+				'id_gudang'          => str_replace(' ', '', $rowData[0][5]),
+				'keranjang'          => str_replace(' ', '_', $rowData[0][6]),
+				'qty'          => $rowData[0][7],
+				'itm_code'          => $rowData[0][0],
 			);
 			// $this->db->insert('data_stock', $obj);
 
