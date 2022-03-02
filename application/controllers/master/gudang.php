@@ -83,7 +83,7 @@ class Gudang extends CI_Controller
             $data['edit'] = $this->db->get_where('master_gudang', array('id' => $id));
             $this->load->view('master/gudang/v_gudang_edit', $data);
         } else {
-            $datapost = get_post_data(array('id', 'kode', 'gudang'));
+            $datapost = get_post_data(array('id', 'id_jenis_item', 'gudang'));
 
             $this->m_gudang->updateData($datapost);
             $this->fungsi->run_js('load_silent("master/gudang","#content")');
