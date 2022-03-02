@@ -21,13 +21,7 @@
             <select name="id_item" class="form-control">
                 <option>Pilih</option>
                 <?php foreach ($item->result() as $valap) : ?>
-                    <option value="<?= $valap->id ?>">
-                        <?= $valap->section_ata ?> -
-                        <?= $valap->section_allure ?> -
-                        <?= $valap->temper ?> -
-                        <?= $valap->kode_warna ?> -
-                        <?= $valap->ukuran ?>
-                    </option>
+                    <option value="<?= $valap->id ?>"><?= $valap->section_ata ?>-<?= $valap->section_allure ?>-<?= $valap->temper ?>-<?= $valap->kode_warna ?>-<?= $valap->ukuran ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
