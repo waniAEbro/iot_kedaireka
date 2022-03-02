@@ -102,9 +102,17 @@
 
                             // $bgrow = ($qty_gudang < $qtyBOM && $qty_aktual == 0) ? "#ffb6a3" : "";
                             if ($qty_gudang < $qtyBOM && $qty_aktual == 0) {
-                                $bgrow = '#ffb6a3';
+                                $bgrow = '#ffb6a3'; //merah
                             } else {
-                                $bgrow = ($qty_aktual > 0) ? "#82ff80" : "";
+                                if ($qty_aktual > 0 &&  $qty_aktual == $row->qty_bom && $row->set_parsial == 0) {
+                                    $bgrow = '#82ff80'; //hijau
+                                } elseif ($qty_aktual > 0 &&  $qty_aktual == $row->qty_bom && $row->set_parsial == 1) {
+                                    $bgrow = '#70ffd9'; //cyan
+                                } else {
+                                    $bgrow = '';
+                                }
+
+                                // $bgrow = ($qty_aktual > 0) ? "#82ff80" : "";
                             }
 
                             // if ($qty_aktual < $qtyBOM) {

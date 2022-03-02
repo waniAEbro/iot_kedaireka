@@ -491,13 +491,15 @@ class Aluminium extends CI_Controller
         $qtyBOM = $getRowStock->qty_bom;
         $kurang = $qtyBOM - $getRowStock->qty_out;
         $object = array(
+            'is_bom'        => $getRowStock->is_bom,
+            'id_multi_brand'        => $getRowStock->id_multi_brand,
             'id_fppp'       => $id_fppp,
             'is_parsial'    => 1,
-            'is_bom'        => $getRowStock->is_bom,
             'id_jenis_item' => $getRowStock->id_jenis_item,
             'id_item'       => $getRowStock->id_item,
             'qty_bom'       => $kurang,
             'ke_mf'         => $getRowStock->ke_mf,
+            'keterangan'         => $getRowStock->keterangan,
             'is_parsial'    => 1,
             'created'       => date('Y-m-d H:i:s'),
         );
@@ -510,6 +512,15 @@ class Aluminium extends CI_Controller
     public function hapus_parsial($id_fppp, $id_stock)
     {
         $this->fungsi->check_previleges('aluminium');
+        $parsial = $this->m_aluminium->getRowStock($id_stock);
+        $asli = $this->m_aluminium->getRowStockNonParsial($parsial->id_item, $id_fppp);
+        $obj = array(
+            'set_parsial'        =>  0,
+            'qty_bom'        =>  $asli->qty_bom + $parsial->qty_bom,
+        );
+        $this->db->where('id', $asli->id);
+        $this->db->update('data_stock', $obj);
+
         $this->m_aluminium->hapusParsial($id_stock);
         $object      = array(
             'id_stock' => $id_stock,
@@ -670,7 +681,7 @@ class Aluminium extends CI_Controller
         $this->fungsi->run_js('load_silent("wrh/aluminium/showformitemdetailbom/' . $id_fppp . '","#divsubcontent")');
     }
 
-    public function showformitemdetailbom( $id_fppp = '')
+    public function showformitemdetailbom($id_fppp = '')
     {
         $this->fungsi->check_previleges('aluminium');
         $this->load->library('form_validation');
