@@ -1147,6 +1147,8 @@ class M_aluminium extends CI_Model
         $keranjang      = $this->db->get_where('data_stock', array('id' => $id_stock))->row()->keranjang;
         $id_gudang      = $this->db->get_where('data_stock', array('id' => $id_stock))->row()->id_gudang;
         $qty_bom      = $this->db->get_where('data_stock', array('id' => $id_stock))->row()->qty_bom;
+        $id_multi_brand      = $this->db->get_where('data_stock', array('id' => $id_stock))->row()->id_multi_brand;
+        $keterangan      = $this->db->get_where('data_stock', array('id' => $id_stock))->row()->keterangan;
         $id_jenis_item = 1;
         $section_ata = $this->db->get_where('master_item', array('id' => $id_item))->row()->section_ata;
         $section_allure = $this->db->get_where('master_item', array('id' => $id_item))->row()->section_allure;
@@ -1206,6 +1208,8 @@ class M_aluminium extends CI_Model
                 'id_jenis_item' => $id_jenis_item,
                 'id_item' => $get_id,
                 'qty_bom' => $qty_kurang,
+                'id_multi_brand' => $id_multi_brand,
+                'keterangan' => $keterangan,
                 'created' => date('Y-m-d H:i:s'),
             );
             $this->db->insert('data_stock', $object);
