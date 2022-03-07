@@ -36,8 +36,8 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label>Warna Aluminium</label>
-                                <input type="text" class="form-control" id="warna" value="<?= $rowFppp->warna ?>" readonly>
+                                <label>Nama Sales</label>
+                                <input type="text" class="form-control" id="sales" value="<?= $rowFppp->sales ?>" readonly>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -56,7 +56,6 @@
                 <table width="100%" id="tableku" class="table">
                     <thead>
                         <th width="5%">No</th>
-                        <th>Brand</th>
                         <th>Section ATA</th>
                         <th>Section Allure</th>
                         <th>Temper</th>
@@ -85,13 +84,13 @@
                             $qtyTotalOut = $this->m_aluminium->getQtyOutFppp($row->id_fppp, $row->id_item);
                             $id_gudang_stock = $this->m_aluminium->getQtyTerbanyakStockGudang($row->id_item);
                             $keranjang_stock = $this->m_aluminium->getQtyTerbanyakStockKeranjang($row->id_item);
-                            $qty_stock = $this->m_aluminium->getQtyTerbanyakStockQty($row->id_item);
+                            $qty_stock = $this->m_aluminium->getQtyTerbanyakStockQtyMf($row->id_item);
 
                             $qtyBOM = $row->qty_bom;
                             if ($row->set_parsial == 0) {
                                 $kurang = $qtyBOM - $row->qty_out;
                             } else {
-                                $kurang = 0;
+                                $kurang = $qtyBOM - $row->qty_out;
                             }
                             $cekproduksi = ($row->produksi == 1) ? 'checked' : '';
                             $ceklapangan = ($row->lapangan == 1) ? 'checked' : '';
@@ -100,40 +99,22 @@
 
                             $qty_aktual = $row->qty_out;
 
-                            // $bgrow = ($qty_gudang < $qtyBOM && $qty_aktual == 0) ? "#ffb6a3" : "";
-                            if ($qty_gudang < $qtyBOM && $qty_aktual == 0) {
-                                $bgrow = '#ffb6a3'; //merah
-                            } else {
-                                if ($qty_aktual > 0 &&  $qty_aktual == $row->qty_bom && $row->set_parsial == 0) {
-                                    $bgrow = '#82ff80'; //hijau
-                                } elseif ($qty_aktual > 0 &&  $qty_aktual == $row->qty_bom && $row->set_parsial == 1) {
-                                    $bgrow = '#70ffd9'; //cyan
-                                } else {
-                                    $bgrow = '';
-                                }
-
-                                // $bgrow = ($qty_aktual > 0) ? "#82ff80" : "";
-                            }
-
-                            // if ($qty_aktual < $qtyBOM) {
-                            if ($kurang > 0) {
+                            $bgrow = ($qty_gudang == 0) ? "#ffb6a3" : "";
+                            if ($qty_gudang < $qtyBOM) {
                                 $this->m_aluminium->updateIsKurang($row->id_stock);
                                 // $this->m_aluminium->updatekeMf($row->id_stock, $id_fppp);
-                            } else {
-                                $this->m_aluminium->updateIsKurang0($row->id_stock);
                             }
 
                             if ($row->id_surat_jalan == 0) {
                         ?>
                                 <tr bgcolor="<?= $bgrow ?>">
                                     <td align="center"><?= $i++ ?></td>
-                                    <td><?= $row->brand ?></td>
                                     <td><?= $row->section_ata ?>
                                         <br><?php echo button_confirm("Anda yakin mengirim parsial item " . $row->section_ata . "-" . $row->section_allure . "?", "wrh/aluminium/kirim_parsial/" . $id_fppp . "/" . $row->id_stock, "#content", 'Kirim Parsial', 'btn btn-xs btn-default', 'data-toggle="tooltip" title="Kirim Parsial"'); ?>
                                         <br><?php //echo button_confirm("Anda yakin membuat di MF item " . $row->section_ata . "-" . $row->section_allure . "?", "wrh/aluminium/buat_mf/" . $id_fppp . "/" . $row->id_stock, "#content", 'Buat di MF', 'btn btn-xs btn-info', 'data-toggle="tooltip" title="Buat di MF"'); 
                                             ?>
                                         <?php if ($row->is_parsial == 1) {
-                                            echo button_confirm("Anda yakin hapus parsial item " . $row->section_ata . "-" . $row->section_allure . "?", "wrh/aluminium/hapus_parsial/" . $id_fppp . "/" . $row->id_stock, "#content", 'Hapus Parsial', 'btn btn-xs btn-danger', 'data-toggle="tooltip" title="Hapus Parsial"');
+                                            echo button_confirm("Anda yakin mengirim parsial item " . $row->section_ata . "-" . $row->section_allure . "?", "wrh/aluminium/hapus_parsial/" . $id_fppp . "/" . $row->id_stock, "#content", 'Hapus Parsial', 'btn btn-xs btn-danger', 'data-toggle="tooltip" title="Hapus Parsial"');
                                         }
                                         ?>
                                     </td>
@@ -152,29 +133,20 @@
                                         <input type='text' class='txtedit' data-id='<?= $row->id_stock ?>' data-field='qty_out' id='txt_<?= $row->id_stock ?>' value='<?= $qty_aktual ?>'>
                                     </td>
                                     <td style="background-color:#ffd45e">
-                                        <select style="width: 100px;" id="id_gudang_<?= $row->id_stock ?>" onchange="gudang(<?= $row->id_stock ?>)" data-id="<?= $row->id_stock ?>" data-field="id_gudang" class="form-control">
+                                        <select id="id_gudang_<?= $row->id_stock ?>" onchange="gudang(<?= $row->id_stock ?>)" data-id="<?= $row->id_stock ?>" data-field="id_gudang" class="form-control">
                                             <option id="">Pilih</option>
                                             <?php foreach ($gudang->result() as $key) {
-                                                if ($qty_aktual > 0) {
-                                                    $selected2 = ($key->id == $row->id_gudang) ? "selected" : "";
-                                                } else {
-                                                    $selected2 = ($key->id == $id_gudang_stock) ? "selected" : "";
-                                                }
-
+                                                $selected2 = ($key->id == $id_gudang_stock) ? "selected" : "";
                                             ?>
                                                 <option value="<?= $key->id ?>" <?= $selected2 ?>><?= $key->gudang ?></option>
                                             <?php } ?>
                                         </select>
                                     </td>
                                     <td style="background-color:#ffd45e">
-                                        <select style="width: 100px;" id="keranjang_<?= $row->id_stock ?>" onchange="keranjang(<?= $row->id_stock ?>)" data-id="<?= $row->id_stock ?>" data-field="keranjang" class="form-control">
+                                        <select id="keranjang_<?= $row->id_stock ?>" onchange="keranjang(<?= $row->id_stock ?>)" data-id="<?= $row->id_stock ?>" data-field="keranjang" class="form-control">
                                             <option id="">Pilih</option>
                                             <?php foreach ($keranjang->result() as $key) {
-                                                if ($qty_aktual > 0) {
-                                                    $selected2 = ($key->keranjang == $row->keranjang) ? "selected" : "";
-                                                } else {
-                                                    $selected2 = ($key->keranjang == $keranjang_stock) ? "selected" : "";
-                                                }
+                                                $selected2 = ($key->keranjang == $keranjang_stock) ? "selected" : "";
                                             ?>
                                                 <option value="<?= $key->keranjang ?>" <?= $selected2 ?>><?= $key->keranjang ?></option>
                                             <?php } ?>
@@ -189,7 +161,6 @@
                             } else { ?>
                                 <tr bgcolor="#8bb0c9">
                                     <td align="center"><?= $i++ ?></td>
-                                    <td><?= $row->brand ?></td>
                                     <td><?= $row->section_ata ?>
                                         <br><?php echo button_confirm("Anda yakin mengirim parsial item " . $row->section_ata . "-" . $row->section_allure . "?", "wrh/aluminium/kirim_parsial/" . $id_fppp . "/" . $row->id_stock, "#content", 'Kirim Parsial', 'btn btn-xs btn-default', 'data-toggle="tooltip" title="Kirim Parsial"'); ?>
                                         <br><?php //echo button_confirm("Anda yakin membuat di MF item " . $row->section_ata . "-" . $row->section_allure . "?", "wrh/aluminium/buat_mf/" . $id_fppp . "/" . $row->id_stock, "#content", 'Buat di MF', 'btn btn-xs btn-info', 'data-toggle="tooltip" title="Buat di MF"'); 
@@ -293,7 +264,6 @@
                     var qtygdg = response['qty_gudang'];
                 }
                 $('#qty_gudang_' + id).html(qtygdg);
-                $('#qty_gudang_asli_' + id).html(qtygdg);
                 // load_silent("wrh/aluminium/detailbom/" + $("#id_fppp").val(), "#content");
             }
         })
@@ -326,7 +296,6 @@
                     var qtygdg = response['qty_gudang'];
                 }
                 $('#qty_gudang_' + id).html(qtygdg);
-                $('#qty_gudang_asli_' + id).html(qtygdg);
                 // load_silent("wrh/aluminium/detailbom/" + $("#id_fppp").val(), "#content");
             }
         })
@@ -351,15 +320,19 @@
         } else {
             $('#produksi_' + edit_id).prop('checked', false); // Checks it
         }
-        var id_fppp = "<?= $id_fppp ?>";
+
         var qtybom = $('#qty_bom_' + edit_id).html();
-        var qty_gudang = $('#qty_gudang_asli_' + edit_id).html();
+        var qty_gudang = $('#qty_gudang_' + edit_id).html();
         var qty_kurang = $('#qty_kurang_' + edit_id).html();
         var qty_aktual = $('#txt_' + edit_id).val();
         if (parseInt(qty_gudang) < parseInt(qty_aktual)) {
             alert("Tidak boleh melebihi Qty Gudang!");
             $('#lapangan_' + edit_id).prop('checked', false);
             $('#produksi_' + edit_id).prop('checked', false);
+        } else if (value == '') {
+            $(element).hide();
+            $(element).prev('.edit').show();
+            $(element).prev('.edit').text(0);
         } else {
             $.ajax({
                 url: "<?= site_url('wrh/aluminium/saveoutcheckmf/') ?>",
@@ -372,7 +345,6 @@
                     gudang: $('#id_gudang_' + edit_id).val(),
                     keranjang: $('#keranjang_' + edit_id).val(),
                     qtytxt: $('#txt_' + edit_id).val(),
-                    id_fppp: id_fppp,
                 },
                 success: function(response) {
                     $.growl.notice({
@@ -385,7 +357,7 @@
                         var qtygdg = response['qty_gudang'];
                     }
                     $('#qty_gudang_' + edit_id).html(qtygdg);
-                    $('#qty_kurang_asli_' + edit_id).html(qtybom - qty_aktual);
+                    $('#qty_kurang_' + edit_id).html(qtybom - qty_aktual);
                 }
             });
         }
@@ -416,19 +388,21 @@
             var edit_id = $(this).data('id');
             // assign instance to element variable
             var element = this;
-            var id_fppp = "<?= $id_fppp ?>";
+
             var qtybom = $('#qty_bom_' + edit_id).html();
-            var qty_gudang = $('#qty_gudang_asli_' + edit_id).html();
+            var qty_gudang = $('#qty_gudang_' + edit_id).html();
             var qty_kurang = $('#qty_kurang_' + edit_id).html();
 
             if (parseInt(qty_gudang) < parseInt(value)) {
                 alert("Tidak boleh melebihi Qty Gudang!");
                 $(element).hide();
                 $(element).prev('.edit').show();
+                $(element).prev('.edit').text(value);
+            } else if (value == '') {
+                $(element).hide();
+                $(element).prev('.edit').show();
                 $(element).prev('.edit').text(0);
-                $(this).val(0);
             } else {
-
                 $.ajax({
                     url: "<?= site_url('wrh/aluminium/saveout/') ?>",
                     dataType: "json",
@@ -439,7 +413,6 @@
                         id: edit_id,
                         gudang: $('#id_gudang_' + edit_id).val(),
                         keranjang: $('#keranjang_' + edit_id).val(),
-                        id_fppp: id_fppp,
                     },
                     success: function(response) {
 
@@ -460,9 +433,6 @@
                         }
                         $('#qty_gudang_' + edit_id).html(qtygdg);
                         $('#qty_kurang_' + edit_id).html(qtybom - value);
-                        // if (value == 0) {
-                        load_silent("wrh/aluminium/stok_out_make/" + id_fppp, "#content");
-                        // }
                         // console.log(qtybom);
                         // console.log(value);
                         // gudang(edit_id);
