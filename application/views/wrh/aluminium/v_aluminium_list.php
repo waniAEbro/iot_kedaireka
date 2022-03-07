@@ -103,7 +103,7 @@
                                 <tr>
                                     <td class="details-control" id="<?= $i ?>"><button class="btn-xs btn-primary">+</button><input type="hidden" id="id_<?= $i ?>" value="<?= $row->id ?>"></td>
                                     <td align="center"><?= $i ?></td>
-                                    <td align="center"><?= $row->item_code ?></td>
+                                    <td align="center"><?= $row->section_ata ?>-<?= $row->section_allure ?>-<?= $row->temper ?>-<?= $row->kode_warna ?>-<?= $row->ukuran ?></td>
                                     <td align="center"><?= $row->warna ?></td>
                                     <td align="center"><?= $row->satuan ?></td>
                                     <td align="center"><?= $tampil_stock_awal_bulan ?></td>
