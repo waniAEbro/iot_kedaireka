@@ -357,11 +357,11 @@
         var qty_gudang = $('#qty_gudang_asli_' + edit_id).html();
         var qty_kurang = $('#qty_kurang_' + edit_id).html();
         var qty_aktual = $('#txt_' + edit_id).val();
-        if (parseInt(qty_gudang) < parseInt(qty_aktual)) {
-            alert("Tidak boleh melebihi Qty Gudang!");
-            $('#lapangan_' + edit_id).prop('checked', false);
-            $('#produksi_' + edit_id).prop('checked', false);
-        } else {
+        // if (parseInt(qty_gudang) < parseInt(qty_aktual)) {
+        //     alert("Tidak boleh melebihi Qty Gudang!");
+        //     $('#lapangan_' + edit_id).prop('checked', false);
+        //     $('#produksi_' + edit_id).prop('checked', false);
+        // } else {
             $.ajax({
                 url: "<?= site_url('wrh/aluminium/saveoutcheck/') ?>",
                 dataType: "json",
@@ -389,7 +389,7 @@
                     $('#qty_kurang_asli_' + edit_id).html(qtybom - qty_aktual);
                 }
             });
-        }
+        // }
 
     });
 </script>
