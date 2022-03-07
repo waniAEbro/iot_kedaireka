@@ -85,7 +85,7 @@
                             $qtyTotalOut = $this->m_aluminium->getQtyOutFppp($row->id_fppp, $row->id_item);
                             $id_gudang_stock = $this->m_aluminium->getQtyTerbanyakStockGudang($row->id_item);
                             $keranjang_stock = $this->m_aluminium->getQtyTerbanyakStockKeranjang($row->id_item);
-                            $qty_stock = $this->m_aluminium->getQtyTerbanyakStockQty($row->id_item);
+                            $qty_stock = $this->m_aluminium->getQtyTerbanyakStockQtyMf($row->id_item);
 
                             $qtyBOM = $row->qty_bom;
                             if ($row->set_parsial == 0) {
@@ -461,7 +461,7 @@
                         $('#qty_gudang_' + edit_id).html(qtygdg);
                         $('#qty_kurang_' + edit_id).html(qtybom - value);
                         // if (value == 0) {
-                        load_silent("wrh/aluminium/stok_out_make/" + id_fppp, "#content");
+                        load_silent("wrh/aluminium/stok_out_make_mf/" + id_fppp, "#content");
                         // }
                         // console.log(qtybom);
                         // console.log(value);
