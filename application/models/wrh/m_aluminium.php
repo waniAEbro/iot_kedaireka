@@ -521,7 +521,7 @@ class M_aluminium extends CI_Model
         $this->db->update('data_stock', $object);
     }
 
-    public function getRowStockNonParsial($id_item,$id_fppp)
+    public function getRowStockNonParsial($id_item, $id_fppp)
     {
         $this->db->where('id_item', $id_item);
         $this->db->where('id_fppp', $id_fppp);
@@ -1001,6 +1001,7 @@ class M_aluminium extends CI_Model
     public function getGudangItem($id_item)
     {
         $this->db->where('dc.id_item', $id_item);
+        $this->db->where('dc.qty >', 0);
         $this->db->join('master_gudang mg', 'mg.id = dc.id_gudang', 'left');
         $this->db->select('mg.*');
         $this->db->group_by('dc.id_gudang');
@@ -1027,6 +1028,8 @@ class M_aluminium extends CI_Model
     {
         $this->db->where('dc.id_item', $id_item);
         $this->db->where('dc.id_gudang', $id_gudang);
+        $this->db->where('dc.qty >', 0);
+
         $this->db->select('dc.keranjang');
         return $this->db->get('data_counter dc')->result();
     }
