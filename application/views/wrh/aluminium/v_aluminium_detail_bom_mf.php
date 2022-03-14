@@ -106,6 +106,8 @@
                             } else {
                                 if ($qty_aktual > 0 &&  $qty_aktual == $row->qty_bom && $row->set_parsial == 0) {
                                     $bgrow = '#82ff80'; //hijau
+                                } elseif ($qty_aktual > 0 &&  $qty_aktual < $row->qty_bom) {
+                                    $bgrow = '#ffb96e'; //orange
                                 } elseif ($qty_aktual > 0 &&  $qty_aktual == $row->qty_bom && $row->set_parsial == 1) {
                                     $bgrow = '#70ffd9'; //cyan
                                 } else {
@@ -129,7 +131,7 @@
                                     <td align="center"><?= $i++ ?></td>
                                     <td><?= $row->brand ?></td>
                                     <td><?= $row->section_ata ?>
-                                        <br><?php echo button_confirm("Anda yakin mengirim parsial item " . $row->section_ata . "-" . $row->section_allure . "?", "wrh/aluminium/kirim_parsial/" . $id_fppp . "/" . $row->id_stock, "#content", 'Kirim Parsial', 'btn btn-xs btn-default', 'data-toggle="tooltip" title="Kirim Parsial"'); ?>
+                                        <br><?php echo button_confirm("Anda yakin mengirim parsial item " . $row->section_ata . "-" . $row->section_allure . "?", "wrh/aluminium/kirim_parsial_mf/" . $id_fppp . "/" . $row->id_stock, "#content", 'Kirim Parsial', 'btn btn-xs btn-default', 'data-toggle="tooltip" title="Kirim Parsial"'); ?>
                                         <br><?php //echo button_confirm("Anda yakin membuat di MF item " . $row->section_ata . "-" . $row->section_allure . "?", "wrh/aluminium/buat_mf/" . $id_fppp . "/" . $row->id_stock, "#content", 'Buat di MF', 'btn btn-xs btn-info', 'data-toggle="tooltip" title="Buat di MF"'); 
                                             ?>
                                         <?php if ($row->is_parsial == 1) {

@@ -514,6 +514,39 @@ class Aluminium extends CI_Controller
         $this->fungsi->run_js('load_silent("wrh/aluminium/stok_out_make/' . $id_fppp . '","#content")');
     }
 
+    public function kirim_parsial_mf($id_fppp, $id_stock)
+    {
+        $this->fungsi->check_previleges('aluminium');
+
+        $getRowStock = $this->m_aluminium->getRowStock($id_stock);
+        $set_parsial = array(
+            'qty_bom'     => $getRowStock->qty_out,
+            'set_parsial' => 1,
+        );
+        $this->m_aluminium->updateRowStock($id_stock, $set_parsial);
+
+
+        $qtyBOM = $getRowStock->qty_bom;
+        $kurang = $qtyBOM - $getRowStock->qty_out;
+        $object = array(
+            'is_bom'        => $getRowStock->is_bom,
+            'id_multi_brand'        => $getRowStock->id_multi_brand,
+            'id_fppp'       => $id_fppp,
+            'is_parsial'    => 1,
+            'id_jenis_item' => $getRowStock->id_jenis_item,
+            'id_item'       => $getRowStock->id_item,
+            'qty_bom'       => $kurang,
+            'ke_mf'         => $getRowStock->ke_mf,
+            'keterangan'         => $getRowStock->keterangan,
+            'is_parsial'    => 1,
+            'created'       => date('Y-m-d H:i:s'),
+        );
+        $this->db->insert('data_stock', $object);
+        $this->fungsi->message_box("Kirim Parsial berhasil", "success");
+        $this->fungsi->catat($object, "Membuat kirim parsial data sbb:", true);
+        $this->fungsi->run_js('load_silent("wrh/aluminium/stok_out_make_mf/' . $id_fppp . '","#content")');
+    }
+
     public function hapus_parsial($id_fppp, $id_stock)
     {
         $this->fungsi->check_previleges('aluminium');
