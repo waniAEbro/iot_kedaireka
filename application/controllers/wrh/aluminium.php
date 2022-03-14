@@ -532,6 +532,7 @@ class Aluminium extends CI_Controller
             'is_bom'        => $getRowStock->is_bom,
             'id_multi_brand'        => $getRowStock->id_multi_brand,
             'id_fppp'       => $id_fppp,
+            'inout'    => 3,
             'is_parsial'    => 1,
             'id_jenis_item' => $getRowStock->id_jenis_item,
             'id_item'       => $getRowStock->id_item,
