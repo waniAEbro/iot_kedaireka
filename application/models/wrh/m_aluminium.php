@@ -1157,8 +1157,12 @@ class M_aluminium extends CI_Model
         $satuan = $this->db->get_where('master_item', array('id' => $id_item))->row()->satuan;
         $kode_warna = '01';
 
-        $this->db->where('section_ata', $section_ata);
-        $this->db->where('section_allure', $section_allure);
+        if ($section_ata != '') {
+            $this->db->where('section_ata', $section_ata);
+        }
+        if ($section_allure != '') {
+            $this->db->where('section_allure', $section_allure);
+        }
         $this->db->where('temper', $temper);
         $this->db->where('ukuran', $ukuran);
         $this->db->where('kode_warna', $kode_warna);

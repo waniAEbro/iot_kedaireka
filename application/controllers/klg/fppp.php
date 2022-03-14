@@ -1027,11 +1027,20 @@ class Fppp extends CI_Controller
 			// $this->db->insert('data_stock', $obj);
 
 			// if ($obj['inout'] == 1) {
-			// 	$cekada = $this->m_fppp->getCounter($obj['id_item'], $obj['id_divisi'], $obj['id_gudang'], $obj['keranjang'])->num_rows();
+				// $cekada = $this->m_fppp->getCounter($obj['id_item'], $obj['id_divisi'], $obj['id_gudang'], $obj['keranjang'])->num_rows();
 			// 	if ($cekada < 1) {
 			// $this->db->where('item_code', $obj['itm_code']);
 
 			// $id_item = $this->db->get('master_item')->row()->id;
+			// $this->db->where('item_code',$obj['itm_code']);
+			// $qq = $this->db->get('master_item')->num_rows();
+			// if ($qq < 1) {
+			// 	$object = array()
+			// 	$this->db->insert('master_item', $object);
+				
+			// }
+			
+			
 
 			$simpan = array(
 				'id_jenis_item' => $obj['id_jenis_item'],

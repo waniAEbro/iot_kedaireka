@@ -344,6 +344,11 @@ class Aluminium extends CI_Controller
         $this->load->view('wrh/aluminium/v_aluminium_detail_bom_mf', $data);
     }
 
+    public function hapus_bom($id)
+    {
+        # code...
+    }
+
     public function saveout()
     {
         $this->fungsi->check_previleges('aluminium');
