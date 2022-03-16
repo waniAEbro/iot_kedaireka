@@ -926,6 +926,7 @@ class M_aksesoris extends CI_Model
     public function getGudangItem($id_item)
     {
         $this->db->where('dc.id_item', $id_item);
+        $this->db->where('dc.qty >', 0);
         $this->db->join('master_gudang mg', 'mg.id = dc.id_gudang', 'left');
         $this->db->select('mg.*');
         return $this->db->get('data_counter dc')->result();
@@ -955,6 +956,7 @@ class M_aksesoris extends CI_Model
         $this->db->where('dc.id_item', $id_item);
         $this->db->where('dc.id_divisi', $id_divisi);
         $this->db->where('dc.id_gudang', $id_gudang);
+        $this->db->where('dc.qty >', 0);
         $this->db->select('dc.keranjang');
         return $this->db->get('data_counter dc')->result();
     }
