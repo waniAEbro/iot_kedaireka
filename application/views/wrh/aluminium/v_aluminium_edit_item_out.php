@@ -373,6 +373,7 @@
                         'id_sj': $('#id_sj').val(),
                         'id_fppp': $('#id_fppp').val(),
                         'item': $('#item').val(),
+                        'id_multi_brand': $('#id_multi_brand').val(),
                         'id_gudang': $("#id_gudang").val(),
                         'keranjang': $("#keranjang").val(),
                         'qty': $("#qty").val(),
