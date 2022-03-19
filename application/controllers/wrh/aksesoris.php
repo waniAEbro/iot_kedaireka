@@ -890,6 +890,12 @@ class aksesoris extends CI_Controller
         );
         $this->db->where('id', $id_sj);
         $this->db->update('data_surat_jalan', $obj);
+
+        $this->db->where('id_surat_jalan', $id_sj);
+        $object_aktual = array('aktual' => $tgl_aktual);
+        $this->db->update('data_stock', $object_aktual);
+
+
         $data['id'] = $id_sj;
         echo json_encode($data);
     }
