@@ -32,8 +32,8 @@ class M_aksesoris extends CI_Model
         
 
         $this->db->where('ds.id_jenis_item', 2);
-        $this->db->where('DATE(dsj.aktual) >=', $tgl_awal);
-        $this->db->where('DATE(dsj.aktual) <=', $tgl_akhir);
+        $this->db->where('DATE(dsj.tgl_aktual) >=', $tgl_awal);
+        $this->db->where('DATE(dsj.tgl_aktual) <=', $tgl_akhir);
         $this->db->where('ds.inout', 2);
         $this->db->where('ds.in_temp', 0);
         $this->db->where('ds.id_surat_jalan !=', 0);
