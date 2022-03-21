@@ -137,7 +137,7 @@ class Fppp extends CI_Controller
 		$this->load->view('klg/fppp/v_fppp_add', $data);
 	}
 
-	public function deleteFPPP($id)
+	public function deleteFPPP($id,$is_memo)
 	{
 		$this->fungsi->check_previleges('fppp');
 		// sleep(1);
@@ -147,12 +147,18 @@ class Fppp extends CI_Controller
 			$this->db->where('id', $id);
 			$this->db->delete('data_fppp');
 
-			$this->fungsi->catat($data, "Menghapus FPPP dengan data sbb:", true);
-			$this->fungsi->message_box("Menghapus FPPP", "success");
+			$this->fungsi->catat($data, "Menghapus ".$is_memo." dengan data sbb:", true);
+			$this->fungsi->message_box("Menghapus ".$is_memo."", "success");
 		} else {
-			$this->fungsi->message_box("FPPP sudah pernah terkirim", "warning");
+			$this->fungsi->message_box("".$is_memo." sudah pernah terkirim", "warning");
 		}
-		$this->fungsi->run_js('load_silent("klg/fppp/","#content")');
+		if ($is_memo == 'fppp') {
+			$this->fungsi->run_js('load_silent("klg/fppp/","#content")');
+		} elseif ($is_memo == 'memo') {
+			$this->fungsi->run_js('load_silent("klg/memo/","#content")');
+		} else {
+			$this->fungsi->run_js('load_silent("klg/mockup/","#content")');
+		}
 	}
 
 	public function formEdit($id = '')

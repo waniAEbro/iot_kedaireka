@@ -267,17 +267,17 @@
                                     if ($is_memo == 'fppp') {
                                         if ($sesi <= 5 || $sesi == 8) {
                                             echo button('load_silent("klg/fppp/formEdit/' . $row->id . '","#content")', 'Edit', 'btn btn-xs btn-info', 'data-toggle="tooltip" title="Edit"');
-                                            echo button_confirm("Apakah anda yakin menghapus FPPP ini?", "klg/fppp/deleteFppp/" . $row->id, "#content", "Hapus", "btn btn-xs btn-danger", "");
+                                            echo button_confirm("Apakah anda yakin menghapus FPPP ini?", "klg/fppp/deleteFppp/" . $row->id . "/" . $is_memo, "#content", "Hapus", "btn btn-xs btn-danger", "");
                                         }
                                     } elseif ($is_memo == 'memo') {
                                         if ($sesi <= 5 || $sesi == 8) {
                                             echo button('load_silent("klg/memo/formEdit/' . $row->id . '","#content")', 'Edit', 'btn btn-xs btn-info', 'data-toggle="tooltip" title="Edit"');
-                                            echo button_confirm("Apakah anda yakin menghapus Memo ini?", "klg/fppp/deleteFppp/" . $row->id, "#content", "Hapus", "btn btn-xs btn-danger", "");
+                                            echo button_confirm("Apakah anda yakin menghapus Memo ini?", "klg/fppp/deleteFppp/" . $row->id . "/" . $is_memo, "#content", "Hapus", "btn btn-xs btn-danger", "");
                                         }
                                     } else {
                                         if ($sesi <= 5 || $sesi == 8) {
                                             echo button('load_silent("klg/mockup/formEdit/' . $row->id . '","#content")', 'Edit', 'btn btn-xs btn-info', 'data-toggle="tooltip" title="Edit"');
-                                            echo button_confirm("Apakah anda yakin menghapus Mockup ini?", "klg/fppp/deleteFppp/" . $row->id, "#content", "Hapus", "btn btn-xs btn-danger", "");
+                                            echo button_confirm("Apakah anda yakin menghapus Mockup ini?", "klg/fppp/deleteFppp/" . $row->id . "/" . $is_memo, "#content", "Hapus", "btn btn-xs btn-danger", "");
                                         }
                                     }
 
