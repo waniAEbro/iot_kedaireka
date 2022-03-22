@@ -16,6 +16,7 @@
         <tr bgcolor="#ffe357">
             <th width="5%">No</th>
             <th>Item Code</th>
+            <th>Deskripsi</th>
             <th>Divisi</th>
             <th>Gudang</th>
             <th>Keranjang</th>
@@ -30,6 +31,7 @@
             <tr>
                 <td align="center"><?= $i++ ?></td>
                 <td><?= $row->item_code ?></td>
+                <td><?= $row->deskripsi ?></td>
                 <td><?= $row->divisi ?></td>
                 <td><?= $row->gudang ?></td>
                 <td><?= $row->keranjang ?></td>
