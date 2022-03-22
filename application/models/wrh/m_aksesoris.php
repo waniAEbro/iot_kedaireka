@@ -1121,6 +1121,12 @@ class M_aksesoris extends CI_Model
         $this->db->delete('data_stock');
     }
 
+    public function deleteSJBonManual($id)
+    {
+        $this->db->where('id', $id);
+        $this->db->delete('data_surat_jalan');
+    }
+
     public function updateJadiSuratJalan($id_fppp, $id_sj)
     {
         $this->db->where('id', $id_sj);

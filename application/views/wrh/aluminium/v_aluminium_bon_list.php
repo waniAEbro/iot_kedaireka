@@ -50,6 +50,7 @@
                                     <?php
                                     echo button('load_silent("wrh/aluminium/edit_item_stok_out/' . $row->id . '","#content")', 'Edit', 'btn btn-xs btn-info', 'data-toggle="tooltip" title="Edit"');
                                     echo button('load_silent("wrh/aluminium/lihat_item_stok_out/' . $row->id . '","#content")', 'Lihat Item', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Lihat Item Stock OUT"');
+                                    echo button_confirm("Apakah anda yakin menghapus SJ BON " . $row->no_surat_jalan . "?", "wrh/aluminium/deleteSJBon/" . $row->id, "#content", "Hapus", "btn btn-xs btn-danger", "");
                                     ?>
                                     <a target="_blank" href="<?= base_url('wrh/aluminium/cetakSjBon'); ?>/<?= $row->id ?>" class="btn btn-xs btn-warning">Cetak Surat Jalan</a>
                                 </td>

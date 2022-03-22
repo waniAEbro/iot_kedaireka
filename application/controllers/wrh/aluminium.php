@@ -290,7 +290,7 @@ class Aluminium extends CI_Controller
         $cekQtyCounter = $this->m_aluminium->getDataCounter($getRow->id_item, $getRow->id_gudang, $getRow->keranjang)->row()->qty;
         $qty_jadi      = (int)$cekQtyCounter - (int)$getRow->qty_in;
         $this->m_aluminium->updateDataCounter($getRow->id_item, $getRow->id_gudang, $getRow->keranjang, $qty_jadi);
-        sleep(2);
+        sleep(1);
         $data = array('id' => $id,);
         $this->db->where('id', $id);
         $this->db->delete('data_stock');
@@ -1001,6 +1001,35 @@ class Aluminium extends CI_Controller
         $this->fungsi->catat($data, "Menghapus BON manual Detail dengan data sbb:", true);
         $respon = ['msg' => 'Data Berhasil Dihapus'];
         echo json_encode($respon);
+    }
+
+    public function deleteSJBon($id)
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $data_detail = $this->db->get_where('data_stock', array('id_surat_jalan' => $id))->result();
+
+        foreach ($data_detail as $key) {
+            $id_item   = $this->db->get_where('data_stock', array('id' => $key->id))->row()->id_item;
+            $id_divisi = $this->db->get_where('data_stock', array('id' => $key->id))->row()->id_divisi;
+            $id_gudang = $this->db->get_where('data_stock', array('id' => $key->id))->row()->id_gudang;
+            $keranjang = $this->db->get_where('data_stock', array('id' => $key->id))->row()->keranjang;
+            $qty_out   = $this->db->get_where('data_stock', array('id' => $key->id))->row()->qty_out;
+
+            $cekQtyCounter = $this->m_aluminium->getDataCounter($id_item, $id_divisi, $id_gudang, $keranjang)->row()->qty;
+            $qty_jadi      = (int)$cekQtyCounter + (int)$qty_out;
+            $this->m_aluminium->updateDataCounter($id_item, $id_divisi, $id_gudang, $keranjang, $qty_jadi);
+            $this->m_aluminium->deleteItemBonManual($key->id);
+        }
+
+        $data = array(
+            'id' => $id,
+            'no_sj_bon' => $this->db->get_where('data_surat_jalan', array('id' => $id))->row()->no_surat_jalan,
+        );
+        $this->fungsi->catat($data, "Menghapus SJ BON dengan data sbb:", true);
+        sleep(1);
+        $this->m_aksesoris->deleteSJBonManual($id);
+        $this->fungsi->message_box("Menghapus " . $data['no_sj_bon'] . "", "success");
+        $this->fungsi->run_js('load_silent("wrh/aluminium/bon_manual","#content")');
     }
 
 
