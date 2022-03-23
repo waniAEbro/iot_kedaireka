@@ -374,7 +374,7 @@ class M_aksesoris extends CI_Model
         $this->db->where('id_divisi', $id_divisi);
         $this->db->where('id_gudang', $id_gudang);
         $this->db->where('keranjang', $keranjang);
-        $this->db->select('sum(qty_out) as stock_out');
+        $this->db->select('sum(qty_in) as stock_out');
         $this->db->where('inout', 1);
         $this->db->where('mutasi', 1);
 
