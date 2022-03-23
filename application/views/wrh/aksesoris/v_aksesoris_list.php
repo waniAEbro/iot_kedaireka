@@ -232,8 +232,10 @@
                 '<th bgcolor="#bfbfbf">Gudang</th>' +
                 '<th bgcolor="#bfbfbf">Keranjang/Rak</th>' +
                 '<th bgcolor="#bfbfbf">Stock Awal Bulan</th>' +
-                '<th bgcolor="#bfbfbf">Total In Per Bulan</th>' +
-                '<th bgcolor="#bfbfbf">Total Out Per Bulan</th>' +
+                '<th bgcolor="#bfbfbf">Total In</th>' +
+                '<th bgcolor="#bfbfbf">Total Out</th>' +
+                '<th bgcolor="#bfbfbf">Mutasi In</th>' +
+                '<th bgcolor="#bfbfbf">Mutasi Out</th>' +
                 '<th bgcolor="#bfbfbf">Stock Akhir Bulan</th>' +
                 '<th bgcolor="#bfbfbf">Rata2 Pemakaian</th>' +
                 '<th bgcolor="#bfbfbf">Min Stock</th>' +
@@ -269,6 +271,18 @@
                             var stok_a_b = data.detail[i].stok_awal_bulan;
                         }
 
+                        if (data.detail[i].mutasi_in == null) {
+                            var mutasi_in = 0;
+                        } else {
+                            var mutasi_in = data.detail[i].mutasi_in;
+                        }
+
+                        if (data.detail[i].mutasi_out == null) {
+                            var mutasi_out = 0;
+                        } else {
+                            var mutasi_out = data.detail[i].mutasi_out;
+                        }
+
                         infoTable += '<tr bgcolor="' + color + '">' +
                             '<td><font color="' + fontcolor + '">' + no + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].divisi + '</font></td>' +
@@ -277,6 +291,8 @@
                             '<td><font color="' + fontcolor + '">' + stok_a_b + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + stok_t_i + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + qty_out + '</font></td>' +
+                            '<td><font color="' + fontcolor + '">' + mutasi_in + '</font></td>' +
+                            '<td><font color="' + fontcolor + '">' + mutasi_out + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].stok_akhir_bulan + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].rata_pemakaian + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].min_stock + '</font></td>' +

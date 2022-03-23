@@ -99,6 +99,8 @@ class aksesoris extends CI_Controller
                 "stok_awal_bulan"  => $stok_awal_bulan,
                 "tot_in"           => $qtyin,
                 "tot_out"          => $qtyout,
+                "mutasi_in"          => $qtyinmutasi,
+                "mutasi_out"          => $qtyoutmutasi,
                 "stok_akhir_bulan" => ($stok_awal_bulan + $qtyin + $qtyinmutasi) - $qtyout - $qtyoutmutasi,
                 "rata_pemakaian"   => '0',
                 "min_stock"        => '0',
