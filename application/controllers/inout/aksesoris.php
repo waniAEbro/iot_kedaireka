@@ -13,7 +13,7 @@ class Aksesoris extends CI_Controller
 
     public function index()
     {
-        $this->fungsi->check_previleges('aksesoris');
+        $this->fungsi->check_previleges('inout');
         $bulan       = date('m');
         $tahun       = date('Y');
         $data['tgl_awal']  = $tahun . '-' . $bulan . '-01';
@@ -25,7 +25,7 @@ class Aksesoris extends CI_Controller
 
     public function diSet($tgl_awal = '', $tgl_akhir = '', $sort = '')
     {
-        $this->fungsi->check_previleges('aksesoris');
+        $this->fungsi->check_previleges('inout');
         $data['tgl_awal']         = $tgl_awal;
         $data['tgl_akhir']        = $tgl_akhir;
         $data['aksesoris']    = $this->m_aksesoris->getData($data['tgl_awal'], $data['tgl_akhir']);
@@ -42,7 +42,7 @@ class Aksesoris extends CI_Controller
 
     public function out()
     {
-        $this->fungsi->check_previleges('aksesoris');
+        $this->fungsi->check_previleges('inout');
         $bulan       = date('m');
         $tahun       = date('Y');
         $data['tgl_awal']  = $tahun . '-' . $bulan . '-01';
@@ -54,7 +54,7 @@ class Aksesoris extends CI_Controller
 
     public function diSetOut($tgl_awal = '', $tgl_akhir = '', $sort = '')
     {
-        $this->fungsi->check_previleges('aksesoris');
+        $this->fungsi->check_previleges('inout');
         $data['tgl_awal']         = $tgl_awal;
         $data['tgl_akhir']        = $tgl_akhir;
         $data['aksesoris']    = $this->m_aksesoris->getDataOut($data['tgl_awal'], $data['tgl_akhir']);

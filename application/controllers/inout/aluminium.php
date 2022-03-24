@@ -13,7 +13,7 @@ class aluminium extends CI_Controller
 
     public function index()
     {
-        $this->fungsi->check_previleges('aluminium');
+        $this->fungsi->check_previleges('inout');
         $bulan       = date('m');
         $tahun       = date('Y');
         $data['tgl_awal']  = $tahun . '-' . $bulan . '-01';
@@ -25,7 +25,7 @@ class aluminium extends CI_Controller
 
     public function diSet($tgl_awal = '', $tgl_akhir = '')
     {
-        $this->fungsi->check_previleges('aluminium');
+        $this->fungsi->check_previleges('inout');
         $data['tgl_awal']         = $tgl_awal;
         $data['tgl_akhir']        = $tgl_akhir;
         $data['aluminium']    = $this->m_aluminium->getData($data['tgl_awal'], $data['tgl_akhir']);
@@ -42,7 +42,7 @@ class aluminium extends CI_Controller
 
     public function out()
     {
-        $this->fungsi->check_previleges('aluminium');
+        $this->fungsi->check_previleges('inout');
         $bulan       = date('m');
         $tahun       = date('Y');
         $data['tgl_awal']  = $tahun . '-' . $bulan . '-01';
@@ -54,7 +54,7 @@ class aluminium extends CI_Controller
 
     public function diSetOut($tgl_awal = '', $tgl_akhir = '')
     {
-        $this->fungsi->check_previleges('aluminium');
+        $this->fungsi->check_previleges('inout');
         $data['tgl_awal']         = $tgl_awal;
         $data['tgl_akhir']        = $tgl_akhir;
         $data['aluminium']    = $this->m_aluminium->getDataOut($data['tgl_awal'], $data['tgl_akhir']);
