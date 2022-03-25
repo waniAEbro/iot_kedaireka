@@ -42,7 +42,7 @@ class M_aksesoris extends CI_Model
         $this->db->where('ds.in_temp', 0);
         // $this->db->where('ds.id_surat_jalan !=', 0);
 
-        $this->db->select('ds.*,mi.*,mb.brand,ds.created as tgl_stok,mds.divisi as divisi_aksesoris,mg.gudang,dsj.no_surat_jalan,df.no_fppp,dsj.tgl_aktual,df.nama_proyek,dsj.penerima,dsj.alamat_pengiriman');
+        $this->db->select('ds.*,mi.*,mb.brand,ds.created as tgl_stok,mds.divisi as divisi_aksesoris,mg.gudang,dsj.no_surat_jalan,df.no_fppp,dsj.tgl_aktual,df.nama_proyek,dsj.penerima,dsj.alamat_pengiriman,dsj.sopir,dsj.no_kendaraan');
         $this->db->order_by('ds.id', 'desc');
 
         return $this->db->get('data_stock ds');

@@ -52,6 +52,8 @@
                                 <th>NO FPPP</th>
                                 <th>Nama Proyek</th>
                                 <th>Nama Penerima</th>
+                                <th>Sopir</th>
+                                <th>No Kendaraan</th>
                                 <th>Alamat Pengiriman</th>
                                 <th>Keterangan</th>
                                 <th>Status</th>
@@ -79,6 +81,8 @@
                                         <td><?= $row->no_fppp ?></td>
                                         <td><?= $row->nama_proyek ?></td>
                                         <td><?= $row->penerima ?></td>
+                                        <td><?= $row->sopir ?></td>
+                                        <td><?= $row->no_kendaraan ?></td>
                                         <td><?= $row->alamat_pengiriman ?></td>
                                         <td><?= $row->keterangan ?></td>
                                         <td><?= $sts ?></td>
