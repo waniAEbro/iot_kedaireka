@@ -67,7 +67,7 @@
                                 ?>
                                     <tr>
                                         <td align="center"><?= $i++ ?></td>
-                                        <td><?= $row->tgl_aktual ?></td>
+                                        <td><?= $row->aktual ?></td>
                                         <td><?= $row->tgl_stok ?></td>
                                         <td><?= $row->item_code ?></td>
                                         <td><?= $row->deskripsi ?></td>

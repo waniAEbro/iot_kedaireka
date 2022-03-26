@@ -34,12 +34,13 @@ class M_aksesoris extends CI_Model
         
 
         $this->db->where('ds.id_jenis_item', 2);
-        $this->db->where('DATE(dsj.tgl_aktual) >=', $tgl_awal);
-        $this->db->where('DATE(dsj.tgl_aktual) <=', $tgl_akhir);
-        // $this->db->where('DATE(ds.created) >=', $tgl_awal);
-        // $this->db->where('DATE(ds.created) <=', $tgl_akhir);
+        // $this->db->where('DATE(dsj.tgl_aktual) >=', $tgl_awal);
+        // $this->db->where('DATE(dsj.tgl_aktual) <=', $tgl_akhir);
+        $this->db->where('DATE(ds.aktual) >=', $tgl_awal);
+        $this->db->where('DATE(ds.aktual) <=', $tgl_akhir);
         $this->db->where('ds.inout', 2);
         $this->db->where('ds.in_temp', 0);
+        // $this->db->where_in('ds.mutasi', ['0','1']);
         // $this->db->where('ds.id_surat_jalan !=', 0);
 
         $this->db->select('ds.*,mi.*,mb.brand,ds.created as tgl_stok,mds.divisi as divisi_aksesoris,mg.gudang,dsj.no_surat_jalan,df.no_fppp,dsj.tgl_aktual,df.nama_proyek,dsj.penerima,dsj.alamat_pengiriman,dsj.sopir,dsj.no_kendaraan');
