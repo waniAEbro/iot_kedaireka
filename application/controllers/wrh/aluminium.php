@@ -372,6 +372,7 @@ class Aluminium extends CI_Controller
                 'qty_out'      => $value,
                 'id_penginput' => from_session('id'),
                 'updated'      => date('Y-m-d H:i:s'),
+                'aktual'      => date('Y-m-d'),
             );
             $this->m_aluminium->editQtyOut($editid, $obj);
         }
@@ -427,6 +428,7 @@ class Aluminium extends CI_Controller
             'qty_out'      => $qty_out,
             'id_penginput' => from_session('id'),
             'updated'      => date('Y-m-d H:i:s'),
+            'aktual'      => date('Y-m-d'),
         );
         $this->m_aluminium->editQtyOut($editid, $obj);
         $this->m_aluminium->editStatusInOut($editid);
@@ -466,6 +468,7 @@ class Aluminium extends CI_Controller
             'qty_out'      => $qty_out,
             'id_penginput' => from_session('id'),
             'updated'      => date('Y-m-d H:i:s'),
+            'aktual'      => date('Y-m-d'),
         );
         $this->m_aluminium->editQtyOut($editid, $obj);
         $this->m_aluminium->editStatusInOut($editid);
@@ -971,6 +974,7 @@ class Aluminium extends CI_Controller
                 'id_penginput'   => from_session('id'),
                 'created'        => date('Y-m-d H:i:s'),
                 'updated'        => date('Y-m-d H:i:s'),
+                'aktual'      => date('Y-m-d'),
             );
             $this->db->insert('data_stock', $datapost);
             $data['id']          = $this->db->insert_id();

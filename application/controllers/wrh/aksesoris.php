@@ -369,6 +369,7 @@ class aksesoris extends CI_Controller
                 'qty_out'      => $value,
                 'id_penginput' => from_session('id'),
                 'updated'      => date('Y-m-d H:i:s'),
+                'aktual'      => date('Y-m-d'),
             );
             $this->m_aksesoris->editQtyOut($editid, $obj);
         }
@@ -426,6 +427,7 @@ class aksesoris extends CI_Controller
             'qty_out'      => $qty_out,
             'id_penginput' => from_session('id'),
             'updated'      => date('Y-m-d H:i:s'),
+            'aktual'      => date('Y-m-d'),
         );
         $this->m_aksesoris->editQtyOut($editid, $obj);
         $this->m_aksesoris->editStatusInOut($editid);
@@ -467,6 +469,7 @@ class aksesoris extends CI_Controller
             'qty_out'      => $qty_out,
             'id_penginput' => from_session('id'),
             'updated'      => date('Y-m-d H:i:s'),
+            'aktual'      => date('Y-m-d'),
         );
         $this->m_aksesoris->editQtyOut($editid, $obj);
         $this->m_aksesoris->editStatusInOut($editid);
@@ -969,6 +972,7 @@ class aksesoris extends CI_Controller
                 'id_warna_akhir' => $this->input->post('warna_akhir'),
                 'created'        => date('Y-m-d H:i:s'),
                 'updated'        => date('Y-m-d H:i:s'),
+                'aktual'      => date('Y-m-d'),
             );
             $this->db->insert('data_stock', $datapost);
             $data['id']          = $this->db->insert_id();
