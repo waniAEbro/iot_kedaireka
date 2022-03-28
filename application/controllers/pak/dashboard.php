@@ -93,12 +93,12 @@ class Dashboard extends CI_Controller
 		// 	$this->db->where('id_item', $key->id);
 		// }
 
-		$dsj = $this->db->get('data_surat_jalan');
-		foreach ($dsj->result() as $key) {
-			$obb = array('aktual' => $key->tgl_aktual);
-			$this->db->where('id_surat_jalan', $key->id);
-			$this->db->update('data_stock', $obb);
-		}
+		// $dsj = $this->db->get('data_surat_jalan');
+		// foreach ($dsj->result() as $key) {
+		// 	$obb = array('aktual' => $key->tgl_aktual);
+		// 	$this->db->where('id_surat_jalan', $key->id);
+		// 	$this->db->update('data_stock', $obb);
+		// }
 
 
 
