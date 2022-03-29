@@ -137,7 +137,7 @@ class Fppp extends CI_Controller
 		$this->load->view('klg/fppp/v_fppp_add', $data);
 	}
 
-	public function deleteFPPP($id,$is_memo)
+	public function deleteFPPP($id, $is_memo)
 	{
 		$this->fungsi->check_previleges('fppp');
 		// sleep(1);
@@ -147,10 +147,10 @@ class Fppp extends CI_Controller
 			$this->db->where('id', $id);
 			$this->db->delete('data_fppp');
 
-			$this->fungsi->catat($data, "Menghapus ".$is_memo." dengan data sbb:", true);
-			$this->fungsi->message_box("Menghapus ".$is_memo."", "success");
+			$this->fungsi->catat($data, "Menghapus " . $is_memo . " dengan data sbb:", true);
+			$this->fungsi->message_box("Menghapus " . $is_memo . "", "success");
 		} else {
-			$this->fungsi->message_box("".$is_memo." sudah pernah terkirim", "warning");
+			$this->fungsi->message_box("" . $is_memo . " sudah pernah terkirim", "warning");
 		}
 		if ($is_memo == 'fppp') {
 			$this->fungsi->run_js('load_silent("klg/fppp/","#content")');
@@ -878,55 +878,18 @@ class Fppp extends CI_Controller
 			if ($jenis_bom == 1) {
 				$obj = array(
 					'id_jenis_item'  => 1,
-					'section_ata'    => $rowData[0][0],
-					'section_allure' => $rowData[0][1],
-					'temper'         => $rowData[0][2],
-					'kode_warna'     => str_pad($rowData[0][3], 2, '0', STR_PAD_LEFT),
-					'ukuran'         => $rowData[0][4],
-					'satuan'         => $rowData[0][5],
-					'perimeter_berat'         => $rowData[0][6],
-					'perimeter_mf'         => $rowData[0][7],
-					'perimeter_coating'         => $rowData[0][8],
-					'item_code'         => $rowData[0][0] . '-' . $rowData[0][1] . '-' . $rowData[0][2] . '-' . str_pad($rowData[0][3], 2, '0', STR_PAD_LEFT) . '-' . $rowData[0][4],
-					// 'code_ata'         => $rowData[0][0] . '--' . $rowData[0][2] . '-' . str_pad($rowData[0][3], 2, '0', STR_PAD_LEFT) . '-' . $rowData[0][4],
-					// 'code_allure'         => '-' . $rowData[0][1] . '-' . $rowData[0][2] . '-' . str_pad($rowData[0][3], 2, '0', STR_PAD_LEFT) . '-' . $rowData[0][4],
+					'item_code'         => $rowData[0][0],
+					'section_ata'    => $rowData[0][1],
+					'section_allure' => $rowData[0][2],
+					'temper'         => $rowData[0][3],
+					'kode_warna'     => str_pad($rowData[0][4], 2, '0', STR_PAD_LEFT),
+					'ukuran'         => $rowData[0][5],
+					'satuan'         => $rowData[0][6],
+					'perimeter_berat'         => $rowData[0][7],
+					'perimeter_mf'         => $rowData[0][8],
+					'perimeter_coating'         => $rowData[0][9],
 					'created'        => date('Y-m-d H:i:s'),
-					'susulan'        => 1,
 				);
-
-
-				// section_ata
-				// $this->db->where('id_jenis_item', 1);
-				// $this->db->where('item_code', $obj['item_code']);
-				// $res = $this->db->get('master_item')->num_rows();
-
-				// $this->db->where('id_jenis_item', 1);
-				// $this->db->where('item_code', $obj['item_code']);
-				// $res2 = $this->db->get('master_item')->num_rows();
-
-				// if ($res2 > 1) {
-				// 	$cd = array('cek_double' => $res2);
-				// 	$this->db->where('id_jenis_item', 1);
-				// 	$this->db->where('item_code', $obj['item_code']);
-
-				// 	$this->db->update('master_item', $cd);
-				// }
-
-
-
-
-
-				// $obj_stock = array(
-				// 	'itm_code'         => $rowData[0][0] . '-' . $rowData[0][1] . '-' . $rowData[0][2] . '-' . str_pad($rowData[0][3], 2, '0', STR_PAD_LEFT) . '-' . $rowData[0][4],
-				// 	'id_jenis_item'          => 1,
-				// 	'id_gudang'          => $rowData[0][9],
-				// 	'keranjang'          => str_replace(' ', '_', $rowData[0][10]),
-				// 	'qty'          => $rowData[0][11],
-				// 	'created'        => date('Y-m-d H:i:s'),
-				// 	'susulan'        => 1,
-				// );
-
-				// $this->db->insert('data_counter', $obj_stock);
 
 				$cek_item = $this->m_fppp->cekItemCodeAluminium($obj['item_code']);
 				if ($cek_item->num_rows() < 1) {
@@ -1022,31 +985,32 @@ class Fppp extends CI_Controller
 				TRUE,
 				FALSE
 			);
+			// $obj = array(
+			// 	'id_jenis_item'          => 2,
+			// 	'id_divisi'          => str_replace(' ', '', $rowData[0][4]),
+			// 	'id_gudang'          => str_replace(' ', '', $rowData[0][5]),
+			// 	'keranjang'          => str_replace(' ', '_', $rowData[0][6]),
+			// 	'qty'          => $rowData[0][7],
+			// 	'itm_code'          => $rowData[0][0],
+			// );
 			$obj = array(
-				'id_jenis_item'          => $rowData[0][3],
-				'id_divisi'          => str_replace(' ', '', $rowData[0][4]),
-				'id_gudang'          => str_replace(' ', '', $rowData[0][5]),
-				'keranjang'          => str_replace(' ', '_', $rowData[0][6]),
-				'qty'          => $rowData[0][7],
+				'id_jenis_item'          => 1,
+				'id_divisi'     => '',
+				'id_gudang'          => str_replace(' ', '', $rowData[0][10]),
+				'keranjang'          => str_replace(' ', '_', $rowData[0][11]),
+				'qty'          => $rowData[0][12],
 				'itm_code'          => $rowData[0][0],
 			);
-			// $this->db->insert('data_stock', $obj);
 
-			// if ($obj['inout'] == 1) {
-				// $cekada = $this->m_fppp->getCounter($obj['id_item'], $obj['id_divisi'], $obj['id_gudang'], $obj['keranjang'])->num_rows();
-			// 	if ($cekada < 1) {
-			// $this->db->where('item_code', $obj['itm_code']);
+			// $objx = array(
+			// 	'item_code'          => $rowData[0][0],
+			// );
+			// $this->db->where('item_code', $objx['item_code']);
+			// $obb = array('cek_double' => 2);
+			// $this->db->where('item_code', $objx['item_code']);
+			// $this->db->update('master_item', $obb);
 
-			// $id_item = $this->db->get('master_item')->row()->id;
-			// $this->db->where('item_code',$obj['itm_code']);
-			// $qq = $this->db->get('master_item')->num_rows();
-			// if ($qq < 1) {
-			// 	$object = array()
-			// 	$this->db->insert('master_item', $object);
-				
-			// }
-			
-			
+
 
 			$simpan = array(
 				'id_jenis_item' => $obj['id_jenis_item'],
@@ -1059,29 +1023,6 @@ class Fppp extends CI_Controller
 				'itm_code'       => $obj['itm_code'],
 			);
 			$this->db->insert('data_counter', $simpan);
-
-			// $obj = array(
-			// 	'awal_bulan' => 1,
-			// 	'inout' => 1,
-			// 	'id_item' => $id_item,
-			// 	'id_divisi' => $obj['id_divisi'],
-			// 	'id_gudang' => $obj['id_gudang'],
-			// 	'keranjang' => $obj['keranjang'],
-			// 	'id_jenis_item' => 2,
-			// 	'qty_in' => $obj['qty'],
-			// 	'created' => date('Y-m-d H:i:s')
-			// );
-			// $this->db->insert('data_stock', $obj);
-			// } else {
-			// 	$cekQtyCounter = $this->m_fppp->getCounter($obj['id_item'], $obj['id_divisi'], $obj['id_gudang'], $obj['keranjang'])->row()->qty;
-			// 	$qty_jadi      = (int)$obj['qty_in'] + (int)$cekQtyCounter;
-			// 	$this->m_fppp->updateDataCounter($obj['id_item'], $obj['id_divisi'], $obj['id_gudang'], $obj['keranjang'], $qty_jadi);
-			// }
-			// } else {
-			// 	$cekQtyCounter = $this->m_fppp->getCounter($obj['id_item'], $obj['id_divisi'], $obj['id_gudang'], $obj['keranjang'])->row()->qty;
-			// 	$qty_jadi      = (int)$cekQtyCounter - (int)$obj['qty_out'];
-			// 	$this->m_fppp->updateDataCounter($obj['id_item'], $obj['id_divisi'], $obj['id_gudang'], $obj['keranjang'], $qty_jadi);
-			// }
 		}
 		// unlink($inputFileName);
 		$data['msg'] = "Data BOM Baru Disimpan....";

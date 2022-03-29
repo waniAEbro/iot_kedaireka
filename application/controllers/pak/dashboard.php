@@ -84,6 +84,16 @@ class Dashboard extends CI_Controller
 		// 	$this->db->insert('data_stock', $obj);
 		// }
 
+		// $this->db->where('cek_double', 2);
+		// $al = $this->db->get('master_item');
+		// foreach ($al->result() as $key) {
+		// 	$this->db->where('id_item', $key->id);
+		// 	$tt = $this->db->get('data_stock')->num_rows();
+		// 	$obb = array('jum_stock' => $tt);
+		// 	$this->db->where('id', $key->id);
+		// 	$this->db->update('master_item', $obb);
+		// }
+
 
 		// $this->db->where('id_jenis_item', 1);
 		// $this->db->where('cek_double', 1);
@@ -101,12 +111,23 @@ class Dashboard extends CI_Controller
 		// }
 
 
-
-		// $this->db->where('id_jenis_item', 2);
+		// $this->db->where('id_jenis_item', 1);
 		// $counter = $this->db->get('master_item');
 		// foreach ($counter->result() as $key) {
 		// 	$object = array('id_item' => $key->id);
-		// 	$this->db->where('id_jenis_item', 2);
+		// 	$this->db->where('id_jenis_item', 1);
+		// 	$this->db->where('itm_code', $key->item_code);
+		// 	$this->db->update('data_counter', $object);
+		// }
+		// $this->db->where('id_jenis_item', 1);
+		// $this->db->where('id_item', 0);
+		// $counter = $this->db->get('data_counter');
+		// foreach ($counter->result() as $key) {
+		// 	$this->db->where('item_code', $key->itm_code);
+		// 	$id = $this->db->get('master_item')->row()->id;
+
+		// 	$object = array('id_item' => $id);
+		// 	$this->db->where('id_jenis_item', 1);
 		// 	$this->db->where('itm_code', $key->item_code);
 		// 	$this->db->update('data_counter', $object);
 		// }
