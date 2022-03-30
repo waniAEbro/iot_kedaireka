@@ -644,7 +644,7 @@ class M_aluminium extends CI_Model
         $this->db->where('ds.ke_mf', 0);
         $this->db->select('ds.*,ds.id as id_stock,mi.*,mwa.warna,mi.divisi,mg.gudang,ds.created as created_,ds.updated as updated_,mb.brand');
 
-        $this->db->order_by('ds.is_kurang', 'desc');
+        $this->db->order_by('ds.id', 'asc');
 
         return $this->db->get('data_stock ds');
     }

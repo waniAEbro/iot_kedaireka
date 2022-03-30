@@ -542,7 +542,7 @@ class M_aksesoris extends CI_Model
         $this->db->where('ds.ke_mf', 0);
         $this->db->select('ds.*,ds.id as id_stock,mi.*,mds.divisi,mg.gudang');
 
-        $this->db->order_by('ds.id', 'desc');
+        $this->db->order_by('ds.id', 'asc');
 
         return $this->db->get('data_stock ds');
     }

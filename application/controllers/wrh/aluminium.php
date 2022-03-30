@@ -845,8 +845,7 @@ class Aluminium extends CI_Controller
     public function lihat_item_stok_out($id_sj)
     {
         $this->fungsi->check_previleges('aluminium');
-        $id_fppp             = $this->m_aluminium->getListItemStokOut($id_sj)->row()->id_fppp;
-        $data['id_fppp']           = $id_fppp;
+        $data['id_fppp']           = $this->m_aluminium->getRowSuratJalan($id_sj)->row()->id_fppp;
         $data['no_surat_jalan']    = $this->m_aluminium->getRowSuratJalan($id_sj)->row()->no_surat_jalan;
         $data['penerima']          = $this->m_aluminium->getRowSuratJalan($id_sj)->row()->penerima;
         $data['alamat_pengiriman'] = $this->m_aluminium->getRowSuratJalan($id_sj)->row()->alamat_pengiriman;
