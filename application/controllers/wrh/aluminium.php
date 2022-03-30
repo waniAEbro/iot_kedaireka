@@ -315,6 +315,15 @@ class Aluminium extends CI_Controller
         $this->load->view('wrh/aluminium/v_aluminium_out_list', $data);
     }
 
+    public function make_lunas($id_fppp)
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $this->m_aluminium->updateStatusLunasFppp($id_fppp);
+        $data = array('id_fppp' => $id_fppp);
+        $this->fungsi->catat($data, "Mengubah status menjadi lunas fppp", true);
+        $this->stok_out();
+    }
+
     public function stok_out_make($id_fppp)
     {
         $id_jenis_item   = 1;

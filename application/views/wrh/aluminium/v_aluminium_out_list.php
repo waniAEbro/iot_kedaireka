@@ -37,12 +37,13 @@
                             $qtybom           = @$qty_bom[$row->id];
                             $qtyout           = @$qty_out[$row->id];
                             $qtyoutproses           = @$qty_out_proses[$row->id];
-                            if ($qtyout == 0) {
+                            if ($row->id_status == 1) {
                                 $status = "PROSES";
-                            } else if ($qtybom > $qtyout) {
+                            } else if ($row->id_status == 2) {
                                 $status = "PARSIAL";
                             } else {
                                 $status = "LUNAS";
+                                // $this->m_aluminium->updateStatusLunasFppp($row->id);
                             }
 
                         ?>
@@ -53,12 +54,16 @@
                                 <td><?= $row->nama_proyek ?></td>
                                 <td align="center"><?= $row->deadline_pengiriman ?></td>
                                 <td align="center"><?= $row->deadline_workshop ?></td>
-                                <td><?= $status ?></td>
+                                <td><b><?= $status ?></b></td>
                                 <td align="center"><?= $qtybom ?></td>
                                 <td align="center"><?= $qtyout ?></td>
                                 <td align="center"><?= $qtyoutproses ?></td>
                                 <td>
-                                    <?php echo button('load_silent("wrh/aluminium/stok_out_make/' . $row->id . '","#content")', 'Stock OUT', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Stock OUT"'); ?>
+
+                                    <?php
+                                    echo button('load_silent("wrh/aluminium/stok_out_make/' . $row->id . '","#content")', 'Stock OUT', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Stock OUT"');
+                                    echo button_confirm("Apakah anda yakin mengubah status menjadi lunas pada no FPPP: " . $row->no_fppp . "?", "wrh/aluminium/make_lunas/" . $row->id, "#content", "Lunas", "btn btn-xs btn-success", "");
+                                    ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

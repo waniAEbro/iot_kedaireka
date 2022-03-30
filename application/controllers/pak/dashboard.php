@@ -19,6 +19,20 @@ class Dashboard extends CI_Controller
 
 	public function status_pak()
 	{
+		// $this->db->where('id_jenis_item', 1);
+		// $this->db->where('id >', 15000);
+		
+		// $a = $this->db->get('master_item');
+		// foreach ($a->result() as $key) {
+		// 	// $this->db->where('id', $key->id);
+		// 	// $object = array('item_code'=>$key->section_ata.'-'.$key->section_allure.'-'.$key->temper.'-'.$key->kode_warna.'-'.$key->ukuran);
+		// 	$this->db->where('item_code', $key->item_code);
+		// 	$cek_double = $this->db->get('master_item')->num_rows();
+			
+		// 	$this->db->where('id', $key->id);
+		// 	$object = array('cek_double' => $cek_double);
+		// 	$this->db->update('master_item', $object);
+		// }
 
 
 

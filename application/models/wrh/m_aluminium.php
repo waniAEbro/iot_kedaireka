@@ -1369,6 +1369,13 @@ class M_aluminium extends CI_Model
         $this->db->update('data_stock', $object);
     }
 
+    public function updateStatusLunasFppp($id_fppp)
+    {
+        $object = array('id_status' => 3);
+        $this->db->where('id', $id_fppp);
+        $this->db->update('data_fppp', $object);
+    }
+
     public function getDC()
     {
         $this->db->where('id_jenis_item', 1);
