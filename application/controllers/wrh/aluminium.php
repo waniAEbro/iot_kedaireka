@@ -275,7 +275,10 @@ class Aluminium extends CI_Controller
         $qty_jadi      = (int)$cekQtyCounter - (int)$getRow->qty_in;
         $this->m_aluminium->updateDataCounter($getRow->id_item, $getRow->id_gudang, $getRow->keranjang, $qty_jadi);
         sleep(1);
-        $data = array('id' => $id,);
+        $data = array(
+            'id' => $id,
+            'qty_dihapus' => $getRow->qty_in,
+        );
         $this->db->where('id', $id);
         $this->db->delete('data_stock');
 
@@ -294,7 +297,10 @@ class Aluminium extends CI_Controller
         $qty_jadi      = (int)$cekQtyCounter - (int)$getRow->qty_in;
         $this->m_aluminium->updateDataCounter($getRow->id_item, $getRow->id_gudang, $getRow->keranjang, $qty_jadi);
         sleep(1);
-        $data = array('id' => $id,);
+        $data = array(
+            'id' => $id,
+            'qty_dihapus' => $getRow->qty_in,
+        );
         $this->db->where('id', $id);
         $this->db->delete('data_stock');
 
