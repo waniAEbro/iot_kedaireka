@@ -223,7 +223,7 @@ class aksesoris extends CI_Controller
         );
         $this->m_aksesoris->insertstokin($datapost);
         $data['id'] = $this->db->insert_id();
-        $this->fungsi->catat($datapost, "Menyimpan detail stock-in aksesoris sbb:", true);
+        $this->fungsi->catat($datapost, "Menyimpan detail aksesoris id ".$data['id']." sbb:", true);
         $cekDataCounter = $this->m_aksesoris->getDataCounter($datapost['id_item'], $datapost['id_divisi'], $datapost['id_gudang'], $datapost['keranjang'])->num_rows();
         if ($cekDataCounter == 0) {
             $simpan = array(
