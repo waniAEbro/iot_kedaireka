@@ -29,7 +29,7 @@
             <select name="kode_warna" class="form-control">
                 <option value="-">Pilih</option>
                 <?php foreach ($warna->result() as $key) { ?>
-                    <option value="<?= $key->kode ?>"><?= $key->warna ?></option>
+                    <option value="<?= $key->kode ?>"><?= $key->kode ?> - <?= $key->warna ?></option>
                 <?php } ?>
             </select>
         </div>

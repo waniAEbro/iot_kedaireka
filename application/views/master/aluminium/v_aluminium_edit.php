@@ -34,7 +34,7 @@ $row = fetch_single_row($edit);
                 <?php foreach ($warna->result() as $key) {
                     $selected = ($key->kode == $row->kode_warna) ? 'selected' : '';
                 ?>
-                    <option value="<?= $key->kode ?>" <?= $selected ?>><?= $key->warna ?></option>
+                    <option value="<?= $key->kode ?>" <?= $selected ?>><?= $key->kode ?> - <?= $key->warna ?></option>
                 <?php } ?>
             </select>
         </div>
