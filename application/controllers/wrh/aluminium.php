@@ -163,7 +163,7 @@ class Aluminium extends CI_Controller
     public function finish_stok_in()
     {
         $this->fungsi->check_previleges('aluminium');
-        $this->m_aksesoris->hapusTemp(2);
+        $this->m_aksesoris->hapusTemp(1);
         $this->stok_in();
     }
 
