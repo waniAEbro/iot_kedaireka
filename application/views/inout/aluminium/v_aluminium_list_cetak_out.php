@@ -50,7 +50,7 @@
 
             <tr>
                 <td align="center"><?= $i++ ?></td>
-                <td><?= $row->tgl_aktual ?></td>
+                <td><?= $row->aktual ?></td>
                 <td><?= $row->tgl_stok ?></td>
                 <td><?= $status ?></td>
                 <td><?= $row->section_ata ?></td>

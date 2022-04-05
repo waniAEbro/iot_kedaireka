@@ -993,14 +993,14 @@ class Fppp extends CI_Controller
 			// 	'qty'          => $rowData[0][7],
 			// 	'itm_code'          => $rowData[0][0],
 			// );
-			$obj = array(
-				'id_jenis_item'          => 1,
-				'id_divisi'     => '',
-				'id_gudang'          => str_replace(' ', '', $rowData[0][10]),
-				'keranjang'          => str_replace(' ', '_', $rowData[0][11]),
-				'qty'          => $rowData[0][12],
-				'itm_code'          => $rowData[0][0],
-			);
+			// $obj = array(
+			// 	'id_jenis_item'          => 1,
+			// 	'id_divisi'     => '',
+			// 	'id_gudang'          => str_replace(' ', '', $rowData[0][10]),
+			// 	'keranjang'          => str_replace(' ', '_', $rowData[0][11]),
+			// 	'qty'          => $rowData[0][12],
+			// 	'itm_code'          => $rowData[0][0],
+			// );
 
 			// $objx = array(
 			// 	'item_code'          => $rowData[0][0],
@@ -1012,17 +1012,28 @@ class Fppp extends CI_Controller
 
 
 
-			$simpan = array(
-				'id_jenis_item' => $obj['id_jenis_item'],
-				'id_item'       => 0,
-				'id_divisi'     => $obj['id_divisi'],
-				'id_gudang'     => $obj['id_gudang'],
-				'keranjang'     => $obj['keranjang'],
-				'qty'           => $obj['qty'],
-				'created'       => date('Y-m-d H:i:s'),
-				'itm_code'       => $obj['itm_code'],
+			// $simpan = array(
+			// 	'id_jenis_item' => $obj['id_jenis_item'],
+			// 	'id_item'       => 0,
+			// 	'id_divisi'     => $obj['id_divisi'],
+			// 	'id_gudang'     => $obj['id_gudang'],
+			// 	'keranjang'     => $obj['keranjang'],
+			// 	'qty'           => $obj['qty'],
+			// 	'created'       => date('Y-m-d H:i:s'),
+			// 	'itm_code'       => $obj['itm_code'],
+			// );
+			// $this->db->insert('data_counter', $simpan);
+
+			$obj = array(
+				'id_jenis_item'          => 2,
+				'itm_code'          => $rowData[0][0],
+				'id_gudang'          => $rowData[0][2],
+				'rata_pemakaian'          => $rowData[0][4],
 			);
-			$this->db->insert('data_counter', $simpan);
+			$this->db->where('itm_code', $obj['itm_code']);
+			$this->db->where('id_gudang', $obj['id_gudang']);
+			// $this->db->limit($obj['limit']);
+			$this->db->update('data_counter',['rata_pemakaian'=>$obj['rata_pemakaian']]);
 		}
 		// unlink($inputFileName);
 		$data['msg'] = "Data BOM Baru Disimpan....";

@@ -18,6 +18,11 @@
         <div class="col-sm-12 border-right">
           <div class="description-block">
             <h5 class="description-header">WELCOME IN ALLURE RETAIL SYSTEM</h5>
+            <?php
+            if (from_session('id')==2) {
+              echo button('load_silent("klg/fppp/uploadbom/1","#content")', 'Upload', 'btn btn-xs btn-success', 'data-toggle="tooltip" title="Upload"');
+            }
+            ?>
             <span class="description-text"><?php echo button('load_silent("cms/user/formedituser/' . from_session('id') . '","#content")', 'Update Profil', 'btn bg-purple', 'data-toggle="tooltip" title="Update Profil"'); ?>
             </span>
           </div>
