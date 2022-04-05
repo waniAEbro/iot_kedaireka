@@ -21,9 +21,11 @@
             ?>
                 <th>Deskripsi</th>
             <?php } ?>
+            <th>Supplier</th>
             <th>Divisi</th>
             <th>Gudang</th>
             <th>Keranjang</th>
+            <th>Rata-rata</th>
             <th>Qty</th>
         </tr>
     </thead>
@@ -40,9 +42,11 @@
                 ?>
                     <td><?= $row->deskripsi ?></td>
                 <?php } ?>
+                <td><?= $row->supplier ?></td>
                 <td><?= $row->divisi ?></td>
                 <td><?= $row->gudang ?></td>
                 <td><?= $row->keranjang ?></td>
+                <td><?= $row->rata_pemakaian ?></td>
                 <td align="center"><?= $row->qty ?></td>
             </tr>
         <?php } ?>
