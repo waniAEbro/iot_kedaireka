@@ -92,7 +92,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Upload Stock</label>
                         <div class="col-sm-8 ">
-                            <input onclick="save_stock()" type="submit" value="Save stock 1" class="btn btn-success">
+                            <input onclick="save_stock()" type="submit" value="Save stock 2" class="btn btn-success">
                             <input onclick="save_master()" type="submit" value="Save master" class="btn btn-success">
 
                         </div>

@@ -1027,13 +1027,17 @@ class Fppp extends CI_Controller
 			$obj = array(
 				'id_jenis_item'          => 2,
 				'itm_code'          => $rowData[0][0],
-				'id_gudang'          => $rowData[0][2],
-				'rata_pemakaian'          => $rowData[0][4],
+				'supplier'          => $rowData[0][3],
+				'lead_time'          => $rowData[0][4],
 			);
-			$this->db->where('itm_code', $obj['itm_code']);
-			$this->db->where('id_gudang', $obj['id_gudang']);
+			$this->db->where('item_code', $obj['itm_code']);
+			$this->db->where('id_jenis_item', $obj['id_jenis_item']);
 			// $this->db->limit($obj['limit']);
-			$this->db->update('data_counter',['rata_pemakaian'=>$obj['rata_pemakaian']]);
+			$updt = array(
+				'supplier'          => $rowData[0][3],
+				'lead_time'          => $rowData[0][4],
+			);
+			$this->db->update('master_item',$updt);
 		}
 		// unlink($inputFileName);
 		$data['msg'] = "Data BOM Baru Disimpan....";
