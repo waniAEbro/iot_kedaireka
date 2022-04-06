@@ -17,7 +17,6 @@
             <th width="5%">No</th>
             <th>Tgl Aktual</th>
             <th>Tgl Input</th>
-            <th>Status</th>
             <th>Item Code</th>
             <th width="25%">Deskripsi</th>
             <th>Satuan</th>
@@ -34,21 +33,20 @@
             <th>No Kendaraan</th>
             <th>Alamat Pengiriman</th>
             <th>Keterangan</th>
+            <th>Status</th>
         </tr>
     </thead>
     <tbody>
         <?php
         $i = 1;
         foreach ($aksesoris->result() as $row) {
+            $sts = ($row->mutasi == 0) ? "Stock" : "Mutasi";
             $qty = ($row->inout == 1) ? $row->qty_in : $row->qty_out;
-            $status = ($row->inout == 1) ? 'MASUK' : 'KELUAR';
         ?>
-
             <tr>
                 <td align="center"><?= $i++ ?></td>
                 <td><?= $row->aktual ?></td>
                 <td><?= $row->tgl_stok ?></td>
-                <td><?= $status ?></td>
                 <td><?= $row->item_code ?></td>
                 <td><?= $row->deskripsi ?></td>
                 <td><?= $row->satuan ?></td>
@@ -65,6 +63,7 @@
                 <td><?= $row->no_kendaraan ?></td>
                 <td><?= $row->alamat_pengiriman ?></td>
                 <td><?= $row->keterangan ?></td>
+                <td><?= $sts ?></td>
             </tr>
         <?php } ?>
     </tbody>
