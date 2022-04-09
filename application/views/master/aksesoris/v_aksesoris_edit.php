@@ -30,6 +30,18 @@ $row = fetch_single_row($edit);
             <?php echo form_error('satuan'); ?>
         </div>
     </div>
+    <div class="form-group">
+        <label class="col-sm-4 control-label">Supplier</label>
+        <div class="col-sm-8">
+            <?php echo form_input(array('name' => 'supplier','value' => $row->supplier, 'class' => 'form-control')); ?>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-4 control-label">Lead Time</label>
+        <div class="col-sm-8">
+            <?php echo form_input(array('name' => 'lead_time','value' => $row->lead_time, 'class' => 'form-control')); ?>
+        </div>
+    </div>
 
     <div class="form-group">
         <label class="col-sm-4 control-label">Simpan</label>
