@@ -63,6 +63,8 @@ class aluminium extends CI_Controller
                 'kode_warna' => $this->input->post('kode_warna'),
                 'ukuran' => $this->input->post('ukuran'),
                 'satuan' => $this->input->post('satuan'),
+                'supplier' => $this->input->post('supplier'),
+                'lead_time' => $this->input->post('lead_time'),
                 'divisi' => $this->input->post('divisi'),
                 'item_code' => $this->input->post('section_ata') . '-' . $this->input->post('section_allure') . '-' . $this->input->post('temper') . '-' . $this->input->post('kode_warna') . '-' . $this->input->post('ukuran'),
                 'created'        => date('Y-m-d H:i:s'),
@@ -115,6 +117,8 @@ class aluminium extends CI_Controller
                 'kode_warna' => $this->input->post('kode_warna'),
                 'ukuran' => $this->input->post('ukuran'),
                 'satuan' => $this->input->post('satuan'),
+                'supplier' => $this->input->post('supplier'),
+                'lead_time' => $this->input->post('lead_time'),
                 'divisi' => $this->input->post('divisi'),
                 'item_code' => $this->input->post('section_ata') . '-' . $this->input->post('section_allure') . '-' . $this->input->post('temper') . '-' . $this->input->post('kode_warna') . '-' . $this->input->post('ukuran'),
             );

@@ -22,6 +22,7 @@
                 <th>Deskripsi</th>
                 <th>Supplier</th>
             <?php } ?>
+            <th>Lead Time</th>
             <th>Divisi</th>
             <th>Gudang</th>
             <th>Keranjang</th>
@@ -43,6 +44,7 @@
                     <td><?= $row->deskripsi ?></td>
                     <td><?= $row->supplier ?></td>
                 <?php } ?>
+                <td><?= $row->lead_time ?></td>
                 <td><?= $row->divisi ?></td>
                 <td><?= $row->gudang ?></td>
                 <td><?= $row->keranjang ?></td>

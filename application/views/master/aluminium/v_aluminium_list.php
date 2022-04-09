@@ -29,6 +29,8 @@
                         <th width="25%">Deskripsi Warna</th>
                         <th>Ukuran</th>
                         <th>Satuan</th>
+                        <th>Supplier</th>
+                        <th>Lead Time</th>
                         <th>Act</th>
                     </thead>
                     <tbody>
@@ -45,6 +47,8 @@
                                 <td><?= $row->warna ?></td>
                                 <td><?= $row->ukuran ?></td>
                                 <td><?= $row->satuan ?></td>
+                                <td><?= $row->supplier ?></td>
+                                <td><?= $row->lead_time ?></td>
                                 <td align="center">
                                     <?php
                                     $sesi = from_session('level');
