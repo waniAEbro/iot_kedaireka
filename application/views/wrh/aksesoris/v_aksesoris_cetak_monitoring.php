@@ -20,8 +20,8 @@
             if ($jenis_barang != 'Aluminium') {
             ?>
                 <th>Deskripsi</th>
+                <th>Supplier</th>
             <?php } ?>
-            <th>Supplier</th>
             <th>Divisi</th>
             <th>Gudang</th>
             <th>Keranjang</th>
@@ -41,8 +41,8 @@
                 if ($jenis_barang != 'Aluminium') {
                 ?>
                     <td><?= $row->deskripsi ?></td>
+                    <td><?= $row->supplier ?></td>
                 <?php } ?>
-                <td><?= $row->supplier ?></td>
                 <td><?= $row->divisi ?></td>
                 <td><?= $row->gudang ?></td>
                 <td><?= $row->keranjang ?></td>
