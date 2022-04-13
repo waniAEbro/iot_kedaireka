@@ -22,10 +22,14 @@
                 <th>Deskripsi</th>
                 <th>Supplier</th>
             <?php } ?>
+            <th>Satuan</th>
             <th>Lead Time</th>
             <th>Divisi</th>
             <th>Gudang</th>
             <th>Keranjang</th>
+            <th>Stock Awal Bulan</th>
+            <th>Total In</th>
+            <th>Total Out</th>
             <th>Rata-rata</th>
             <th>Qty</th>
         </tr>
@@ -34,6 +38,9 @@
         <?php
         $i = 1;
         foreach ($aksesoris->result() as $row) {
+            $stock_awal_bulan = @$s_awal_bulan[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
+            $total_in = @$s_total_in[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
+            $total_out = @$s_total_out[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
         ?>
             <tr>
                 <td align="center"><?= $i++ ?></td>
@@ -44,10 +51,14 @@
                     <td><?= $row->deskripsi ?></td>
                     <td><?= $row->supplier ?></td>
                 <?php } ?>
+                <td><?= $row->satuan ?></td>
                 <td><?= $row->lead_time ?></td>
                 <td><?= $row->divisi ?></td>
                 <td><?= $row->gudang ?></td>
                 <td><?= $row->keranjang ?></td>
+                <td><?= $stock_awal_bulan ?></td>
+                <td><?= $total_in ?></td>
+                <td><?= $total_out ?></td>
                 <td><?= $row->rata_pemakaian ?></td>
                 <td align="center"><?= $row->qty ?></td>
             </tr>
