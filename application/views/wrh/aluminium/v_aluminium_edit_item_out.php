@@ -158,8 +158,6 @@
                                 <th width="15%">FPPP</th>
                                 <th width="15%">Brand</th>
                                 <th width="15%">Item</th>
-                                <th width="30%">Deskripsi Warna</th>
-                                <th width="15%">Divisi</th>
                                 <th width="15%">Gudang</th>
                                 <th width="15%">Keranjang</th>
                                 <th width="7%">Qty</th>
