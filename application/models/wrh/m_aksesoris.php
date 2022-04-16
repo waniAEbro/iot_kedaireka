@@ -206,7 +206,7 @@ class M_aksesoris extends CI_Model
         $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
         $this->db->where('mutasi', 0);
         $this->db->where('inout', 2);
-        $this->db->where('id_surat_jalan !=', 0);
+        // $this->db->where('id_surat_jalan !=', 0);
         // $this->db->where('is_bom', 1);
         // $this->db->where('status_fppp', 0);
         // $this->db->where('id_surat_jalan !=', 0);
