@@ -102,11 +102,19 @@ class aksesoris extends CI_Controller
                 "tot_out"          => $qtyout,
                 "mutasi_in"          => $qtyinmutasi,
                 "mutasi_out"          => $qtyoutmutasi,
-                "stok_akhir_bulan" => $key->qty,
-                // "stok_akhir_bulan" => ($stok_awal_bulan + $qtyin + $qtyinmutasi) - $qtyout - $qtyoutmutasi,
+                // "stok_akhir_bulan" => $key->qty,
+                "stok_akhir_bulan" => ($stok_awal_bulan + $qtyin + $qtyinmutasi) - $qtyout - $qtyoutmutasi,
                 "rata_pemakaian"   => $key->rata_pemakaian,
                 "min_stock"        => '0',
             );
+
+            $this->db->where('id_item', $key->id_item);
+            $this->db->where('id_divisi', $key->id_divisi);
+            $this->db->where('id_gudang', $key->id_gudang);
+            $this->db->where('keranjang', $key->keranjang);
+            $object = array('qty' => $temp['stok_akhir_bulan']);
+            $this->db->update('data_counter', $object);
+
 
             array_push($arr, $temp);
             // echo $key->gt . '<br>';
@@ -225,7 +233,7 @@ class aksesoris extends CI_Controller
         );
         $this->m_aksesoris->insertstokin($datapost);
         $data['id'] = $this->db->insert_id();
-        $this->fungsi->catat($datapost, "Menyimpan detail aksesoris id ".$data['id']." sbb:", true);
+        $this->fungsi->catat($datapost, "Menyimpan detail aksesoris id " . $data['id'] . " sbb:", true);
         $cekDataCounter = $this->m_aksesoris->getDataCounter($datapost['id_item'], $datapost['id_divisi'], $datapost['id_gudang'], $datapost['keranjang'])->num_rows();
         if ($cekDataCounter == 0) {
             $simpan = array(

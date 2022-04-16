@@ -126,11 +126,18 @@ class Aluminium extends CI_Controller
                 "tot_out"          => $qtyout,
                 "mutasi_in"          => $qtyinmutasi,
                 "mutasi_out"          => $qtyoutmutasi,
-                "stok_akhir_bulan" => $key->qty,
-                // "stok_akhir_bulan" => ($stok_awal_bulan + $qtyin + $qtyinmutasi) - $qtyout - $qtyoutmutasi,
+                // "stok_akhir_bulan" => $key->qty,
+                "stok_akhir_bulan" => ($stok_awal_bulan + $qtyin + $qtyinmutasi) - $qtyout - $qtyoutmutasi,
                 "rata_pemakaian"   => '0',
                 "min_stock"        => '0',
             );
+
+            $this->db->where('id_item', $key->id_item);
+            $this->db->where('id_divisi', $key->id_divisi);
+            $this->db->where('id_gudang', $key->id_gudang);
+            $this->db->where('keranjang', $key->keranjang);
+            $object = array('qty' => $temp['stok_akhir_bulan']);
+            $this->db->update('data_counter', $object);
 
             array_push($arr, $temp);
             // echo $key->gt . '<br>';
