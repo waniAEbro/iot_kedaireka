@@ -17,6 +17,7 @@ class aksesoris extends CI_Controller
         $this->fungsi->check_previleges('aksesoris');
         $data['aksesoris']           = $this->m_aksesoris->getData();
         $data['s_awal_bulan']        = $this->m_aksesoris->getStockAwalBulan();
+        $data['s_akhir_bulan'] = $this->m_aksesoris->getStockAkhirBulan();
         $data['total_bom']           = $this->m_aksesoris->getTotalBOM();
         $data['total_in_per_bulan']  = $this->m_aksesoris->getTotalInPerBulan();
         $data['total_out_per_bulan'] = $this->m_aksesoris->getTotalOutPerBulan();
@@ -101,7 +102,8 @@ class aksesoris extends CI_Controller
                 "tot_out"          => $qtyout,
                 "mutasi_in"          => $qtyinmutasi,
                 "mutasi_out"          => $qtyoutmutasi,
-                "stok_akhir_bulan" => ($stok_awal_bulan + $qtyin + $qtyinmutasi) - $qtyout - $qtyoutmutasi,
+                "stok_akhir_bulan" => $key->qty,
+                // "stok_akhir_bulan" => ($stok_awal_bulan + $qtyin + $qtyinmutasi) - $qtyout - $qtyoutmutasi,
                 "rata_pemakaian"   => $key->rata_pemakaian,
                 "min_stock"        => '0',
             );

@@ -125,6 +125,21 @@ class M_aksesoris extends CI_Model
         // return $data;
     }
 
+    public function getStockAkhirBulan()
+    {
+        $res  = $this->db->get('data_counter');
+        $data = array();
+
+        foreach ($res->result() as $key) {
+
+            if (!isset($data[$key->id_item])) {
+                $data[$key->id_item] = 0;
+            }
+            $data[$key->id_item] = $data[$key->id_item] + $key->qty;
+        }
+        return $data;
+    }
+
     public function getTotalBOM()
     {
         $this->db->where('id_fppp !=', 0);
