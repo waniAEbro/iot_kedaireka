@@ -132,12 +132,12 @@ class Aluminium extends CI_Controller
                 "min_stock"        => '0',
             );
 
-            $this->db->where('id_item', $key->id_item);
-            $this->db->where('id_divisi', $key->id_divisi);
-            $this->db->where('id_gudang', $key->id_gudang);
-            $this->db->where('keranjang', $key->keranjang);
-            $object = array('qty' => $temp['stok_akhir_bulan']);
-            $this->db->update('data_counter', $object);
+            // $this->db->where('id_item', $key->id_item);
+            // $this->db->where('id_divisi', $key->id_divisi);
+            // $this->db->where('id_gudang', $key->id_gudang);
+            // $this->db->where('keranjang', $key->keranjang);
+            // $object = array('qty' => $temp['stok_akhir_bulan']);
+            // $this->db->update('data_counter', $object);
 
             array_push($arr, $temp);
             // echo $key->gt . '<br>';
