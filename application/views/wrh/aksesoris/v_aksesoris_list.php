@@ -1,4 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
+<?php ini_set('memory_limit', '128M'); ?>
 <style>
     td.details-control {
         background: url("<?= base_url('assets/img/details_open.png') ?>") no-repeat center center;
