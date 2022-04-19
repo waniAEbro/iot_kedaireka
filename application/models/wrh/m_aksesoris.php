@@ -9,7 +9,7 @@ class M_aksesoris extends CI_Model
         $id_jenis_item = 2;
         $this->db->where('mi.id_jenis_item', $id_jenis_item);
         $this->db->select('mi.*');
-        $this->db->limit(100);
+        // $this->db->limit(100);
         
         return $this->db->get('master_item mi');
 
