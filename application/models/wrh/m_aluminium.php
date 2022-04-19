@@ -11,7 +11,7 @@ class M_aluminium extends CI_Model
         $this->db->where('mi.id_jenis_item', $id_jenis_item);
         $this->db->where('mi.kode_warna !=', '01');
         $this->db->select('mi.*,mwa.warna');
-
+        $this->db->limit(100);
         return $this->db->get('master_item mi')->result();
     }
 
