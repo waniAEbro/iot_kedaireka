@@ -40,9 +40,9 @@
                                 <td align="center">
                                     <?php
                                     $sesi = from_session('level');
-                                    if ($sesi <= 3) {
-                                        echo button('load_silent("master/proyek/form/sub/' . $row->id . '","#modal")', '', 'btn btn-info fa fa-edit', 'data-toggle="tooltip" title="Edit"');
-                                    }
+                                    // if ($sesi <= 3) {
+                                    echo button('load_silent("master/proyek/form/sub/' . $row->id . '","#modal")', '', 'btn btn-info fa fa-edit', 'data-toggle="tooltip" title="Edit"');
+                                    // }
                                     ?>
                                 </td>
                             </tr>
