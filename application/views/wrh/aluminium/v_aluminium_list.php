@@ -80,7 +80,7 @@
                         <tbody>
                             <?php
                             $i = 1;
-                            foreach ($aluminium_list as $row) {
+                            foreach ($aluminium_list->result() as $row) {
                                 $ada                     = 1;
                                 // $stock_awal_bulan        = 0;
                                 $stock_awal_bulan        = @$s_awal_bulan[$row->id];

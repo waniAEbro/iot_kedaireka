@@ -7,21 +7,22 @@ class M_aluminium extends CI_Model
     public function getdata()
     {
         $id_jenis_item = 1;
-        // $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
-        // $this->db->where('mi.id_jenis_item', $id_jenis_item);
-        // $this->db->where('mi.kode_warna !=', '01');
-        // $this->db->select('mi.*,mwa.warna');
-        // // $this->db->limit(100);
-        // return $this->db->get('master_item mi')->result();
-        $this->db->join('master_item mi', 'mi.id = dc.id_item', 'left');
         $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
-        $this->db->where('dc.id_jenis_item', $id_jenis_item);
+        $this->db->where('mi.id_jenis_item', $id_jenis_item);
         $this->db->where('mi.kode_warna !=', '01');
-        
-        $this->db->group_by('dc.id_item');
         $this->db->select('mi.*,mwa.warna');
+        // $this->db->limit(100);
+        return $this->db->get('master_item mi');
+    }
 
-        return $this->db->get('data_counter dc')->result();
+    public function getdataMf()
+    {
+        $id_jenis_item = 1;
+        $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
+        $this->db->where('mi.id_jenis_item', $id_jenis_item);
+        $this->db->where('mi.kode_warna', '01');
+        $this->db->select('mi.*,mwa.warna');
+        return $this->db->get('master_item mi');
     }
 
     public function getdatapaging($num = false, $keyword = '', $perpage = '', $offset = '')
@@ -49,24 +50,7 @@ class M_aluminium extends CI_Model
         }
     }
 
-    public function getdataMf()
-    {
-        $id_jenis_item = 1;
-        // $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
-        // $this->db->where('mi.id_jenis_item', $id_jenis_item);
-        // $this->db->where('mi.kode_warna', '01');
-        // $this->db->select('mi.*,mwa.warna');
-        // return $this->db->get('master_item mi')->result();
-        $this->db->join('master_item mi', 'mi.id = dc.id_item', 'left');
-        $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
-        $this->db->where('dc.id_jenis_item', $id_jenis_item);
-        $this->db->where('mi.kode_warna', '01');
-        
-        $this->db->group_by('dc.id_item');
-        $this->db->select('mi.*,mwa.warna');
-
-        return $this->db->get('data_counter dc')->result();
-    }
+    
 
     public function getCetakMonitoring($id_jenis_barang)
     {
