@@ -27,6 +27,8 @@ class M_aluminium extends CI_Model
     {
         $this->db->join('master_item mi', 'mi.id = ds.id_item', 'left');
         $this->db->join('master_warna mw', 'mw.kode = mi.kode_warna', 'left');
+        $this->db->join('master_warna mwab', 'mwab.id = ds.id_warna_akhir', 'left');
+        
         $this->db->join('master_gudang mg', 'mg.id = ds.id_gudang', 'left');
         $this->db->join('data_surat_jalan dsj', 'dsj.id = ds.id_surat_jalan', 'left');
         $this->db->join('data_fppp df', 'df.id = ds.id_fppp', 'left');
@@ -40,7 +42,7 @@ class M_aluminium extends CI_Model
         $this->db->where('ds.inout', 2);
         // $this->db->where('ds.in_temp', 0);
         // $this->db->where('ds.id_surat_jalan !=', 0);
-        $this->db->select('ds.*,mi.*,mw.*,mb.brand,ds.created as tgl_stok,mg.gudang,dsj.no_surat_jalan,df.no_fppp,dsj.tgl_aktual,df.nama_proyek,dsj.penerima,dsj.alamat_pengiriman,dsj.sopir,dsj.no_kendaraan');
+        $this->db->select('ds.*,mi.*,mw.*,mwab.warna as warna_akhir,mb.brand,ds.created as tgl_stok,mg.gudang,dsj.no_surat_jalan,df.no_fppp,dsj.tgl_aktual,df.nama_proyek,dsj.penerima,dsj.alamat_pengiriman,dsj.sopir,dsj.no_kendaraan');
         $this->db->order_by('ds.id', 'desc');
 
         return $this->db->get('data_stock ds');

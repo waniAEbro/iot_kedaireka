@@ -47,6 +47,8 @@
                                 <th width="25%">Deskripsi Warna</th>
                                 <th>Ukuran</th>
                                 <th>Satuan</th>
+                                <th>Warna Akhir</th>
+
                                 <th>Qty</th>
                                 <th>Brand</th>
                                 <th>Divisi</th>
@@ -80,6 +82,7 @@
                                         <td><?= $row->warna ?></td>
                                         <td><?= $row->ukuran ?></td>
                                         <td><?= $row->satuan ?></td>
+                                        <td><?= $row->warna_akhir ?></td>
                                         <td><?= $qty ?></td>
                                         <td><?= $row->brand ?></td>
                                         <td><?= $row->divisi ?></td>
