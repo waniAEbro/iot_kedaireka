@@ -850,7 +850,7 @@ class Aluminium extends CI_Controller
         $id_jenis_item = 1;
         $data['fppp']        = $this->db->get('data_fppp');
         $data['warna_akhir'] = $this->db->get('master_warna');
-        $data['item']        = $this->m_aluminium->getDataItem();
+        $data['item']        = $this->m_aluminium->getDataItemAda();
         $data['list_sj']     = $this->m_aluminium->getListItemBonManual();
         $this->load->view('wrh/aluminium/v_aluminium_bon_item', $data);
     }
@@ -886,7 +886,7 @@ class Aluminium extends CI_Controller
         $id_fppp             = $this->m_aluminium->getListItemStokOut($id_sj)->row()->id_fppp;
         $data['fppp']              = $this->db->get('data_fppp');
         $data['warna_akhir']       = $this->db->get('master_warna');
-        $data['item']              = $this->m_aluminium->getDataItem();
+        $data['item']              = $this->m_aluminium->getDataItemAda();
         $data['id_sj']             = $id_sj;
         $data['id_fppp']           = $id_fppp;
         $data['no_surat_jalan']    = $this->m_aluminium->getRowSuratJalan($id_sj)->row()->no_surat_jalan;
