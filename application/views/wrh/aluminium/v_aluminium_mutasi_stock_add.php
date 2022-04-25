@@ -98,29 +98,31 @@
         var qty2 = parseInt($('#qty2').val());
         if (qty1 >= qty2) {
             $('#mutasi').hide();
-            $.ajax({
-                url: "<?= site_url('wrh/aluminium/simpanMutasi') ?>",
-                dataType: "json",
-                type: "POST",
-                data: {
-                    "tgl_aktual": $('#tgl_aktual').val(),
-                    "id_item": $('#item').val(),
-                    "id_gudang": $('#id_gudang').val(),
-                    "keranjang": $('#keranjang').val(),
-                    "qty": $('#qty').val(),
+            if ($('#id_gudang').val() != '' && $('#keranjang').val() != '' && $('#id_gudang2').val() != '' && $('#qty').val() != '' && $('#keranjang2').val() != '' && $('#qty2').val() != '') {
+                $.ajax({
+                    url: "<?= site_url('wrh/aluminium/simpanMutasi') ?>",
+                    dataType: "json",
+                    type: "POST",
+                    data: {
+                        "tgl_aktual": $('#tgl_aktual').val(),
+                        "id_item": $('#item').val(),
+                        "id_gudang": $('#id_gudang').val(),
+                        "keranjang": $('#keranjang').val(),
+                        "qty": $('#qty').val(),
 
-                    "id_gudang2": $('#id_gudang2').val(),
-                    "keranjang2": $('#keranjang2').val(),
-                    "qty2": $('#qty2').val(),
-                },
-                success: function(data) {
-                    $.growl.notice({
-                        title: 'Sukses',
-                        message: "Berhasil mutasi"
-                    });
-                    load_silent("wrh/aluminium/mutasi_stock_history/" + $('#item').val(), "#content");
-                }
-            });
+                        "id_gudang2": $('#id_gudang2').val(),
+                        "keranjang2": $('#keranjang2').val(),
+                        "qty2": $('#qty2').val(),
+                    },
+                    success: function(data) {
+                        $.growl.notice({
+                            title: 'Sukses',
+                            message: "Berhasil mutasi"
+                        });
+                        load_silent("wrh/aluminium/mutasi_stock_history/" + $('#item').val(), "#content");
+                    }
+                });
+            }
 
         } else {
             alert("Jangan melebihi qty awal!");
