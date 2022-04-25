@@ -1190,6 +1190,7 @@ class Aluminium extends CI_Controller
             $qty_jadi      = (int)$datapost_in['qty_in'] + (int)$cekQtyCounter;
             $this->m_aluminium->updateDataCounter($datapost_in['id_item'],  $datapost_in['id_gudang'], $datapost_in['keranjang'], $qty_jadi);
         }
+        sleep(1);
         $data['pesan'] = "Berhasil";
         echo json_encode($data);
     }

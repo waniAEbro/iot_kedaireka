@@ -133,6 +133,7 @@
         var qty1 = parseInt($('#qty').val());
         var qty2 = parseInt($('#qty2').val());
         if (qty1 >= qty2) {
+            $('#mutasi').hide();
             $.ajax({
                 url: "<?= site_url('wrh/aksesoris/simpanMutasi') ?>",
                 dataType: "json",
