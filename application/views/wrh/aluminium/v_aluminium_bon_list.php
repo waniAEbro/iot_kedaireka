@@ -8,11 +8,36 @@
                     <?php
                     $sesi = from_session('level');
                     if ($sesi <= 3) {
-                        echo button('load_silent("wrh/aluminium/bon_manual_add/","#content")', 'Add BON Manual', 'btn btn-primary', 'data-toggle="tooltip" title="BON Manual"');
+                        echo button('load_silent("wrh/aluminium/bon_manual_add/","#content")', 'Add BON Manual MF', 'btn btn-info', 'data-toggle="tooltip" title="BON Manual"');
+                        echo button('load_silent("wrh/aluminium/bon_manual_add_warna/","#content")', 'Add BON Manual Warna', 'btn btn-primary', 'data-toggle="tooltip" title="BON Manual"');
                     } else {
                         # code...
                     }
                     ?>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Tanggal Awal</label>
+                            <input type="text" data-date-format="yyyy-mm-dd" value="<?= $tgl_awal ?>" class="form-control datepicker" autocomplete="off" id="tgl_awal">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Tanggal Akhir</label>
+                            <input type="text" data-date-format="yyyy-mm-dd" value="<?= $tgl_akhir ?>" class="form-control datepicker" autocomplete="off" id="tgl_akhir">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box-tools pull-right">
+                            <a class="btn btn-success" onclick="setFilter()">Set Filter</a>
+                        </div>
+                    </div>
+                    </>
                 </div>
             </div>
             <div class="box-body">
@@ -69,4 +94,21 @@
             "scrollX": true,
         });
     });
+
+    function setFilter(argument) {
+        var tgl_awal = $('#tgl_awal').val();
+        if (tgl_awal != '') {
+            var tlg1 = tgl_awal;
+        } else {
+            var tlg1 = '<?= $tgl_awal ?>';
+        };
+        var tgl_akhir = $('#tgl_akhir').val();
+        if (tgl_akhir != '') {
+            var tgl2 = tgl_akhir;
+        } else {
+            var tgl2 = '<?= $tgl_akhir ?>';
+        };
+        load_silent("wrh/aluminium/bon_manual_diSet/" + tlg1 + "/" + tgl2, "#content");
+
+    }
 </script>

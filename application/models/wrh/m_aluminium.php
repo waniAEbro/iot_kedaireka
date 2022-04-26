@@ -101,6 +101,38 @@ class M_aluminium extends CI_Model
         
     }
 
+    public function getdataItemAdamf()
+    {
+        $id_jenis_item = 1;
+        $this->db->join('master_item mi', 'mi.id = dc.id_item', 'left');
+        $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
+        $this->db->where('dc.id_jenis_item', $id_jenis_item);
+        $this->db->where('mi.kode_warna', '01');
+        $this->db->select('mi.*,mwa.warna');
+        $this->db->group_by('dc.id_item');
+        
+        // $this->db->limit(300);
+        // return $this->db->get('master_item mi');
+        return $this->db->get('data_counter dc');
+        
+    }
+
+    public function getdataItemAdawarna()
+    {
+        $id_jenis_item = 1;
+        $this->db->join('master_item mi', 'mi.id = dc.id_item', 'left');
+        $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
+        $this->db->where('dc.id_jenis_item', $id_jenis_item);
+        $this->db->where('mi.kode_warna !=', '01');
+        $this->db->select('mi.*,mwa.warna');
+        $this->db->group_by('dc.id_item');
+        
+        // $this->db->limit(300);
+        // return $this->db->get('master_item mi');
+        return $this->db->get('data_counter dc');
+        
+    }
+
     public function getdataItemMutasi($id_item)
     {
         $id_jenis_item = 1;
@@ -815,7 +847,7 @@ class M_aluminium extends CI_Model
         }
     }
 
-    public function getSuratJalan($tipe, $id_jenis_item)
+    public function getSuratJalan($tipe, $id_jenis_item,$tgl_awal, $tgl_akhir)
     {
         if ($tipe == 1) {
             $this->db->join('data_fppp df', 'df.id = dsj.id_fppp', 'left');
@@ -823,6 +855,9 @@ class M_aluminium extends CI_Model
         } else {
             $this->db->select('dsj.*');
         }
+
+        $this->db->where('DATE(dsj.tgl_aktual) >=', $tgl_awal);
+        $this->db->where('DATE(dsj.tgl_aktual) <=', $tgl_akhir);
 
 
         $this->db->order_by('dsj.id', 'desc');

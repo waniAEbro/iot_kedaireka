@@ -742,7 +742,7 @@ class M_aksesoris extends CI_Model
         }
     }
 
-    public function getSuratJalan($tipe, $id_jenis_item)
+    public function getSuratJalan($tipe, $id_jenis_item,$tgl_awal, $tgl_akhir)
     {
         if ($tipe == 1) {
             $this->db->join('data_fppp df', 'df.id = dsj.id_fppp', 'left');
@@ -750,6 +750,9 @@ class M_aksesoris extends CI_Model
         } else {
             $this->db->select('dsj.*');
         }
+
+        $this->db->where('DATE(dsj.tgl_aktual) >=', $tgl_awal);
+        $this->db->where('DATE(dsj.tgl_aktual) <=', $tgl_akhir);
 
 
         $this->db->order_by('dsj.id', 'desc');

@@ -839,7 +839,24 @@ class Aluminium extends CI_Controller
     {
         $this->fungsi->check_previleges('aluminium');
         $id_jenis_item = 1;
-        $data['surat_jalan'] = $this->m_aluminium->getSuratJalan(2, $id_jenis_item);
+        $bulan       = date('m');
+        $tahun       = date('Y');
+        $data['tgl_awal']  = $tahun . '-' . $bulan . '-01';
+        $data['tgl_akhir'] = date("Y-m-t", strtotime($data['tgl_awal']));
+        $data['surat_jalan'] = $this->m_aluminium->getSuratJalan(2, $id_jenis_item,$data['tgl_awal'], $data['tgl_akhir']);
+        $data['keterangan']  = $this->m_aluminium->getKeterangan();
+        $this->load->view('wrh/aluminium/v_aluminium_bon_list', $data);
+    }
+
+    public function bon_manual_diSet($tgl_awal = '', $tgl_akhir = '')
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $id_jenis_item = 1;
+        $bulan       = date('m');
+        $tahun       = date('Y');
+        $data['tgl_awal']  = $tahun . '-' . $bulan . '-01';
+        $data['tgl_akhir'] = date("Y-m-t", strtotime($data['tgl_awal']));
+        $data['surat_jalan'] = $this->m_aluminium->getSuratJalan(2, $id_jenis_item,$data['tgl_awal'], $data['tgl_akhir']);
         $data['keterangan']  = $this->m_aluminium->getKeterangan();
         $this->load->view('wrh/aluminium/v_aluminium_bon_list', $data);
     }
@@ -850,7 +867,18 @@ class Aluminium extends CI_Controller
         $id_jenis_item = 1;
         $data['fppp']        = $this->db->get('data_fppp');
         $data['warna_akhir'] = $this->db->get('master_warna');
-        $data['item']        = $this->m_aluminium->getDataItemAda();
+        $data['item']        = $this->m_aluminium->getDataItemAdamf();
+        $data['list_sj']     = $this->m_aluminium->getListItemBonManual();
+        $this->load->view('wrh/aluminium/v_aluminium_bon_item', $data);
+    }
+
+    public function bon_manual_add_warna()
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $id_jenis_item = 1;
+        $data['fppp']        = $this->db->get('data_fppp');
+        $data['warna_akhir'] = $this->db->get('master_warna');
+        $data['item']        = $this->m_aluminium->getDataItemAdawarna();
         $data['list_sj']     = $this->m_aluminium->getListItemBonManual();
         $this->load->view('wrh/aluminium/v_aluminium_bon_item', $data);
     }

@@ -16,6 +16,30 @@
                 </div>
             </div>
             <div class="box-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Tanggal Awal</label>
+                            <input type="text" data-date-format="yyyy-mm-dd" value="<?= $tgl_awal ?>" class="form-control datepicker" autocomplete="off" id="tgl_awal">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Tanggal Akhir</label>
+                            <input type="text" data-date-format="yyyy-mm-dd" value="<?= $tgl_akhir ?>" class="form-control datepicker" autocomplete="off" id="tgl_akhir">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box-tools pull-right">
+                            <a class="btn btn-success" onclick="setFilter()">Set Filter</a>
+                        </div>
+                    </div>
+                    </>
+                </div>
+            </div>
+            <div class="box-body">
                 <table width="100%" id="tableku" class="table table-striped">
                     <thead>
                         <th width="5%">No</th>
@@ -69,4 +93,21 @@
             "scrollX": true,
         });
     });
+
+    function setFilter(argument) {
+        var tgl_awal = $('#tgl_awal').val();
+        if (tgl_awal != '') {
+            var tlg1 = tgl_awal;
+        } else {
+            var tlg1 = '<?= $tgl_awal ?>';
+        };
+        var tgl_akhir = $('#tgl_akhir').val();
+        if (tgl_akhir != '') {
+            var tgl2 = tgl_akhir;
+        } else {
+            var tgl2 = '<?= $tgl_akhir ?>';
+        };
+        load_silent("wrh/aksesoris/bon_manual_diSet/" + tlg1 + "/" + tgl2, "#content");
+
+    }
 </script>

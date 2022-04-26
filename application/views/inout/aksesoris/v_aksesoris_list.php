@@ -32,8 +32,8 @@
                             </div>
                         </div>
                         </>
-                    <?php } ?>
                     </div>
+                    <?php } ?>
                     <div class="box-body">
                         <table width="100%" id="tableku" class="table table-striped">
                             <thead>
