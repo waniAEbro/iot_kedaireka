@@ -125,6 +125,7 @@ class Dashboard extends CI_Controller
 		// }
 
 
+		//aluminium update id item
 		// $this->db->where('id_jenis_item', 1);
 		// $counter = $this->db->get('master_item');
 		// foreach ($counter->result() as $key) {
@@ -133,6 +134,9 @@ class Dashboard extends CI_Controller
 		// 	$this->db->where('itm_code', $key->item_code);
 		// 	$this->db->update('data_counter', $object);
 		// }
+
+
+
 		// $this->db->where('id_jenis_item', 1);
 		// $this->db->where('id_item', 0);
 		// $counter = $this->db->get('data_counter');

@@ -94,6 +94,7 @@
                         <div class="col-sm-8 ">
                             <input onclick="save_stock()" type="submit" value="Save stock 2" class="btn btn-success">
                             <input onclick="save_master()" type="submit" value="Save master" class="btn btn-success">
+                            <input onclick="save_counter()" type="submit" value="Save counter" class="btn btn-success">
 
                         </div>
                     </div>
@@ -196,6 +197,34 @@
         $('#loading').show(100);
         $.ajaxFileUpload({
             url: site + 'klg/fppp/uploadMaster',
+            secureuri: false,
+            fileElementId: 'file',
+            dataType: 'json',
+            data: {
+                id: $('#id').val(),
+                jenis_bom: $('#jenis_bom').val(),
+            },
+            success: function(data) {
+                $.growl.notice({
+                    title: 'Berhasil',
+                    message: data['msg']
+                });
+                // load_silent("klg/fppp/", "#content");
+                $('#loading').hide();
+
+            },
+            error: function(data, e) {
+                $("#info").html(e);
+            }
+        })
+        return false;
+    }
+
+    function save_counter() {
+        $('#tombol').attr('disabled', 'disabled');
+        $('#loading').show(100);
+        $.ajaxFileUpload({
+            url: site + 'klg/fppp/uploadCounter',
             secureuri: false,
             fileElementId: 'file',
             dataType: 'json',

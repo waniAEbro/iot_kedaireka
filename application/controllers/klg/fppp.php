@@ -1024,23 +1024,100 @@ class Fppp extends CI_Controller
 			// );
 			// $this->db->insert('data_counter', $simpan);
 
-			$obj = array(
-				'id_jenis_item'          => 2,
-				'itm_code'          => $rowData[0][0],
-				'supplier'          => $rowData[0][3],
-				'lead_time'          => $rowData[0][4],
-			);
-			$this->db->where('item_code', $obj['itm_code']);
-			$this->db->where('id_jenis_item', $obj['id_jenis_item']);
-			// $this->db->limit($obj['limit']);
-			$updt = array(
-				'supplier'          => $rowData[0][3],
-				'lead_time'          => $rowData[0][4],
-			);
-			$this->db->update('master_item',$updt);
+			// $obj = array(
+			// 	'id_jenis_item'          => 2,
+			// 	'itm_code'          => $rowData[0][0],
+			// 	'supplier'          => $rowData[0][3],
+			// 	'lead_time'          => $rowData[0][4],
+			// );
+			// $this->db->where('item_code', $obj['itm_code']);
+			// $this->db->where('id_jenis_item', $obj['id_jenis_item']);
+			// // $this->db->limit($obj['limit']);
+			// $updt = array(
+			// 	'supplier'          => $rowData[0][3],
+			// 	'lead_time'          => $rowData[0][4],
+			// );
+			// $this->db->update('master_item',$updt);
 		}
 		// unlink($inputFileName);
 		$data['msg'] = "Data BOM Baru Disimpan....";
+		echo json_encode($data);
+	}
+
+	public function uploadCounter()
+	{
+		$fileName = time();
+		//      $upload_folder = get_upload_folder('./excel_files/');
+
+		// $config['upload_path']   = $upload_folder;
+
+		$config['upload_path']   = './files/';      //buat folder dengan nama excel_files di root folder
+		$config['file_name']     = $fileName;
+		$config['allowed_types'] = 'xls|xlsx|csv';
+		$config['max_size']      = 20000;
+
+		$this->load->library('upload');
+		$this->upload->initialize($config);
+
+		if (!$this->upload->do_upload('file'))
+			$this->upload->display_errors();
+
+		$media         = $this->upload->data('file');
+		$inputFileName = './files/' . $media['file_name'];
+
+		try {
+			$inputFileType = IOFactory::identify($inputFileName);
+			$objReader     = IOFactory::createReader($inputFileType);
+			$objPHPExcel   = $objReader->load($inputFileName);
+		} catch (Exception $e) {
+			die('Error loading file "' . pathinfo($inputFileName, PATHINFO_BASENAME) . '": ' . $e->getMessage());
+		}
+
+		$sheet         = $objPHPExcel->getSheet(0);
+		$highestRow    = $sheet->getHighestRow();
+		$highestColumn = $sheet->getHighestColumn();
+		$id_fppp       = $this->input->post('id');
+		$jenis_bom     = $this->input->post('jenis_bom');
+
+		for ($row = 2; $row <= $highestRow; $row++) {                  //  Read a row of data into an array
+			$rowData = $sheet->rangeToArray(
+				'A' . $row . ':' . $highestColumn . $row,
+				NULL,
+				TRUE,
+				FALSE
+			);
+
+			if ($jenis_bom == 1) {
+				$obj = array(
+					'id_jenis_item'  => 1,
+					'id_item'         => $rowData[0][1],
+					'id_gudang'    => $rowData[0][2],
+					'keranjang' => $rowData[0][3],
+					'qty'         => $rowData[0][4],
+					'updated'        => $rowData[0][5],
+					'itm_code'        => $rowData[0][8],
+				);
+
+				$this->db->where('id_item', $obj['id_item']);
+				$this->db->where('id_gudang', $obj['id_gudang']);
+				$this->db->where('keranjang', $obj['keranjang']);
+				$cek = $this->db->get('data_counter')->num_rows();
+				if ($cek > 0) {
+					$obj2 = array('qty' => $obj['qty']);
+					$this->db->where('id_item', $obj['id_item']);
+					$this->db->where('id_gudang', $obj['id_gudang']);
+					$this->db->where('keranjang', $obj['keranjang']);
+					$this->db->update('data_counter', $obj2);
+				}else{
+					$this->db->insert('data_counter', $obj);
+					
+				}
+			} 
+		}
+		// unlink($inputFileName);
+		sleep(1);
+		// $data['detail'] = $this->m_fppp->getTemp($id_fppp, $jenis_bom);
+		$data['msg']    = "Data Counter Baru Disimpan....";
 		echo json_encode($data);
 	}
 
