@@ -1094,7 +1094,7 @@ class Fppp extends CI_Controller
 					'id_gudang'    => $rowData[0][2],
 					'keranjang' => $rowData[0][3],
 					'qty'         => $rowData[0][4],
-					'updated'        => $rowData[0][5],
+					'updated'        => '2022-04-27 10:22:01',
 					'itm_code'        => $rowData[0][8],
 				);
 
