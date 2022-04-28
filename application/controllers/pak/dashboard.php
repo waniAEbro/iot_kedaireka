@@ -20,13 +20,14 @@ class Dashboard extends CI_Controller
 	public function status_pak()
 	{
 
-		// echo "delete counter";
-		// $this->db->where('kode_warna !=', '01');
-		// $xx = $this->db->get('master_item');
-		// foreach ($xx->result() as $key) {
-		// 	$this->db->where('id_item', $key->id);
-		// 	$this->db->delete('data_counter');
-		// }
+		echo "delete counter";
+		$this->db->where('id_jenis_item', '1');
+		$this->db->where('kode_warna !=', '01');
+		$xx = $this->db->get('master_item');
+		foreach ($xx->result() as $key) {
+			$this->db->where('id_item', $key->id);
+			$this->db->delete('data_counter');
+		}
 
 
 		// $this->db->where('id_jenis_item', 1);
