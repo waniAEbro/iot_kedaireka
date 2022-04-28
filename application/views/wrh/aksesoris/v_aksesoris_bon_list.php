@@ -92,6 +92,9 @@
             "ordering": true,
             "scrollX": true,
         });
+        $('.datepicker').datepicker({
+            autoclose: true
+        });
     });
 
     function setFilter(argument) {
