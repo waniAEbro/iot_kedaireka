@@ -222,7 +222,7 @@ class Aluminium extends CI_Controller
     {
         $this->fungsi->check_previleges('aluminium');
 
-        $cek_in_temp = $this->m_aksesoris->getInTemp(1)->num_rows();;
+        $cek_in_temp = $this->m_aksesoris->getInTemp(1)->num_rows();
         if ($cek_in_temp < 1) {
             $data_temp = array(
                 'id_user'        => from_session('id'),
@@ -273,6 +273,14 @@ class Aluminium extends CI_Controller
             $qty_jadi      = (int)$datapost['qty_in'] + (int)$cekQtyCounter;
             $this->m_aluminium->updateDataCounter($datapost['id_item'],  $datapost['id_gudang'], $datapost['keranjang'], $qty_jadi);
         }
+
+        $tgl_aktual = $this->input->post('aktual');
+        // //update qty awal bulan
+        // $this->m_aluminium->updateQtyAwalBulan($tgl_aktual,$datapost);
+        // //update qty awal bulan
+        // $this->m_aluminium->updateQtyStockPoin($tgl_aktual,$datapost);
+
+
         $data['msg'] = "stock Disimpan";
         echo json_encode($data);
     }
@@ -852,10 +860,8 @@ class Aluminium extends CI_Controller
     {
         $this->fungsi->check_previleges('aluminium');
         $id_jenis_item = 1;
-        $bulan       = date('m');
-        $tahun       = date('Y');
-        $data['tgl_awal']  = $tahun . '-' . $bulan . '-01';
-        $data['tgl_akhir'] = date("Y-m-t", strtotime($data['tgl_awal']));
+        $data['tgl_awal']  = $tgl_awal;
+        $data['tgl_akhir'] = $tgl_akhir;
         $data['surat_jalan'] = $this->m_aluminium->getSuratJalan(2, $id_jenis_item,$data['tgl_awal'], $data['tgl_akhir']);
         $data['keterangan']  = $this->m_aluminium->getKeterangan();
         $this->load->view('wrh/aluminium/v_aluminium_bon_list', $data);

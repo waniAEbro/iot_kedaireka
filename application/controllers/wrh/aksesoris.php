@@ -796,10 +796,8 @@ class aksesoris extends CI_Controller
     {
         $this->fungsi->check_previleges('inout');
         $id_jenis_item = 2;
-        $bulan       = date('m');
-        $tahun       = date('Y');
-        $data['tgl_awal']  = $tahun . '-' . $bulan . '-01';
-        $data['tgl_akhir'] = date("Y-m-t", strtotime($data['tgl_awal']));
+        $data['tgl_awal']  = $tgl_awal;
+        $data['tgl_akhir'] = $tgl_akhir;
         $data['surat_jalan'] = $this->m_aksesoris->getSuratJalan(2, $id_jenis_item,$data['tgl_awal'], $data['tgl_akhir']);
         $data['keterangan']  = $this->m_aksesoris->getKeterangan();
         $this->load->view('wrh/aksesoris/v_aksesoris_bon_list', $data);
