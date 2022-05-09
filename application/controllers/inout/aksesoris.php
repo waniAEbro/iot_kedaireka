@@ -32,6 +32,48 @@ class Aksesoris extends CI_Controller
         $this->load->view('inout/aksesoris/v_aksesoris_list', $data);
     }
 
+    public function formedit($param = '')
+    {
+        $content   = "<div id='divsubcontent'></div>";
+        $header    = "Form Edit";
+        $subheader = "";
+        $buttons[]          = button('', 'Tutup', 'btn btn-default', 'data-dismiss="modal"');
+        echo $this->fungsi->parse_modal($header, $subheader, $content, $buttons, "");
+
+        $this->fungsi->run_js('load_silent("inout/aksesoris/show_editForm/' . $param . '","#divsubcontent")');
+    }
+
+    public function show_editForm($id = '')
+    {
+        $this->load->library('form_validation');
+        $config = array(
+            array(
+                'field' => 'id',
+                'label' => 'wes mbarke',
+                'rules' => ''
+            ),
+            array(
+                'field' => 'id_supplier',
+                'label' => 'id_supplier',
+                'rules' => 'required'
+            )
+        );
+        $this->form_validation->set_rules($config);
+        $this->form_validation->set_error_delimiters('<span class="error-span">', '</span>');
+
+        if ($this->form_validation->run() == FALSE) {
+            $data['supplier'] = $this->db->get('master_supplier');
+            $data['edit'] = $this->db->get_where('data_stock', array('id' => $id));
+            $this->load->view('inout/aksesoris/v_inout_edit', $data);
+        } else {
+            $datapost = get_post_data(array('id', 'id_supplier'));
+
+            $this->m_aksesoris->updateData($datapost);
+            $this->fungsi->run_js('load_silent("inout/aksesoris","#content")');
+            $this->fungsi->message_box("Data sukses diperbarui...", "success");
+        }
+    }
+
     public function diSetCetak($tgl_awal = '', $tgl_akhir = '')
     {
         $data['tgl_awal']         = $tgl_awal;

@@ -53,6 +53,7 @@
                                 <th>NO PR/WO</th>
                                 <th>Keterangan</th>
                                 <th>Status</th>
+                                <th></th>
                             </thead>
                             <tbody>
                                 <?php
@@ -79,6 +80,7 @@
                                         <td><?= $row->no_pr ?></td>
                                         <td><?= $row->keterangan ?></td>
                                         <td><?= $sts ?></td>
+                                        <td><?php echo button('load_silent("inout/aksesoris/formedit/' . $row->id_ds . '","#modal")', 'Edit', 'btn btn-info btn-xs', 'data-toggle="tooltip" title="Edit"');?></td>
 
                                     </tr>
 
