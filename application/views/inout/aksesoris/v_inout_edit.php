@@ -20,6 +20,24 @@ $row = fetch_single_row($edit);
             </select>
         </div>
     </div>
+    <div class="form-group">
+        <label class="col-sm-4 control-label">No Surat Jalan</label>
+        <div class="col-sm-8">
+            <?php echo form_input(array('name' => 'no_surat_jalan', 'value' => $row->no_surat_jalan, 'class' => 'form-control')); ?>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-4 control-label">No PR/WO</label>
+        <div class="col-sm-8">
+            <?php echo form_input(array('name' => 'no_pr', 'value' => $row->no_pr, 'class' => 'form-control')); ?>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-4 control-label">Keterangan</label>
+        <div class="col-sm-8">
+            <?php echo form_input(array('name' => 'keterangan', 'value' => $row->keterangan, 'class' => 'form-control')); ?>
+        </div>
+    </div>
 
     <div class="form-group">
         <label class="col-sm-4 control-label">Simpan</label>

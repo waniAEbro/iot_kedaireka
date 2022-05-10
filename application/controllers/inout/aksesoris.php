@@ -66,7 +66,7 @@ class Aksesoris extends CI_Controller
             $data['edit'] = $this->db->get_where('data_stock', array('id' => $id));
             $this->load->view('inout/aksesoris/v_inout_edit', $data);
         } else {
-            $datapost = get_post_data(array('id', 'id_supplier'));
+            $datapost = get_post_data(array('id', 'id_supplier', 'no_surat_jalan', 'no_pr', 'keterangan'));
 
             $this->m_aksesoris->updateData($datapost);
             $this->fungsi->run_js('load_silent("inout/aksesoris","#content")');
