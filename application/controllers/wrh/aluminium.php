@@ -901,7 +901,18 @@ class Aluminium extends CI_Controller
         $this->load->view('wrh/aluminium/v_aluminium_bon_add', $data);
     }
 
-    public function lihat_item_stok_out($id_sj)
+    public function lihat_item_stok_out($param = '')
+    {
+        $content   = "<div id='divsubcontent'></div>";
+        $header    = "Preview";
+        $subheader = "";
+        $buttons[]          = button('', 'Tutup', 'btn btn-default', 'data-dismiss="modal"');
+        echo $this->fungsi->parse_modal($header, $subheader, $content, $buttons, "");
+
+        $this->fungsi->run_js('load_silent("wrh/aluminium/lihat_item_stok_out_modal/' . $param . '","#divsubcontent")');
+    }
+
+    public function lihat_item_stok_out_modal($id_sj)
     {
         $this->fungsi->check_previleges('aluminium');
         $data['id_fppp']           = $this->m_aluminium->getRowSuratJalan($id_sj)->row()->id_fppp;

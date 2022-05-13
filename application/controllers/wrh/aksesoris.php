@@ -837,7 +837,18 @@ class aksesoris extends CI_Controller
     //     $this->load->view('wrh/aksesoris/v_aksesoris_bon_add', $data);
     // }
 
-    public function lihat_item_stok_out($id_sj)
+    public function lihat_item_stok_out($param = '')
+    {
+        $content   = "<div id='divsubcontent'></div>";
+        $header    = "Preview";
+        $subheader = "";
+        $buttons[]          = button('', 'Tutup', 'btn btn-default', 'data-dismiss="modal"');
+        echo $this->fungsi->parse_modal($header, $subheader, $content, $buttons, "");
+
+        $this->fungsi->run_js('load_silent("wrh/aksesoris/lihat_item_stok_out_modal/' . $param . '","#divsubcontent")');
+    }
+
+    public function lihat_item_stok_out_modal($id_sj)
     {
         $this->fungsi->check_previleges('aksesoris');
         $data['id_fppp']           = $this->m_aksesoris->getRowSuratJalan($id_sj)->row()->id_fppp;

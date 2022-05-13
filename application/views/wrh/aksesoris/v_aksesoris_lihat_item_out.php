@@ -51,7 +51,7 @@
                 </form>
             </div>
             <div class="box-body">
-                <table width="100%" id="tableku" class="table table-bordered table-striped" style="font-size: smaller;">
+                <table width="100%" id="tablekuz" class="table table-bordered table-striped" style="font-size: smaller;">
                     <thead>
                         <tr>
                             <th width="15%">FPPP</th>
@@ -96,7 +96,7 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function() {
-        var table = $('#tableku').DataTable({
+        var table = $('#tablekuz').DataTable({
             ordering: false,
             paging: false,
             scrollX: true,
