@@ -57,6 +57,7 @@
                                 <th>Alamat Pengiriman</th>
                                 <th>Keterangan</th>
                                 <th>Status</th>
+                                <th>Jenis</th>
                             </thead>
                             <tbody>
                                 <?php
@@ -64,6 +65,7 @@
                                 foreach ($aksesoris->result() as $row) :
                                     $sts = ($row->mutasi == 0) ? "Stock" : "Mutasi";
                                     $qty = ($row->inout == 1) ? $row->qty_in : $row->qty_out;
+                                    $jenis = ($row->produksi == 1) ? 'Produksi' : 'Lapangan';
                                 ?>
                                     <tr>
                                         <td align="center"><?= $i++ ?></td>
@@ -86,6 +88,7 @@
                                         <td><?= $row->alamat_pengiriman ?></td>
                                         <td><?= $row->keterangan ?></td>
                                         <td><?= $sts ?></td>
+                                        <td><?= $jenis ?></td>
 
                                     </tr>
 
