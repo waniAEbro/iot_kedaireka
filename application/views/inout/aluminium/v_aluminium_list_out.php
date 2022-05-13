@@ -40,12 +40,8 @@
                                 <th width="5%">No</th>
                                 <th>Tgl Aktual</th>
                                 <th>Tgl Input</th>
-                                <th>Section ATA</th>
-                                <th>Section Allure</th>
-                                <th>Temper</th>
-                                <th>Warna</th>
+                                <th>Item Code</th>
                                 <th width="25%">Deskripsi Warna</th>
-                                <th>Ukuran</th>
                                 <th>Satuan</th>
                                 <th>Warna Akhir</th>
 
@@ -77,12 +73,9 @@
                                         <td align="center"><?= $i++ ?></td>
                                         <td><?= $row->aktual ?></td>
                                         <td><?= $row->tgl_stok ?></td>
-                                        <td><?= $row->section_ata ?></td>
-                                        <td><?= $row->section_allure ?></td>
-                                        <td><?= $row->temper ?></td>
-                                        <td><?= $row->kode_warna ?></td>
+                                        <td><?= $row->section_ata . '-' . $row->section_allure . '-' . $row->temper . '-' . $row->kode_warna . '-' . $row->ukuran ?></td>
+
                                         <td><?= $row->warna ?></td>
-                                        <td><?= $row->ukuran ?></td>
                                         <td><?= $row->satuan ?></td>
                                         <td><?= $row->warna_akhir ?></td>
                                         <td><?= $qty ?></td>
