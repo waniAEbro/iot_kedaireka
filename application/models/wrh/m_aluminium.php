@@ -50,7 +50,7 @@ class M_aluminium extends CI_Model
         }
     }
 
-    
+
 
     public function getCetakMonitoring($id_jenis_barang)
     {
@@ -94,11 +94,10 @@ class M_aluminium extends CI_Model
         $this->db->where('dc.id_jenis_item', $id_jenis_item);
         $this->db->select('mi.*,mwa.warna');
         $this->db->group_by('dc.id_item');
-        
+
         // $this->db->limit(300);
         // return $this->db->get('master_item mi');
         return $this->db->get('data_counter dc');
-        
     }
 
     public function getdataItemAdamf()
@@ -110,11 +109,10 @@ class M_aluminium extends CI_Model
         $this->db->where('mi.kode_warna', '01');
         $this->db->select('mi.*,mwa.warna');
         $this->db->group_by('dc.id_item');
-        
+
         // $this->db->limit(300);
         // return $this->db->get('master_item mi');
         return $this->db->get('data_counter dc');
-        
     }
 
     public function getdataItemAdawarna()
@@ -126,11 +124,10 @@ class M_aluminium extends CI_Model
         $this->db->where('mi.kode_warna !=', '01');
         $this->db->select('mi.*,mwa.warna');
         $this->db->group_by('dc.id_item');
-        
+
         // $this->db->limit(300);
         // return $this->db->get('master_item mi');
         return $this->db->get('data_counter dc');
-        
     }
 
     public function getdataItemMutasi($id_item)
@@ -566,9 +563,9 @@ class M_aluminium extends CI_Model
 
     public function updateDataCounter($item, $gudang, $keranjang, $qty)
     {
-        $id_jenis_item = 1;
+        // $id_jenis_item = 1;
         $object = array('qty' => $qty,);
-        $this->db->where('id_jenis_item', $id_jenis_item);
+        // $this->db->where('id_jenis_item', $id_jenis_item);
         $this->db->where('id_item', $item);
         $this->db->where('id_gudang', $gudang);
         $this->db->where('keranjang', $keranjang);
@@ -847,7 +844,7 @@ class M_aluminium extends CI_Model
         }
     }
 
-    public function getSuratJalan($tipe, $id_jenis_item,$tgl_awal, $tgl_akhir)
+    public function getSuratJalan($tipe, $id_jenis_item, $tgl_awal, $tgl_akhir)
     {
         if ($tipe == 1) {
             $this->db->join('data_fppp df', 'df.id = dsj.id_fppp', 'left');
@@ -1508,6 +1505,50 @@ class M_aluminium extends CI_Model
         $this->db->where('DATE(ds.created)', $tgl);
         $this->db->select('ds.*,mg.gudang,mi.item_code,mwa.warna');
         return $this->db->get('data_stok_poin ds');
+    }
+
+    public function updateQtyAwalBulan($tgl_aktual, $datapost)
+    {
+        $this->db->where('awal_bulan', 1);
+        $this->db->where('DATE(created) >=', $tgl_aktual);
+        $this->db->where('id_item', $datapost['id_item']);
+        $this->db->where('id_gudang', $datapost['id_gudang']);
+        $this->db->where('keranjang', $datapost['keranjang']);
+        $tampil = $this->db->get('data_stock');
+        if ($tampil->num_rows() > 0) {
+            foreach ($tampil->result() as $key) {
+                $qty = $key->qty_in + $datapost['qty_in'];
+                $object = array('qty_in' => $qty);
+                $this->db->where('awal_bulan', 1);
+                $this->db->where('DATE(created) >=', $tgl_aktual);
+                $this->db->where('id_item', $datapost['id_item']);
+                $this->db->where('id_gudang', $datapost['id_gudang']);
+                $this->db->where('keranjang', $datapost['keranjang']);
+                $this->db->update('data_stock', $object);
+            }
+        }
+    }
+
+    public function updateQtyStockPoin($tgl_aktual, $datapost)
+    {
+        $this->db->where('awal_bulan', 1);
+        $this->db->where('DATE(created) >=', $tgl_aktual);
+        $this->db->where('id_item', $datapost['id_item']);
+        $this->db->where('id_gudang', $datapost['id_gudang']);
+        $this->db->where('keranjang', $datapost['keranjang']);
+        $tampil = $this->db->get('data_stok_poin');
+        if ($tampil->num_rows() > 0) {
+            foreach ($tampil->result() as $key) {
+                $qty = $key->qty + $datapost['qty_in'];
+                $object = array('qty' => $qty);
+                $this->db->where('awal_bulan', 1);
+                $this->db->where('DATE(created) >=', $tgl_aktual);
+                $this->db->where('id_item', $datapost['id_item']);
+                $this->db->where('id_gudang', $datapost['id_gudang']);
+                $this->db->where('keranjang', $datapost['keranjang']);
+                $this->db->update('data_stok_poin', $object);
+            }
+        }
     }
 }
 

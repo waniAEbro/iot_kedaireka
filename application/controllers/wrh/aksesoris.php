@@ -1074,7 +1074,7 @@ class aksesoris extends CI_Controller
             $cekQtyCounter = $this->m_aksesoris->getDataCounter($id_item, $id_divisi, $id_gudang, $keranjang)->row()->qty;
             $qty_jadi      = (int)$cekQtyCounter + (int)$qty_out;
             $this->m_aksesoris->updateDataCounter($id_item, $id_divisi, $id_gudang, $keranjang, $qty_jadi);
-            $this->m_aksesoris->deleteItemBonManual($key->id);
+            // $this->m_aksesoris->deleteItemBonManual($key->id);
         }
 
         $data = array(

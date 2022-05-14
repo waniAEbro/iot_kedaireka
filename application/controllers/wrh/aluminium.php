@@ -1083,6 +1083,8 @@ class Aluminium extends CI_Controller
     {
         $this->fungsi->check_previleges('aluminium');
         $data_detail = $this->db->get_where('data_stock', array('id_surat_jalan' => $id))->result();
+        // print_r($data_detail);
+        // die();
 
         foreach ($data_detail as $key) {
             $id_item   = $this->db->get_where('data_stock', array('id' => $key->id))->row()->id_item;
@@ -1091,10 +1093,10 @@ class Aluminium extends CI_Controller
             $keranjang = $this->db->get_where('data_stock', array('id' => $key->id))->row()->keranjang;
             $qty_out   = $this->db->get_where('data_stock', array('id' => $key->id))->row()->qty_out;
 
-            $cekQtyCounter = $this->m_aluminium->getDataCounter($id_item, $id_divisi, $id_gudang, $keranjang)->row()->qty;
+            $cekQtyCounter = $this->m_aluminium->getDataCounter($id_item, $id_gudang, $keranjang)->row()->qty;
             $qty_jadi      = (int)$cekQtyCounter + (int)$qty_out;
-            $this->m_aluminium->updateDataCounter($id_item, $id_divisi, $id_gudang, $keranjang, $qty_jadi);
-            $this->m_aluminium->deleteItemBonManual($key->id);
+            $this->m_aluminium->updateDataCounter($id_item, $id_gudang, $keranjang, $qty_jadi);
+            //$this->m_aluminium->deleteItemBonManual($key->id);
         }
 
         $data = array(

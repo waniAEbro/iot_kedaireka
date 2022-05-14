@@ -10,7 +10,7 @@ class M_aksesoris extends CI_Model
         $this->db->where('mi.id_jenis_item', $id_jenis_item);
         $this->db->select('mi.*');
         // $this->db->limit(100);
-        
+
         return $this->db->get('master_item mi');
 
         // $this->db->join('master_item mi', 'mi.id = dc.id_item', 'left');
@@ -462,9 +462,9 @@ class M_aksesoris extends CI_Model
 
     public function updateDataCounter($item, $divisi, $gudang, $keranjang, $qty)
     {
-        $id_jenis_item = 2;
+        // $id_jenis_item = 2;
         $object        = array('qty' => $qty,);
-        $this->db->where('id_jenis_item', $id_jenis_item);
+        // $this->db->where('id_jenis_item', $id_jenis_item);
         $this->db->where('id_item', $item);
         $this->db->where('id_divisi', $divisi);
         $this->db->where('id_gudang', $gudang);
@@ -742,7 +742,7 @@ class M_aksesoris extends CI_Model
         }
     }
 
-    public function getSuratJalan($tipe, $id_jenis_item,$tgl_awal, $tgl_akhir)
+    public function getSuratJalan($tipe, $id_jenis_item, $tgl_awal, $tgl_akhir)
     {
         if ($tipe == 1) {
             $this->db->join('data_fppp df', 'df.id = dsj.id_fppp', 'left');
@@ -1164,6 +1164,9 @@ class M_aksesoris extends CI_Model
     {
         $this->db->where('id', $id);
         $this->db->delete('data_surat_jalan');
+
+        $this->db->where('id_surat_jalan', $id);
+        $this->db->delete('data_stock');
     }
 
     public function updateJadiSuratJalan($id_fppp, $id_sj)
