@@ -40,6 +40,7 @@
                                 <th width="5%">No</th>
                                 <th>Tgl Aktual</th>
                                 <th>Tgl Input</th>
+                                <th>User</th>
                                 <th>Stok Awal Bulan</th>
                                 <th>Item Code</th>
                                 <th width="25%">Deskripsi</th>
@@ -67,6 +68,7 @@
                                         <td align="center"><?= $i++ ?></td>
                                         <td><?= $row->aktual ?></td>
                                         <td><?= $row->tgl_stok ?></td>
+                                        <td><?= $row->nama ?></td>
                                         <td><?= $awal_bulan ?></td>
                                         <td><?= $row->item_code ?></td>
                                         <td><?= $row->deskripsi ?></td>

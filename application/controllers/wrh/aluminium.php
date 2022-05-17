@@ -1180,10 +1180,12 @@ class Aluminium extends CI_Controller
         $id_gudang     = $this->input->post('id_gudang');
         $keranjang     = str_replace(" ", "", $this->input->post('keranjang'));
         $qty           = $this->input->post('qty');
-
+        $keterangan_out           = $this->input->post('keterangan_out');
+        
         $id_gudang2 = $this->input->post('id_gudang2');
         $keranjang2 = str_replace(" ", "", $this->input->post('keranjang2'));
         $qty2       = $this->input->post('qty2');
+        $keterangan_in           = $this->input->post('keterangan_in');
 
         $datapost_out = array(
             'id_item'       => $id_item,
@@ -1193,7 +1195,7 @@ class Aluminium extends CI_Controller
             'qty_out'       => $qty2,
             'id_gudang'     => $id_gudang,
             'keranjang'     => $keranjang,
-            'keterangan'    => 'Mutasi Out',
+            'keterangan'    => $keterangan_out,
             'created'       => date('Y-m-d H:i:s'),
             'updated'       => date('Y-m-d H:i:s'),
             'aktual'       => $tgl_aktual,
@@ -1212,7 +1214,7 @@ class Aluminium extends CI_Controller
             'qty_in'        => $qty2,
             'id_gudang'     => $id_gudang2,
             'keranjang'     => $keranjang2,
-            'keterangan'    => 'Mutasi IN',
+            'keterangan'    => $keterangan_in,
             'created'       => date('Y-m-d H:i:s'),
             'updated'       => date('Y-m-d H:i:s'),
             'aktual'       => $tgl_aktual,
