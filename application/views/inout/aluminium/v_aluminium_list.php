@@ -40,6 +40,7 @@
                                 <th width="5%">No</th>
                                 <th>Tgl Aktual</th>
                                 <th>Tgl</th>
+                                <th>User</th>
                                 <th>Stok Awal Bulan</th>
                                 <th>Item Code</th>
                                 <th width="25%">Deskripsi Warna</th>
@@ -66,6 +67,7 @@
                                         <td align="center"><?= $i++ ?></td>
                                         <td><?= $row->aktual ?></td>
                                         <td><?= $row->tgl_stok ?></td>
+                                        <td><?= $row->nama ?></td>
                                         <td><?= $awal_bulan ?></td>
                                         <td><?= $row->section_ata . '-' . $row->section_allure . '-' . $row->temper . '-' . $row->kode_warna . '-' . $row->ukuran ?></td>
 
