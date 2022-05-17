@@ -77,6 +77,14 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Keterangan Out</label>
+                        <input type="text" class="form-control" id="keterangan_out">
+                    </div>
+                </div>
+            </div>
             <h3 class="box-title">Mutasi Ke:</h3>
             <div class="row">
                 <div class="col-md-12">
@@ -120,6 +128,14 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Keterangan In</label>
+                        <input type="text" class="form-control" id="keterangan_in">
+                    </div>
+                </div>
+            </div>
     </div>
     <!-- /.box-body -->
     <div class="box-footer">
@@ -146,11 +162,13 @@
                         "id_gudang": $('#id_gudang').val(),
                         "keranjang": $('#keranjang').val(),
                         "qty": $('#qty').val(),
+                        "keterangan_out": $('#keterangan_out').val(),
 
                         "id_divisi2": $('#id_divisi2').val(),
                         "id_gudang2": $('#id_gudang2').val(),
                         "keranjang2": $('#keranjang2').val(),
                         "qty2": $('#qty2').val(),
+                        "keterangan_in": $('#keterangan_in').val(),
                     },
                     success: function(data) {
                         $.growl.notice({
