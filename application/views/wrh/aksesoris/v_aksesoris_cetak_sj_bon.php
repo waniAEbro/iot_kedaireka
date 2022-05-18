@@ -86,9 +86,9 @@ table.first {
             <td>' . date('Y-m-d', strtotime($header->created)) . '</td>
         </tr>
         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>Keterangan</td>
+            <td>:</td>
+            <td>' . $header->keterangan_sj . '</td>
             <td>Sopir / No Kendaraan</td>
             <td>:</td>
             <td>' . $header->sopir . ' / ' . $header->no_kendaraan . '</td>

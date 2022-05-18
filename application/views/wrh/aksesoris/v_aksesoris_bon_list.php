@@ -51,6 +51,7 @@
                         <th>Sopir</th>
                         <th>No Kendaraan</th>
                         <th>Keterangan</th>
+                        <th>Status</th>
                         <th></th>
                     </thead>
                     <tbody>
@@ -69,6 +70,7 @@
                                 <td><?= $row->alamat_pengiriman ?></td>
                                 <td><?= $row->sopir ?></td>
                                 <td><?= $row->no_kendaraan ?></td>
+                                <td><?= $row->keterangan_sj ?></td>
                                 <td><?= $ket ?></td>
                                 <td>
                                     <?php

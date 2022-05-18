@@ -55,6 +55,14 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Keterangan</label>
+                                <input type="text" class="form-control" id="keterangan" value="<?= $keterangan_sj ?>">
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>
             <div class="box-footer">
@@ -251,6 +259,7 @@
                 "alamat_pengiriman": $("#alamat_pengiriman").val(),
                 "sopir": $("#sopir").val(),
                 "no_kendaraan": $("#no_kendaraan").val(),
+                "keterangan": $("#keterangan").val(),
             },
             success: function(img) {
                 $.growl.notice({
@@ -569,7 +578,6 @@
                         message: datasaved.msg
                     });
                     $('#output_data_' + i).remove();
-                    hitungJml(xi);
                 });
         }
     }

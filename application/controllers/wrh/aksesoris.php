@@ -882,6 +882,7 @@ class aksesoris extends CI_Controller
         $data['alamat_pengiriman'] = $this->m_aksesoris->getRowSuratJalan($id_sj)->row()->alamat_pengiriman;
         $data['sopir']             = $this->m_aksesoris->getRowSuratJalan($id_sj)->row()->sopir;
         $data['no_kendaraan']      = $this->m_aksesoris->getRowSuratJalan($id_sj)->row()->no_kendaraan;
+        $data['keterangan_sj']      = $this->m_aksesoris->getRowSuratJalan($id_sj)->row()->keterangan_sj;
         $data['list_sj']           = $this->m_aksesoris->getListItemStokOut($id_sj);
         $this->load->view('wrh/aksesoris/v_aksesoris_edit_item_out', $data);
     }
@@ -896,6 +897,7 @@ class aksesoris extends CI_Controller
         $alamat_pengiriman = $this->input->post('alamat_pengiriman');
         $sopir             = $this->input->post('sopir');
         $no_kendaraan      = $this->input->post('no_kendaraan');
+        $keterangan      = $this->input->post('keterangan');
         $kode_divisi       = $this->m_aksesoris->getKodeDivisi($id_fppp);
         $no_surat_jalan    = str_pad($this->m_aksesoris->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJBON/' . $kode_divisi . '/' . date('m') . '/' . date('Y');
         $obj               = array(
@@ -907,6 +909,7 @@ class aksesoris extends CI_Controller
             'sopir'             => $sopir,
             'no_kendaraan'      => $no_kendaraan,
             'id_jenis_item'     => $id_jenis_item,
+            'keterangan_sj'      => $keterangan,
             'tipe'              => 2,
             'id_penginput'      => from_session('id'),
             'created'           => date('Y-m-d H:i:s'),
@@ -927,6 +930,7 @@ class aksesoris extends CI_Controller
         $alamat_pengiriman = $this->input->post('alamat_pengiriman');
         $sopir             = $this->input->post('sopir');
         $no_kendaraan      = $this->input->post('no_kendaraan');
+        $keterangan      = $this->input->post('keterangan');
         $obj               = array(
             'penerima'          => $penerima,
             'tgl_aktual'        => $tgl_aktual,
@@ -934,6 +938,7 @@ class aksesoris extends CI_Controller
             'sopir'             => $sopir,
             'no_kendaraan'      => $no_kendaraan,
             'id_jenis_item'     => $id_jenis_item,
+            'keterangan_sj'      => $keterangan,
             'tipe'              => 2,
             'id_penginput'      => from_session('id'),
             'updated'           => date('Y-m-d H:i:s'),
@@ -941,9 +946,12 @@ class aksesoris extends CI_Controller
         $this->db->where('id', $id_sj);
         $this->db->update('data_surat_jalan', $obj);
 
+        $object = array(
+            'aktual' => $tgl_aktual,
+            'keterangan' => $keterangan,
+        );
         $this->db->where('id_surat_jalan', $id_sj);
-        $object_aktual = array('aktual' => $tgl_aktual);
-        $this->db->update('data_stock', $object_aktual);
+        $this->db->update('data_stock', $object);
 
 
         $data['id'] = $id_sj;

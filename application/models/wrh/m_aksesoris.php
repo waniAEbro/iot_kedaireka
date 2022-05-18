@@ -1247,9 +1247,11 @@ class M_aksesoris extends CI_Model
     {
         $this->db->where('id', $id_sj);
         $aktual = $this->db->get('data_surat_jalan')->row()->tgl_aktual;
+        $keterangan = $this->db->get('data_surat_jalan')->row()->keterangan_sj;
 
         $object = array(
             'aktual' => $aktual,
+            'keterangan' => $keterangan,
             'id_surat_jalan' => $id_sj
         );
         $this->db->where('inout', 2);

@@ -86,9 +86,9 @@ table.first {
             <td>' . date('Y-m-d', strtotime($header->created)) . '</td>
         </tr>
         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>Keterangan</td>
+            <td>:</td>
+            <td>' . $header->keterangan_sj . '</td>
             <td>Sopir / No Kendaraan</td>
             <td>:</td>
             <td>' . $header->sopir . ' / ' . $header->no_kendaraan . '</td>
@@ -111,14 +111,14 @@ $i = 1;
 $total = 0;
 $pack = 0;
 foreach ($detail as $key) {
-    $cek_div = substr($key->no_fppp,9,-8);
+    $cek_div = substr($key->no_fppp, 9, -8);
 
     if ($cek_div == "ABO") {
         $itm = $key->section_allure;
     } else {
-        $itm = $key->section_allure.'-'.$key->section_ata;
+        $itm = $key->section_allure . '-' . $key->section_ata;
     }
-    
+
 
     // $itm_sat = str_replace('', '-', $key->section_ata);
     // $itm_sal = str_replace('', '-', $key->section_allure);
@@ -139,7 +139,7 @@ foreach ($detail as $key) {
     $html .= '<tr>
                     <td align="center">' . $i++ . '</td>
                     <td align="center"> ' . $key->nama_proyek . '<br>' . $key->no_fppp . '</td>
-                    <td align="center"> ' . $itm . '-'.$key->temper.'-'.$key->ukuran.'</td>
+                    <td align="center"> ' . $itm . '-' . $key->temper . '-' . $key->ukuran . '</td>
                     <td align="center">' . $key->qty_out . '</td>
                     <td align="center">1</td>
                     <td align="center">' . $key->satuan . '</td>

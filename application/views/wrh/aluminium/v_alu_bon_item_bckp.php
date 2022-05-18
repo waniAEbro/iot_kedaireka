@@ -340,7 +340,7 @@
                         message: datasaved.msg
                     });
                     $('#output_data_' + i).remove();
-                    hitungJml(xi);
+
                 });
         }
     }

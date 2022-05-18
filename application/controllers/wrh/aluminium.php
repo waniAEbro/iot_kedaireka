@@ -854,7 +854,7 @@ class Aluminium extends CI_Controller
         $tahun       = date('Y');
         $data['tgl_awal']  = $tahun . '-' . $bulan . '-01';
         $data['tgl_akhir'] = date("Y-m-t", strtotime($data['tgl_awal']));
-        $data['surat_jalan'] = $this->m_aluminium->getSuratJalan(2, $id_jenis_item,$data['tgl_awal'], $data['tgl_akhir']);
+        $data['surat_jalan'] = $this->m_aluminium->getSuratJalan(2, $id_jenis_item, $data['tgl_awal'], $data['tgl_akhir']);
         $data['keterangan']  = $this->m_aluminium->getKeterangan();
         $this->load->view('wrh/aluminium/v_aluminium_bon_list', $data);
     }
@@ -865,7 +865,7 @@ class Aluminium extends CI_Controller
         $id_jenis_item = 1;
         $data['tgl_awal']  = $tgl_awal;
         $data['tgl_akhir'] = $tgl_akhir;
-        $data['surat_jalan'] = $this->m_aluminium->getSuratJalan(2, $id_jenis_item,$data['tgl_awal'], $data['tgl_akhir']);
+        $data['surat_jalan'] = $this->m_aluminium->getSuratJalan(2, $id_jenis_item, $data['tgl_awal'], $data['tgl_akhir']);
         $data['keterangan']  = $this->m_aluminium->getKeterangan();
         $this->load->view('wrh/aluminium/v_aluminium_bon_list', $data);
     }
@@ -943,6 +943,7 @@ class Aluminium extends CI_Controller
         $data['alamat_pengiriman'] = $this->m_aluminium->getRowSuratJalan($id_sj)->row()->alamat_pengiriman;
         $data['sopir']             = $this->m_aluminium->getRowSuratJalan($id_sj)->row()->sopir;
         $data['no_kendaraan']      = $this->m_aluminium->getRowSuratJalan($id_sj)->row()->no_kendaraan;
+        $data['keterangan_sj']      = $this->m_aksesoris->getRowSuratJalan($id_sj)->row()->keterangan_sj;
         $data['list_sj']           = $this->m_aluminium->getListItemStokOut($id_sj);
         $this->load->view('wrh/aluminium/v_aluminium_edit_item_out', $data);
     }
@@ -957,6 +958,7 @@ class Aluminium extends CI_Controller
         $alamat_pengiriman = $this->input->post('alamat_pengiriman');
         $sopir             = $this->input->post('sopir');
         $no_kendaraan      = $this->input->post('no_kendaraan');
+        $keterangan      = $this->input->post('keterangan');
         $kode_divisi       = $this->m_aluminium->getKodeDivisi($id_fppp);
         $no_surat_jalan    = str_pad($this->m_aluminium->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJBON/' . $kode_divisi . '/' . date('m') . '/' . date('Y');
         $obj               = array(
@@ -967,6 +969,7 @@ class Aluminium extends CI_Controller
             'alamat_pengiriman' => $alamat_pengiriman,
             'sopir'             => $sopir,
             'no_kendaraan'      => $no_kendaraan,
+            'keterangan_sj'      => $keterangan,
             'id_jenis_item'     => $id_jenis_item,
             'tipe'              => 2,
             'id_penginput'      => from_session('id'),
@@ -975,6 +978,8 @@ class Aluminium extends CI_Controller
         $this->db->insert('data_surat_jalan', $obj);
         $data['id'] = $this->db->insert_id();
         $this->m_aluminium->updateJadiSuratJalanBon($data['id']);
+
+
         echo json_encode($data);
     }
 
@@ -988,6 +993,7 @@ class Aluminium extends CI_Controller
         $alamat_pengiriman = $this->input->post('alamat_pengiriman');
         $sopir             = $this->input->post('sopir');
         $no_kendaraan      = $this->input->post('no_kendaraan');
+        $keterangan      = $this->input->post('keterangan');
         $obj               = array(
             'penerima'          => $penerima,
             'tgl_aktual'        => $tgl_aktual,
@@ -995,12 +1001,22 @@ class Aluminium extends CI_Controller
             'sopir'             => $sopir,
             'no_kendaraan'      => $no_kendaraan,
             'id_jenis_item'     => $id_jenis_item,
+            'keterangan_sj'      => $keterangan,
             'tipe'              => 2,
             'id_penginput'      => from_session('id'),
             'updated'           => date('Y-m-d H:i:s'),
         );
         $this->db->where('id', $id_sj);
         $this->db->update('data_surat_jalan', $obj);
+
+        $object = array(
+            'aktual' => $tgl_aktual,
+            'keterangan' => $keterangan,
+        );
+        $this->db->where('id_surat_jalan', $id_sj);
+        $this->db->update('data_stock', $object);
+
+
         $data['id'] = $id_sj;
         echo json_encode($data);
     }
@@ -1184,7 +1200,7 @@ class Aluminium extends CI_Controller
         $keranjang     = str_replace(" ", "", $this->input->post('keranjang'));
         $qty           = $this->input->post('qty');
         $keterangan_out           = $this->input->post('keterangan_out');
-        
+
         $id_gudang2 = $this->input->post('id_gudang2');
         $keranjang2 = str_replace(" ", "", $this->input->post('keranjang2'));
         $qty2       = $this->input->post('qty2');
@@ -1198,7 +1214,7 @@ class Aluminium extends CI_Controller
             'qty_out'       => $qty2,
             'id_gudang'     => $id_gudang,
             'keranjang'     => $keranjang,
-            'keterangan'    => $keterangan_out.' (MUTASI OUT)',
+            'keterangan'    => $keterangan_out . ' (MUTASI OUT)',
             'created'       => date('Y-m-d H:i:s'),
             'updated'       => date('Y-m-d H:i:s'),
             'aktual'       => $tgl_aktual,
@@ -1217,7 +1233,7 @@ class Aluminium extends CI_Controller
             'qty_in'        => $qty2,
             'id_gudang'     => $id_gudang2,
             'keranjang'     => $keranjang2,
-            'keterangan'    => $keterangan_in.' (MUTASI IN)',
+            'keterangan'    => $keterangan_in . ' (MUTASI IN)',
             'created'       => date('Y-m-d H:i:s'),
             'updated'       => date('Y-m-d H:i:s'),
             'aktual'       => $tgl_aktual,
