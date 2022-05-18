@@ -126,7 +126,7 @@ class M_aluminium extends CI_Model
         $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
         $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
         $this->db->where('inout', 2);
-        $this->db->where('awal_bulan', 0);;
+        $this->db->where('awal_bulan', 0);
 
         $res  = $this->db->get('data_stock');
         $data = array();
@@ -135,7 +135,7 @@ class M_aluminium extends CI_Model
             if (!isset($data[$key->id_item][$key->id_gudang][$key->keranjang])) {
                 $data[$key->id_item][$key->id_gudang][$key->keranjang] = 0;
             }
-            $data[$key->id_item][$key->id_gudang][$key->keranjang] = $data[$key->id_item][$key->id_gudang][$key->keranjang] + $key->qty_in;
+            $data[$key->id_item][$key->id_gudang][$key->keranjang] = $data[$key->id_item][$key->id_gudang][$key->keranjang] + $key->qty_out;
         }
         return $data;
     }
