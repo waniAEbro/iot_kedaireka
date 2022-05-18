@@ -7,14 +7,16 @@ class M_barang extends CI_Model
     public function getData()
     {
         $this->db->where('is_del', 1);
+        $this->db->order_by('id', 'desc');
+        
         return $this->db->get('master_barang');
     }
 
     public function getBrand()
     {
-        $this->db->where('is_del', 1);
-        $this->db->group_by('brand');
-        return $this->db->get('master_barang');
+        // $this->db->where('is_del', 1);
+        // $this->db->group_by('brand');
+        return $this->db->get('master_brand');
     }
 
     public function getMax($value = '')
