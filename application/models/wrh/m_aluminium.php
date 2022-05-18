@@ -76,6 +76,70 @@ class M_aluminium extends CI_Model
         return $this->db->get('data_counter dc');
     }
 
+    public function getStockAwalBulanCetak()
+    {
+        $year  = date('Y');
+        $month = date('m');
+        $this->db->where('DATE_FORMAT(ds.created,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(ds.created,"%m")', $month);
+        $this->db->where('ds.awal_bulan', 1);
+        $this->db->select('*');
+
+        $res  = $this->db->get('data_stock ds');
+        $data = array();
+
+        foreach ($res->result() as $key) {
+
+            if (!isset($data[$key->id_item][$key->id_gudang][$key->keranjang])) {
+                $data[$key->id_item][$key->id_gudang][$key->keranjang] = 0;
+            }
+            $data[$key->id_item][$key->id_gudang][$key->keranjang] = $data[$key->id_item][$key->id_gudang][$key->keranjang] + $key->qty_in;
+        }
+        return $data;
+    }
+
+    public function getTotalInPerBulanCetak()
+    {
+        $year  = date('Y');
+        $month = date('m');
+        $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
+        $this->db->where('inout', 1);
+        $this->db->where('awal_bulan', 0);
+
+        $res  = $this->db->get('data_stock');
+        $data = array();
+        foreach ($res->result() as $key) {
+
+            if (!isset($data[$key->id_item][$key->id_gudang][$key->keranjang])) {
+                $data[$key->id_item][$key->id_gudang][$key->keranjang] = 0;
+            }
+            $data[$key->id_item][$key->id_gudang][$key->keranjang] = $data[$key->id_item][$key->id_gudang][$key->keranjang] + $key->qty_in;
+        }
+        return $data;
+    }
+
+    public function getTotalOutPerBulanCetak()
+    {
+        $year  = date('Y');
+        $month = date('m');
+        $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
+        $this->db->where('inout', 2);
+        $this->db->where('awal_bulan', 0);;
+
+        $res  = $this->db->get('data_stock');
+        $data = array();
+        foreach ($res->result() as $key) {
+
+            if (!isset($data[$key->id_item][$key->id_gudang][$key->keranjang])) {
+                $data[$key->id_item][$key->id_gudang][$key->keranjang] = 0;
+            }
+            $data[$key->id_item][$key->id_gudang][$key->keranjang] = $data[$key->id_item][$key->id_gudang][$key->keranjang] + $key->qty_in;
+        }
+        return $data;
+    }
+
     public function getdataItem()
     {
         $id_jenis_item = 1;

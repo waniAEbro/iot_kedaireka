@@ -76,6 +76,9 @@ class aksesoris extends CI_Controller
     public function cetakExcelMonitoring()
     {
         $data['aksesoris']    = $this->m_aksesoris->getCetakMonitoring(2);
+        $data['s_awal_bulan']    = $this->m_aksesoris->getStockAwalBulanCetak();
+        $data['s_total_in']  = $this->m_aksesoris->getTotalInPerBulanCetak();
+        $data['s_total_out'] = $this->m_aksesoris->getTotalOutPerBulanCetak();
         $data['jenis_barang'] = "Aksesoris";
         $this->load->view('wrh/aksesoris/v_aksesoris_cetak_monitoring', $data);
     }
