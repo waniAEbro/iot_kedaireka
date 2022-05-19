@@ -17,6 +17,7 @@
             <th width="5%">No</th>
             <th>Item Code</th>
             
+            <th>Deskripsi Warna</th>
             <th>Satuan</th>
             <th>Lead Time</th>
             <th>Divisi</th>
@@ -41,6 +42,7 @@
                 <td align="center"><?= $i++ ?></td>
                 <td><?= $row->item_code ?></td>
                 
+                <td><?= $row->warna ?></td>
                 <td><?= $row->satuan ?></td>
                 <td><?= $row->lead_time ?></td>
                 <td><?= $row->divisi ?></td>
