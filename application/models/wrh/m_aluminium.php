@@ -1434,9 +1434,9 @@ class M_aluminium extends CI_Model
 
     public function updateJadiSuratJalanBon($id_sj)
     {
-        $this->db->where('id', $id_sj);
-        $aktual = $this->db->get('data_surat_jalan')->row()->tgl_aktual;
-        $keterangan = $this->db->get('data_surat_jalan')->row()->keterangan_sj;
+        // $this->db->where('id', $id_sj);
+        $aktual = $this->db->get_where('data_surat_jalan', array('id' => $id_sj))->row()->tgl_aktual;
+        $keterangan = $this->db->get_where('data_surat_jalan', array('id' => $id_sj))->row()->keterangan_sj;
 
         $object = array(
             'aktual' => $aktual,
