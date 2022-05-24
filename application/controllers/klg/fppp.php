@@ -1090,25 +1090,32 @@ class Fppp extends CI_Controller
 			if ($jenis_bom == 1) {
 				$obj = array(
 					'id_jenis_item'  => 1,
-					'id_item'         => $rowData[0][1],
-					'id_gudang'    => $rowData[0][2],
-					'keranjang' => $rowData[0][3],
+					'itm_code'         => $rowData[0][0],
+					'id_gudang'    => $rowData[0][1],
+					'keranjang' => $rowData[0][2],
+					'rata_pemakaian' => $rowData[0][3],
 					'qty'         => $rowData[0][4],
-					'updated'        => '2022-04-27 10:22:01',
-					'itm_code'        => $rowData[0][8],
+					'created'        => date('Y-m-d H:i:s'),
+					'updated'        => date('Y-m-d H:i:s'),
 				);
 
-				$this->db->where('id_item', $obj['id_item']);
+				$this->db->where('itm_code', $obj['itm_code']);
 				$this->db->where('id_gudang', $obj['id_gudang']);
 				$this->db->where('keranjang', $obj['keranjang']);
 				$cek = $this->db->get('data_counter')->num_rows();
 				if ($cek > 0) {
-					$obj2 = array('qty' => $obj['qty']);
-					$this->db->where('id_item', $obj['id_item']);
+					$obj2 = array(
+						'qty' => $obj['qty'],
+						'updated'        => date('Y-m-d H:i:s'),
+					);
+					
+					$this->db->where('itm_code', $obj['itm_code']);
 					$this->db->where('id_gudang', $obj['id_gudang']);
 					$this->db->where('keranjang', $obj['keranjang']);
 					$this->db->update('data_counter', $obj2);
-				}else{
+					
+				}
+				else{
 					$this->db->insert('data_counter', $obj);
 					
 				}

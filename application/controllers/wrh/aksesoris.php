@@ -226,7 +226,7 @@ class aksesoris extends CI_Controller
             'no_pr'          => $this->input->post('no_pr'),
             'id_divisi'      => $this->input->post('id_divisi'),
             'id_gudang'      => $this->input->post('id_gudang'),
-            'keranjang'      => str_replace(" ", "", $this->input->post('keranjang')),
+            'keranjang'      => str_replace(' ', '', $this->input->post('keranjang')),
             'keterangan'     => $this->input->post('keterangan'),
             'id_penginput'   => from_session('id'),
             'created'        => date('Y-m-d H:i:s'),
@@ -244,7 +244,7 @@ class aksesoris extends CI_Controller
                 'id_item'       => $this->input->post('item'),
                 'id_divisi'     => $this->input->post('id_divisi'),
                 'id_gudang'     => $this->input->post('id_gudang'),
-                'keranjang'     => str_replace(" ", "", $this->input->post('keranjang')),
+                'keranjang'     => str_replace(' ', '', $this->input->post('keranjang')),
                 'qty'           => $this->input->post('qty'),
                 'created'       => date('Y-m-d H:i:s'),
                 'itm_code'      => $this->m_aksesoris->getRowItem($this->input->post('item'))->item_code,
@@ -384,7 +384,7 @@ class aksesoris extends CI_Controller
             $obj = array(
                 'id_divisi'    => $this->input->post('divisi'),
                 'id_gudang'    => $this->input->post('gudang'),
-                'keranjang'    => str_replace(" ", "", $this->input->post('keranjang')),
+                'keranjang'    => str_replace(' ', '', $this->input->post('keranjang')),
                 'qty_out'      => $value,
                 'id_penginput' => from_session('id'),
                 'updated'      => date('Y-m-d H:i:s'),
@@ -402,7 +402,7 @@ class aksesoris extends CI_Controller
         $id_item      = $this->db->get_where('data_stock', array('id' => $editid))->row()->id_item;
         $id_divisi    = $this->input->post('divisi');
         $id_gudang    = $this->input->post('gudang');
-        $keranjang    = str_replace(" ", "", $this->input->post('keranjang'));
+        $keranjang    = str_replace(' ', '', $this->input->post('keranjang'));
         $qtyin        = $this->m_aksesoris->getQtyInDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
         $qtyout       = $this->m_aksesoris->getQtyOutDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
         $data['qty_gudang'] = $qtyin - $qtyout;
@@ -442,7 +442,7 @@ class aksesoris extends CI_Controller
             'sj_mf'        => 0,
             'id_divisi'    => $this->input->post('divisi'),
             'id_gudang'    => $this->input->post('gudang'),
-            'keranjang'    => str_replace(" ", "", $this->input->post('keranjang')),
+            'keranjang'    => str_replace(' ', '', $this->input->post('keranjang')),
             'qty_out'      => $qty_out,
             'id_penginput' => from_session('id'),
             'updated'      => date('Y-m-d H:i:s'),
@@ -453,7 +453,7 @@ class aksesoris extends CI_Controller
         $id_item      = $this->db->get_where('data_stock', array('id' => $editid))->row()->id_item;
         $id_divisi    = $this->input->post('divisi');
         $id_gudang    = $this->input->post('gudang');
-        $keranjang    = str_replace(" ", "", $this->input->post('keranjang'));
+        $keranjang    = str_replace(' ', '', $this->input->post('keranjang'));
         $qtyin        = $this->m_aksesoris->getQtyInDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
         $qtyout       = $this->m_aksesoris->getQtyOutDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
         $data['qty_gudang'] = $qtyin - $qtyout;
@@ -484,7 +484,7 @@ class aksesoris extends CI_Controller
             'sj_mf'        => 1,
             'id_divisi'    => $this->input->post('divisi'),
             'id_gudang'    => $this->input->post('gudang'),
-            'keranjang'    => str_replace(" ", "", $this->input->post('keranjang')),
+            'keranjang'    => str_replace(' ', '', $this->input->post('keranjang')),
             'qty_out'      => $qty_out,
             'id_penginput' => from_session('id'),
             'updated'      => date('Y-m-d H:i:s'),
@@ -495,7 +495,7 @@ class aksesoris extends CI_Controller
         $id_item      = $this->db->get_where('data_stock', array('id' => $editid))->row()->id_item;
         $id_divisi    = $this->input->post('divisi');
         $id_gudang    = $this->input->post('gudang');
-        $keranjang    = str_replace(" ", "", $this->input->post('keranjang'));
+        $keranjang    = str_replace(' ', '', $this->input->post('keranjang'));
         $qtyin        = $this->m_aksesoris->getQtyInDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
         $qtyout       = $this->m_aksesoris->getQtyOutDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
         $data['qty_gudang'] = $qtyin - $qtyout;
@@ -692,9 +692,9 @@ class aksesoris extends CI_Controller
     {
         $content   = "<div id='divsubcontent'></div>";
         $header    = "Form Tambah Item BOM";
-        $subheader = "";
+        $subheader = '';
         $buttons[]          = button('', 'Tutup', 'btn btn-default', 'data-dismiss="modal"');
-        echo $this->fungsi->parse_modal($header, $subheader, $content, $buttons, "");
+        echo $this->fungsi->parse_modal($header, $subheader, $content, $buttons, '');
         $this->fungsi->run_js('load_silent("wrh/aksesoris/showformitemdetailbom/' . $id_fppp . '","#divsubcontent")');
     }
 
@@ -746,7 +746,7 @@ class aksesoris extends CI_Controller
         $id_item   = $this->db->get_where('data_stock', array('id' => $editid))->row()->id_item;
         $id_divisi = $this->input->post('divisi');
         $id_gudang = $this->input->post('gudang');
-        $keranjang = str_replace(" ", "", $this->input->post('keranjang'));
+        $keranjang = str_replace(' ', '', $this->input->post('keranjang'));
         $qtyin     = $this->m_aksesoris->getQtyInDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
         $qtyout    = $this->m_aksesoris->getQtyOutDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
         // $data['qty_gudang'] = $qtyin;
@@ -790,7 +790,7 @@ class aksesoris extends CI_Controller
         $tahun       = date('Y');
         $data['tgl_awal']  = $tahun . '-' . $bulan . '-01';
         $data['tgl_akhir'] = date("Y-m-t", strtotime($data['tgl_awal']));
-        $data['surat_jalan'] = $this->m_aksesoris->getSuratJalan(2, $id_jenis_item,$data['tgl_awal'], $data['tgl_akhir']);
+        $data['surat_jalan'] = $this->m_aksesoris->getSuratJalan(2, $id_jenis_item, $data['tgl_awal'], $data['tgl_akhir']);
         $data['keterangan']  = $this->m_aksesoris->getKeterangan();
         $this->load->view('wrh/aksesoris/v_aksesoris_bon_list', $data);
     }
@@ -801,7 +801,7 @@ class aksesoris extends CI_Controller
         $id_jenis_item = 2;
         $data['tgl_awal']  = $tgl_awal;
         $data['tgl_akhir'] = $tgl_akhir;
-        $data['surat_jalan'] = $this->m_aksesoris->getSuratJalan(2, $id_jenis_item,$data['tgl_awal'], $data['tgl_akhir']);
+        $data['surat_jalan'] = $this->m_aksesoris->getSuratJalan(2, $id_jenis_item, $data['tgl_awal'], $data['tgl_akhir']);
         $data['keterangan']  = $this->m_aksesoris->getKeterangan();
         $this->load->view('wrh/aksesoris/v_aksesoris_bon_list', $data);
     }
@@ -844,9 +844,9 @@ class aksesoris extends CI_Controller
     {
         $content   = "<div id='divsubcontent'></div>";
         $header    = "Preview";
-        $subheader = "";
+        $subheader = '';
         $buttons[]          = button('', 'Tutup', 'btn btn-default', 'data-dismiss="modal"');
-        echo $this->fungsi->parse_modal($header, $subheader, $content, $buttons, "");
+        echo $this->fungsi->parse_modal($header, $subheader, $content, $buttons, '');
 
         $this->fungsi->run_js('load_silent("wrh/aksesoris/lihat_item_stok_out_modal/' . $param . '","#divsubcontent")');
     }
@@ -981,7 +981,7 @@ class aksesoris extends CI_Controller
         $id_item      = $this->input->post('item');
         $id_divisi    = $this->input->post('divisi');
         $id_gudang    = $this->input->post('gudang');
-        $keranjang    = str_replace(" ", "", $this->input->post('keranjang'));
+        $keranjang    = str_replace(' ', '', $this->input->post('keranjang'));
         $qtyin        = $this->m_aksesoris->getQtyInDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
         $qtyout       = $this->m_aksesoris->getQtyOutDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
         $data['qty_gudang'] = $qtyin - $qtyout;
@@ -997,7 +997,7 @@ class aksesoris extends CI_Controller
         $id_item       = $this->input->post('item');
         $id_divisi     = $this->input->post('id_divisi');
         $id_gudang     = $this->input->post('id_gudang');
-        $keranjang     = str_replace(" ", "", $this->input->post('keranjang'));
+        $keranjang     = str_replace(' ', '', $this->input->post('keranjang'));
         $cekQtyCounter = $this->m_aksesoris->getDataCounter($id_item, $id_divisi, $id_gudang, $keranjang)->row()->qty;
         $qty_out       = $this->input->post('qty');
         if ($qty_out > $cekQtyCounter) {
@@ -1015,7 +1015,7 @@ class aksesoris extends CI_Controller
                 'id_item'        => $this->input->post('item'),
                 'id_divisi'      => $this->input->post('id_divisi'),
                 'id_gudang'      => $this->input->post('id_gudang'),
-                'keranjang'      => str_replace(" ", "", $this->input->post('keranjang')),
+                'keranjang'      => str_replace(' ', '', $this->input->post('keranjang')),
                 'qty_out'        => $this->input->post('qty'),
                 'produksi'       => $this->input->post('produksi'),
                 'lapangan'       => $this->input->post('lapangan'),
@@ -1095,7 +1095,7 @@ class aksesoris extends CI_Controller
         $this->fungsi->catat($data, "Menghapus SJ BON dengan data sbb:", true);
         sleep(1);
         $this->m_aksesoris->deleteSJBonManual($id);
-        $this->fungsi->message_box("Menghapus " . $data['no_sj_bon'] . "", "success");
+        $this->fungsi->message_box("Menghapus " . $data['no_sj_bon'] . '', "success");
         $this->fungsi->run_js('load_silent("wrh/aksesoris/bon_manual","#content")');
     }
 
@@ -1182,7 +1182,7 @@ class aksesoris extends CI_Controller
         $id_item   = $this->input->post('item');
         $id_divisi = $this->input->post('divisi');
         $id_gudang = $this->input->post('gudang');
-        $keranjang = str_replace(" ", "", $this->input->post('keranjang'));
+        $keranjang = str_replace(' ', '', $this->input->post('keranjang'));
         // $qtyin     = $this->m_aksesoris->getQtyInDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
         // $qtyout    = $this->m_aksesoris->getQtyOutDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
 
@@ -1199,13 +1199,13 @@ class aksesoris extends CI_Controller
         $id_item       = $this->input->post('id_item');
         $id_divisi     = $this->input->post('id_divisi');
         $id_gudang     = $this->input->post('id_gudang');
-        $keranjang     = str_replace(" ", "", $this->input->post('keranjang'));
+        $keranjang     = str_replace(' ', '', $this->input->post('keranjang'));
         $qty           = $this->input->post('qty');
         $keterangan_out           = $this->input->post('keterangan_out');
 
         $id_divisi2 = $this->input->post('id_divisi2');
         $id_gudang2 = $this->input->post('id_gudang2');
-        $keranjang2 = str_replace(" ", "", $this->input->post('keranjang2'));
+        $keranjang2 = str_replace(' ', '', $this->input->post('keranjang2'));
         $qty2       = $this->input->post('qty2');
         $keterangan_in           = $this->input->post('keterangan_in');
 
@@ -1218,7 +1218,7 @@ class aksesoris extends CI_Controller
             'id_divisi'     => $id_divisi,
             'id_gudang'     => $id_gudang,
             'keranjang'     => $keranjang,
-            'keterangan'    => $keterangan_out.' (MUTASI OUT)',
+            'keterangan'    => $keterangan_out . ' (MUTASI OUT)',
             'created'       => date('Y-m-d H:i:s'),
             'updated'       => date('Y-m-d H:i:s'),
             'aktual'       => $tgl_aktual,
@@ -1238,7 +1238,7 @@ class aksesoris extends CI_Controller
             'id_divisi'     => $id_divisi2,
             'id_gudang'     => $id_gudang2,
             'keranjang'     => $keranjang2,
-            'keterangan'    => $keterangan_in.' (MUTASI IN)',
+            'keterangan'    => $keterangan_in . ' (MUTASI IN)',
             'created'       => date('Y-m-d H:i:s'),
             'updated'       => date('Y-m-d H:i:s'),
             'aktual'       => $tgl_aktual,
