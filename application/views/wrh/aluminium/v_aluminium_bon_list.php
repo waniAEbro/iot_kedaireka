@@ -35,6 +35,7 @@
                     <div class="col-md-12">
                         <div class="box-tools pull-right">
                             <a class="btn btn-success" onclick="setFilter()">Set Filter</a>
+                            <a class="btn btn-success" onclick="setCetakAlu()">Cetak</a>
                         </div>
                     </div>
                     </>
@@ -115,5 +116,16 @@
         };
         load_silent("wrh/aluminium/bon_manual_diSet/" + tlg1 + "/" + tgl2, "#content");
 
+
+        
+    }
+
+    function setCetakAlu() {
+        var tgl_awal = $('#tgl_awal').val();
+
+        var tgl_akhir = $('#tgl_akhir').val();
+
+        var url = "<?= site_url('wrh/aluminium/bon_manual_diSet_cetak/"+tgl_awal+"/"+tgl_akhir+"') ?>";
+        window.open(url, "_blank");
     }
 </script>

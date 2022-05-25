@@ -34,6 +34,7 @@
                     <div class="col-md-12">
                         <div class="box-tools pull-right">
                             <a class="btn btn-success" onclick="setFilter()">Set Filter</a>
+                            <a class="btn btn-primary" onclick="setCetak()">Cetak</a>
                         </div>
                     </div>
                     </>
@@ -114,5 +115,14 @@
         };
         load_silent("wrh/aksesoris/bon_manual_diSet/" + tlg1 + "/" + tgl2, "#content");
 
+    }
+
+    function setCetak() {
+        var tgl_awal = $('#tgl_awal').val();
+
+        var tgl_akhir = $('#tgl_akhir').val();
+
+        var url = "<?= site_url('wrh/aksesoris/bon_manual_diSet_cetak/"+tgl_awal+"/"+tgl_akhir+"') ?>";
+        window.open(url, "_blank");
     }
 </script>

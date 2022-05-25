@@ -806,6 +806,17 @@ class aksesoris extends CI_Controller
         $this->load->view('wrh/aksesoris/v_aksesoris_bon_list', $data);
     }
 
+    public function bon_manual_diSet_cetak($tgl_awal = '', $tgl_akhir = '')
+    {
+        $this->fungsi->check_previleges('inout');
+        $id_jenis_item = 2;
+        $data['tgl_awal']  = $tgl_awal;
+        $data['tgl_akhir'] = $tgl_akhir;
+        $data['surat_jalan'] = $this->m_aksesoris->getSuratJalan(2, $id_jenis_item, $data['tgl_awal'], $data['tgl_akhir']);
+        $data['keterangan']  = $this->m_aksesoris->getKeterangan();
+        $this->load->view('wrh/aksesoris/v_aksesoris_bon_list_cetak', $data);
+    }
+
     public function bon_manual_add()
     {
         $this->fungsi->check_previleges('aksesoris');

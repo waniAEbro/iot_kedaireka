@@ -870,6 +870,17 @@ class Aluminium extends CI_Controller
         $this->load->view('wrh/aluminium/v_aluminium_bon_list', $data);
     }
 
+    public function bon_manual_diSet_cetak($tgl_awal = '', $tgl_akhir = '')
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $id_jenis_item = 1;
+        $data['tgl_awal']  = $tgl_awal;
+        $data['tgl_akhir'] = $tgl_akhir;
+        $data['surat_jalan'] = $this->m_aluminium->getSuratJalan(2, $id_jenis_item, $data['tgl_awal'], $data['tgl_akhir']);
+        $data['keterangan']  = $this->m_aluminium->getKeterangan();
+        $this->load->view('wrh/aluminium/v_aluminium_bon_list_cetak', $data);
+    }
+
     public function bon_manual_add()
     {
         $this->fungsi->check_previleges('aluminium');
