@@ -266,4 +266,20 @@
             }
         });
     });
+
+    $("select[name=id_gudang2]").change(function() {
+        $.ajax({
+            url: "<?= site_url('wrh/aksesoris/inOptionGetKeranjang') ?>",
+            dataType: "json",
+            type: "POST",
+            data: {
+                "item": $('#item').val(),
+                "divisi": $('#id_divisi2').val(),
+                "gudang": $('#id_gudang2').val(),
+            },
+            success: function(data) {
+                $('#keranjang2').val(data['keranjang']);
+            }
+        });
+    });
 </script>
