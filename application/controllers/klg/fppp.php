@@ -65,6 +65,21 @@ class Fppp extends CI_Controller
 		$this->load->view('klg/fppp/v_fppp_tab', $data);
 	}
 
+	public function cetakFppp($param, $tgl_awal, $tgl_akhir)
+	{
+		$this->fungsi->check_previleges('fppp');
+
+		$data['tgl_awal']  = $tgl_awal;
+		$data['tgl_akhir'] = $tgl_akhir;
+		$data['fppp']           = $this->m_fppp->getData($param);
+		$data['get_total_hold'] = $this->m_fppp->getTotalHold();
+		// $data['param_tab']          = $param;
+		$data['param']          = $param;
+		$data['memo']          = 1;
+		$data['is_memo']          = 'fppp';
+		$this->load->view('klg/fppp/v_fppp_cetak', $data);
+	}
+
 	public function hasil_finish($param)
 	{
 		$this->fungsi->check_previleges('fppp');
@@ -1094,8 +1109,6 @@ class Fppp extends CI_Controller
 					'id_gudang'    => $rowData[0][1],
 					'keranjang' => $rowData[0][2],
 					'rata_pemakaian' => $rowData[0][3],
-					'qty'         => $rowData[0][4],
-					'created'        => date('Y-m-d H:i:s'),
 					'updated'        => date('Y-m-d H:i:s'),
 				);
 
@@ -1105,7 +1118,7 @@ class Fppp extends CI_Controller
 				$cek = $this->db->get('data_counter')->num_rows();
 				if ($cek > 0) {
 					$obj2 = array(
-						'qty' => $obj['qty'],
+						'rata_pemakaian' => $obj['rata_pemakaian'],
 						'updated'        => date('Y-m-d H:i:s'),
 					);
 					
@@ -1116,7 +1129,7 @@ class Fppp extends CI_Controller
 					
 				}
 				else{
-					$this->db->insert('data_counter', $obj);
+					// $this->db->insert('data_counter', $obj);
 					
 				}
 			} 

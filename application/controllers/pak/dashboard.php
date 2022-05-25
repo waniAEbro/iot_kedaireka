@@ -20,17 +20,49 @@ class Dashboard extends CI_Controller
 	public function status_pak()
 	{
 		// $this->db->where('id_jenis_item', 1);
+		// $this->db->where('id >', 315297);
+		// $hehe = $this->db->get('data_stock')->result();
+		// foreach ($hehe as $key) {
+		// 	$cekDataCounter = $this->m_aluminium->getDataCounter($key->id_item,  $key->id_gudang, $key->keranjang)->num_rows();
+		// 	if ($cekDataCounter == 0) {
+		// 		$simpan = array(
+		// 			'id_jenis_item' => 1,
+		// 			'id_item'       => $key->id_item,
+		// 			'id_gudang'     => $key->id_gudang,
+		// 			'keranjang'     => $key->keranjang,
+		// 			'qty'           => $key->qty_in,
+		// 			'created'       => date('Y-m-d H:i:s'),
+		// 			'itm_code'      => $this->m_aksesoris->getRowItem($key->id_item)->item_code,
+		// 		);
+		// 		$this->db->insert('data_counter', $simpan);
+		// 	} else {
+		// 		if ($key->inout == 1) {
+		// 			$cekQtyCounter = $this->m_aluminium->getDataCounter($key->id_item,  $key->id_gudang, $key->keranjang)->row()->qty;
+		// 			$qty_jadi      = (int)$key->qty_in + (int)$cekQtyCounter;
+		// 			$this->m_aluminium->updateDataCounter($key->id_item,  $key->id_gudang, $key->keranjang, $qty_jadi);
+		// 		} else {
+		// 			$cekQtyCounter = $this->m_aluminium->getDataCounter($key->id_item,  $key->id_gudang, $key->keranjang)->row()->qty;
+		// 			$qty_jadi      = (int)$cekQtyCounter - (int)$key->qty_out;
+		// 			$this->m_aluminium->updateDataCounter($key->id_item,  $key->id_gudang, $key->keranjang, $qty_jadi);
+		// 		}
+		// 	}
+			
+		// }
+
+
+
+		// $this->db->where('id_jenis_item', 1);
 		// $master = $this->db->get('master_item');
 		// foreach ($master->result() as $key) {
 		// 	$item_code = $key->section_ata . '-' . $key->section_allure . '-' . $key->temper . '-' . $key->kode_warna . '-' . $key->ukuran;
 		// 	$object = array('item_code'=>$item_code);
 		// 	$this->db->where('id', $key->id);
-			
+
 		// 	$this->db->update('master_item', $object);
-			
+
 		// }
-		
-		
+
+
 
 		// echo "delete counter";
 		// $this->db->where('id_jenis_item', '1');

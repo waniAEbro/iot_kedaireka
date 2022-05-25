@@ -32,8 +32,13 @@
             <?php
             if ($is_memo == 'fppp') { ?>
                 <a class="btn btn-primary" onclick="setFilter()">Set Filter</a>
+                <a class="btn btn-primary" onclick="setCetak()">Cetak</a>
+            <?php } else if ($is_memo == 'mockup') { ?>
+                <a class="btn btn-primary" onclick="setFilterMockup()">Set Filter</a>
+                <a class="btn btn-primary" onclick="setCetakMockup()">Cetak</a>
             <?php } else { ?>
                 <a class="btn btn-primary" onclick="setFilterMemo()">Set Filter Memo</a>
+                <a class="btn btn-primary" onclick="setCetakMemo()">Cetak</a>
             <?php }
 
             ?>
@@ -328,6 +333,16 @@
 
     }
 
+    function setCetak() {
+        var tgl_awal = $('#tgl_awal').val();
+
+        var tgl_akhir = $('#tgl_akhir').val();
+        var param = <?= $param ?>;
+
+        var url = "<?= site_url('klg/fppp/cetakFppp/"+param+"/"+tgl_awal+"/"+tgl_akhir+"') ?>";
+        window.open(url, "_blank");
+    }
+
     function setFilterMemo() {
 
         var tgl_awal = $('#tgl_awal').val();
@@ -336,6 +351,35 @@
         load_silent("klg/memo/filter/" + param + "/" + tgl_awal + "/" + tgl_akhir + "/", "#content");
 
     }
+
+    function setCetakMemo() {
+        var tgl_awal = $('#tgl_awal').val();
+
+        var tgl_akhir = $('#tgl_akhir').val();
+        var param = <?= $param ?>;
+
+        var url = "<?= site_url('klg/memo/cetakFppp/"+param+"/"+tgl_awal+"/"+tgl_akhir+"') ?>";
+        window.open(url, "_blank");
+    }
+
+    function setFilterMockup() {
+
+var tgl_awal = $('#tgl_awal').val();
+var tgl_akhir = $('#tgl_akhir').val();
+var param = <?= $param ?>;
+load_silent("klg/mockup/filter/" + param + "/" + tgl_awal + "/" + tgl_akhir + "/", "#content");
+
+}
+
+function setCetakMockup() {
+var tgl_awal = $('#tgl_awal').val();
+
+var tgl_akhir = $('#tgl_akhir').val();
+var param = <?= $param ?>;
+
+var url = "<?= site_url('klg/mockup/cetakFppp/"+param+"/"+tgl_awal+"/"+tgl_akhir+"') ?>";
+window.open(url, "_blank");
+}
 
     $(document).ready(function() {
         $("select").select2();

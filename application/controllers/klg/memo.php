@@ -97,6 +97,21 @@ class Memo extends CI_Controller
 		$this->load->view('klg/fppp/v_fppp_list', $data);
 	}
 
+	public function cetakFppp($param, $tgl_awal, $tgl_akhir)
+	{
+		$this->fungsi->check_previleges('fppp');
+
+		$data['tgl_awal']  = $tgl_awal;
+		$data['tgl_akhir'] = $tgl_akhir;
+		$data['fppp']           = $this->m_fppp->getDataMemo($param);
+		$data['get_total_hold'] = $this->m_fppp->getTotalHold();
+		// $data['param_tab']          = $param;
+		$data['param']          = $param;
+		$data['memo']          = 1;
+		$data['is_memo']          = 'memo';
+		$this->load->view('klg/fppp/v_fppp_cetak', $data);
+	}
+
 	public function deadlineWorkshop()
 	{
 		$this->fungsi->check_previleges('fppp');
