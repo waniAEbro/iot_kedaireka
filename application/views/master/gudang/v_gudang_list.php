@@ -19,6 +19,7 @@
                 <table width="100%" id="tableku" class="table table-striped">
                     <thead>
                         <th width="5%">No</th>
+                        <th>ID/KODE</th>
                         <th>Jenis Item</th>
                         <th>gudang</th>
                         <th>Act</th>
@@ -29,6 +30,7 @@
                         foreach ($gudang->result() as $row) : ?>
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
+                                <td align="center"><?= $row->id ?></td>
                                 <td><?= $row->jenis_item ?></td>
                                 <td><?= $row->gudang ?></td>
                                 <td align="center">
