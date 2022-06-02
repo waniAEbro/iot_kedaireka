@@ -25,6 +25,11 @@
             ?>
             <span class="description-text"><?php echo button('load_silent("cms/user/formedituser/' . from_session('id') . '","#content")', 'Update Profil', 'btn bg-purple', 'data-toggle="tooltip" title="Update Profil"'); ?>
             </span>
+            <?php
+            if (from_session('level')==1) {
+              echo button('load_silent("klg/fppp/uploadmasterstock","#content")', 'Upload Master dan Stock', 'btn btn-danger', 'data-toggle="tooltip" title="Upload Master dan Stock"');
+            }
+            ?>
           </div>
           <!-- /.description-block -->
         </div>
