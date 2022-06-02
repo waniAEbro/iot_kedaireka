@@ -738,7 +738,6 @@ class Fppp extends CI_Controller
 					'item_code'         => str_replace(' ', '', $rowData[0][1]),
 					'deskripsi'         => $rowData[0][2],
 					'satuan'            => $rowData[0][3],
-					'qty'         => $rowData[0][7],
 					'section_ata'       => $rowData[0][8],
 					'section_allure'    => $rowData[0][9],
 					'temper'            => $rowData[0][10],
