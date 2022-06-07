@@ -1252,36 +1252,57 @@ class Fppp extends CI_Controller
 				TRUE,
 				FALSE
 			);
+			$obj = array(
+				'id_jenis_item'  => 1,
+				'itm_code'       => $rowData[0][0] . '-' . $rowData[0][1] . '-' . $rowData[0][2] . '-' . str_pad($rowData[0][3], 2, '0', STR_PAD_LEFT) . '-' . $rowData[0][4],
+				'id_gudang'      => $rowData[0][5],
+				'keranjang'      => $rowData[0][6],
+				'qty'      => $rowData[0][7],
+				'updated'        => date('Y-m-d H:i:s'),
+			);
 
-			if ($jenis_bom == 1) {
-				$obj = array(
-					'id_jenis_item'  => 1,
-					'itm_code'       => $rowData[0][0],
-					'id_gudang'      => $rowData[0][1],
-					'keranjang'      => $rowData[0][2],
-					'rata_pemakaian' => $rowData[0][3],
-					'updated'        => date('Y-m-d H:i:s'),
-				);
+			$cek_id = $this->db->get_where('master_item', array('item_code' => $obj['itm_code']))->row()->id;
+			$counter = array(
+				'id_jenis_item'  => 1,
+				'itm_code'       => $obj['itm_code'],
+				'id_item'      => $cek_id,
+				'id_gudang'      => $obj['id_gudang'],
+				'keranjang'      => $obj['keranjang'],
+				'qty'      => $obj['qty'],
+				'updated'        => date('Y-m-d H:i:s'),
+			);
+			$this->db->insert('data_counter', $counter);
 
-				$this->db->where('itm_code', $obj['itm_code']);
-				$this->db->where('id_gudang', $obj['id_gudang']);
-				$this->db->where('keranjang', $obj['keranjang']);
-				$cek = $this->db->get('data_counter')->num_rows();
-				if ($cek > 0) {
-					$obj2 = array(
-						'rata_pemakaian' => $obj['rata_pemakaian'],
-						'updated'        => date('Y-m-d H:i:s'),
-					);
 
-					$this->db->where('itm_code', $obj['itm_code']);
-					$this->db->where('id_gudang', $obj['id_gudang']);
-					$this->db->where('keranjang', $obj['keranjang']);
-					$this->db->update('data_counter', $obj2);
-				} else {
-					// $this->db->insert('data_counter', $obj);
+			// if ($jenis_bom == 1) {
+			// 	$obj = array(
+			// 		'id_jenis_item'  => 1,
+			// 		'itm_code'       => $rowData[0][0],
+			// 		'id_gudang'      => $rowData[0][1],
+			// 		'keranjang'      => $rowData[0][2],
+			// 		'rata_pemakaian' => $rowData[0][3],
+			// 		'updated'        => date('Y-m-d H:i:s'),
+			// 	);
 
-				}
-			}
+			// 	$this->db->where('itm_code', $obj['itm_code']);
+			// 	$this->db->where('id_gudang', $obj['id_gudang']);
+			// 	$this->db->where('keranjang', $obj['keranjang']);
+			// 	$cek = $this->db->get('data_counter')->num_rows();
+			// 	if ($cek > 0) {
+			// 		$obj2 = array(
+			// 			'rata_pemakaian' => $obj['rata_pemakaian'],
+			// 			'updated'        => date('Y-m-d H:i:s'),
+			// 		);
+
+			// 		$this->db->where('itm_code', $obj['itm_code']);
+			// 		$this->db->where('id_gudang', $obj['id_gudang']);
+			// 		$this->db->where('keranjang', $obj['keranjang']);
+			// 		$this->db->update('data_counter', $obj2);
+			// 	} else {
+			// 		// $this->db->insert('data_counter', $obj);
+
+			// 	}
+			// }
 		}
 		// unlink($inputFileName);
 		sleep(1);
