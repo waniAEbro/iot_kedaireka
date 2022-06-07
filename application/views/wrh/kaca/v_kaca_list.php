@@ -70,9 +70,10 @@
                             <th width="5%">No</th>
                             <th>Item Code</th>
                             <th>Deskripsi</th>
+                            <th>Lebar</th>
+                            <th>Tinggi</th>
+                            <th>Area</th>
                             <th>Satuan</th>
-                            <th>Supplier</th>
-                            <th>Lead Time</th>
                             <th>Stock Awal Bulan</th>
                             <th>Total In Per Bulan</th>
                             <th>Total Out Per Bulan</th>
@@ -109,9 +110,10 @@
                                     <td align="center"><?= $i ?></td>
                                     <td align="center"><?= $row->item_code ?></td>
                                     <td align="center"><?= $row->deskripsi ?></td>
+                                    <td align="center"><?= $row->lebar ?></td>
+                                    <td align="center"><?= $row->tinggi ?></td>
+                                    <td align="center"><?= $row->area ?></td>
                                     <td align="center"><?= $row->satuan ?></td>
-                                    <td align="center"><?= $row->supplier ?></td>
-                                    <td align="center"><?= $row->lead_time ?></td>
                                     <td align="center"><?= $tampil_stock_awal_bulan ?></td>
                                     <td align="center"><?= $tampil_total_in_per_bulan ?></td>
                                     <td align="center"><?= $tampil_total_out_per_bulan ?></td>

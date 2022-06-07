@@ -6,9 +6,12 @@ class M_lembaran extends CI_Model
 
     public function getData($value = '')
     {
-        $this->db->where('id_jenis_item', 4);
-        $this->db->order_by('id', 'desc');
-        return $this->db->get('master_item ');
+        $this->db->where('mi.id_jenis_item', 4);
+        $this->db->join('master_warna mw', 'mw.kode = mi.kode_warna', 'left');
+        $this->db->select('mi.*,mw.warna');
+        
+        $this->db->order_by('mi.id', 'desc');
+        return $this->db->get('master_item mi');
     }
 
     public function insertData($data = '')

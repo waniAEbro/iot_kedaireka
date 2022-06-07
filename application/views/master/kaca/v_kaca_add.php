@@ -23,23 +23,29 @@
         </div>
     </div>
     <div class="form-group">
+        <label class="col-sm-4 control-label">Lebar</label>
+        <div class="col-sm-8">
+            <?php echo form_input(array('name' => 'lebar', 'class' => 'form-control')); ?>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-4 control-label">Tinggi</label>
+        <div class="col-sm-8">
+            <?php echo form_input(array('name' => 'tinggi', 'class' => 'form-control')); ?>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-4 control-label">Area</label>
+        <div class="col-sm-8">
+            <?php echo form_input(array('name' => 'area', 'class' => 'form-control')); ?>
+        </div>
+    </div>
+    <div class="form-group">
         <label class="col-sm-4 control-label">Satuan</label>
         <div class="col-sm-8">
             <?php echo form_input(array('name' => 'satuan', 'class' => 'form-control')); ?>
             <?php echo form_error('satuan'); ?>
             <span id="check_data"></span>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-4 control-label">Supplier</label>
-        <div class="col-sm-8">
-            <?php echo form_input(array('name' => 'supplier', 'class' => 'form-control')); ?>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-4 control-label">Lead Time</label>
-        <div class="col-sm-8">
-            <?php echo form_input(array('name' => 'lead_time', 'class' => 'form-control')); ?>
         </div>
     </div>
 

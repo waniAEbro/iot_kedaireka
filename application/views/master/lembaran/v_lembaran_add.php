@@ -23,23 +23,40 @@
         </div>
     </div>
     <div class="form-group">
+        <label class="col-sm-4 control-label">Kode Warna</label>
+        <div class="col-sm-8">
+            <select name="kode_warna" class="form-control">
+                <option value="-">Pilih</option>
+                <?php foreach ($warna->result() as $key) { ?>
+                    <option value="<?= $key->kode ?>"><?= $key->kode ?> - <?= $key->warna ?></option>
+                <?php } ?>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-4 control-label">Lebar</label>
+        <div class="col-sm-8">
+            <?php echo form_input(array('name' => 'lebar', 'class' => 'form-control')); ?>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-4 control-label">Tinggi</label>
+        <div class="col-sm-8">
+            <?php echo form_input(array('name' => 'tinggi', 'class' => 'form-control')); ?>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-4 control-label">Tebal</label>
+        <div class="col-sm-8">
+            <?php echo form_input(array('name' => 'tebal', 'class' => 'form-control')); ?>
+        </div>
+    </div>
+    <div class="form-group">
         <label class="col-sm-4 control-label">Satuan</label>
         <div class="col-sm-8">
             <?php echo form_input(array('name' => 'satuan', 'class' => 'form-control')); ?>
             <?php echo form_error('satuan'); ?>
             <span id="check_data"></span>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-4 control-label">Supplier</label>
-        <div class="col-sm-8">
-            <?php echo form_input(array('name' => 'supplier', 'class' => 'form-control')); ?>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-sm-4 control-label">Lead Time</label>
-        <div class="col-sm-8">
-            <?php echo form_input(array('name' => 'lead_time', 'class' => 'form-control')); ?>
         </div>
     </div>
 
@@ -57,6 +74,7 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
+        $('select').select2();
         $('.tutup').click(function(e) {
             $('#myModal').modal('hide');
         });

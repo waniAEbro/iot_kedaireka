@@ -8,7 +8,8 @@ class M_lembaran extends CI_Model
     {
         $id_jenis_item = 4;
         $this->db->where('mi.id_jenis_item', $id_jenis_item);
-        $this->db->select('mi.*');
+        $this->db->join('master_warna mw', 'mw.kode = mi.kode_warna', 'left');
+        $this->db->select('mi.*,mw.warna');
         // $this->db->limit(100);
 
         return $this->db->get('master_item mi');
@@ -57,7 +58,8 @@ class M_lembaran extends CI_Model
         $this->db->join('master_divisi_stock md', 'md.id = dc.id_divisi', 'left');
         $this->db->join('master_gudang mg', 'mg.id = dc.id_gudang', 'left');
         $this->db->join('master_item mi', 'mi.id = dc.id_item', 'left');
-        $this->db->select('dc.*,md.divisi,mg.gudang,mi.item_code,mi.deskripsi,mi.supplier,mi.lead_time,mi.satuan');
+        $this->db->join('master_warna mw', 'mw.kode = mi.kode_warna', 'left');
+        $this->db->select('dc.*,mw.warna,md.divisi,mg.gudang,mi.item_code,mi.deskripsi,mi.supplier,mi.lead_time,mi.satuan,mi.lebar,mi.tinggi,mi.tebal');
 
         $this->db->where('dc.id_jenis_item', $id_jenis_barang);
         return $this->db->get('data_counter dc');

@@ -23,9 +23,11 @@
                         <th width="5%">No</th>
                         <th>Item code</th>
                         <th>Deskripsi</th>
+                        <th>Kode Warna</th>
+                        <th>Lebar</th>
+                        <th>Tinggi</th>
+                        <th>Tebal</th>
                         <th>Satuan</th>
-                        <th>Supplier</th>
-                        <th>Lead Time</th>
                         <th>Act</th>
                     </thead>
                     <tbody>
@@ -36,9 +38,11 @@
                                 <td align="center"><?= $i++ ?></td>
                                 <td><?= $row->item_code ?></td>
                                 <td><?= $row->deskripsi ?></td>
+                                <td><?= $row->warna ?></td>
+                                <td><?= $row->lebar ?></td>
+                                <td><?= $row->tinggi ?></td>
+                                <td><?= $row->tebal ?></td>
                                 <td><?= $row->satuan ?></td>
-                                <td><?= $row->supplier ?></td>
-                                <td><?= $row->lead_time ?></td>
                                 <td align="center">
                                     <?php
                                     $sesi = from_session('level');

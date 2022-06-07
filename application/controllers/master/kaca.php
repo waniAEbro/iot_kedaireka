@@ -58,12 +58,14 @@ class kaca extends CI_Controller
                 'item_code' => $this->input->post('item_code'),
                 'id_jenis_item' => 3,
                 'deskripsi' => $this->input->post('deskripsi'),
+                'lebar' => $this->input->post('lebar'),
+                'tinggi' => $this->input->post('tinggi'),
+                'area' => $this->input->post('area'),
                 'satuan' => $this->input->post('satuan'),
-                'supplier' => $this->input->post('supplier'),
-                'lead_time' => $this->input->post('lead_time'),
                 'created'        => date('Y-m-d H:i:s'),
 
             );
+            // $datapost = $_POST;
             $cek = $this->m_kaca->cekMaster($datapost);
             if ($cek > 0) {
                 $this->fungsi->message_box("Data Master kaca sudah ada!", "warning");
@@ -101,7 +103,17 @@ class kaca extends CI_Controller
             $data['edit'] = $this->db->get_where('master_item', array('id' => $id));
             $this->load->view('master/kaca/v_kaca_edit', $data);
         } else {
-            $datapost = get_post_data(array('id', 'item_code', 'deskripsi', 'satuan','supplier','lead_time'));
+            // $datapost = get_post_data(array('id', 'item_code', 'deskripsi', 'satuan','supplier','lead_time'));
+            $datapost = array(
+                'id' => $this->input->post('id'),
+                'item_code' => $this->input->post('item_code'),
+                'deskripsi' => $this->input->post('deskripsi'),
+                'lebar' => $this->input->post('lebar'),
+                'tinggi' => $this->input->post('tinggi'),
+                'area' => $this->input->post('area'),
+                'satuan' => $this->input->post('satuan'),
+
+            );
             $this->m_kaca->updateData($datapost);
             $this->fungsi->run_js('load_silent("master/kaca","#content")');
             $this->fungsi->message_box("Data Master kaca sukses diperbarui...", "success");
@@ -219,7 +231,7 @@ class kaca extends CI_Controller
         $id   = $this->input->post('id');
         $jum_counter = $this->db->get_where('data_counter', array('id_item' => $id))->num_rows();
         $jum_transaksi = $this->db->get_where('data_stock', array('id_item' => $id))->num_rows();
-        
+
         $this->db->where('id', $id);
         $res = $this->db->get('master_item')->result();
         $obj = array(

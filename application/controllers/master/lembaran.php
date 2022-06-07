@@ -51,6 +51,7 @@ class lembaran extends CI_Controller
 
         if ($this->form_validation->run() == FALSE) {
             $data['status'] = '';
+            $data['warna'] = $this->db->get('master_warna');
             $this->load->view('master/lembaran/v_lembaran_add', $data);
         } else {
             // $datapost = get_post_data(array('item_code', 'deskripsi', 'satuan'));
@@ -58,9 +59,11 @@ class lembaran extends CI_Controller
                 'item_code' => $this->input->post('item_code'),
                 'id_jenis_item' => 4,
                 'deskripsi' => $this->input->post('deskripsi'),
+                'kode_warna' => $this->input->post('kode_warna'),
+                'lebar' => $this->input->post('lebar'),
+                'tinggi' => $this->input->post('tinggi'),
+                'tebal' => $this->input->post('tebal'),
                 'satuan' => $this->input->post('satuan'),
-                'supplier' => $this->input->post('supplier'),
-                'lead_time' => $this->input->post('lead_time'),
                 'created'        => date('Y-m-d H:i:s'),
 
             );
@@ -99,9 +102,21 @@ class lembaran extends CI_Controller
 
         if ($this->form_validation->run() == FALSE) {
             $data['edit'] = $this->db->get_where('master_item', array('id' => $id));
+            $data['warna'] = $this->db->get('master_warna');
             $this->load->view('master/lembaran/v_lembaran_edit', $data);
         } else {
-            $datapost = get_post_data(array('id', 'item_code', 'deskripsi', 'satuan','supplier','lead_time'));
+            // $datapost = get_post_data(array('id', 'item_code', 'deskripsi', 'satuan','supplier','lead_time'));
+            $datapost = array(
+                'id' => $this->input->post('id'),
+                'item_code' => $this->input->post('item_code'),
+                'deskripsi' => $this->input->post('deskripsi'),
+                'kode_warna' => $this->input->post('kode_warna'),
+                'lebar' => $this->input->post('lebar'),
+                'tinggi' => $this->input->post('tinggi'),
+                'tebal' => $this->input->post('tebal'),
+                'satuan' => $this->input->post('satuan'),
+
+            );
             $this->m_lembaran->updateData($datapost);
             $this->fungsi->run_js('load_silent("master/lembaran","#content")');
             $this->fungsi->message_box("Data Master lembaran sukses diperbarui...", "success");
