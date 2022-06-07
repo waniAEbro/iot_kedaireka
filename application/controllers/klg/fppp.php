@@ -1333,9 +1333,9 @@ class Fppp extends CI_Controller
 			// }
 		}
 		// unlink($inputFileName);
-		sleep(1);
+		// sleep(1);
 		// $data['detail'] = $this->m_fppp->getTemp($id_fppp, $jenis_bom);
-		$data['msg'] = "Data Counter Baru Disimpan....";
+		$data['msg'] = "Data Counter Stock Baru Disimpan....";
 		echo json_encode($data);
 	}
 
