@@ -405,6 +405,25 @@ class M_fppp extends CI_Model
         return $this->db->get('data_counter');
     }
 
+	public function cekCounterAlu($id_jenis_item,$item, $gudang, $keranjang)
+    {
+        $this->db->where('id_jenis_item', $id_jenis_item);
+        $this->db->where('id_item', $item);
+        $this->db->where('id_gudang', $gudang);
+        $this->db->where('keranjang', $keranjang);
+        return $this->db->get('data_counter');
+    }
+
+	public function updateCounterAlu($id_jenis_item,$item, $gudang, $keranjang, $qty)
+    {
+        $object        = array('qty' => $qty,);
+        $this->db->where('id_jenis_item', $id_jenis_item);
+        $this->db->where('id_item', $item);
+        $this->db->where('id_gudang', $gudang);
+        $this->db->where('keranjang', $keranjang);
+        $this->db->update('data_counter', $object);
+    }
+
 	public function getMasterAksesoris($item_code = '')
 	{
 		$this->db->where('item_code', $item_code);

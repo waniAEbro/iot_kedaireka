@@ -1261,7 +1261,25 @@ class Fppp extends CI_Controller
 				'updated'        => date('Y-m-d H:i:s'),
 			);
 
-			$cek_id = $this->db->get_where('master_item', array('item_code' => $obj['itm_code']))->row()->id;
+			$cek_ada = $this->db->get_where('master_item', array('item_code' => $obj['itm_code']))->num_rows();
+			if ($cek_ada < 1) {
+				$master_item = array(
+					'id_jenis_item'  => 1,
+					'section_ata'      => $rowData[0][0],
+					'section_allure'      => $rowData[0][1],
+					'temper'      => $rowData[0][2],
+					'kode_warna'      => str_pad($rowData[0][3], 2, '0', STR_PAD_LEFT),
+					'ukuran'      => $rowData[0][4],
+					'item_code'       => $rowData[0][0] . '-' . $rowData[0][1] . '-' . $rowData[0][2] . '-' . str_pad($rowData[0][3], 2, '0', STR_PAD_LEFT) . '-' . $rowData[0][4],
+					'created'        => date('Y-m-d H:i:s'),
+					'ket'        => 'upload master',
+				);
+				$this->db->insert('master_item', $master_item);
+				$cek_id = $this->db->insert_id();
+			} else {
+				$cek_id = $this->db->get_where('master_item', array('item_code' => $obj['itm_code']))->row()->id;
+			}
+
 			$counter = array(
 				'id_jenis_item'  => 1,
 				'itm_code'       => $obj['itm_code'],
@@ -1271,7 +1289,17 @@ class Fppp extends CI_Controller
 				'qty'      => $obj['qty'],
 				'updated'        => date('Y-m-d H:i:s'),
 			);
-			$this->db->insert('data_counter', $counter);
+			$cekQtyCounter = $this->m_fppp->cekCounterAlu($obj['id_jenis_item'], $cek_id, $obj['id_gudang'], $obj['keranjang']);
+			if ($cekQtyCounter->num_rows() == 0) {
+				$this->db->insert('data_counter', $counter);
+			} else {
+				$qty_sebelum = $cekQtyCounter->row()->qty;
+				$qty_jadi      = (int)$qty_sebelum + (int)$obj['qty'];
+				$this->m_fppp->updateCounterAlu($obj['id_jenis_item'], $obj['item_code'], $obj['id_gudang'], $obj['keranjang'], $qty_jadi);
+			}
+
+
+			// $this->db->insert('data_counter', $counter);
 
 
 			// if ($jenis_bom == 1) {
