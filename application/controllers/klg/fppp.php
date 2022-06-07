@@ -1242,8 +1242,6 @@ class Fppp extends CI_Controller
 		$sheet         = $objPHPExcel->getSheet(0);
 		$highestRow    = $sheet->getHighestRow();
 		$highestColumn = $sheet->getHighestColumn();
-		$id_fppp       = $this->input->post('id');
-		$jenis_bom     = $this->input->post('jenis_bom');
 
 		for ($row = 2; $row <= $highestRow; $row++) {                  //  Read a row of data into an array
 			$rowData = $sheet->rangeToArray(
@@ -1299,38 +1297,7 @@ class Fppp extends CI_Controller
 			}
 
 
-			// $this->db->insert('data_counter', $counter);
-
-
-			// if ($jenis_bom == 1) {
-			// 	$obj = array(
-			// 		'id_jenis_item'  => 1,
-			// 		'itm_code'       => $rowData[0][0],
-			// 		'id_gudang'      => $rowData[0][1],
-			// 		'keranjang'      => $rowData[0][2],
-			// 		'rata_pemakaian' => $rowData[0][3],
-			// 		'updated'        => date('Y-m-d H:i:s'),
-			// 	);
-
-			// 	$this->db->where('itm_code', $obj['itm_code']);
-			// 	$this->db->where('id_gudang', $obj['id_gudang']);
-			// 	$this->db->where('keranjang', $obj['keranjang']);
-			// 	$cek = $this->db->get('data_counter')->num_rows();
-			// 	if ($cek > 0) {
-			// 		$obj2 = array(
-			// 			'rata_pemakaian' => $obj['rata_pemakaian'],
-			// 			'updated'        => date('Y-m-d H:i:s'),
-			// 		);
-
-			// 		$this->db->where('itm_code', $obj['itm_code']);
-			// 		$this->db->where('id_gudang', $obj['id_gudang']);
-			// 		$this->db->where('keranjang', $obj['keranjang']);
-			// 		$this->db->update('data_counter', $obj2);
-			// 	} else {
-			// 		// $this->db->insert('data_counter', $obj);
-
-			// 	}
-			// }
+			
 		}
 		// unlink($inputFileName);
 		// sleep(1);

@@ -94,7 +94,7 @@
                         <div class="col-sm-8 ">
                             <input onclick="save_stock()" type="submit" value="Save stock 2" class="btn btn-success">
                             <input onclick="save_master()" type="submit" value="Save master" class="btn btn-success">
-                            <input onclick="save_counter()" type="submit" value="Save counter" class="btn btn-success">
+                            <input onclick="save_counter()" type="submit" value="Save counter stock" class="btn btn-success">
 
                         </div>
                     </div>
