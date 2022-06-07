@@ -729,6 +729,7 @@ class Fppp extends CI_Controller
 					'perimeter_coating' => $rowData[0][15],
 					'lebar'             => $rowData[0][16],
 					'tinggi'            => $rowData[0][17],
+					'tebal'            => $rowData[0][18],
 					'ket'               => 'upload',
 					'created'           => date('Y-m-d H:i:s'),
 				);
@@ -748,6 +749,7 @@ class Fppp extends CI_Controller
 					'perimeter_coating' => $rowData[0][15],
 					'lebar'             => $rowData[0][16],
 					'tinggi'            => $rowData[0][17],
+					'tebal'            => $rowData[0][18],
 					'ket'               => 'upload',
 					'created'           => date('Y-m-d H:i:s'),
 				);
