@@ -8,7 +8,7 @@
     <div class="form-group">
         <label class="col-sm-4 control-label">Item code</label>
         <div class="col-sm-8">
-        <?php echo form_hidden('id_jenis_item', 3); ?>
+        <?php echo form_hidden('id_jenis_item', 4); ?>
             <?php echo form_input(array('name' => 'item_code', 'class' => 'form-control')); ?>
             <?php echo form_error('item_code'); ?>
             <span id="check_data"></span>
@@ -48,7 +48,7 @@
         <label class="col-sm-4 control-label">Save</label>
         <div class="col-sm-8 tutup">
             <?php
-            echo button('send_form(document.faddmenugrup,"master/kaca/show_addForm/","#divsubcontent")', 'Save', 'btn btn-success') . " ";
+            echo button('send_form(document.faddmenugrup,"master/lembaran/show_addForm/","#divsubcontent")', 'Save', 'btn btn-success') . " ";
             ?>
         </div>
     </div>

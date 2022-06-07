@@ -56,6 +56,7 @@ class kaca extends CI_Controller
             // $datapost = get_post_data(array('item_code', 'deskripsi', 'satuan'));
             $datapost = array(
                 'item_code' => $this->input->post('item_code'),
+                'id_jenis_item' => 3,
                 'deskripsi' => $this->input->post('deskripsi'),
                 'satuan' => $this->input->post('satuan'),
                 'supplier' => $this->input->post('supplier'),
@@ -156,7 +157,7 @@ class kaca extends CI_Controller
             );
 
             $data = array(
-                'id_jenis_item'      => 2,
+                'id_jenis_item'      => 3,
                 'item_code'          => $rowData[0][0],
                 'deskripsi'          => $rowData[0][1],
                 'divisi'             => $rowData[0][2],

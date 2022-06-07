@@ -1,12 +1,12 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class M_lembaran extends CI_Model
+class M_pvc extends CI_Model
 {
 
     public function getData($value = '')
     {
-        $this->db->where('id_jenis_item', 4);
+        $this->db->where('id_jenis_item', 5);
         $this->db->order_by('id', 'desc');
         return $this->db->get('master_item ');
     }
@@ -34,7 +34,7 @@ class M_lembaran extends CI_Model
         $this->db->where('id', $id);
         $this->db->delete('master_item');
     }
-    public function cekMasterlembaran($item_code = '')
+    public function cekMasterpvc($item_code = '')
     {
         $this->db->where('item_code', $item_code);
         return $this->db->get('master_item')->num_rows();
@@ -47,5 +47,5 @@ class M_lembaran extends CI_Model
     }
 }
 
-/* End of file m_lembaran.php */
-/* Location: ./application/models/master/m_lembaran.php */
+/* End of file m_pvc.php */
+/* Location: ./application/models/master/m_pvc.php */

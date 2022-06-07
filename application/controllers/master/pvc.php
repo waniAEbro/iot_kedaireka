@@ -1,43 +1,43 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class lembaran extends CI_Controller
+class pvc extends CI_Controller
 {
 
     public function __construct()
     {
         parent::__construct();
         $this->fungsi->restrict();
-        $this->load->model('master/m_lembaran');
+        $this->load->model('master/m_pvc');
         $this->load->library(array('PHPExcel', 'PHPExcel/IOFactory'));
         $this->load->library('zend');
     }
 
     public function index()
     {
-        $this->fungsi->check_previleges('lembaran');
-        $data['lembaran'] = $this->m_lembaran->getData();
-        $this->load->view('master/lembaran/v_lembaran_list', $data);
+        $this->fungsi->check_previleges('pvc');
+        $data['pvc'] = $this->m_pvc->getData();
+        $this->load->view('master/pvc/v_pvc_list', $data);
     }
 
     public function form($param = '')
     {
         $content   = "<div id='divsubcontent'></div>";
-        $header    = "Form Master lembaran";
-        $subheader = "lembaran";
+        $header    = "Form Master pvc";
+        $subheader = "pvc";
         $buttons[]          = button('jQuery.facebox.close()', 'Tutup', 'btn btn-default', 'data-dismiss="modal"');
         echo $this->fungsi->parse_modal($header, $subheader, $content, $buttons, "");
         if ($param == 'base') {
-            $this->fungsi->run_js('load_silent("master/lembaran/show_addForm/","#divsubcontent")');
+            $this->fungsi->run_js('load_silent("master/pvc/show_addForm/","#divsubcontent")');
         } else {
             $base_kom = $this->uri->segment(5);
-            $this->fungsi->run_js('load_silent("master/lembaran/show_editForm/' . $base_kom . '","#divsubcontent")');
+            $this->fungsi->run_js('load_silent("master/pvc/show_editForm/' . $base_kom . '","#divsubcontent")');
         }
     }
 
     public function show_addForm()
     {
-        $this->fungsi->check_previleges('lembaran');
+        $this->fungsi->check_previleges('pvc');
         $this->load->library('form_validation');
         $config = array(
             array(
@@ -51,12 +51,12 @@ class lembaran extends CI_Controller
 
         if ($this->form_validation->run() == FALSE) {
             $data['status'] = '';
-            $this->load->view('master/lembaran/v_lembaran_add', $data);
+            $this->load->view('master/pvc/v_pvc_add', $data);
         } else {
             // $datapost = get_post_data(array('item_code', 'deskripsi', 'satuan'));
             $datapost = array(
                 'item_code' => $this->input->post('item_code'),
-                'id_jenis_item' => 4,
+                'id_jenis_item' => 5,
                 'deskripsi' => $this->input->post('deskripsi'),
                 'satuan' => $this->input->post('satuan'),
                 'supplier' => $this->input->post('supplier'),
@@ -64,23 +64,23 @@ class lembaran extends CI_Controller
                 'created'        => date('Y-m-d H:i:s'),
 
             );
-            $cek = $this->m_lembaran->cekMaster($datapost);
+            $cek = $this->m_pvc->cekMaster($datapost);
             if ($cek > 0) {
-                $this->fungsi->message_box("Data Master lembaran sudah ada!", "warning");
+                $this->fungsi->message_box("Data Master pvc sudah ada!", "warning");
             } else {
-                $this->m_lembaran->insertData($datapost);
+                $this->m_pvc->insertData($datapost);
                 $id_item = $this->db->insert_id();
                 // $code = '2' . str_pad($id_item, 10, '0', STR_PAD_LEFT);
                 $code = $datapost['item_code'];
                 $this->insertbarcode($code, $id_item);
-                $this->fungsi->catat($datapost, "Menambah Master lembaran dengan data sbb:", true);
+                $this->fungsi->catat($datapost, "Menambah Master pvc dengan data sbb:", true);
             }
         }
     }
 
     public function show_editForm($id = '')
     {
-        $this->fungsi->check_previleges('lembaran');
+        $this->fungsi->check_previleges('pvc');
         $this->load->library('form_validation');
         $config = array(
             array(
@@ -99,20 +99,20 @@ class lembaran extends CI_Controller
 
         if ($this->form_validation->run() == FALSE) {
             $data['edit'] = $this->db->get_where('master_item', array('id' => $id));
-            $this->load->view('master/lembaran/v_lembaran_edit', $data);
+            $this->load->view('master/pvc/v_pvc_edit', $data);
         } else {
             $datapost = get_post_data(array('id', 'item_code', 'deskripsi', 'satuan','supplier','lead_time'));
-            $this->m_lembaran->updateData($datapost);
-            $this->fungsi->run_js('load_silent("master/lembaran","#content")');
-            $this->fungsi->message_box("Data Master lembaran sukses diperbarui...", "success");
-            $this->fungsi->catat($datapost, "Mengedit Master lembaran dengan data sbb:", true);
+            $this->m_pvc->updateData($datapost);
+            $this->fungsi->run_js('load_silent("master/pvc","#content")');
+            $this->fungsi->message_box("Data Master pvc sukses diperbarui...", "success");
+            $this->fungsi->catat($datapost, "Mengedit Master pvc dengan data sbb:", true);
         }
     }
 
     public function import()
     {
         $data['id'] = '';
-        $this->load->view('master/lembaran/v_lembaran_upload', $data);
+        $this->load->view('master/pvc/v_pvc_upload', $data);
     }
 
     public function saveimport()
@@ -157,7 +157,7 @@ class lembaran extends CI_Controller
             );
 
             $data = array(
-                'id_jenis_item'      => 3,
+                'id_jenis_item'      => 5,
                 'item_code'          => $rowData[0][0],
                 'deskripsi'          => $rowData[0][1],
                 'divisi'             => $rowData[0][2],
@@ -167,11 +167,11 @@ class lembaran extends CI_Controller
                 'stock_akhir_bulan'  => $rowData[0][6],
                 'created'            => date('Y-m-d H:i:s'),
             );
-            $cek_item = $this->m_lembaran->cekMasterlembaran($data['item_code']);
+            $cek_item = $this->m_pvc->cekMasterpvc($data['item_code']);
             if ($cek_item < 1) {
-                $this->m_lembaran->insertData($data);
+                $this->m_pvc->insertData($data);
             } else {
-                $this->m_lembaran->updateItemCode($data);
+                $this->m_pvc->updateItemCode($data);
             }
         }
         $data['msg'] = "Data Disimpan....";
@@ -193,29 +193,29 @@ class lembaran extends CI_Controller
             'barcode' => $barcode,
             'image_barcode' => $pathBarcode
         );
-        $this->m_lembaran->updateData($data);
+        $this->m_pvc->updateData($data);
 
-        $this->fungsi->run_js('load_silent("master/lembaran","#content")');
-        $this->fungsi->message_box("Data Master lembaran sukses disimpan...", "success");
+        $this->fungsi->run_js('load_silent("master/pvc","#content")');
+        $this->fungsi->message_box("Data Master pvc sukses disimpan...", "success");
     }
 
     public function cetak_barcode($id)
     {
         $this->db->where('id', $id);
         $data['bcd'] = $this->db->get('master_item')->row();
-        $this->load->view('master/lembaran/v_lembaran_cetak_barcode', $data);
+        $this->load->view('master/pvc/v_pvc_cetak_barcode', $data);
     }
 
     public function cetakExcel()
     {
-        $this->fungsi->check_previleges('lembaran');
-        $data['lembaran'] = $this->m_lembaran->getData();
-        $this->load->view('master/lembaran/v_lembaran_cetak', $data);
+        $this->fungsi->check_previleges('pvc');
+        $data['pvc'] = $this->m_pvc->getData();
+        $this->load->view('master/pvc/v_pvc_cetak', $data);
     }
 
     public function delete()
     {
-        $this->fungsi->check_previleges('lembaran');
+        $this->fungsi->check_previleges('pvc');
         $id   = $this->input->post('id');
         $jum_counter = $this->db->get_where('data_counter', array('id_item' => $id))->num_rows();
         $jum_transaksi = $this->db->get_where('data_stock', array('id_item' => $id))->num_rows();
@@ -238,11 +238,11 @@ class lembaran extends CI_Controller
         $this->db->where('id', $id);
         $this->db->delete('master_item');
 
-        $this->fungsi->catat($data, "Menghapus Master lembaran dengan data sbb:", true);
+        $this->fungsi->catat($data, "Menghapus Master pvc dengan data sbb:", true);
         $respon = ['msg' => 'Data Berhasil Dihapus'];
         echo json_encode($respon);
     }
 }
 
-/* End of file lembaran.php */
-/* Location: ./application/controllers/master/lembaran.php */
+/* End of file pvc.php */
+/* Location: ./application/controllers/master/pvc.php */

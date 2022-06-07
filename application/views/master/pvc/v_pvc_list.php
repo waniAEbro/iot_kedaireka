@@ -3,16 +3,16 @@
     <div class="col-lg-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Master lembaran</h3>
+                <h3 class="box-title">Master pvc</h3>
                 <div class="box-tools pull-right">
                     <a class="btn btn-primary" onclick="cetakExcel()">Cetak</a>
                     <?php
                     $sesi = from_session('level');
                     if ($sesi <= 2) {
-                        //echo button('load_silent("master/lembaran/import/","#content")', 'Import Excel', 'btn btn-primary', 'data-toggle="tooltip" title="Import Excel"');
+                        //echo button('load_silent("master/pvc/import/","#content")', 'Import Excel', 'btn btn-primary', 'data-toggle="tooltip" title="Import Excel"');
                     }
                     if ($sesi <= 3) {
-                        echo button('load_silent("master/lembaran/form/base","#modal")', 'Add', 'btn btn-info', 'data-toggle="tooltip" title="Add"');
+                        echo button('load_silent("master/pvc/form/base","#modal")', 'Add', 'btn btn-info', 'data-toggle="tooltip" title="Add"');
                     }
                     ?>
                 </div>
@@ -31,7 +31,7 @@
                     <tbody>
                         <?php
                         $i = 1;
-                        foreach ($lembaran->result() as $row) : ?>
+                        foreach ($pvc->result() as $row) : ?>
                             <tr id="output_data_<?= $row->id ?>" class="output_data">
                                 <td align="center"><?= $i++ ?></td>
                                 <td><?= $row->item_code ?></td>
@@ -43,7 +43,7 @@
                                     <?php
                                     $sesi = from_session('level');
                                     if ($sesi <= 3) {
-                                        echo button('load_silent("master/lembaran/form/sub/' . $row->id . '","#modal")', 'Edit', 'btn btn-xs btn-info', 'data-toggle="tooltip" title="Edit"');
+                                        echo button('load_silent("master/pvc/form/sub/' . $row->id . '","#modal")', 'Edit', 'btn btn-xs btn-info', 'data-toggle="tooltip" title="Edit"');
                                     } else {
                                         # code...
                                     }
@@ -51,7 +51,7 @@
                                     <a class="btn btn-xs btn-danger" href="javascript:void(0)" onClick="hapus(<?= $row->id ?>)">
                                         hapus
                                     </a>
-                                    <a target="_blank" href="<?= base_url('master/lembaran/cetak_barcode/' . $row->id); ?>" class="btn btn-xs btn-primary">Cetak Barcode</a>
+                                    <a target="_blank" href="<?= base_url('master/pvc/cetak_barcode/' . $row->id); ?>" class="btn btn-xs btn-primary">Cetak Barcode</a>
                                 </td>
                             </tr>
 
@@ -71,7 +71,7 @@
     });
 
     function cetakExcel() {
-        var url = "<?= site_url('master/lembaran/cetakExcel') ?>";
+        var url = "<?= site_url('master/pvc/cetakExcel') ?>";
         window.open(url, "_blank");
     }
 
@@ -79,7 +79,7 @@
         if (confirm('Lanjutkan Proses Hapus?')) {
             $.ajax({
                     type: "POST",
-                    url: "<?= site_url('master/lembaran/delete') ?>",
+                    url: "<?= site_url('master/pvc/delete') ?>",
                     dataType: 'json',
                     data: {
                         'id': i
