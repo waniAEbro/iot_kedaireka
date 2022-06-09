@@ -72,7 +72,6 @@
                             <th>Deskripsi</th>
                             <th>Lebar</th>
                             <th>Tinggi</th>
-                            <th>Area</th>
                             <th>Satuan</th>
                             <th>Stock Awal Bulan</th>
                             <th>Total In Per Bulan</th>
@@ -112,7 +111,6 @@
                                     <td align="center"><?= $row->deskripsi ?></td>
                                     <td align="center"><?= $row->lebar ?></td>
                                     <td align="center"><?= $row->tinggi ?></td>
-                                    <td align="center"><?= $row->area ?></td>
                                     <td align="center"><?= $row->satuan ?></td>
                                     <td align="center"><?= $tampil_stock_awal_bulan ?></td>
                                     <td align="center"><?= $tampil_total_in_per_bulan ?></td>
@@ -238,7 +236,7 @@
                 '<th bgcolor="#bfbfbf">No</th>' +
                 '<th bgcolor="#bfbfbf">Divisi/Rak</th>' +
                 '<th bgcolor="#bfbfbf">Gudang</th>' +
-                '<th bgcolor="#bfbfbf">Keranjang/Rak</th>' +
+                '<th bgcolor="#bfbfbf">Area</th>' +
                 '<th bgcolor="#bfbfbf">Stock Awal Bulan</th>' +
                 '<th bgcolor="#bfbfbf">Total In</th>' +
                 '<th bgcolor="#bfbfbf">Total Out</th>' +

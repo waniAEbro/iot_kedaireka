@@ -23,7 +23,7 @@
             <th>Satuan</th>
             <th>Divisi</th>
             <th>Gudang</th>
-            <th>Keranjang</th>
+            <th>Area</th>
             <th>Stock Awal Bulan</th>
             <th>Total In</th>
             <th>Total Out</th>

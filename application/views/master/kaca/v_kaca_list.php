@@ -25,7 +25,6 @@
                         <th>Deskripsi</th>
                         <th>Lebar</th>
                         <th>Tinggi</th>
-                        <th>Area</th>
                         <th>Satuan</th>
                         <th>Act</th>
                     </thead>
@@ -39,7 +38,6 @@
                                 <td><?= $row->deskripsi ?></td>
                                 <td><?= $row->lebar ?></td>
                                 <td><?= $row->tinggi ?></td>
-                                <td><?= $row->area ?></td>
                                 <td><?= $row->satuan ?></td>
                                 <td align="center">
                                     <?php
