@@ -8,10 +8,10 @@
                     <?php
                     $sesi = from_session('level');
                     if ($sesi <= 3) {
-                        echo button('load_silent("wrh/kaca/bon_manual_add/","#content")', 'Add BON Manual', 'btn btn-primary', 'data-toggle="tooltip" title="BON Manual"');
                     } else {
                         # code...
                     }
+                    echo button('load_silent("wrh/kaca/bon_manual_add/","#content")', 'Add BON Manual', 'btn btn-primary', 'data-toggle="tooltip" title="BON Manual"');
                     ?>
                 </div>
             </div>

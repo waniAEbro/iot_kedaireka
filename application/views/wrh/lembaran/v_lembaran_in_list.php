@@ -8,10 +8,10 @@
                     <?php
                     $sesi = from_session('level');
                     if ($sesi <= 3) {
-                        echo button('load_silent("wrh/lembaran/stok_in_add/","#content")', 'Tambah Stock', 'btn btn-primary', 'data-toggle="tooltip" title="Tambah Stock"');
                     } else {
                         # code...
                     }
+                    echo button('load_silent("wrh/lembaran/stok_in_add/","#content")', 'Tambah Stock', 'btn btn-primary', 'data-toggle="tooltip" title="Tambah Stock"');
                     ?>
                 </div>
             </div>
