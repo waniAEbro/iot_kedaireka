@@ -65,7 +65,7 @@
                         <th>Qty Aktual</th>
                         <th>Out Dari Divisi</th>
                         <th>Area Gudang</th>
-                        <th>Keranjang/Rak</th>
+                        <th>Area</th>
                         <th>Produksi</th>
                         <th>Lapangan</th>
                     </thead>

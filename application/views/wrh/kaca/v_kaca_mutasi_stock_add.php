@@ -62,7 +62,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label class="control-label">Keranjang:</label>
+                        <label class="control-label">Area:</label>
                         <select id="keranjang" name="keranjang" class="form-control" style="width:100%" required>
                             <option value="">-- Select --</option>
                         </select>

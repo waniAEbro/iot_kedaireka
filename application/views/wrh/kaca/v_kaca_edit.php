@@ -39,7 +39,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label>Keranjang</label>
+                        <label>Area</label>
                         <input type="text" class="form-control" value="<?= $row->keranjang ?>" readonly>
                     </div>
                 </div>

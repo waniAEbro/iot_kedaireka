@@ -48,7 +48,7 @@
                         <th>Deskripsi</th>
                         <th>Divisi</th>
                         <th>Gudang</th>
-                        <th>Keranjang/Rak</th>
+                        <th>Area</th>
                         <th>Qty</th>
                         <th>Supplier</th>
                         <th>No Surat Jalan</th>

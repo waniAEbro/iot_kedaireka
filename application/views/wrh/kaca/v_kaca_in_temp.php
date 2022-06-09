@@ -66,7 +66,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label class="control-label">Keranjang / Rak:</label>
+                            <label class="control-label">Area</label>
                             <input type="text" class="form-control" id="keranjang" placeholder="Keranjang">
                         </div>
                         <div class="form-group">

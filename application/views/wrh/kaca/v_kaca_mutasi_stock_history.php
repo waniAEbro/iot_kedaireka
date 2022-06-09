@@ -47,7 +47,7 @@
                             <th>Waktu</th>
                             <th>Divisi</th>
                             <th>Gudang</th>
-                            <th>Keranjang/Rak</th>
+                            <th>Area</th>
                             <th>Qty In</th>
                             <th>Qty OUT</th>
                             <th>Keterangan</th>
