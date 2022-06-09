@@ -19,6 +19,7 @@
                 <table width="100%" id="tableku" class="table table-striped">
                     <thead>
                         <th width="5%">No</th>
+                        <th>ID</th>
                         <th>Jenis Item</th>
                         <th>Divisi</th>
                         <th>Act</th>
@@ -29,6 +30,7 @@
                         foreach ($divisi->result() as $row) : ?>
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
+                                <td><?= $row->id ?></td>
                                 <td><?= $row->jenis_item ?></td>
                                 <td><?= $row->divisi ?></td>
                                 <td align="center">
