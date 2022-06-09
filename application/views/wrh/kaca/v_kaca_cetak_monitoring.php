@@ -16,11 +16,13 @@
         <tr bgcolor="#ffe357">
             <th width="5%">No</th>
             <th>Item Code</th>
-                <th>Deskripsi</th>
+            <th>Deskripsi</th>
             <th>Lebar</th>
             <th>Tinggi</th>
             <th>Area</th>
             <th>Satuan</th>
+            <th>Divisi</th>
+            <th>Gudang</th>
             <th>Keranjang</th>
             <th>Stock Awal Bulan</th>
             <th>Total In</th>
@@ -45,6 +47,8 @@
                 <td><?= $row->tinggi ?></td>
                 <td><?= $row->area ?></td>
                 <td><?= $row->satuan ?></td>
+                <td><?= $row->divisi ?></td>
+                <td><?= $row->gudang ?></td>
                 <td><?= $row->keranjang ?></td>
                 <td><?= $stock_awal_bulan ?></td>
                 <td><?= $total_in ?></td>
