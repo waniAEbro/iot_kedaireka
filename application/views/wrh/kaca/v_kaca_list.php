@@ -236,8 +236,6 @@
             infoTable = '<table id="infoTable" class="table table-striped" border="1px" style="font-size: smaller;">' +
                 '<tr>' +
                 '<th bgcolor="#bfbfbf">No</th>' +
-                '<th bgcolor="#bfbfbf">Divisi</th>' +
-                '<th bgcolor="#bfbfbf">Gudang</th>' +
                 '<th bgcolor="#bfbfbf">Keranjang/Rak</th>' +
                 '<th bgcolor="#bfbfbf">Stock Awal Bulan</th>' +
                 '<th bgcolor="#bfbfbf">Total In</th>' +
@@ -293,8 +291,6 @@
 
                         infoTable += '<tr bgcolor="' + color + '">' +
                             '<td><font color="' + fontcolor + '">' + no + '</font></td>' +
-                            '<td><font color="' + fontcolor + '">' + data.detail[i].divisi + '</font></td>' +
-                            '<td><font color="' + fontcolor + '">' + data.detail[i].gudang + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + data.detail[i].keranjang + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + stok_a_b + '</font></td>' +
                             '<td><font color="' + fontcolor + '">' + stok_t_i + '</font></td>' +
