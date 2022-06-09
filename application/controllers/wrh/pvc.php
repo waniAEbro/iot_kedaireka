@@ -1018,7 +1018,7 @@ class pvc extends CI_Controller
 
 
             $datapost      = array(
-                'inout'          => 5,
+                'inout'          => 2,
                 'id_jenis_item'  => $id_jenis_item,
                 'id_surat_jalan' => $this->input->post('id_sj'),
                 'id_fppp'        => $this->input->post('id_fppp'),
