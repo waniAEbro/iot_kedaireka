@@ -1400,7 +1400,7 @@ class M_aluminium extends CI_Model
         $this->db->where('ds.id_surat_jalan', $id);
         // $this->db->group_by('ds.id_item');
         // $this->db->group_by('ds.id_warna_akhir');
-        $this->db->select('ds.id as id_stock,sum(ds.qty_out) as qty_out,mwab.warna as warna_akhir,mwa.warna,df.no_fppp,df.nama_proyek,mi.*');
+        $this->db->select('ds.id as id_stock,ds.qty_out,mwab.warna as warna_akhir,mwa.warna,df.no_fppp,df.nama_proyek,mi.*');
 
         return $this->db->get('data_stock ds');
     }

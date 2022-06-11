@@ -1202,7 +1202,7 @@ class M_pvc extends CI_Model
         // $this->db->group_by('ds.id_warna_awal');
         // $this->db->group_by('ds.id_warna_akhir');
 
-        $this->db->select('ds.id as id_stock,sum(ds.qty_out) as qty_out,mw.warna as warna_akhir,mw2.warna as warna_awal,df.no_fppp,df.nama_proyek,mi.*');
+        $this->db->select('ds.id as id_stock,ds.qty_out,mw.warna as warna_akhir,mw2.warna as warna_awal,df.no_fppp,df.nama_proyek,mi.*');
 
         return $this->db->get('data_stock ds');
     }
