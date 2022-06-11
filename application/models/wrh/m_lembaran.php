@@ -25,7 +25,11 @@ class M_lembaran extends CI_Model
     public function getdataItem()
     {
         $id_jenis_item = 4;
+        $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
+        
         $this->db->where('mi.id_jenis_item', $id_jenis_item);
+        $this->db->select('mi.*,mwa.warna');
+        
         return $this->db->get('master_item mi');
     }
 
