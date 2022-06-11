@@ -965,8 +965,8 @@ class M_pvc extends CI_Model
         $this->db->join('master_divisi_stock mds', 'mds.id = ds.id_divisi', 'left');
         $this->db->join('master_gudang mg', 'mg.id = ds.id_gudang', 'left');
         $this->db->join('master_item mi', 'mi.id = ds.id_item', 'left');
-        $this->db->join('master_warna mw', 'mi.id = ds.id_warna_akhir', 'left');
-        $this->db->join('master_warna mw2', 'mi.id = ds.id_warna_awal', 'left');
+        $this->db->join('master_warna mw', 'mw.id = ds.id_warna_akhir', 'left');
+        $this->db->join('master_warna mw2', 'mw2.id = ds.id_warna_awal', 'left');
         $this->db->join('master_brand mb', 'mb.id = ds.id_multi_brand', 'left');
 
         $this->db->where('ds.id_surat_jalan', $id_sj);

@@ -764,6 +764,7 @@ class lembaran extends CI_Controller
             'id'     => $id,
             'header' => $this->m_lembaran->getHeaderSendCetak($id)->row(),
             'detail' => $this->m_lembaran->getDataDetailSendCetak($id)->result(),
+            'detail' => $this->m_lembaran->getDataDetailSendCetak($id)->result(),
         );
         // print_r($data['detail']);
 
