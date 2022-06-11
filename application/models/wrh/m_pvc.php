@@ -1198,9 +1198,9 @@ class M_pvc extends CI_Model
         $this->db->where('ds.lapangan', 1);
         $this->db->where('ds.id_jenis_item', $id_jenis_item);
         $this->db->where('ds.id_surat_jalan', $id);
-        $this->db->group_by('ds.id_item');
-        $this->db->group_by('ds.id_warna_awal');
-        $this->db->group_by('ds.id_warna_akhir');
+        // $this->db->group_by('ds.id_item');
+        // $this->db->group_by('ds.id_warna_awal');
+        // $this->db->group_by('ds.id_warna_akhir');
 
         $this->db->select('ds.id as id_stock,sum(ds.qty_out) as qty_out,mw.warna as warna_akhir,mw2.warna as warna_awal,df.no_fppp,df.nama_proyek,mi.*');
 
