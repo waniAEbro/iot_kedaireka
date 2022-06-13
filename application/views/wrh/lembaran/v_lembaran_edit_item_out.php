@@ -98,7 +98,7 @@
                                 <tr id="output_data_<?= $row->id_stock ?>" class="output_data">
                                     <td align="center"><?= $row->no_fppp ?>-<?= $row->nama_proyek ?></td>
                                     <td align="center"><?= $row->brand ?></td>
-                                    <td><?= $row->item_code ?>-<?= $row->deskripsi ?></td>
+                                    <td><?= $row->item_code ?>-<?= $row->warna ?>-<?= $row->lebar ?>-<?= $row->tinggi ?></td>
                                     <td align="center"><?= $row->divisi_stock ?></td>
                                     <td align="center"><?= $row->gudang ?></td>
                                     <td align="center"><?= $row->keranjang ?></td>
@@ -128,7 +128,7 @@
                                         <option value="">-- Select --</option>
                                         <?php foreach ($item->result() as $valap) : ?>
                                             <option value="<?= $valap->id ?>">
-                                                <?= $valap->item_code ?>-<?= $valap->deskripsi ?>
+                                            <?= $valap->item_code ?>-<?= $valap->warna ?>-<?= $valap->lebar ?>-<?= $valap->tinggi ?>
                                             </option>
                                         <?php endforeach; ?>
                                     </select></td>
