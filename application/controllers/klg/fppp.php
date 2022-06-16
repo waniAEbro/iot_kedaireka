@@ -767,12 +767,13 @@ class Fppp extends CI_Controller
 					}
 				} else {
 					$iditem  = $cek_item->row()->id;
+					$krjng = ($obj['keranjang']!='') ? $obj['keranjang'] : '-' ;
 					$counter = array(
 						'id_jenis_item' => $obj['id_jenis_item'],
 						'id_item'       => $iditem,
 						'id_divisi'     => $obj['id_divisi'],
 						'id_gudang'     => $obj['id_gudang'],
-						'keranjang'     => str_replace(' ', '', $obj['keranjang']),
+						'keranjang'     => str_replace(' ', '-', $krjng),
 						'qty'           => $obj['qty'],
 						'created'       => date('Y-m-d H:i:s'),
 						'updated'       => date('Y-m-d H:i:s'),
@@ -794,7 +795,7 @@ class Fppp extends CI_Controller
 						'id_item'       => $iditem,
 						'id_divisi'     => $obj['id_divisi'],
 						'id_gudang'     => $obj['id_gudang'],
-						'keranjang'     => str_replace(' ', '', $obj['keranjang']),
+						'keranjang'     => str_replace(' ', '-', $krjng),
 						'qty_in'        => $obj['qty'],
 						'created'       => date('Y-m-d H:i:s'),
 						'updated'       => date('Y-m-d H:i:s'),
