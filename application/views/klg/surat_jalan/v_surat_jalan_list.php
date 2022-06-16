@@ -32,7 +32,7 @@
                     <div class="col-md-12">
                         <div class="box-tools pull-right">
                             <a class="btn btn-success" onclick="setFilter()">Set Filter</a>
-                            <a class="btn btn-primary" onclick="setCetak()">Cetak</a>
+                            <!-- <a class="btn btn-primary" onclick="setCetak()">Cetak</a> -->
                         </div>
                     </div>
                     </>
@@ -105,7 +105,7 @@
         } else {
             var tgl2 = '<?= $tgl_akhir ?>';
         };
-        load_silent("klg/surat_jalan/bon_manual_diSet/" + tlg1 + "/" + tgl2, "#content");
+        load_silent("klg/surat_jalan/set/" + tlg1 + "/" + tgl2, "#content");
 
     }
 
