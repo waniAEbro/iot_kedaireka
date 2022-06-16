@@ -14,7 +14,7 @@ class pvc extends CI_Controller
 
     public function index()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $data['pvc']           = $this->m_pvc->getData();
         $data['s_awal_bulan']        = $this->m_pvc->getStockAwalBulan();
         $data['s_akhir_bulan'] = $this->m_pvc->getStockAkhirBulan();
@@ -27,7 +27,7 @@ class pvc extends CI_Controller
 
     public function list()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $offset  = $this->uri->segment(4, 0);
         $perpage = 10;
 
@@ -47,7 +47,7 @@ class pvc extends CI_Controller
 
     public function search_list()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $offset = $this->uri->segment(5, 0);
         if ($offset > 0) {
             $keyword = from_session('keyword_al_warna');
@@ -85,7 +85,7 @@ class pvc extends CI_Controller
 
     public function getDetailTabel()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $id = $this->input->post('id');
 
         $data_pvc_in = $this->m_pvc->getDataDetailTabel($id);
@@ -128,7 +128,7 @@ class pvc extends CI_Controller
 
     public function stok_in()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $bulan       = date('m');
         $tahun       = date('Y');
         $data['tbl_del']   = 1;
@@ -141,7 +141,7 @@ class pvc extends CI_Controller
 
     public function stok_in_set($tgl_awal = '', $tgl_akhir = '')
     {
-        $this->fungsi->check_previleges('pvc');
+
         $data['tgl_awal']  = $tgl_awal;
         $data['tgl_akhir'] = $tgl_akhir;
         $data['tbl_del']   = 0;
@@ -152,14 +152,14 @@ class pvc extends CI_Controller
 
     public function finish_stok_in()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $this->m_pvc->hapusTemp(5);
         $this->stok_in();
     }
 
     public function stok_in_add()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $data['item']      = $this->m_pvc->getdataItem();
         $data['divisi']    = $this->db->get_where('master_divisi_stock', array('id_jenis_item' => 5));
         $data['gudang']    = $this->db->get_where('master_gudang', array('id_jenis_item' => 5));
@@ -175,7 +175,7 @@ class pvc extends CI_Controller
 
     public function stok_in_edit($id)
     {
-        $this->fungsi->check_previleges('pvc');
+
         $data['id']       = $id;
         $data['row']      = $this->m_pvc->getDataStockRow($id)->row();
         $data['supplier'] = $this->db->get('master_supplier');
@@ -184,7 +184,7 @@ class pvc extends CI_Controller
 
     public function simpan_edit()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $id  = $this->input->post('id');
         $obj = array(
             'id_supplier'    => $this->input->post('supplier'),
@@ -200,7 +200,7 @@ class pvc extends CI_Controller
 
     public function savestokin()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $cek_in_temp = $this->m_pvc->getInTemp(5)->num_rows();;
         if ($cek_in_temp < 1) {
             $data_temp = array(
@@ -261,7 +261,7 @@ class pvc extends CI_Controller
 
     public function inOptionGetKeranjang()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $id_item   = $this->input->post('item');
         $id_divisi = $this->input->post('divisi');
         $id_gudang = $this->input->post('gudang');
@@ -272,7 +272,7 @@ class pvc extends CI_Controller
 
     public function getIdDivisi()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $id        = $this->input->post('id_item');
         $id_divisi = $this->m_pvc->getRowItemWarna($id)->id_divisi;
         $respon    = ['id_divisi' => $id_divisi];
@@ -281,7 +281,7 @@ class pvc extends CI_Controller
 
     public function deleteIn($id)
     {
-        $this->fungsi->check_previleges('pvc');
+
         $getRow        = $this->m_pvc->getRowStock($id);
         $cekQtyCounter = $this->m_pvc->getDataCounter($getRow->id_item, $getRow->id_divisi, $getRow->id_gudang, $getRow->keranjang)->row()->qty;
         $qty_jadi      = (int)$cekQtyCounter - (int)$getRow->qty_in;
@@ -301,7 +301,7 @@ class pvc extends CI_Controller
 
     public function deleteItemIn()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $id            = $this->input->post('id');
         $getRow        = $this->m_pvc->getRowStock($id);
         $cekQtyCounter = $this->m_pvc->getDataCounter($getRow->id_item, $getRow->id_divisi, $getRow->id_gudang, $getRow->keranjang)->row()->qty;
@@ -322,7 +322,7 @@ class pvc extends CI_Controller
 
     public function stok_out()
     {
-        $this->fungsi->check_previleges('pvc');
+
         // $data['surat_jalan'] = $this->m_pvc->getSuratJalan(1, 1);
         $id_jenis_item = 5;
         $data['qty_bom']     = $this->m_pvc->getTotQtyBomFppp($id_jenis_item);
@@ -369,7 +369,7 @@ class pvc extends CI_Controller
 
     public function saveout()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $field   = $this->input->post('field');
         $value   = $this->input->post('value');
         $editid  = $this->input->post('id');
@@ -423,7 +423,7 @@ class pvc extends CI_Controller
 
     public function saveoutcheck()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $field   = $this->input->post('field');
         $value   = $this->input->post('value');
         $editid  = $this->input->post('id');
@@ -465,7 +465,7 @@ class pvc extends CI_Controller
 
     public function saveoutcheckmf()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $field   = $this->input->post('field');
         $value   = $this->input->post('value');
         $editid  = $this->input->post('id');
@@ -510,7 +510,7 @@ class pvc extends CI_Controller
 
     public function kirim_parsial($id_fppp, $id_stock)
     {
-        $this->fungsi->check_previleges('pvc');
+
 
         $set_parsial = array('set_parsial' => 1);
         $this->m_pvc->updateRowStock($id_stock, $set_parsial);
@@ -537,7 +537,7 @@ class pvc extends CI_Controller
 
     public function hapus_parsial($id_fppp, $id_stock)
     {
-        $this->fungsi->check_previleges('pvc');
+
         $this->m_pvc->hapusParsial($id_stock);
         $object      = array(
             'id_stock' => $id_stock,
@@ -549,7 +549,7 @@ class pvc extends CI_Controller
 
     public function buat_surat_jalan($id_fppp)
     {
-        $this->fungsi->check_previleges('pvc');
+
         $data['id_fppp']        = $id_fppp;
         $data['row_fppp']       = $this->m_pvc->getRowFppp($id_fppp);
         $kode_divisi      = $this->m_pvc->getKodeDivisi($id_fppp);
@@ -560,7 +560,7 @@ class pvc extends CI_Controller
 
     public function buat_surat_jalan_mf($id_fppp)
     {
-        $this->fungsi->check_previleges('pvc');
+
         $data['id_fppp']        = $id_fppp;
         $data['row_fppp']       = $this->m_pvc->getRowFppp($id_fppp);
         $kode_divisi      = $this->m_pvc->getKodeDivisi($id_fppp);
@@ -571,7 +571,7 @@ class pvc extends CI_Controller
 
     public function stok_out_add()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $data['no_fppp']        = $this->db->get_where('data_fppp', array('id_status' => 1));
         $data['no_surat_jalan'] = str_pad($this->m_pvc->getNoSuratJalan(), 5, '0', STR_PAD_LEFT) . '/SJ/AL/' . date('m') . '/' . date('Y');
 
@@ -580,7 +580,7 @@ class pvc extends CI_Controller
 
     public function list_surat_jalan()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $id_jenis_item = 5;
         $data['surat_jalan'] = $this->m_pvc->getSuratJalan(1, $id_jenis_item);
         $data['keterangan']  = $this->m_pvc->getKeterangan();
@@ -589,7 +589,7 @@ class pvc extends CI_Controller
 
     public function getDetailFppp()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $id = $this->input->post('no_fppp');
 
         $data['nama_proyek']         = $this->m_pvc->getRowFppp($id)->nama_proyek;
@@ -603,7 +603,7 @@ class pvc extends CI_Controller
 
     public function simpanSuratJalan()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $id_jenis_item     = 5;
         $id_fppp           = $this->input->post('id_fppp');
         $penerima          = $this->input->post('penerima');
@@ -631,7 +631,7 @@ class pvc extends CI_Controller
 
     public function simpanSuratJalanMf()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $id_jenis_item     = 5;
         $id_fppp           = $this->input->post('id_fppp');
         $penerima          = $this->input->post('penerima');
@@ -659,7 +659,7 @@ class pvc extends CI_Controller
 
     public function updateSuratJalan()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $id_sj             = $this->input->post('id_sj');
         $penerima          = $this->input->post('penerima');
         $alamat_pengiriman = $this->input->post('alamat_pengiriman');
@@ -680,7 +680,7 @@ class pvc extends CI_Controller
 
     public function finishdetailbom($id_sj)
     {
-        $this->fungsi->check_previleges('pvc');
+
         $this->m_pvc->finishdetailbom($id_sj);
         $datapost = array('id_sj' => $id_sj,);
         $this->fungsi->message_box("Fisnish Surat Jalan", "success");
@@ -700,7 +700,7 @@ class pvc extends CI_Controller
 
     public function showformitemdetailbom($id_fppp = '')
     {
-        $this->fungsi->check_previleges('pvc');
+
         $this->load->library('form_validation');
         $id_jenis_item = 5;
         $config        = array(
@@ -737,7 +737,7 @@ class pvc extends CI_Controller
 
     public function getQtyRowGudang()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $field  = $this->input->post('field');
         $value  = $this->input->post('value');
         $editid = $this->input->post('id');
@@ -784,7 +784,7 @@ class pvc extends CI_Controller
 
     public function bon_manual()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $id_jenis_item = 5;
         $bulan       = date('m');
         $tahun       = date('Y');
@@ -819,7 +819,7 @@ class pvc extends CI_Controller
 
     public function bon_manual_add()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $id_jenis_item = 5;
         $data['fppp']        = $this->db->get('data_fppp');
         $data['warna_awal']  = $this->db->get('master_warna');
@@ -832,7 +832,7 @@ class pvc extends CI_Controller
 
     public function buat_surat_jalan_bon()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $id_fppp          = $this->m_pvc->getListItemBonManual()->row()->id_fppp;
         $data['id_fppp']        = $id_fppp;
         $kode_divisi      = $this->m_pvc->getKodeDivisi($id_fppp);
@@ -844,7 +844,7 @@ class pvc extends CI_Controller
 
     // public function bon_manual_add()
     // {
-    //     $this->fungsi->check_previleges('pvc');
+    //    
     //     $data['no_fppp']        = $this->db->get_where('data_fppp', array('id_status' => 1));
     //     $data['no_surat_jalan'] = str_pad($this->m_pvc->getNoSuratJalan(), 5, '0', STR_PAD_LEFT) . '/SJ/AL/' . date('m') . '/' . date('Y');
 
@@ -864,7 +864,7 @@ class pvc extends CI_Controller
 
     public function lihat_item_stok_out_modal($id_sj)
     {
-        $this->fungsi->check_previleges('pvc');
+
         $data['id_fppp']           = $this->m_pvc->getRowSuratJalan($id_sj)->row()->id_fppp;
         $data['no_surat_jalan']    = $this->m_pvc->getRowSuratJalan($id_sj)->row()->no_surat_jalan;
         $data['penerima']          = $this->m_pvc->getRowSuratJalan($id_sj)->row()->penerima;
@@ -877,7 +877,7 @@ class pvc extends CI_Controller
 
     public function edit_item_stok_out($id_sj)
     {
-        $this->fungsi->check_previleges('pvc');
+
         $id_jenis_item       = 5;
         $id_fppp             = $this->m_pvc->getListItemStokOut($id_sj)->row()->id_fppp;
         $data['fppp']              = $this->db->get('data_fppp');
@@ -900,7 +900,7 @@ class pvc extends CI_Controller
 
     public function simpanSuratJalanBon()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $id_jenis_item     = 5;
         $id_fppp           = $this->input->post('id_fppp');
         $penerima          = $this->input->post('penerima');
@@ -933,7 +933,7 @@ class pvc extends CI_Controller
 
     public function updateSuratJalanBon()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $id_jenis_item     = 5;
         $id_sj             = $this->input->post('id_sj');
         $penerima          = $this->input->post('penerima');
@@ -971,7 +971,7 @@ class pvc extends CI_Controller
 
     // public function edit_bon_manual($id_sj = '')
     // {
-    //     $this->fungsi->check_previleges('pvc');
+    //    
     //     $id_jenis_item = 5;
 
     //     $data['id_sj']             = $id_sj;
@@ -1003,7 +1003,7 @@ class pvc extends CI_Controller
 
     public function savebonmanual()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $id_jenis_item = 5;
         $id_item       = $this->input->post('item');
         $id_divisi     = $this->input->post('id_divisi');
@@ -1056,7 +1056,7 @@ class pvc extends CI_Controller
 
     public function deleteItemBonManual()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $id = $this->input->post('id');
 
         $id_item   = $this->db->get_where('data_stock', array('id' => $id))->row()->id_item;
@@ -1083,7 +1083,7 @@ class pvc extends CI_Controller
 
     public function deleteSJBon($id)
     {
-        $this->fungsi->check_previleges('pvc');
+
         $data_detail = $this->db->get_where('data_stock', array('id_surat_jalan' => $id))->result();
 
         foreach ($data_detail as $key) {
@@ -1112,7 +1112,7 @@ class pvc extends CI_Controller
 
     // public function finishdetailbon($id_sj)
     // {
-    //     $this->fungsi->check_previleges('pvc');
+    //    
     //     // $this->m_pvc->finishdetailbom($id_sj);
     //     $datapost = array('id_sj' => $id_sj,);
     //     $this->fungsi->message_box("Fisnish BON Manual", "success");
@@ -1122,7 +1122,7 @@ class pvc extends CI_Controller
 
     public function mutasi_stock_add($id = '')
     {
-        $this->fungsi->check_previleges('pvc');
+
         $id_jenis_item = 5;
         $data['id_item']     = $id;
         $data['item']        = $this->m_pvc->getDataItem();
@@ -1151,7 +1151,7 @@ class pvc extends CI_Controller
 
     public function optionGetDivisiItem()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $id_item  = $this->input->post('item');
         $get_data = $this->m_pvc->getDivisiItem($id_item);
         $data     = array();
@@ -1163,7 +1163,7 @@ class pvc extends CI_Controller
 
     public function optionGetGudangDivisi()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $id_item   = $this->input->post('item');
         $id_divisi = $this->input->post('divisi');
         $get_data  = $this->m_pvc->getGudangDivisi($id_item, $id_divisi);
@@ -1176,7 +1176,7 @@ class pvc extends CI_Controller
 
     public function optionGetKeranjangGudang()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $id_item   = $this->input->post('item');
         $id_divisi = $this->input->post('divisi');
         $id_gudang = $this->input->post('gudang');
@@ -1189,7 +1189,7 @@ class pvc extends CI_Controller
     }
     public function optionGetQtyKeranjang()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $id_item   = $this->input->post('item');
         $id_divisi = $this->input->post('divisi');
         $id_gudang = $this->input->post('gudang');
@@ -1204,7 +1204,7 @@ class pvc extends CI_Controller
 
     public function simpanMutasi()
     {
-        $this->fungsi->check_previleges('pvc');
+
         $id_jenis_item = 5;
         $tgl_aktual       = $this->input->post('tgl_aktual');
         $id_item       = $this->input->post('id_item');
@@ -1282,7 +1282,7 @@ class pvc extends CI_Controller
 
     public function mutasi_stock_history($id = '')
     {
-        $this->fungsi->check_previleges('pvc');
+
         $data['item']   = $this->db->get_where('master_item', array("id" => $id))->row();
         $data['mutasi'] = $this->m_pvc->getMutasiHistory($id);
 
@@ -1291,7 +1291,7 @@ class pvc extends CI_Controller
 
     public function stockPointList($tgl = '')
     {
-        $this->fungsi->check_previleges('pvc');
+
         $tgl_def = date('Y-m-d');
 
         if ($tgl == '') {
