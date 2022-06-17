@@ -47,7 +47,7 @@ class Surat_jalan extends CI_Controller
         $this->db->where('dfd.id_fppp', $id_fppp);
         $this->db->join('master_brand mb', 'mb.id = dfd.id_brand', 'left');
         $this->db->join('master_barang mbr', 'mbr.id = dfd.id_item', 'left');
-        $this->db->join('master_warna mwa', 'mwa.id = did.finish_coating', 'left');
+        $this->db->join('master_warna mwa', 'mwa.id = dfd.finish_coating', 'left');
 
         $this->db->select('dfd.*,mb.brand,mbr.barang,mwa.warna');
 
@@ -135,7 +135,7 @@ class Surat_jalan extends CI_Controller
 
         $this->db->select('sum(qty) as qty_fppp');
         $this->db->where('id_fppp', $datapost['id_fppp']);
-        $total_fppp = $this->db->get('data_fppp')->row()->qty_fppp;
+        $total_fppp = $this->db->get('data_fppp_detail')->row()->qty_fppp;
 
         $this->db->where('id_fppp', $datapost['id_fppp']);
         $this->db->select('sum(qty) as qty');

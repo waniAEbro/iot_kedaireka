@@ -30,7 +30,7 @@ class M_surat_jalan extends CI_Model
         $this->db->where('dfd.id', $id);
         $this->db->join('master_brand mb', 'mb.id = dfd.id_brand', 'left');
         $this->db->join('master_barang mbr', 'mbr.id = dfd.id_item', 'left');
-        $this->db->join('master_warna mwa', 'mwa.id = did.finish_coating', 'left');
+        $this->db->join('master_warna mwa', 'mwa.id = dfd.finish_coating', 'left');
         $this->db->select('dfd.*,mb.brand,mbr.barang,mwa.warna');
 
         $hasil = $this->db->get('data_fppp_detail dfd')->row();
