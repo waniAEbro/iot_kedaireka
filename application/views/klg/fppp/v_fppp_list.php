@@ -200,7 +200,7 @@
 
                             $total_hold = @$get_total_hold[$row->id];
                             $total_unit_fg = 0;
-                            $total_kirim = 0;
+                            $total_kirim = $row->total_kirim;
 
 
                         ?>

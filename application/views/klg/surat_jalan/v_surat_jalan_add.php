@@ -113,7 +113,7 @@
 
                     var z = "<option value=''>-- Select --</option>";
                     for (var i = 0; i < data.length; i++) {
-                        z += '<option value=' + data[i].id + '>' + data[i].brand + '-' + data[i].kode_opening + '-' + data[i].kode_unit + '-' + data[i].barang + '-' + data[i].glass_thick + '</option>';
+                        z += '<option value=' + data[i].id + '>' + data[i].brand + '-' + data[i].warna + '-' + data[i].kode_opening + '-' + data[i].kode_unit + '-' + data[i].barang + '-' + data[i].glass_thick + '</option>';
                     }
                     x.html(z);
                 }

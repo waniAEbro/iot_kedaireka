@@ -30,11 +30,11 @@ class M_surat_jalan extends CI_Model
         $this->db->where('dfd.id', $id);
         $this->db->join('master_brand mb', 'mb.id = dfd.id_brand', 'left');
         $this->db->join('master_barang mbr', 'mbr.id = dfd.id_item', 'left');
-
-        $this->db->select('dfd.*,mb.brand,mbr.barang');
+        $this->db->join('master_warna mwa', 'mwa.id = did.finish_coating', 'left');
+        $this->db->select('dfd.*,mb.brand,mbr.barang,mwa.warna');
 
         $hasil = $this->db->get('data_fppp_detail dfd')->row();
-        return $hasil->brand . '-' . $hasil->kode_opening . '-' . $hasil->kode_unit . '-' . $hasil->barang . '-' . $hasil->glass_thick;
+        return $hasil->brand . '-' . $hasil->warna . '-' . $hasil->kode_opening . '-' . $hasil->kode_unit . '-' . $hasil->barang . '-' . $hasil->glass_thick;
     }
 
     public function getNoSuratJalan()
@@ -73,6 +73,36 @@ class M_surat_jalan extends CI_Model
         $this->db->where('dsd.id_sj_fppp', $id_sj);
         $this->db->where('dsd.is_proses', 0);
         $this->db->select('dsd.*,df.no_fppp');
+
+        return $this->db->get('data_sj_fppp_detail dsd');
+    }
+
+    public function getKodeDivisi($id_fppp)
+    {
+        $this->db->join('master_divisi md', 'md.id = df.id_divisi', 'left');
+        $this->db->where('df.id', $id_fppp);
+        return $this->db->get('data_fppp df')->row()->divisi_pendek;
+    }
+
+    public function getHeaderCetak($id)
+    {
+        $this->db->join('data_fppp df', 'df.id = dsf.id_fppp', 'left');
+        
+        $this->db->where('dsf.id', $id);
+        $this->db->select('dsf.*,df.no_fppp');
+        
+        return $this->db->get('data_sj_fppp dsf');
+        
+    }
+
+    public function getDataDetailCetak($id)
+    {
+        $this->db->join('data_fppp_detail did', 'did.id = dsd.id_fppp_detail', 'left');
+        $this->db->join('master_brand mb', 'mb.id = did.id_brand', 'left');
+		$this->db->join('master_barang mi', 'mi.id = did.id_item', 'left');
+		$this->db->join('master_warna mwa', 'mwa.id = did.finish_coating', 'left');
+        $this->db->where('dsd.id_sj_fppp', $id);
+		$this->db->select('dsd.qty as qty_out,did.*,mb.brand,mi.barang as item,mwa.warna');
 
         return $this->db->get('data_sj_fppp_detail dsd');
     }

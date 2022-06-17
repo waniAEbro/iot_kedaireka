@@ -34,7 +34,8 @@ class Surat_jalan extends CI_Controller
     public function add()
     {
         $this->fungsi->check_previleges('surat_jalan');
-        $data['fppp']        = $this->db->get('data_fppp');
+        $data['fppp']        = $this->db->get_where('data_fppp', array('ws_update <' => 3));
+        // $data['fppp']        = $this->db->get('data_fppp');
         $data['list_sj']     = $this->m_surat_jalan->getlistsjproses();
         $this->load->view('klg/surat_jalan/v_surat_jalan_add', $data);
     }
@@ -42,11 +43,13 @@ class Surat_jalan extends CI_Controller
     public function optionDetailFppp()
     {
         $id_fppp = $this->input->post('id_fppp');
+
         $this->db->where('dfd.id_fppp', $id_fppp);
         $this->db->join('master_brand mb', 'mb.id = dfd.id_brand', 'left');
         $this->db->join('master_barang mbr', 'mbr.id = dfd.id_item', 'left');
+        $this->db->join('master_warna mwa', 'mwa.id = did.finish_coating', 'left');
 
-        $this->db->select('dfd.*,mb.brand,mbr.barang');
+        $this->db->select('dfd.*,mb.brand,mbr.barang,mwa.warna');
 
         $get_data = $this->db->get('data_fppp_detail dfd')->result();
         $data     = array();
@@ -67,6 +70,13 @@ class Surat_jalan extends CI_Controller
         );
         $this->db->insert('data_sj_fppp_detail', $datapost);
         $data['id']          = $this->db->insert_id();
+
+        $this->db->where('id', $datapost['id_fppp_detail']);
+        $object = array(
+            'pengiriman' => date('Y-m-d H:i:s'),
+        );
+        $this->db->update('data_fppp_detail', $object);
+
         $this->fungsi->catat($datapost, "Menyimpan SJ FPPP detail sbb:", true);
         $data['sts'] = "sukses";
         $data['msg'] = "Disimpan";
@@ -78,7 +88,7 @@ class Surat_jalan extends CI_Controller
         $id = $this->input->post('id');
         $this->db->where('id', $id);
         $this->db->delete('data_sj_fppp_detail');
-        
+
         $data = array('id' => $id,);
         $this->fungsi->catat($data, "Menghapus SJ FPPP detail data sbb:", true);
         $respon = ['msg' => 'Data Berhasil Dihapus'];
@@ -87,9 +97,12 @@ class Surat_jalan extends CI_Controller
 
     public function buat_surat_jalan()
     {
-        $no_surat_jalan   = str_pad($this->m_surat_jalan->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJ/' . date('m') . '/' . date('Y');
+        $id_fppp = $this->m_surat_jalan->getlistsjproses()->row()->id_fppp;
+        $kode_divisi       = $this->m_surat_jalan->getKodeDivisi($id_fppp);
+        $no_surat_jalan   = str_pad($this->m_surat_jalan->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/' . 'SJ' . '/' . $kode_divisi . '/' . date('m') . '/' . date('Y');
         $data['no_surat_jalan']        = $no_surat_jalan;
         $data['list_sj']        = $this->m_surat_jalan->getlistsjproses();
+        $data['id_fppp']        = $id_fppp;
         $this->load->view('klg/surat_jalan/v_surat_jalan_make', $data);
     }
 
@@ -97,6 +110,7 @@ class Surat_jalan extends CI_Controller
     {
         $datapost = array(
             'no_sj' => $this->input->post('no_surat_jalan'),
+            'id_fppp' => $this->input->post('id_fppp'),
             'penerima' => $this->input->post('penerima'),
             'alamat' => $this->input->post('alamat_pengiriman'),
             'sopir' => $this->input->post('sopir'),
@@ -107,12 +121,40 @@ class Surat_jalan extends CI_Controller
         $this->db->insert('data_sj_fppp', $datapost);
         $data['id']          = $this->db->insert_id();
         $object = array(
-            'id_sj_fppp'=>$data['id'],
-            'is_proses'=>0,
+            'id_sj_fppp' => $data['id'],
+            'is_proses' => 0,
         );
-        $this->db->where('id_penginput', from_session('id'));        
+        $this->db->where('id_penginput', from_session('id'));
         $this->db->update('data_sj_fppp_detail', $object);
-        
+
+        $total_kirim_fppp = $this->db->get_where('data_fppp', array('id' => $datapost['id_fppp']))->row()->total_kirim;
+        $this->db->where('id_fppp', $datapost['id_fppp']);
+        $this->db->where('id_sj_fppp', $data['id']);
+        $this->db->select('sum(qty) as qty');
+        $total_kirim_sj = $this->db->get('data_sj_fppp_detail')->row()->qty;
+
+        $this->db->select('sum(qty) as qty_fppp');
+        $this->db->where('id_fppp', $datapost['id_fppp']);
+        $total_fppp = $this->db->get('data_fppp')->row()->qty_fppp;
+
+        $this->db->where('id_fppp', $datapost['id_fppp']);
+        $this->db->select('sum(qty) as qty');
+        $total_terkirim = $this->db->get('data_sj_fppp_detail')->row()->qty;
+
+        if ($total_fppp >= $total_terkirim) {
+            $ws_update = 3;
+        } else {
+            $ws_update = 2;
+        }
+
+
+        $upd_fppp = array(
+            'total_kirim' => $total_kirim_fppp + $total_kirim_sj,
+            'ws_update' => $ws_update,
+        );
+        $this->db->where('id', $datapost['id_fppp']);
+        $this->db->update('data_fppp', $upd_fppp);
+
         $this->fungsi->catat($datapost, "Menyimpan SJ FPPP sbb:", true);
         $data['sts'] = "sukses";
         $data['msg'] = "Disimpan";
@@ -135,5 +177,17 @@ class Surat_jalan extends CI_Controller
         $data['row']           = $this->m_surat_jalan->getRowSuratJalan($id_sj)->row();
         $data['list_sj']           = $this->m_surat_jalan->getlistsj($id_sj);
         $this->load->view('klg/surat_jalan/v_surat_jalan_lihat', $data);
+    }
+
+    public function cetakSj($id)
+    {
+        $data = array(
+            'id'     => $id,
+            'header' => $this->m_surat_jalan->getHeaderCetak($id)->row(),
+            'detail' => $this->m_surat_jalan->getDataDetailCetak($id)->result(),
+        );
+        // print_r($data['detail']);
+
+        $this->load->view('klg/surat_jalan/v_surat_jalan_cetak', $data);
     }
 }

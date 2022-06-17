@@ -17,6 +17,7 @@
                             <div class="form-group">
                                 <label>No Surat Jalan</label>
 
+                                <input type="hidden" class="form-control" value="<?= $id_fppp ?>" id="id_fppp" readonly>
                                 <input type="text" class="form-control" value="<?= $no_surat_jalan ?>" id="no_surat_jalan" readonly>
                             </div>
                         </div>
@@ -52,7 +53,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Keterangan</label>
+                                <label>Keterangan/Special Intruction</label>
                                 <input type="text" class="form-control" id="keterangan">
                             </div>
                         </div>
@@ -114,6 +115,7 @@
             dataType: "json",
             type: "POST",
             data: {
+                "id_fppp": $("#id_fppp").val(),
                 "no_surat_jalan": $("#no_surat_jalan").val(),
                 "penerima": $("#penerima").val(),
                 "alamat_pengiriman": $("#alamat_pengiriman").val(),
