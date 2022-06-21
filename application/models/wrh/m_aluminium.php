@@ -641,7 +641,10 @@ class M_aluminium extends CI_Model
     public function updateDataCounter($item, $gudang, $keranjang, $qty)
     {
         // $id_jenis_item = 1;
-        $object = array('qty' => $qty,);
+        $object = array(
+            'updated' => date('Y-m-d H:i:s'),
+            'qty' => $qty,
+        );
         // $this->db->where('id_jenis_item', $id_jenis_item);
         $this->db->where('id_item', $item);
         $this->db->where('id_gudang', $gudang);

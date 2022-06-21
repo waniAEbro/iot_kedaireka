@@ -516,7 +516,10 @@ class M_kaca extends CI_Model
     public function updateDataCounter($item, $divisi, $gudang, $keranjang, $qty)
     {
         // $id_jenis_item = 3;
-        $object        = array('qty' => $qty,);
+        $object = array(
+            'updated' => date('Y-m-d H:i:s'),
+            'qty' => $qty,
+        );
         // $this->db->where('id_jenis_item', $id_jenis_item);
         $this->db->where('id_item', $item);
         $this->db->where('id_divisi', $divisi);
