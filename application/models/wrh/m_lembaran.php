@@ -467,6 +467,7 @@ class M_lembaran extends CI_Model
         $this->db->join('master_gudang mg', 'mg.id = da.id_gudang', 'left');
         $this->db->join('master_item mi', 'mi.id = da.id_item', 'left');
         $this->db->join('master_supplier ms', 'ms.id = da.id_supplier', 'left');
+        $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
         $this->db->join('cms_user cu', 'cu.id = da.id_penginput', 'left');
         $this->db->where('da.awal_bulan', 0);
         $this->db->where('da.inout', 1);
@@ -478,7 +479,7 @@ class M_lembaran extends CI_Model
         $this->db->order_by('da.id', 'desc');
         $this->db->where('DATE(da.created) >=', $tgl_awal);
         $this->db->where('DATE(da.created) <=', $tgl_akhir);
-        $this->db->select('cu.nama,da.*,md.divisi,ms.supplier,mg.gudang,mi.item_code,mi.deskripsi');
+        $this->db->select('mwa.warna,cu.nama,da.*,md.divisi,ms.supplier,mg.gudang,mi.item_code,mi.deskripsi');
 
         return $this->db->get('data_stock da');
     }

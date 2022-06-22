@@ -46,6 +46,7 @@
                         <th>User</th>
                         <th>Item Code</th>
                         <th>Deskripsi</th>
+                        <th>Warna</th>
                         <th>Divisi</th>
                         <th>Gudang</th>
                         <th>Keranjang/Rak</th>
@@ -72,6 +73,7 @@
                                 <td><?= $row->nama ?></td>
                                 <td><?= $row->item_code ?></td>
                                 <td><?= $row->deskripsi ?></td>
+                                <td><?= $row->warna ?></td>
                                 <td><?= $row->divisi ?></td>
                                 <td><?= $row->gudang ?></td>
                                 <td><?= $row->keranjang ?></td>

@@ -26,6 +26,8 @@
             <th>Divisi</th>
             <th>Gudang</th>
             <th>Keranjang</th>
+            <th>Warna Awal</th>
+            <th>Warna Akhir</th>
             <th>NO Surat Jalan</th>
             <th>NO FPPP</th>
             <th>Nama Proyek</th>
@@ -59,6 +61,8 @@
                 <td><?= $row->divisi_lembaran ?></td>
                 <td><?= $row->gudang ?></td>
                 <td><?= $row->keranjang ?></td>
+                <td><?= $row->warna_awal ?></td>
+                <td><?= $row->warna_akhir ?></td>
                 <td><?= $row->no_surat_jalan ?></td>
                 <td><?= $row->no_fppp ?></td>
                 <td><?= $row->nama_proyek ?></td>

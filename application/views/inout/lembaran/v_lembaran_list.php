@@ -44,6 +44,7 @@
                                 <th>Stok Awal Bulan</th>
                                 <th>Item Code</th>
                                 <th width="25%">Deskripsi</th>
+                                <th>Warna</th>
                                 <th>Satuan</th>
                                 <th>Qty</th>
                                 <th>Divisi</th>
@@ -72,6 +73,7 @@
                                         <td><?= $awal_bulan ?></td>
                                         <td><?= $row->item_code ?></td>
                                         <td><?= $row->deskripsi ?></td>
+                                        <td><?= $row->warna ?></td>
                                         <td><?= $row->satuan ?></td>
                                         <td><?= $qty ?></td>
                                         <td><?= $row->divisi_lembaran ?></td>
