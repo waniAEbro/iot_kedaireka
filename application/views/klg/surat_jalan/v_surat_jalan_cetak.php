@@ -59,7 +59,7 @@ $hed .= '</table><hr>';
 // output the HTML content
 $pdf->writeHTML($hed, true, false, true, false, '');
 // $this->Line(15, 20, 190, 20);
-$pdf->SetFont('Helvetica', '', 9, '', 'false');
+$pdf->SetFont('times', '', 11, '', 'false');
 $html = '
 <style>
 
