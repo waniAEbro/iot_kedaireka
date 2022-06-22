@@ -6,9 +6,13 @@ class M_surat_jalan extends CI_Model
 
     public function getData($tgl_awal, $tgl_akhir)
     {
+        $this->db->join('data_fppp df', 'df.id = dsj.id_fppp', 'left');
+        
         $this->db->where('DATE(dsj.date) >=', $tgl_awal);
         $this->db->where('DATE(dsj.date) <=', $tgl_akhir);
         $this->db->order_by('dsj.id', 'desc');
+        $this->db->select('dsj.*,df.no_fppp');
+        
         return $this->db->get('data_sj_fppp dsj');
     }
 

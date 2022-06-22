@@ -43,6 +43,7 @@
                     <thead>
                         <th width="5%">No</th>
                         <th>Tgl</th>
+                        <th>No FPPP</th>
                         <th>No Surat Jalan</th>
                         <th>Penerima</th>
                         <th>Alamat Pengiriman</th>
@@ -59,6 +60,7 @@
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
                                 <td align="center"><?= $row->date ?></td>
+                                <td><?= $row->no_fppp ?></td>
                                 <td><?= $row->no_sj ?></td>
                                 <td><?= $row->penerima ?></td>
                                 <td><?= $row->alamat ?></td>
