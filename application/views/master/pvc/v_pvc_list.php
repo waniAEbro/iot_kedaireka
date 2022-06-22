@@ -7,13 +7,7 @@
                 <div class="box-tools pull-right">
                     <a class="btn btn-primary" onclick="cetakExcel()">Cetak</a>
                     <?php
-                    $sesi = from_session('level');
-                    if ($sesi <= 2) {
-                        //echo button('load_silent("master/pvc/import/","#content")', 'Import Excel', 'btn btn-primary', 'data-toggle="tooltip" title="Import Excel"');
-                    }
-                    if ($sesi <= 3) {
-                        echo button('load_silent("master/pvc/form/base","#modal")', 'Add', 'btn btn-info', 'data-toggle="tooltip" title="Add"');
-                    }
+                    echo button('load_silent("master/pvc/form/base","#modal")', 'Add', 'btn btn-info', 'data-toggle="tooltip" title="Add"');
                     ?>
                 </div>
             </div>
@@ -41,12 +35,8 @@
                                 <td><?= $row->lead_time ?></td>
                                 <td align="center">
                                     <?php
-                                    $sesi = from_session('level');
-                                    if ($sesi <= 3) {
-                                        echo button('load_silent("master/pvc/form/sub/' . $row->id . '","#modal")', 'Edit', 'btn btn-xs btn-info', 'data-toggle="tooltip" title="Edit"');
-                                    } else {
-                                        # code...
-                                    }
+                                    
+                                    echo button('load_silent("master/pvc/form/sub/' . $row->id . '","#modal")', 'Edit', 'btn btn-xs btn-info', 'data-toggle="tooltip" title="Edit"');
                                     ?>
                                     <a class="btn btn-xs btn-danger" href="javascript:void(0)" onClick="hapus(<?= $row->id ?>)">
                                         hapus
