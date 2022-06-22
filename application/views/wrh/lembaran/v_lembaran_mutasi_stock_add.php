@@ -175,7 +175,8 @@
                             title: 'Sukses',
                             message: "Berhasil mutasi"
                         });
-                        load_silent("wrh/lembaran/mutasi_stock_history/" + $('#item').val(), "#content");
+                        load_silent("wrh/lembaran", "#content");
+                        // load_silent("wrh/lembaran/mutasi_stock_history/" + $('#item').val(), "#content");
                     }
                 });
             }

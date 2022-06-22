@@ -1281,7 +1281,17 @@ class lembaran extends CI_Controller
         echo json_encode($data);
     }
 
-    public function mutasi_stock_history($id = '')
+    public function mutasi_stock_history($id)
+    {
+        $content   = "<div id='divsubcontent'></div>";
+        $header    = "History Mutasi";
+        $subheader = '';
+        $buttons[]          = button('', 'Tutup', 'btn btn-default', 'data-dismiss="modal"');
+        echo $this->fungsi->parse_modal($header, $subheader, $content, $buttons, '');
+        $this->fungsi->run_js('load_silent("wrh/lembaran/mutasi_stock_history_show/' . $id . '","#divsubcontent")');
+    }
+
+    public function mutasi_stock_history_show($id = '')
     {
         $this->fungsi->check_previleges('lembaran');
         $data['item']   = $this->db->get_where('master_item', array("id" => $id))->row();

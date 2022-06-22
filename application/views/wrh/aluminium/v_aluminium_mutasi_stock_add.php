@@ -138,7 +138,13 @@
                             title: 'Sukses',
                             message: "Berhasil mutasi"
                         });
-                        load_silent("wrh/aluminium/mutasi_stock_history/" + $('#item').val(), "#content");
+                        if (data['is_mf']=='01') {
+                            
+                            load_silent("wrh/aluminium/monitoring_mf", "#content");
+                        } else {
+                            load_silent("wrh/aluminium", "#content");
+                            
+                        }
                     }
                 });
             }

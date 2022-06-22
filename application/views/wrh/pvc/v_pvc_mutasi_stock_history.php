@@ -4,11 +4,7 @@
         <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title">History Mutasi pvc : <?= $item->item_code ?> - <?= $item->deskripsi ?></h3>
-                <div class="box-tools pull-right">
-                    <?php
-                    echo button('load_silent("wrh/pvc/","#content")', 'Kembali', 'btn btn-warning', 'data-toggle="tooltip" title="Mutasi"');
-                    ?>
-                </div>
+                
             </div>
             <div class="box-body">
                 <style type="text/css" media="screen">
@@ -41,7 +37,7 @@
                     <div>&nbsp;</div>
                 </div>
                 <div class="large-table-container-3">
-                    <table width="100%" id="tableku" class="table table-striped">
+                    <table width="100%" id="tablekux" class="table table-striped">
                         <thead>
                             <th width="5%">No</th>
                             <th>Waktu</th>
@@ -93,7 +89,7 @@
         });
     })
     $(document).ready(function() {
-        var table = $('#tableku').DataTable({
+        var table = $('#tablekux').DataTable({
             "ordering": true,
             // "scrollX": true,
         });

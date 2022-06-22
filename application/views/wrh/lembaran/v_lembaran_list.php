@@ -124,7 +124,7 @@
                                     <td align="center"><?= $tampil_total_bom ?> - <?= $tampil_total_out_per_bulan ?></td>
                                     <td align="center">
                                         <?= button('load_silent("wrh/lembaran/mutasi_stock_add/' . $row->id . '","#content")', 'mutasi', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Mutasi"'); ?>
-                                        <?= button('load_silent("wrh/lembaran/mutasi_stock_history/' . $row->id . '","#content")', 'history mutasi', 'btn btn-xs btn-default', 'data-toggle="tooltip" title="History Mutasi"'); ?></td>
+                                        <?= button('load_silent("wrh/lembaran/mutasi_stock_history/' . $row->id . '","#modal")', 'history mutasi', 'btn btn-xs btn-default', 'data-toggle="tooltip" title="History Mutasi"'); ?></td>
                                 </tr>
 
                             <?php $i++;
