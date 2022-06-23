@@ -60,7 +60,8 @@
                 <table width="100%" id="tablekuz" class="table table-bordered table-striped" style="font-size: smaller;">
                     <thead>
                         <tr>
-                            <th width="35%">FPPP</th>
+                            <th width="15%">FPPP</th>
+                            <th width="20%">Nama Proyek</th>
                             <th width="50%">FPPP Detail</th>
                             <th width="10%">Qty</th>
                         </tr>
@@ -73,6 +74,7 @@
 
                             <tr id="output_data_<?= $row->id ?>" class="output_data">
                                 <td align="center"><?= $row->no_fppp ?></td>
+                                <td align="center"><?= $row->nama_proyek ?></td>
                                 <td align="center"><?= $detail_fppp ?></td>
                                 <td align="center"><?= $row->qty ?></td>
                             </tr>

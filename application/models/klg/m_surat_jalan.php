@@ -24,7 +24,7 @@ class M_surat_jalan extends CI_Model
         $this->db->where('dsd.id_penginput', from_session('id'));
         $this->db->where('dsd.is_proses', 1);
 
-        $this->db->select('dsd.*,df.no_fppp');
+        $this->db->select('dsd.*,df.no_fppp,df.nama_proyek');
 
         return $this->db->get('data_sj_fppp_detail dsd');
     }
