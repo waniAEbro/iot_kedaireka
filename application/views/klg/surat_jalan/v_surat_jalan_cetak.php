@@ -86,6 +86,11 @@ table.first {
             <td>:</td>
             <td colspan="4">' . $header->penerima . '</td>
         </tr>
+        <tr>
+            <td>Nama Proyek</td>
+            <td>:</td>
+            <td colspan="4">' . $header->nama_proyek . '</td>
+        </tr>
 
         <tr>
             <td>No Kendaraan</td>

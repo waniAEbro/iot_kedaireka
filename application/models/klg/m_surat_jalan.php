@@ -93,7 +93,7 @@ class M_surat_jalan extends CI_Model
         $this->db->join('data_fppp df', 'df.id = dsf.id_fppp', 'left');
         
         $this->db->where('dsf.id', $id);
-        $this->db->select('dsf.*,df.no_fppp');
+        $this->db->select('dsf.*,df.no_fppp,df.nama_proyek');
         
         return $this->db->get('data_sj_fppp dsf');
         
