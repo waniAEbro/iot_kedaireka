@@ -6,10 +6,8 @@
                 <h3 class="box-title">List Surat Jalan</h3>
                 <div class="box-tools pull-right">
                     <?php
-                    $sesi = from_session('level');
-                    if ($sesi <= 3) {
-                        echo button('load_silent("klg/surat_jalan/add/","#content")', 'Add', 'btn btn-primary', 'data-toggle="tooltip" title="Add"');
-                    }
+                    
+                    echo button('load_silent("klg/surat_jalan/add/","#content")', 'Add', 'btn btn-primary', 'data-toggle="tooltip" title="Add"');
                     ?>
                 </div>
             </div>
@@ -44,6 +42,7 @@
                         <th width="5%">No</th>
                         <th>Tgl</th>
                         <th>No FPPP</th>
+                        <th>Nama Proyek</th>
                         <th>No Surat Jalan</th>
                         <th>Penerima</th>
                         <th>Alamat Pengiriman</th>
@@ -61,6 +60,7 @@
                                 <td align="center"><?= $i++ ?></td>
                                 <td align="center"><?= $row->date ?></td>
                                 <td><?= $row->no_fppp ?></td>
+                                <td><?= $row->nama_proyek ?></td>
                                 <td><?= $row->no_sj ?></td>
                                 <td><?= $row->penerima ?></td>
                                 <td><?= $row->alamat ?></td>
