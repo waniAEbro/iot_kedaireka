@@ -34,7 +34,7 @@ class Surat_jalan extends CI_Controller
     public function add()
     {
         $this->fungsi->check_previleges('surat_jalan');
-        $data['fppp']        = $this->db->get_where('data_fppp', array('ws_update' => 1));
+        $data['fppp']        = $this->db->get_where('data_fppp', array('ws_update !=' => 3));
         // $data['fppp']        = $this->db->get('data_fppp');
         $data['list_sj']     = $this->m_surat_jalan->getlistsjproses();
         $this->load->view('klg/surat_jalan/v_surat_jalan_add', $data);
