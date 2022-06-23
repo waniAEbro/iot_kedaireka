@@ -73,7 +73,7 @@ class Surat_jalan extends CI_Controller
 
         $this->db->where('id', $datapost['id_fppp_detail']);
         $object = array(
-            'pengiriman' => date('Y-m-d H:i:s'),
+            'pengiriman' => 'PARSIAL',
         );
         $this->db->update('data_fppp_detail', $object);
 
@@ -141,7 +141,7 @@ class Surat_jalan extends CI_Controller
         $this->db->select('sum(qty) as qty');
         $total_terkirim = $this->db->get('data_sj_fppp_detail')->row()->qty;
 
-        if ($total_fppp >= $total_terkirim) {
+        if ($total_fppp == $total_terkirim) {
             $ws_update = 3;
         } else {
             $ws_update = 2;
