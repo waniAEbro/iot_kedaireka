@@ -63,6 +63,7 @@
                     <div class="col-sm-8 tutup">
                         <input onclick="save()" type="submit" id="tombol" value="Save" class="btn btn-success" disabled>
                         <?php if (from_session('id') == 2) { ?>
+                            <input type="text" id="id_gudang" class="form-control">
                             <input onclick="save_penyesuaian()" type="submit" id="tombol" value="Save penyesuaian" class="btn btn-success">
 
                         <?php } ?>
@@ -124,6 +125,7 @@
         dataType: 'json',
         data: {
             id_jenis_item: $('#jenis_item').val(),
+            id_gudang: $('#id_gudang').val(),
         },
         success: function(data) {
 

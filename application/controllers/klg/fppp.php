@@ -1402,6 +1402,9 @@ class Fppp extends CI_Controller
 		
 		$this->db->where('keterangan', '');
 		$this->db->where('id_jenis_item', $this->input->post('id_jenis_item'));
+		if ($this->input->post('id_gudang')!='') {
+			$this->db->where('id_gudang', $this->input->post('id_gudang'));
+		}
 		$data_aksesoris_in = $this->db->get('data_counter')->result();
 		
         foreach ($data_aksesoris_in as $key) {
