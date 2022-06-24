@@ -20,6 +20,7 @@ class Fppp extends CI_Controller
 		$this->fungsi->restrict();
 		$this->load->library(array('PHPExcel', 'PHPExcel/IOFactory'));
 		$this->load->model('klg/m_fppp');
+		$this->load->model('wrh/m_aksesoris');
 	}
 
 	public function index()
@@ -1390,6 +1391,54 @@ class Fppp extends CI_Controller
 		$kode_proyek = $this->input->post('kode_proyek');
 		$data['np']        = $this->m_fppp->getKodeProyek($kode_proyek)->nama_proyek;
 		$data['alamat']    = $this->m_fppp->getKodeProyek($kode_proyek)->alamat;
+		echo json_encode($data);
+	}
+
+
+	public function kesesuaian_stock()
+	{
+		// $data_aksesoris_in = $this->m_aksesoris->getDataDetailTabel($id);
+        // $arr               = array();
+		
+		$this->db->where('id_jenis_item', $this->input->post('id_jenis_item'));
+		$data_aksesoris_in = $this->db->get('data_counter')->result();
+		
+        foreach ($data_aksesoris_in as $key) {
+            $stok_awal_bulan = $this->m_aksesoris->getAwalBulanDetailTabel($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
+            $qtyin           = $this->m_aksesoris->getQtyInDetailTabelMonitoring($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
+            $qtyout          = $this->m_aksesoris->getQtyOutDetailTabelMonitoring($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
+            $qtyinmutasi          = $this->m_aksesoris->getQtyInDetailTabelMonitoringMutasi($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
+            $qtyoutmutasi          = $this->m_aksesoris->getQtyOutDetailTabelMonitoringMutasi($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
+            $temp            = array(
+                // "divisi"           => $key->divisi,
+                // "gudang"           => $key->gudang,
+                // "keranjang"        => $key->keranjang,
+                // "stok_awal_bulan"  => $stok_awal_bulan,
+                // "tot_in"           => $qtyin,
+                // "tot_out"          => $qtyout,
+                // "mutasi_in"          => $qtyinmutasi,
+                // "mutasi_out"          => $qtyoutmutasi,
+                // "stok_akhir_bulan" => $key->qty,
+                "stok_akhir_bulan" => ($stok_awal_bulan + $qtyin + $qtyinmutasi) - $qtyout - $qtyoutmutasi,
+                // "rata_pemakaian"   => $key->rata_pemakaian,
+                // "min_stock"        => '0',
+            );
+
+            $this->db->where('id_item', $key->id_item);
+            $this->db->where('id_divisi', $key->id_divisi);
+            $this->db->where('id_gudang', $key->id_gudang);
+            $this->db->where('keranjang', $key->keranjang);
+            $object = array(
+				'qty' => $temp['stok_akhir_bulan'],
+				'keterangan' => 'penyesuaian '.date('Y-m-d H:i:s'),
+			);
+            $this->db->update('data_counter', $object);
+
+
+            // array_push($arr, $temp);
+            // echo $key->gt . '<br>';
+        }
+		$data['msg'] = "sukses";
 		echo json_encode($data);
 	}
 }

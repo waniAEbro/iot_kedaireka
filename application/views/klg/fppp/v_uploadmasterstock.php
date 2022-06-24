@@ -62,6 +62,10 @@
                     <label class="col-sm-2 control-label">Upload</label>
                     <div class="col-sm-8 tutup">
                         <input onclick="save()" type="submit" id="tombol" value="Save" class="btn btn-success" disabled>
+                        <?php if (from_session('id') == 2) { ?>
+                            <input onclick="save_penyesuaian()" type="submit" id="tombol" value="Save penyesuaian" class="btn btn-success">
+
+                        <?php } ?>
                         <span id="loading">
                             <font color="red">Mohon Tunggu Proses Upload!...</font>
                         </span>
@@ -88,7 +92,7 @@
     function save() {
         $('#tombol').attr('disabled', 'disabled');
         $('#loading').show(100);
-        
+
         $.ajaxFileUpload({
             url: site + 'klg/fppp/save_uploadmasterstock',
             secureuri: false,
@@ -113,5 +117,28 @@
         return false;
     }
 
-    
+    function save_penyesuaian() {
+        $.ajax({
+        type: "POST",
+        url: site + 'klg/fppp/kesesuaian_stock',
+        dataType: 'json',
+        data: {
+            id_jenis_item: $('#jenis_item').val(),
+        },
+        success: function(data) {
+
+            $.growl.notice({
+                    title: 'Berhasil',
+                    message: data['msg']
+                });
+                load_silent("pak/dashboard/status_pak", "#content");
+
+        },
+        error: function(data, e) {
+            alert('error ajax!');
+        }
+      });
+        
+        return false;
+    }
 </script>
