@@ -85,13 +85,13 @@ table.first {
             <td>:</td>
             <td>' . date('Y-m-d', strtotime($header->created)) . '</td>
         </tr>
-        <tr>
-            <td>Keterangan</td>
-            <td>:</td>
-            <td>' . $header->keterangan_sj . '</td>
+        <tr>            
             <td>Sopir / No Kendaraan</td>
             <td>:</td>
             <td>' . $header->sopir . ' / ' . $header->no_kendaraan . '</td>
+            <td></td>
+            <td></td>
+            <td></td>
         </tr>
 </table><br>
 ';
@@ -158,6 +158,13 @@ $html .= '<tr>
         <td align="center"></td>
         </tr>
         </table><br><br>';
+$html .= '<table border="1" cellpadding="2">
+        <tr>
+            <td style="height:30px;">Keterangan : <br>' . $header->keterangan_sj . '</td>
+        </tr>
+    
+    </table><br><br>
+    ';
 $html .= '
 <style>
 table.ttd {
