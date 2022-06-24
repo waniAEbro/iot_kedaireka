@@ -21,6 +21,7 @@ class Fppp extends CI_Controller
 		$this->load->library(array('PHPExcel', 'PHPExcel/IOFactory'));
 		$this->load->model('klg/m_fppp');
 		$this->load->model('wrh/m_aksesoris');
+		$this->load->model('wrh/m_aluminium');
 	}
 
 	public function index()
@@ -1408,12 +1409,20 @@ class Fppp extends CI_Controller
 		$data_aksesoris_in = $this->db->get('data_counter')->result();
 		
         foreach ($data_aksesoris_in as $key) {
-            $stok_awal_bulan = $this->m_aksesoris->getAwalBulanDetailTabel($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
-            $qtyin           = $this->m_aksesoris->getQtyInDetailTabelMonitoring($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
-            $qtyout          = $this->m_aksesoris->getQtyOutDetailTabelMonitoring($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
-            $qtyinmutasi          = $this->m_aksesoris->getQtyInDetailTabelMonitoringMutasi($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
-            $qtyoutmutasi          = $this->m_aksesoris->getQtyOutDetailTabelMonitoringMutasi($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
-            $temp            = array(
+            // $stok_awal_bulan = $this->m_aksesoris->getAwalBulanDetailTabel($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
+            // $qtyin           = $this->m_aksesoris->getQtyInDetailTabelMonitoring($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
+            // $qtyout          = $this->m_aksesoris->getQtyOutDetailTabelMonitoring($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
+            // $qtyinmutasi          = $this->m_aksesoris->getQtyInDetailTabelMonitoringMutasi($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
+            // $qtyoutmutasi          = $this->m_aksesoris->getQtyOutDetailTabelMonitoringMutasi($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
+            
+			$stok_awal_bulan = $this->m_aluminium->getAwalBulanDetailTabel($key->id_item, $key->id_gudang, $key->keranjang);
+            $qtyin           = $this->m_aluminium->getQtyInDetailTabelMonitoring($key->id_item, $key->id_gudang, $key->keranjang);
+            $qtyout          = $this->m_aluminium->getQtyOutDetailTabelMonitoring($key->id_item, $key->id_gudang, $key->keranjang);
+            $qtyinmutasi          = $this->m_aluminium->getQtyInDetailTabelMonitoringMutasi($key->id_item, $key->id_gudang, $key->keranjang);
+            $qtyoutmutasi          = $this->m_aluminium->getQtyOutDetailTabelMonitoringMutasi($key->id_item, $key->id_gudang, $key->keranjang);
+            
+			$qty_counter = ($stok_awal_bulan + $qtyin + $qtyinmutasi) - ($qtyout + $qtyoutmutasi);
+			// $temp            = array(
                 // "divisi"           => $key->divisi,
                 // "gudang"           => $key->gudang,
                 // "keranjang"        => $key->keranjang,
@@ -1423,17 +1432,17 @@ class Fppp extends CI_Controller
                 // "mutasi_in"          => $qtyinmutasi,
                 // "mutasi_out"          => $qtyoutmutasi,
                 // "stok_akhir_bulan" => $key->qty,
-                "stok_akhir_bulan" => ($stok_awal_bulan + $qtyin + $qtyinmutasi) - $qtyout - $qtyoutmutasi,
+                // "stok_akhir_bulan" => ($stok_awal_bulan + $qtyin + $qtyinmutasi) - $qtyout - $qtyoutmutasi,
                 // "rata_pemakaian"   => $key->rata_pemakaian,
                 // "min_stock"        => '0',
-            );
+            // );
 
             $this->db->where('id_item', $key->id_item);
             $this->db->where('id_divisi', $key->id_divisi);
             $this->db->where('id_gudang', $key->id_gudang);
             $this->db->where('keranjang', $key->keranjang);
             $object = array(
-				'qty' => $temp['stok_akhir_bulan'],
+				'qty' => $qty_counter,
 				'keterangan' => 'penyesuaian '.date('Y-m-d H:i:s'),
 			);
             $this->db->update('data_counter', $object);
