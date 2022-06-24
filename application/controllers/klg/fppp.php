@@ -1400,6 +1400,7 @@ class Fppp extends CI_Controller
 		// $data_aksesoris_in = $this->m_aksesoris->getDataDetailTabel($id);
         // $arr               = array();
 		
+		$this->db->where('keterangan', '');
 		$this->db->where('id_jenis_item', $this->input->post('id_jenis_item'));
 		$data_aksesoris_in = $this->db->get('data_counter')->result();
 		
