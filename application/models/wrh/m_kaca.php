@@ -142,8 +142,8 @@ class M_kaca extends CI_Model
     {
         $year  = date('Y');
         $month = date('m');
-        $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
-        $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
+        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(created,"%m")', $month);
         $this->db->where('inout', 1);
         $this->db->where('awal_bulan', 0);
 
@@ -163,8 +163,8 @@ class M_kaca extends CI_Model
     {
         $year  = date('Y');
         $month = date('m');
-        $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
-        $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
+        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(created,"%m")', $month);
         $this->db->where('inout', 2);
         $this->db->where('awal_bulan', 0);
 
@@ -215,8 +215,8 @@ class M_kaca extends CI_Model
     {
         $year  = date('Y');
         $month = date('m');
-        $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
-        $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
+        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(created,"%m")', $month);
         $this->db->where('inout', 1);
         $this->db->where('awal_bulan', 0);
         $this->db->where('mutasi', 0);
@@ -257,8 +257,8 @@ class M_kaca extends CI_Model
     {
         $year  = date('Y');
         $month = date('m');
-        $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
-        $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
+        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(created,"%m")', $month);
         $this->db->where('mutasi', 0);
         $this->db->where('inout', 2);
         // $this->db->where('id_surat_jalan !=', 0);
@@ -346,8 +346,8 @@ class M_kaca extends CI_Model
     {
         $year  = date('Y');
         $month = date('m');
-        $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
-        $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
+        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(created,"%m")', $month);
         $this->db->where('id_item', $id);
         $this->db->where('id_divisi', $id_divisi);
         $this->db->where('id_gudang', $id_gudang);
@@ -399,8 +399,8 @@ class M_kaca extends CI_Model
     {
         $year  = date('Y');
         $month = date('m');
-        $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
-        $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
+        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(created,"%m")', $month);
         $this->db->where('id_item', $id);
         $this->db->where('id_divisi', $id_divisi);
         $this->db->where('id_gudang', $id_gudang);
@@ -419,8 +419,8 @@ class M_kaca extends CI_Model
     {
         $year  = date('Y');
         $month = date('m');
-        $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
-        $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
+        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(created,"%m")', $month);
         $this->db->where('id_item', $id);
         $this->db->where('id_divisi', $id_divisi);
         $this->db->where('id_gudang', $id_gudang);
@@ -438,8 +438,8 @@ class M_kaca extends CI_Model
     {
         $year  = date('Y');
         $month = date('m');
-        $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
-        $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
+        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(created,"%m")', $month);
         $this->db->where('id_item', $id);
         $this->db->where('id_divisi', $id_divisi);
         $this->db->where('id_gudang', $id_gudang);
