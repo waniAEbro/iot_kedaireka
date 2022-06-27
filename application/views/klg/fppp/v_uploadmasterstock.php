@@ -7,7 +7,7 @@
                 <h3 class="box-title">From Upload Master dan Stock</h3>
             </div>
             <div class="box-body">
-                <h4>Ketentuan Upload excel: </h4>
+                <h4>:Ketentuan Upload excel: </h4>
                 <ul>
                     <li>Upload File dengan format .xls .xlsx .csv</li>
                     <li>Ukuran Maksimal adalah 1000 kb</li>
