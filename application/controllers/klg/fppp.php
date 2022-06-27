@@ -371,7 +371,7 @@ class Fppp extends CI_Controller
 				);
 				$this->db->insert('data_fppp_finance', $obj_py);
 			}
-			$this->fungsi->catat($datapost, "Menyimpan fppp sbb:", true);
+			$this->fungsi->catat($datapost, "Menyimpan fppp dengan file sbb:", true);
 			$data['msg'] = "fppp Disimpan";
 			echo json_encode($data);
 		}
@@ -442,7 +442,7 @@ class Fppp extends CI_Controller
 		$data_multi_brand_string = array('multi_brand_string' => implode($b));
 		$this->m_fppp->updateFppp($data['id'], $data_multi_brand_string);
 
-		$this->fungsi->catat($datapost, "Menyimpan fppp sbb:", true);
+		$this->fungsi->catat($datapost, "Mengupdate fppp sbb:", true);
 		$data['msg'] = "fppp Disimpan";
 		echo json_encode($data);
 	}
@@ -520,7 +520,7 @@ class Fppp extends CI_Controller
 			$data_multi_brand_string = array('multi_brand_string' => implode($b));
 			$this->m_fppp->updateFppp($data['id'], $data_multi_brand_string);
 
-			$this->fungsi->catat($datapost, "Menyimpan fppp sbb:", true);
+			$this->fungsi->catat($datapost, "Mengupdate fppp dengan file sbb:", true);
 			$data['msg'] = "fppp Disimpan";
 			echo json_encode($data);
 		}
