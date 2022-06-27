@@ -1401,11 +1401,11 @@ class Fppp extends CI_Controller
 		// $data_aksesoris_in = $this->m_aksesoris->getDataDetailTabel($id);
         // $arr               = array();
 		
-		$this->db->where('keterangan', '');
+		// $this->db->where('keterangan', '');
 		$this->db->where('id_jenis_item', $this->input->post('id_jenis_item'));
-		if ($this->input->post('id_gudang')!='') {
-			$this->db->where('id_gudang', $this->input->post('id_gudang'));
-		}
+		// if ($this->input->post('id_gudang')!='') {
+		// 	$this->db->where('id_gudang', $this->input->post('id_gudang'));
+		// }
 		$data_aksesoris_in = $this->db->get('data_counter')->result();
 		
         foreach ($data_aksesoris_in as $key) {
@@ -1416,10 +1416,10 @@ class Fppp extends CI_Controller
             // $qtyoutmutasi          = $this->m_aksesoris->getQtyOutDetailTabelMonitoringMutasi($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
             
 			$stok_awal_bulan = $this->m_aluminium->getAwalBulanDetailTabel($key->id_item, $key->id_gudang, $key->keranjang);
-            $qtyin           = $this->m_aluminium->getQtyInDetailTabelMonitoring($key->id_item, $key->id_gudang, $key->keranjang);
-            $qtyout          = $this->m_aluminium->getQtyOutDetailTabelMonitoring($key->id_item, $key->id_gudang, $key->keranjang);
-            $qtyinmutasi          = $this->m_aluminium->getQtyInDetailTabelMonitoringMutasi($key->id_item, $key->id_gudang, $key->keranjang);
-            $qtyoutmutasi          = $this->m_aluminium->getQtyOutDetailTabelMonitoringMutasi($key->id_item, $key->id_gudang, $key->keranjang);
+            $qtyin           = $this->m_aluminium->getQtyInDetailTabelMonitoringP($key->id_item, $key->id_gudang, $key->keranjang);
+            $qtyout          = $this->m_aluminium->getQtyOutDetailTabelMonitoringP($key->id_item, $key->id_gudang, $key->keranjang);
+            $qtyinmutasi          = $this->m_aluminium->getQtyInDetailTabelMonitoringMutasiP($key->id_item, $key->id_gudang, $key->keranjang);
+            $qtyoutmutasi          = $this->m_aluminium->getQtyOutDetailTabelMonitoringMutasiP($key->id_item, $key->id_gudang, $key->keranjang);
             
 			$qty_counter = ($stok_awal_bulan + $qtyin + $qtyinmutasi) - ($qtyout + $qtyoutmutasi);
 			// $temp            = array(
