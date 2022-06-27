@@ -107,8 +107,8 @@ class Aluminium extends CI_Controller
         $data['s_awal_bulan']    = $this->m_aluminium->getStockAwalBulanCetak();
         $data['s_total_in']  = $this->m_aluminium->getTotalInPerBulanCetak();
         $data['s_total_out'] = $this->m_aluminium->getTotalOutPerBulanCetak();
-        $data['jenis_barang'] = "Aluminium";
-        $this->load->view('wrh/aksesoris/v_aksesoris_cetak_monitoring', $data);
+        $data['jenis_barang'] = "Aluminium MF";
+        $this->load->view('wrh/aluminium/v_aluminium_cetak_monitoring', $data);
     }
 
     public function getDetailTabel()
