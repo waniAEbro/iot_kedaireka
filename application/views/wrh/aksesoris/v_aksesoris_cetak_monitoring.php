@@ -16,12 +16,8 @@
         <tr bgcolor="#ffe357">
             <th width="5%">No</th>
             <th>Item Code</th>
-            <?php
-            if ($jenis_barang != 'Aluminium') {
-            ?>
-                <th>Deskripsi</th>
-                <th>Supplier</th>
-            <?php } ?>
+            <th>Deskripsi</th>
+            <th>Supplier</th>
             <th>Satuan</th>
             <th>Lead Time</th>
             <th>Divisi</th>
@@ -45,12 +41,8 @@
             <tr>
                 <td align="center"><?= $i++ ?></td>
                 <td><?= $row->item_code ?></td>
-                <?php
-                if ($jenis_barang != 'Aluminium') {
-                ?>
-                    <td><?= $row->deskripsi ?></td>
-                    <td><?= $row->supplier ?></td>
-                <?php } ?>
+                <td><?= $row->deskripsi ?></td>
+                <td><?= $row->supplier ?></td>
                 <td><?= $row->satuan ?></td>
                 <td><?= $row->lead_time ?></td>
                 <td><?= $row->divisi ?></td>
