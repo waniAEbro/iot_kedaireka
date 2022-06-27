@@ -104,6 +104,9 @@ class Aluminium extends CI_Controller
     public function cetakExcelMonitoringMf()
     {
         $data['aksesoris']    = $this->m_aluminium->getCetakMonitoringMf(1);
+        $data['s_awal_bulan']    = $this->m_aluminium->getStockAwalBulanCetak();
+        $data['s_total_in']  = $this->m_aluminium->getTotalInPerBulanCetak();
+        $data['s_total_out'] = $this->m_aluminium->getTotalOutPerBulanCetak();
         $data['jenis_barang'] = "Aluminium";
         $this->load->view('wrh/aksesoris/v_aksesoris_cetak_monitoring', $data);
     }
