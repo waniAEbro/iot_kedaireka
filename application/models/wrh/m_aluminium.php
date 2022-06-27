@@ -82,8 +82,9 @@ class M_aluminium extends CI_Model
         $this->db->join('master_divisi_stock md', 'md.id = dc.id_divisi', 'left');
         $this->db->join('master_gudang mg', 'mg.id = dc.id_gudang', 'left');
         $this->db->join('master_item mi', 'mi.id = dc.id_item', 'left');
+        $this->db->join('master_warna mw', 'mw.kode = mi.kode_warna', 'left');
         $this->db->where('mi.kode_warna', '01');
-        $this->db->select('dc.*,md.divisi,mg.gudang,mi.item_code,mi.supplier,mi.lead_time,mi.satuan');
+        $this->db->select('dc.*,md.divisi,mg.gudang,mi.item_code,mi.supplier,mi.lead_time,mi.satuan,mw.warna');
 
         $this->db->where('dc.id_jenis_item', $id_jenis_barang);
         return $this->db->get('data_counter dc');
