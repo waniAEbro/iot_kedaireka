@@ -87,8 +87,6 @@ class Auth
                 'username'          => $query->row()->username,
                 'nama'              => $query->row()->nama,
                 'level'             => $query->row()->level,
-                'store'             => $query->row()->id_store,
-                'gambar'            => $query->row()->gambar,
                 'nama_level'        => $query->row()->nama_level,
                 'logged_in'         => TRUE,
             );
