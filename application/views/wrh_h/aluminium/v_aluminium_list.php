@@ -18,7 +18,7 @@
     <div class="col-lg-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Monitoring Aluminium <?= $warna ?> RSD</h3>
+                <h3 class="box-title">Monitoring Aluminium <?= $warna ?> HRB</h3>
 
                 <div class="box-tools pull-right">
                     <?php
@@ -115,8 +115,8 @@
                                     <td align="center"><?= $free_stock ?></td>
                                     <td align="center"><?= $tampil_total_bom ?> - <?= $tampil_total_out_per_bulan ?></td>
                                     <td align="center">
-                                        <?= button('load_silent("wrh/aluminium/mutasi_stock_add/' . $row->id . '","#content")', 'mutasi', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Mutasi"'); ?>
-                                        <?= button('load_silent("wrh/aluminium/mutasi_stock_history/' . $row->id . '","#modal")', 'history mutasi', 'btn btn-xs btn-default', 'data-toggle="tooltip" title="History Mutasi"'); ?></td>
+                                        <?= button('load_silent("wrh_h/aluminium/mutasi_stock_add/' . $row->id . '","#content")', 'mutasi', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Mutasi"'); ?>
+                                        <?= button('load_silent("wrh_h/aluminium/mutasi_stock_history/' . $row->id . '","#modal")', 'history mutasi', 'btn btn-xs btn-default', 'data-toggle="tooltip" title="History Mutasi"'); ?></td>
                                 </tr>
 
                             <?php $i++;
@@ -148,12 +148,12 @@
     })
 
     function cetakExcelmf() {
-        var url = "<?= site_url('wrh/aluminium/cetakExcelMonitoringMf') ?>";
+        var url = "<?= site_url('wrh_h/aluminium/cetakExcelMonitoringMf') ?>";
         window.open(url, "_blank");
     }
 
     function cetakExcelwarna() {
-        var url = "<?= site_url('wrh/aluminium/cetakExcelMonitoring') ?>";
+        var url = "<?= site_url('wrh_h/aluminium/cetakExcelMonitoring') ?>";
         window.open(url, "_blank");
     }
 
@@ -205,7 +205,7 @@
         };
         var status = $('#status').val();
         var jne = $('#jne').val();
-        load_silent("wrh/aluminium/filter/" + id_store + "/" + id_bulan + "/" + id_tahun + "/" + status + "/" + jne + "/", "#content");
+        load_silent("wrh_h/aluminium/filter/" + id_store + "/" + id_bulan + "/" + id_tahun + "/" + status + "/" + jne + "/", "#content");
 
     }
 
@@ -248,7 +248,7 @@
                 '<th bgcolor="#bfbfbf">Min Stock</th>' +
                 '</tr>';
             $.ajax({
-                    url: "<?= site_url('wrh/aluminium/getDetailTabel') ?>",
+                    url: "<?= site_url('wrh_h/aluminium/getDetailTabel') ?>",
                     type: 'POST',
                     dataType: 'JSON',
                     data: {
