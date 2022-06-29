@@ -43,6 +43,9 @@
                                 <th>User</th>
                                 <th>Item Code</th>
                                 <th width="25%">Deskripsi</th>
+                                <th>Lebar</th>
+                                <th>Tinggi</th>
+                                <th>Warna</th>
                                 <th>Satuan</th>
                                 <th>Qty</th>
                                 <th>Brand</th>
@@ -77,6 +80,9 @@
                                         <td><?= $row->nama ?></td>
                                         <td><?= $row->item_code ?></td>
                                         <td><?= $row->deskripsi ?></td>
+                                        <td><?= $row->lebar ?></td>
+                                        <td><?= $row->tinggi ?></td>
+                                        <td><?= $row->warna ?></td>
                                         <td><?= $row->satuan ?></td>
                                         <td><?= $qty ?></td>
                                         <td><?= $row->brand ?></td>

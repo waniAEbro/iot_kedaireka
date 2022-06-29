@@ -33,65 +33,69 @@
                         </div>
                         </>
                     </div>
-                    <?php } ?>
-                    <div class="box-body">
-                        <table width="100%" id="tableku" class="table table-striped">
-                            <thead>
-                                <th width="5%">No</th>
-                                <th>Tgl Aktual</th>
-                                <th>Tgl Input</th>
-                                <th>User</th>
-                                <th>Stok Awal Bulan</th>
-                                <th>Item Code</th>
-                                <th width="25%">Deskripsi</th>
-                                <th>Warna</th>
-                                <th>Satuan</th>
-                                <th>Qty</th>
-                                <th>Divisi</th>
-                                <th>Gudang</th>
-                                <th>Keranjang</th>
-                                <th>Supplier</th>
-                                <th>NO Surat Jalan</th>
-                                <th>NO PR/WO</th>
-                                <th>Keterangan</th>
-                                <th>Status</th>
-                                <th></th>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $i = 1;
-                                foreach ($lembaran->result() as $row) :
-                                    $sts = ($row->mutasi == 0) ? "Stock" : "Mutasi";
-                                    $qty = ($row->inout == 1) ? $row->qty_in : $row->qty_out;
-                                    $awal_bulan = ($row->awal_bulan == 1) ? 'YA' : 'TIDAK';
-                                ?>
-                                    <tr>
-                                        <td align="center"><?= $i++ ?></td>
-                                        <td><?= $row->aktual ?></td>
-                                        <td><?= $row->tgl_stok ?></td>
-                                        <td><?= $row->nama ?></td>
-                                        <td><?= $awal_bulan ?></td>
-                                        <td><?= $row->item_code ?></td>
-                                        <td><?= $row->deskripsi ?></td>
-                                        <td><?= $row->warna ?></td>
-                                        <td><?= $row->satuan ?></td>
-                                        <td><?= $qty ?></td>
-                                        <td><?= $row->divisi_lembaran ?></td>
-                                        <td><?= $row->gudang ?></td>
-                                        <td><?= $row->keranjang ?></td>
-                                        <td><?= $row->supplier ?></td>
-                                        <td><?= $row->no_surat_jalan ?></td>
-                                        <td><?= $row->no_pr ?></td>
-                                        <td><?= $row->keterangan ?></td>
-                                        <td><?= $sts ?></td>
-                                        <td><?php echo button('load_silent("inout/lembaran/formedit/' . $row->id_ds . '","#modal")', 'Edit', 'btn btn-info btn-xs', 'data-toggle="tooltip" title="Edit"');?></td>
+                <?php } ?>
+                <div class="box-body">
+                    <table width="100%" id="tableku" class="table table-striped">
+                        <thead>
+                            <th width="5%">No</th>
+                            <th>Tgl Aktual</th>
+                            <th>Tgl Input</th>
+                            <th>User</th>
+                            <th>Stok Awal Bulan</th>
+                            <th>Item Code</th>
+                            <th width="25%">Deskripsi</th>
+                            <th>Lebar</th>
+                            <th>Tinggi</th>
+                            <th>Warna</th>
+                            <th>Satuan</th>
+                            <th>Qty</th>
+                            <th>Divisi</th>
+                            <th>Gudang</th>
+                            <th>Keranjang</th>
+                            <th>Supplier</th>
+                            <th>NO Surat Jalan</th>
+                            <th>NO PR/WO</th>
+                            <th>Keterangan</th>
+                            <th>Status</th>
+                            <th></th>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $i = 1;
+                            foreach ($lembaran->result() as $row) :
+                                $sts = ($row->mutasi == 0) ? "Stock" : "Mutasi";
+                                $qty = ($row->inout == 1) ? $row->qty_in : $row->qty_out;
+                                $awal_bulan = ($row->awal_bulan == 1) ? 'YA' : 'TIDAK';
+                            ?>
+                                <tr>
+                                    <td align="center"><?= $i++ ?></td>
+                                    <td><?= $row->aktual ?></td>
+                                    <td><?= $row->tgl_stok ?></td>
+                                    <td><?= $row->nama ?></td>
+                                    <td><?= $awal_bulan ?></td>
+                                    <td><?= $row->item_code ?></td>
+                                    <td><?= $row->deskripsi ?></td>
+                                    <td><?= $row->lebar ?></td>
+                                    <td><?= $row->tinggi ?></td>
+                                    <td><?= $row->warna ?></td>
+                                    <td><?= $row->satuan ?></td>
+                                    <td><?= $qty ?></td>
+                                    <td><?= $row->divisi_lembaran ?></td>
+                                    <td><?= $row->gudang ?></td>
+                                    <td><?= $row->keranjang ?></td>
+                                    <td><?= $row->supplier ?></td>
+                                    <td><?= $row->no_surat_jalan ?></td>
+                                    <td><?= $row->no_pr ?></td>
+                                    <td><?= $row->keterangan ?></td>
+                                    <td><?= $sts ?></td>
+                                    <td><?php echo button('load_silent("inout/lembaran/formedit/' . $row->id_ds . '","#modal")', 'Edit', 'btn btn-info btn-xs', 'data-toggle="tooltip" title="Edit"'); ?></td>
 
-                                    </tr>
+                                </tr>
 
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    </div>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
