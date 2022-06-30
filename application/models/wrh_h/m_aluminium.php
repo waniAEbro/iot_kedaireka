@@ -1035,6 +1035,7 @@ class M_aluminium extends CI_Model
 
         $this->db->order_by('dsj.id', 'desc');
         $this->db->where('dsj.tipe', $tipe);
+        $this->db->like('no_surat_jalan', 'HRB');
         $this->db->where('dsj.id_jenis_item', $id_jenis_item);
         return $this->db->get('data_surat_jalan dsj');
     }
@@ -1064,6 +1065,7 @@ class M_aluminium extends CI_Model
         $id_jenis_item = 1;
         $this->db->where('DATE_FORMAT(created,"%Y")', $year);
         $this->db->where('DATE_FORMAT(created,"%m")', $month);
+        $this->db->like('no_surat_jalan', 'HRB');
         $this->db->order_by('id', 'desc');
         $this->db->limit(1);
         $this->db->where('id_jenis_item', $id_jenis_item);
