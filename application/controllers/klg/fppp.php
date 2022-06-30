@@ -712,9 +712,15 @@ class Fppp extends CI_Controller
 					FALSE
 				);
 
+				if ($jenis_item == 1) {
+					$itmcode = $rowData[0][8] . '-' . $rowData[0][9] . '-' . $rowData[0][10] . '-' . str_pad($rowData[0][11], 2, '0', STR_PAD_LEFT) . '-' . $rowData[0][12];
+				}else{
+					$itmcode = str_replace(' ', '', $rowData[0][1]);
+				}
+
 				$obj = array(
 					'id_jenis_item'     => $jenis_item,
-					'item_code'         => str_replace(' ', '', $rowData[0][1]),
+					'item_code'         => $itmcode,
 					'deskripsi'         => $rowData[0][2],
 					'satuan'            => $rowData[0][3],
 					'id_divisi'         => $rowData[0][4],
@@ -739,7 +745,7 @@ class Fppp extends CI_Controller
 
 				$obj_master = array(
 					'id_jenis_item'     => $jenis_item,
-					'item_code'         => str_replace(' ', '', $rowData[0][1]),
+					'item_code'         => $itmcode,
 					'deskripsi'         => $rowData[0][2],
 					'satuan'            => $rowData[0][3],
 					'section_ata'       => $rowData[0][8],
