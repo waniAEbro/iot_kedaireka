@@ -768,11 +768,12 @@ class Fppp extends CI_Controller
 				if ($tipe_upload == 1) {
 					if ($cek_item->num_rows() < 1) {
 						$this->db->insert('master_item', $obj_master);
-					} else {
-						$this->db->where('item_code', $obj['item_code']);
-						$this->db->where('id_jenis_item', $obj['id_jenis_item']);
-						$this->db->update('master_item', $obj_master);
-					}
+					} 
+					// else {
+					// 	$this->db->where('item_code', $obj['item_code']);
+					// 	$this->db->where('id_jenis_item', $obj['id_jenis_item']);
+					// 	$this->db->update('master_item', $obj_master);
+					// }
 				} else {
 					$iditem  = $cek_item->row()->id;
 					$krjng = ($obj['keranjang']!='') ? $obj['keranjang'] : '-' ;
