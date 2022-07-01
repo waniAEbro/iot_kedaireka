@@ -245,7 +245,7 @@
         } else {
             z = "<option>-- Select --</option>";
             $.ajax({
-                url: "<?= site_url('wrh_h/aksesoris/optionGetMultibrandFppp') ?>",
+                url: "<?= site_url('wrh/aksesoris/optionGetMultibrandFppp') ?>",
                 dataType: "json",
                 type: "POST",
                 data: {
