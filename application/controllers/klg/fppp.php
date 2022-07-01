@@ -787,6 +787,7 @@ class Fppp extends CI_Controller
 						'created'       => date('Y-m-d H:i:s'),
 						'updated'       => date('Y-m-d H:i:s'),
 						'itm_code'      => str_replace(' ', '', $obj['item_code']),
+						'keterangan'      => 'upload_stock',
 					);
 					$cekQtyCounter = $this->m_fppp->cekCounter($obj['id_jenis_item'], $obj['item_code'], $obj['id_divisi'], $obj['id_gudang'], $obj['keranjang']);
 					if ($cekQtyCounter->num_rows() == 0) {
