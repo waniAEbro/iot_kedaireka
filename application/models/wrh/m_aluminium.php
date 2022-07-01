@@ -68,14 +68,13 @@ class M_aluminium extends CI_Model
 
     public function getCetakMonitoring($id_jenis_barang)
     {
-        $this->db->join('master_divisi_stock md', 'md.id = dc.id_divisi', 'left');
         $this->db->join('master_gudang mg', 'mg.id = dc.id_gudang', 'left');
         $this->db->join('master_item mi', 'mi.id = dc.id_item', 'left');
         $this->db->join('master_warna mw', 'mw.kode = mi.kode_warna', 'left');
         
         $this->db->where('mi.kode_warna !=', '01');
         $this->db->where_in('dc.id_gudang', ['1','3']);
-        $this->db->select('dc.*,md.divisi,mg.gudang,mi.item_code,mi.supplier,mi.lead_time,mi.satuan,mw.warna');
+        $this->db->select('dc.*,mg.gudang,mi.item_code,mi.supplier,mi.lead_time,mi.satuan,mw.warna');
 
         $this->db->where('dc.id_jenis_item', $id_jenis_barang);
         return $this->db->get('data_counter dc');
@@ -83,13 +82,12 @@ class M_aluminium extends CI_Model
 
     public function getCetakMonitoringMf($id_jenis_barang)
     {
-        $this->db->join('master_divisi_stock md', 'md.id = dc.id_divisi', 'left');
         $this->db->join('master_gudang mg', 'mg.id = dc.id_gudang', 'left');
         $this->db->join('master_item mi', 'mi.id = dc.id_item', 'left');
         $this->db->join('master_warna mw', 'mw.kode = mi.kode_warna', 'left');
         $this->db->where('mi.kode_warna', '01');
         $this->db->where_in('dc.id_gudang', ['1','3']);
-        $this->db->select('dc.*,md.divisi,mg.gudang,mi.item_code,mi.supplier,mi.lead_time,mi.satuan,mw.warna');
+        $this->db->select('dc.*,mg.gudang,mi.item_code,mi.supplier,mi.lead_time,mi.satuan,mw.warna');
 
         $this->db->where('dc.id_jenis_item', $id_jenis_barang);
         return $this->db->get('data_counter dc');
@@ -239,15 +237,7 @@ class M_aluminium extends CI_Model
 
     public function getlistStock()
     {
-        // $this->db->join('master_divisi_stock md', 'md.id = da.id_divisi', 'left');
-        // $this->db->join('master_gudang mg', 'mg.id = da.id_gudang', 'left');
-        // $this->db->group_by('da.id_divisi');
-        // $this->db->group_by('da.id_gudang');
-        // $this->db->group_by('da.keranjang');
-        // $this->db->select('da.*');
-
-        // return $this->db->get('data_stock da');
-        // $this->db->where('id_jenis_item', 1);
+        
 
         return $this->db->get('data_counter');
     }
@@ -428,20 +418,7 @@ class M_aluminium extends CI_Model
 
     public function getDataDetailTabel($id_item = '')
     {
-        // $this->db->join('master_divisi_stock md', 'md.id = da.id_divisi', 'left');
-        // $this->db->join('master_gudang mg', 'mg.id = da.id_gudang', 'left');
-        // $this->db->where('da.inout', 1);
-        // $this->db->where('da.id_item', $id_item);
-        // // $this->db->where('da.id_surat_jalan', 0);
-        // $this->db->where('da.awal_bulan', 0);
-        // $this->db->group_by('da.id_divisi');
-        // $this->db->group_by('da.id_gudang');
-        // $this->db->group_by('da.keranjang');
-        // // $this->db->group_by(array('da.id_divisi', 'da.id_gudang', 'da.keranjang'));
-
-        // $this->db->select('da.*,mg.gudang,md.divisi');
-
-        // return $this->db->get('data_stock da')->result();
+        
 
         $this->db->join('master_item mi', 'mi.id = dc.id_item', 'left');
         $this->db->join('master_gudang mg', 'mg.id = dc.id_gudang', 'left');
@@ -915,22 +892,25 @@ class M_aluminium extends CI_Model
         return $this->db->get('data_counter ds');
     }
 
+    public function getStockAkhirBulan()
+    {
+        $this->db->where_in('id_gudang', ['1','3']);
+        $res  = $this->db->get('data_counter');
+        $data = array();
+
+        foreach ($res->result() as $key) {
+
+            if (!isset($data[$key->id_item])) {
+                $data[$key->id_item] = 0;
+            }
+            $data[$key->id_item] = $data[$key->id_item] + $key->qty;
+        }
+        return $data;
+    }
 
 
-    // public function getQtyTerbanyakStockDivisi($id_item)
-    // {
-    //     $this->db->where('id_item', $id_item);
-    //     // $this->db->where('id_gudang >=', 3);
-    //     $this->db->order_by('qty', 'desc');
-    //     $this->db->limit(1);
 
-    //     $hasil = $this->db->get('data_counter');
-    //     if ($hasil->num_rows() < 1) {
-    //         return 0;
-    //     } else {
-    //         return $hasil->row()->id_divisi;
-    //     }
-    // }
+   
     public function getQtyTerbanyakStockGudang($id_item)
     {
         $this->db->where('id_item', $id_item);
@@ -1083,6 +1063,7 @@ class M_aluminium extends CI_Model
             return '1';
         }
     }
+
 
     public function getKodeDivisi($id_fppp)
     {
@@ -1260,11 +1241,7 @@ class M_aluminium extends CI_Model
         return $this->db->get('data_counter dc')->result();
     }
 
-    // public function mgetDivisiItem($item)
-    // {
-    //     $this->db->where('id', $item);
-    //     return $this->db->get('master_item')->row()->id_divisi;
-    // }
+    
 
     public function getGudangDivisi($id_item)
     {

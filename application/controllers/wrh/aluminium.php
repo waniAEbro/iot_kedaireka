@@ -19,7 +19,7 @@ class Aluminium extends CI_Controller
         $data['aluminium_list'] = $this->m_aluminium->getData();
 
         $data['s_awal_bulan'] = $this->m_aluminium->getStockAwalBulan();
-        $data['s_akhir_bulan'] = $this->m_aksesoris->getStockAkhirBulan();
+        $data['s_akhir_bulan'] = $this->m_aluminium->getStockAkhirBulan();
 
         $data['total_bom'] = $this->m_aluminium->getTotalBOM();
         // print_r($data);
@@ -83,7 +83,7 @@ class Aluminium extends CI_Controller
         $this->fungsi->check_previleges('aluminium');
         $data['aluminium_list']      = $this->m_aluminium->getdataMf();
         $data['s_awal_bulan']        = $this->m_aluminium->getStockAwalBulan();
-        $data['s_akhir_bulan'] = $this->m_aksesoris->getStockAkhirBulan();
+        $data['s_akhir_bulan'] = $this->m_aluminium->getStockAkhirBulan();
         $data['total_bom']           = $this->m_aluminium->getTotalBOM();
         $data['total_in_per_bulan']  = $this->m_aluminium->getTotalInPerBulan();
         $data['total_out_per_bulan'] = $this->m_aluminium->getTotalOutPerBulan();
@@ -139,7 +139,6 @@ class Aluminium extends CI_Controller
             );
 
             // $this->db->where('id_item', $key->id_item);
-            // $this->db->where('id_divisi', $key->id_divisi);
             // $this->db->where('id_gudang', $key->id_gudang);
             // $this->db->where('keranjang', $key->keranjang);
             // $object = array('qty' => $temp['stok_akhir_bulan']);
@@ -1125,7 +1124,6 @@ class Aluminium extends CI_Controller
 
         foreach ($data_detail as $key) {
             $id_item   = $this->db->get_where('data_stock', array('id' => $key->id))->row()->id_item;
-            $id_divisi = $this->db->get_where('data_stock', array('id' => $key->id))->row()->id_divisi;
             $id_gudang = $this->db->get_where('data_stock', array('id' => $key->id))->row()->id_gudang;
             $keranjang = $this->db->get_where('data_stock', array('id' => $key->id))->row()->keranjang;
             $qty_out   = $this->db->get_where('data_stock', array('id' => $key->id))->row()->qty_out;

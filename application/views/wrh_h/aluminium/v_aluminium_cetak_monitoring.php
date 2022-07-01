@@ -20,7 +20,6 @@
             <th>Deskripsi Warna</th>
             <th>Satuan</th>
             <th>Lead Time</th>
-            <th>Divisi</th>
             <th>Gudang</th>
             <th>Keranjang</th>
             <th>Stock Awal Bulan</th>
@@ -45,7 +44,6 @@
                 <td><?= $row->warna ?></td>
                 <td><?= $row->satuan ?></td>
                 <td><?= $row->lead_time ?></td>
-                <td><?= $row->divisi ?></td>
                 <td><?= $row->gudang ?></td>
                 <td><?= $row->keranjang ?></td>
                 <td><?= $stock_awal_bulan ?></td>
