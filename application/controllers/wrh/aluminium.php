@@ -620,7 +620,7 @@ class Aluminium extends CI_Controller
         $data['id_fppp']        = $id_fppp;
         $data['row_fppp']       = $this->m_aluminium->getRowFppp($id_fppp);
         $kode_divisi      = $this->m_aluminium->getKodeDivisi($id_fppp);
-        $data['no_surat_jalan'] = str_pad($this->m_aluminium->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJ/RSD/' . $kode_divisi . '/' . date('m') . '/' . date('Y');
+        $data['no_surat_jalan'] = str_pad($this->m_aluminium->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJ/SJRSD/' . $kode_divisi . '/' . date('m') . '/' . date('Y');
 
         $this->load->view('wrh/aluminium/v_aluminium_buat_surat_jalan', $data);
     }
@@ -631,7 +631,7 @@ class Aluminium extends CI_Controller
         $data['id_fppp']        = $id_fppp;
         $data['row_fppp']       = $this->m_aluminium->getRowFppp($id_fppp);
         $kode_divisi      = $this->m_aluminium->getKodeDivisi($id_fppp);
-        $data['no_surat_jalan'] = str_pad($this->m_aluminium->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJMF/RSD/' . $kode_divisi . '/' . date('m') . '/' . date('Y');
+        $data['no_surat_jalan'] = str_pad($this->m_aluminium->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJMF/SJRSD/' . $kode_divisi . '/' . date('m') . '/' . date('Y');
 
         $this->load->view('wrh/aluminium/v_aluminium_buat_surat_jalan_mf', $data);
     }
@@ -640,7 +640,7 @@ class Aluminium extends CI_Controller
     {
         $this->fungsi->check_previleges('aluminium');
         $data['no_fppp']        = $this->db->get_where('data_fppp', array('id_status' => 1));
-        $data['no_surat_jalan'] = str_pad($this->m_aluminium->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJ/AL/RSD/' . date('m') . '/' . date('Y');
+        $data['no_surat_jalan'] = str_pad($this->m_aluminium->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJ/AL/SJRSD/' . date('m') . '/' . date('Y');
 
         $this->load->view('wrh/aluminium/v_aluminium_out', $data);
     }
@@ -678,7 +678,7 @@ class Aluminium extends CI_Controller
         $sopir             = $this->input->post('sopir');
         $no_kendaraan      = $this->input->post('no_kendaraan');
         $kode_divisi       = $this->m_aluminium->getKodeDivisi($id_fppp);
-        $no_surat_jalan    = str_pad($this->m_aluminium->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJ/RSD/' . $kode_divisi . '/' . date('m') . '/' . date('Y');
+        $no_surat_jalan    = str_pad($this->m_aluminium->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJ/SJRSD/' . $kode_divisi . '/' . date('m') . '/' . date('Y');
         $obj               = array(
             'id_fppp'           => $id_fppp,
             'no_surat_jalan'    => $no_surat_jalan,
@@ -706,7 +706,7 @@ class Aluminium extends CI_Controller
         $sopir             = $this->input->post('sopir');
         $no_kendaraan      = $this->input->post('no_kendaraan');
         $kode_divisi       = $this->m_aluminium->getKodeDivisi($id_fppp);
-        $no_surat_jalan    = str_pad($this->m_aluminium->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJMF/RSD/' . $kode_divisi . '/' . date('m') . '/' . date('Y');
+        $no_surat_jalan    = str_pad($this->m_aluminium->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJMF/SJRSD/' . $kode_divisi . '/' . date('m') . '/' . date('Y');
         $obj               = array(
             'id_fppp'           => $id_fppp,
             'no_surat_jalan'    => $no_surat_jalan,
@@ -912,7 +912,7 @@ class Aluminium extends CI_Controller
         $id_fppp          = $this->m_aluminium->getListItemBonManual()->row()->id_fppp;
         $data['id_fppp']        = $id_fppp;
         $kode_divisi      = $this->m_aluminium->getKodeDivisi($id_fppp);
-        $no_surat_jalan   = str_pad($this->m_aluminium->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJBON/RSD/' . $kode_divisi . '/' . date('m') . '/' . date('Y');
+        $no_surat_jalan   = str_pad($this->m_aluminium->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJBON/SJRSD/' . $kode_divisi . '/' . date('m') . '/' . date('Y');
         $data['no_surat_jalan'] = $no_surat_jalan;
         $data['list_sj']        = $this->m_aluminium->getListItemBonManual();
         $this->load->view('wrh/aluminium/v_aluminium_bon_add', $data);
@@ -974,7 +974,7 @@ class Aluminium extends CI_Controller
         $no_kendaraan      = $this->input->post('no_kendaraan');
         $keterangan      = $this->input->post('keterangan');
         $kode_divisi       = $this->m_aluminium->getKodeDivisi($id_fppp);
-        $no_surat_jalan    = str_pad($this->m_aluminium->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJBON/RSD/' . $kode_divisi . '/' . date('m') . '/' . date('Y');
+        $no_surat_jalan    = str_pad($this->m_aluminium->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJBON/SJRSD/' . $kode_divisi . '/' . date('m') . '/' . date('Y');
         $obj               = array(
             'id_fppp'           => $id_fppp,
             'no_surat_jalan'    => $no_surat_jalan,
@@ -1077,6 +1077,7 @@ class Aluminium extends CI_Controller
                 'created'        => date('Y-m-d H:i:s'),
                 'updated'        => date('Y-m-d H:i:s'),
                 'aktual'      => date('Y-m-d'),
+                'jenis_aluminium'      => 1,
             );
             $this->db->insert('data_stock', $datapost);
             $data['id']          = $this->db->insert_id();
