@@ -688,6 +688,7 @@ class Aluminium extends CI_Controller
             'no_kendaraan'      => $no_kendaraan,
             'id_jenis_item'     => $id_jenis_item,
             'tipe'              => 1,
+            'jenis_aluminium'              => 1,
             'created'           => date('Y-m-d H:i:s'),
         );
         $this->db->insert('data_surat_jalan', $obj);
