@@ -6,13 +6,10 @@
                 <h3 class="box-title">List BON Aluminium</h3>
                 <div class="box-tools pull-right">
                     <?php
-                    $sesi = from_session('level');
-                    if ($sesi <= 3) {
-                        echo button('load_silent("wrh_h/aluminium/bon_manual_add/","#content")', 'Add BON Manual MF', 'btn btn-info', 'data-toggle="tooltip" title="BON Manual"');
+                    
+
+                    echo button('load_silent("wrh_h/aluminium/bon_manual_add/","#content")', 'Add BON Manual MF', 'btn btn-info', 'data-toggle="tooltip" title="BON Manual"');
                         echo button('load_silent("wrh_h/aluminium/bon_manual_add_warna/","#content")', 'Add BON Manual Warna', 'btn btn-primary', 'data-toggle="tooltip" title="BON Manual"');
-                    } else {
-                        # code...
-                    }
                     ?>
                 </div>
             </div>
