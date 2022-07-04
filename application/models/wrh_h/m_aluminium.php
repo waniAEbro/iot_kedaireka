@@ -1012,7 +1012,7 @@ class M_aluminium extends CI_Model
 
         $this->db->where('DATE(dsj.tgl_aktual) >=', $tgl_awal);
         $this->db->where('DATE(dsj.tgl_aktual) <=', $tgl_akhir);
-        $this->db->where('jenis_aluminium', '1');
+        $this->db->where('jenis_aluminium', '2');
 
 
         $this->db->order_by('dsj.id', 'desc');
@@ -1046,7 +1046,7 @@ class M_aluminium extends CI_Model
         $id_jenis_item = 1;
         $this->db->where('DATE_FORMAT(created,"%Y")', $year);
         $this->db->where('DATE_FORMAT(created,"%m")', $month);
-        $this->db->where('jenis_aluminium', '1');
+        $this->db->where('jenis_aluminium', '2');
         
         $this->db->order_by('id', 'desc');
         $this->db->limit(1);
@@ -1515,7 +1515,7 @@ class M_aluminium extends CI_Model
         $this->db->where('is_bom', 0);
         $this->db->where('id_jenis_item', 1);
         $this->db->where('mutasi', 0);
-        $this->db->where('jenis_aluminium', 1);
+        $this->db->where('jenis_aluminium', 2);
         $this->db->where('id_penginput', from_session('id'));
         $this->db->update('data_stock', $object);
     }
