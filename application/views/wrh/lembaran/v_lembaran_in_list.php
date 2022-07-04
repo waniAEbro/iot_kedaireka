@@ -6,11 +6,7 @@
                 <h3 class="box-title">Stok IN lembaran</h3>
                 <div class="box-tools pull-right">
                     <?php
-                    $sesi = from_session('level');
-                    if ($sesi <= 3) {
-                    } else {
-                        # code...
-                    }
+                    
                     echo button('load_silent("wrh/lembaran/stok_in_add/","#content")', 'Tambah Stock', 'btn btn-primary', 'data-toggle="tooltip" title="Tambah Stock"');
                     ?>
                 </div>

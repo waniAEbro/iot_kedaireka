@@ -22,15 +22,6 @@
 
                 <div class="box-tools pull-right">
                     <a class="btn btn-primary" onclick="cetakExcel()">Cetak</a>
-                    <?php
-                    $sesi = from_session('level');
-                    if ($sesi <= 3) {
-                        //echo button('load_silent("wrh/aksesoris/formAdd","#content")', 'Input Stock', 'btn btn-success');
-                    } else {
-                        # code...
-                    }
-                    ?>
-                    <!-- <input type="button" target="_blank" class="btn btn-default" onclick="printDiv('printableArea')" value="Print Page" /> -->
                 </div>
             </div>
             <div class="box-body" id="printableArea">

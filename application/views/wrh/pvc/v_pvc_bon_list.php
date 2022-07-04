@@ -6,11 +6,7 @@
                 <h3 class="box-title">List BON pvc</h3>
                 <div class="box-tools pull-right">
                     <?php
-                    $sesi = from_session('level');
-                    if ($sesi <= 3) {
-                    } else {
-                        # code...
-                    }
+                    
                     echo button('load_silent("wrh/pvc/bon_manual_add/","#content")', 'Add BON Manual', 'btn btn-primary', 'data-toggle="tooltip" title="BON Manual"');
                     ?>
                 </div>

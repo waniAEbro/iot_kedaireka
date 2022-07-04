@@ -6,12 +6,8 @@
                 <h3 class="box-title">Stok IN Aksesoris</h3>
                 <div class="box-tools pull-right">
                     <?php
-                    $sesi = from_session('level');
-                    if ($sesi <= 3) {
-                        echo button('load_silent("wrh/aksesoris/stok_in_add/","#content")', 'Tambah Stock', 'btn btn-primary', 'data-toggle="tooltip" title="Tambah Stock"');
-                    } else {
-                        # code...
-                    }
+                    
+                    echo button('load_silent("wrh/aksesoris/stok_in_add/","#content")', 'Tambah Stock', 'btn btn-primary', 'data-toggle="tooltip" title="Tambah Stock"');
                     ?>
                 </div>
             </div>

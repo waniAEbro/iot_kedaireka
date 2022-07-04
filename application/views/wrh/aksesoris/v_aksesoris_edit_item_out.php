@@ -69,7 +69,7 @@
                 <button type="submit" id="update" onclick="update()" class="btn btn-success">Update</button>
             </div>
             <?php
-            if (from_session('level') == 1) { ?>
+            if (from_session('level') == 1 || from_session('level') == 2) { ?>
                 <div class="box-body" style="overflow-x:auto;">
                     <table width="100%" id="ableku" class="table table-bordered table-striped table-responsive" style="font-size: smaller;">
                         <thead>
