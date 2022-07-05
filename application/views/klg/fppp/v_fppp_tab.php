@@ -121,7 +121,7 @@ if ($param_tab == '1') {
     $tab_9 = 'active';
     $tab_10 = '';
 } else {
-    $this->fungsi->run_js($t9);
+    $this->fungsi->run_js($t10);
     $tab_1 = '';
     $tab_2 = '';
     $tab_3 = '';
