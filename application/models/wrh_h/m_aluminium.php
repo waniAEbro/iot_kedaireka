@@ -7,20 +7,38 @@ class M_aluminium extends CI_Model
     public function getdata()
     {
         $id_jenis_item = 1;
-        $this->db->join('master_item mi', 'mi.id = dc.id_item', 'left');
-        $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
-        $this->db->where('mi.id_jenis_item', $id_jenis_item);
+        $year  = date('Y');
+        $month = date('m');
+        $this->db->join('master_item mi', 'mi.id = ds.id_item', 'left');
         $this->db->where('mi.kode_warna !=', '01');
-        $this->db->where('dc.qty >', 0);
-        $this->db->where_in('dc.id_gudang', ['2', '4', '58', '59', '79']);
-        
-        $this->db->select('mi.*,mwa.warna');
+        $this->db->where('ds.id_jenis_item', $id_jenis_item);
+        $this->db->where('DATE_FORMAT(ds.created,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(ds.created,"%m")', $month);
+        $this->db->where('ds.awal_bulan', 1);
+        $this->db->where_in('ds.id_gudang', ['2', '4', '58', '59', '79']);
+        $this->db->where('ds.qty_in >', 0);
         $this->db->group_by('mi.id');
-        // $this->db->limit(100);
-        // return $this->db->get('master_item mi');
+        $this->db->select('mi.*,mwa.warna');
+        return $this->db->get('data_stock ds');
         
-        return $this->db->get('data_counter dc');
-        
+    }
+
+    public function getdataMf()
+    {
+        $id_jenis_item = 1;
+        $year  = date('Y');
+        $month = date('m');
+        $this->db->join('master_item mi', 'mi.id = ds.id_item', 'left');
+        $this->db->where('mi.kode_warna', '01');
+        $this->db->where('ds.id_jenis_item', $id_jenis_item);
+        $this->db->where('DATE_FORMAT(ds.created,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(ds.created,"%m")', $month);
+        $this->db->where('ds.awal_bulan', 1);
+        $this->db->where_in('ds.id_gudang', ['2', '4', '58', '59', '79']);
+        $this->db->where('ds.qty_in >', 0);
+        $this->db->group_by('mi.id');
+        $this->db->select('mi.*,mwa.warna');
+        return $this->db->get('data_stock ds');
     }
 
     public function getStockAkhirBulan()
@@ -39,21 +57,7 @@ class M_aluminium extends CI_Model
         return $data;
     }
 
-    public function getdataMf()
-    {
-        $id_jenis_item = 1;
-        $this->db->join('master_item mi', 'mi.id = dc.id_item', 'left');
-        $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
-        $this->db->where('mi.id_jenis_item', $id_jenis_item);
-        $this->db->where('mi.kode_warna', '01');
-        $this->db->where('dc.qty >', 0);
-        $this->db->where_in('dc.id_gudang', ['2', '4', '58', '59', '79']);
-        
-        $this->db->select('mi.*,mwa.warna');
-        $this->db->group_by('mi.id');
-        // return $this->db->get('master_item mi');
-        return $this->db->get('data_counter dc');
-    }
+    
 
     public function getdatapaging($num = false, $keyword = '', $perpage = '', $offset = '')
     {
