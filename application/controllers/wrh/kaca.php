@@ -14,7 +14,7 @@ class kaca extends CI_Controller
 
     public function index()
     {
-        
+
         $data['kaca']           = $this->m_kaca->getData();
         $data['s_awal_bulan']        = $this->m_kaca->getStockAwalBulan();
         $data['s_akhir_bulan'] = $this->m_kaca->getStockAkhirBulan();
@@ -27,7 +27,7 @@ class kaca extends CI_Controller
 
     public function list()
     {
-        
+
         $offset  = $this->uri->segment(4, 0);
         $perpage = 10;
 
@@ -47,7 +47,7 @@ class kaca extends CI_Controller
 
     public function search_list()
     {
-        
+
         $offset = $this->uri->segment(5, 0);
         if ($offset > 0) {
             $keyword = from_session('keyword_al_warna');
@@ -85,7 +85,7 @@ class kaca extends CI_Controller
 
     public function getDetailTabel()
     {
-        
+
         $id = $this->input->post('id');
 
         $data_kaca_in = $this->m_kaca->getDataDetailTabel($id);
@@ -96,20 +96,22 @@ class kaca extends CI_Controller
             $qtyout          = $this->m_kaca->getQtyOutDetailTabelMonitoring($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
             $qtyinmutasi          = $this->m_kaca->getQtyInDetailTabelMonitoringMutasi($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
             $qtyoutmutasi          = $this->m_kaca->getQtyOutDetailTabelMonitoringMutasi($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
-            $temp            = array(
-                "divisi"           => $key->divisi,
-                "gudang"           => $key->gudang,
-                "keranjang"        => $key->keranjang,
-                "stok_awal_bulan"  => $stok_awal_bulan,
-                "tot_in"           => $qtyin,
-                "tot_out"          => $qtyout,
-                "mutasi_in"          => $qtyinmutasi,
-                "mutasi_out"          => $qtyoutmutasi,
-                // "stok_akhir_bulan" => $key->qty,
-                "stok_akhir_bulan" => ($stok_awal_bulan + $qtyin + $qtyinmutasi) - $qtyout - $qtyoutmutasi,
-                "rata_pemakaian"   => $key->rata_pemakaian,
-                "min_stock"        => '0',
-            );
+            if ($stok_awal_bulan > 0) {
+                $temp            = array(
+                    "divisi"           => $key->divisi,
+                    "gudang"           => $key->gudang,
+                    "keranjang"        => $key->keranjang,
+                    "stok_awal_bulan"  => $stok_awal_bulan,
+                    "tot_in"           => $qtyin,
+                    "tot_out"          => $qtyout,
+                    "mutasi_in"          => $qtyinmutasi,
+                    "mutasi_out"          => $qtyoutmutasi,
+                    // "stok_akhir_bulan" => $key->qty,
+                    "stok_akhir_bulan" => ($stok_awal_bulan + $qtyin + $qtyinmutasi) - $qtyout - $qtyoutmutasi,
+                    "rata_pemakaian"   => $key->rata_pemakaian,
+                    "min_stock"        => '0',
+                );
+            }
 
             // $this->db->where('id_item', $key->id_item);
             // $this->db->where('id_divisi', $key->id_divisi);
@@ -128,7 +130,7 @@ class kaca extends CI_Controller
 
     public function stok_in()
     {
-        
+
         $bulan       = date('m');
         $tahun       = date('Y');
         $data['tbl_del']   = 1;
@@ -141,7 +143,7 @@ class kaca extends CI_Controller
 
     public function stok_in_set($tgl_awal = '', $tgl_akhir = '')
     {
-        
+
         $data['tgl_awal']  = $tgl_awal;
         $data['tgl_akhir'] = $tgl_akhir;
         $data['tbl_del']   = 0;
@@ -152,14 +154,14 @@ class kaca extends CI_Controller
 
     public function finish_stok_in()
     {
-        
+
         $this->m_kaca->hapusTemp(3);
         $this->stok_in();
     }
 
     public function stok_in_add()
     {
-        
+
         $data['item']      = $this->m_kaca->getdataItem();
         $data['divisi']    = $this->db->get_where('master_divisi_stock', array('id_jenis_item' => 3));
         $data['gudang']    = $this->db->get_where('master_gudang', array('id_jenis_item' => 3));
@@ -175,7 +177,7 @@ class kaca extends CI_Controller
 
     public function stok_in_edit($id)
     {
-        
+
         $data['id']       = $id;
         $data['row']      = $this->m_kaca->getDataStockRow($id)->row();
         $data['supplier'] = $this->db->get('master_supplier');
@@ -184,7 +186,7 @@ class kaca extends CI_Controller
 
     public function simpan_edit()
     {
-        
+
         $id  = $this->input->post('id');
         $obj = array(
             'id_supplier'    => $this->input->post('supplier'),
@@ -200,7 +202,7 @@ class kaca extends CI_Controller
 
     public function savestokin()
     {
-        
+
         $cek_in_temp = $this->m_kaca->getInTemp(3)->num_rows();;
         if ($cek_in_temp < 1) {
             $data_temp = array(
@@ -261,7 +263,7 @@ class kaca extends CI_Controller
 
     public function inOptionGetKeranjang()
     {
-        
+
         $id_item   = $this->input->post('item');
         $id_divisi = $this->input->post('divisi');
         $id_gudang = $this->input->post('gudang');
@@ -272,7 +274,7 @@ class kaca extends CI_Controller
 
     public function getIdDivisi()
     {
-        
+
         $id        = $this->input->post('id_item');
         $id_divisi = $this->m_kaca->getRowItemWarna($id)->id_divisi;
         $respon    = ['id_divisi' => $id_divisi];
@@ -281,7 +283,7 @@ class kaca extends CI_Controller
 
     public function deleteIn($id)
     {
-        
+
         $getRow        = $this->m_kaca->getRowStock($id);
         $cekQtyCounter = $this->m_kaca->getDataCounter($getRow->id_item, $getRow->id_divisi, $getRow->id_gudang, $getRow->keranjang)->row()->qty;
         $qty_jadi      = (int)$cekQtyCounter - (int)$getRow->qty_in;
@@ -301,7 +303,7 @@ class kaca extends CI_Controller
 
     public function deleteItemIn()
     {
-        
+
         $id            = $this->input->post('id');
         $getRow        = $this->m_kaca->getRowStock($id);
         $cekQtyCounter = $this->m_kaca->getDataCounter($getRow->id_item, $getRow->id_divisi, $getRow->id_gudang, $getRow->keranjang)->row()->qty;
@@ -322,7 +324,7 @@ class kaca extends CI_Controller
 
     public function stok_out()
     {
-        
+
         // $data['surat_jalan'] = $this->m_kaca->getSuratJalan(1, 1);
         $id_jenis_item = 3;
         $data['qty_bom']     = $this->m_kaca->getTotQtyBomFppp($id_jenis_item);
@@ -369,7 +371,7 @@ class kaca extends CI_Controller
 
     public function saveout()
     {
-        
+
         $field   = $this->input->post('field');
         $value   = $this->input->post('value');
         $editid  = $this->input->post('id');
@@ -423,7 +425,7 @@ class kaca extends CI_Controller
 
     public function saveoutcheck()
     {
-        
+
         $field   = $this->input->post('field');
         $value   = $this->input->post('value');
         $editid  = $this->input->post('id');
@@ -465,7 +467,7 @@ class kaca extends CI_Controller
 
     public function saveoutcheckmf()
     {
-        
+
         $field   = $this->input->post('field');
         $value   = $this->input->post('value');
         $editid  = $this->input->post('id');
@@ -510,7 +512,7 @@ class kaca extends CI_Controller
 
     public function kirim_parsial($id_fppp, $id_stock)
     {
-        
+
 
         $set_parsial = array('set_parsial' => 1);
         $this->m_kaca->updateRowStock($id_stock, $set_parsial);
@@ -537,7 +539,7 @@ class kaca extends CI_Controller
 
     public function hapus_parsial($id_fppp, $id_stock)
     {
-        
+
         $this->m_kaca->hapusParsial($id_stock);
         $object      = array(
             'id_stock' => $id_stock,
@@ -549,7 +551,7 @@ class kaca extends CI_Controller
 
     public function buat_surat_jalan($id_fppp)
     {
-        
+
         $data['id_fppp']        = $id_fppp;
         $data['row_fppp']       = $this->m_kaca->getRowFppp($id_fppp);
         $kode_divisi      = $this->m_kaca->getKodeDivisi($id_fppp);
@@ -560,7 +562,7 @@ class kaca extends CI_Controller
 
     public function buat_surat_jalan_mf($id_fppp)
     {
-        
+
         $data['id_fppp']        = $id_fppp;
         $data['row_fppp']       = $this->m_kaca->getRowFppp($id_fppp);
         $kode_divisi      = $this->m_kaca->getKodeDivisi($id_fppp);
@@ -571,7 +573,7 @@ class kaca extends CI_Controller
 
     public function stok_out_add()
     {
-        
+
         $data['no_fppp']        = $this->db->get_where('data_fppp', array('id_status' => 1));
         $data['no_surat_jalan'] = str_pad($this->m_kaca->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJ/AL/' . date('m') . '/' . date('Y');
 
@@ -580,7 +582,7 @@ class kaca extends CI_Controller
 
     public function list_surat_jalan()
     {
-        
+
         $id_jenis_item = 3;
         $data['surat_jalan'] = $this->m_kaca->getSuratJalan(1, $id_jenis_item);
         $data['keterangan']  = $this->m_kaca->getKeterangan();
@@ -589,7 +591,7 @@ class kaca extends CI_Controller
 
     public function getDetailFppp()
     {
-        
+
         $id = $this->input->post('no_fppp');
 
         $data['nama_proyek']         = $this->m_kaca->getRowFppp($id)->nama_proyek;
@@ -603,7 +605,7 @@ class kaca extends CI_Controller
 
     public function simpanSuratJalan()
     {
-        
+
         $id_jenis_item     = 3;
         $id_fppp           = $this->input->post('id_fppp');
         $penerima          = $this->input->post('penerima');
@@ -631,7 +633,7 @@ class kaca extends CI_Controller
 
     public function simpanSuratJalanMf()
     {
-        
+
         $id_jenis_item     = 3;
         $id_fppp           = $this->input->post('id_fppp');
         $penerima          = $this->input->post('penerima');
@@ -659,7 +661,7 @@ class kaca extends CI_Controller
 
     public function updateSuratJalan()
     {
-        
+
         $id_sj             = $this->input->post('id_sj');
         $penerima          = $this->input->post('penerima');
         $alamat_pengiriman = $this->input->post('alamat_pengiriman');
@@ -680,7 +682,7 @@ class kaca extends CI_Controller
 
     public function finishdetailbom($id_sj)
     {
-        
+
         $this->m_kaca->finishdetailbom($id_sj);
         $datapost = array('id_sj' => $id_sj,);
         $this->fungsi->message_box("Fisnish Surat Jalan", "success");
@@ -700,7 +702,7 @@ class kaca extends CI_Controller
 
     public function showformitemdetailbom($id_fppp = '')
     {
-        
+
         $this->load->library('form_validation');
         $id_jenis_item = 3;
         $config        = array(
@@ -737,7 +739,7 @@ class kaca extends CI_Controller
 
     public function getQtyRowGudang()
     {
-        
+
         $field  = $this->input->post('field');
         $value  = $this->input->post('value');
         $editid = $this->input->post('id');
@@ -784,7 +786,7 @@ class kaca extends CI_Controller
 
     public function bon_manual()
     {
-        
+
         $id_jenis_item = 3;
         $bulan       = date('m');
         $tahun       = date('Y');
@@ -819,7 +821,7 @@ class kaca extends CI_Controller
 
     public function bon_manual_add()
     {
-        
+
         $id_jenis_item = 3;
         $data['fppp']        = $this->db->get('data_fppp');
         $data['warna_awal']  = $this->db->get('master_warna');
@@ -832,7 +834,7 @@ class kaca extends CI_Controller
 
     public function buat_surat_jalan_bon()
     {
-        
+
         $id_fppp          = $this->m_kaca->getListItemBonManual()->row()->id_fppp;
         $data['id_fppp']        = $id_fppp;
         $kode_divisi      = $this->m_kaca->getKodeDivisi($id_fppp);
@@ -864,7 +866,7 @@ class kaca extends CI_Controller
 
     public function lihat_item_stok_out_modal($id_sj)
     {
-        
+
         $data['id_fppp']           = $this->m_kaca->getRowSuratJalan($id_sj)->row()->id_fppp;
         $data['no_surat_jalan']    = $this->m_kaca->getRowSuratJalan($id_sj)->row()->no_surat_jalan;
         $data['penerima']          = $this->m_kaca->getRowSuratJalan($id_sj)->row()->penerima;
@@ -877,7 +879,7 @@ class kaca extends CI_Controller
 
     public function edit_item_stok_out($id_sj)
     {
-        
+
         $id_jenis_item       = 3;
         $id_fppp             = $this->m_kaca->getListItemStokOut($id_sj)->row()->id_fppp;
         $data['fppp']              = $this->db->get('data_fppp');
@@ -900,7 +902,7 @@ class kaca extends CI_Controller
 
     public function simpanSuratJalanBon()
     {
-        
+
         $id_jenis_item     = 3;
         $id_fppp           = $this->input->post('id_fppp');
         $penerima          = $this->input->post('penerima');
@@ -933,7 +935,7 @@ class kaca extends CI_Controller
 
     public function updateSuratJalanBon()
     {
-        
+
         $id_jenis_item     = 3;
         $id_sj             = $this->input->post('id_sj');
         $penerima          = $this->input->post('penerima');
@@ -1003,7 +1005,7 @@ class kaca extends CI_Controller
 
     public function savebonmanual()
     {
-        
+
         $id_jenis_item = 3;
         $id_item       = $this->input->post('item');
         $id_divisi     = $this->input->post('id_divisi');
@@ -1056,7 +1058,7 @@ class kaca extends CI_Controller
 
     public function deleteItemBonManual()
     {
-        
+
         $id = $this->input->post('id');
 
         $id_item   = $this->db->get_where('data_stock', array('id' => $id))->row()->id_item;
@@ -1083,7 +1085,7 @@ class kaca extends CI_Controller
 
     public function deleteSJBon($id)
     {
-        
+
         $data_detail = $this->db->get_where('data_stock', array('id_surat_jalan' => $id))->result();
 
         foreach ($data_detail as $key) {
@@ -1122,7 +1124,7 @@ class kaca extends CI_Controller
 
     public function mutasi_stock_add($id = '')
     {
-        
+
         $id_jenis_item = 3;
         $data['id_item']     = $id;
         $data['item']        = $this->m_kaca->getDataItem();
@@ -1151,7 +1153,7 @@ class kaca extends CI_Controller
 
     public function optionGetDivisiItem()
     {
-        
+
         $id_item  = $this->input->post('item');
         $get_data = $this->m_kaca->getDivisiItem($id_item);
         $data     = array();
@@ -1163,7 +1165,7 @@ class kaca extends CI_Controller
 
     public function optionGetGudangDivisi()
     {
-        
+
         $id_item   = $this->input->post('item');
         $id_divisi = $this->input->post('divisi');
         $get_data  = $this->m_kaca->getGudangDivisi($id_item, $id_divisi);
@@ -1176,7 +1178,7 @@ class kaca extends CI_Controller
 
     public function optionGetKeranjangGudang()
     {
-        
+
         $id_item   = $this->input->post('item');
         $id_divisi = $this->input->post('divisi');
         $id_gudang = $this->input->post('gudang');
@@ -1189,7 +1191,7 @@ class kaca extends CI_Controller
     }
     public function optionGetQtyKeranjang()
     {
-        
+
         $id_item   = $this->input->post('item');
         $id_divisi = $this->input->post('divisi');
         $id_gudang = $this->input->post('gudang');
@@ -1204,7 +1206,7 @@ class kaca extends CI_Controller
 
     public function simpanMutasi()
     {
-        
+
         $id_jenis_item = 3;
         $tgl_aktual       = $this->input->post('tgl_aktual');
         $id_item       = $this->input->post('id_item');
@@ -1292,7 +1294,7 @@ class kaca extends CI_Controller
 
     public function mutasi_stock_history_show($id = '')
     {
-        
+
         $data['item']   = $this->db->get_where('master_item', array("id" => $id))->row();
         $data['mutasi'] = $this->m_kaca->getMutasiHistory($id);
 
@@ -1301,7 +1303,7 @@ class kaca extends CI_Controller
 
     public function stockPointList($tgl = '')
     {
-        
+
         $tgl_def = date('Y-m-d');
 
         if ($tgl == '') {
