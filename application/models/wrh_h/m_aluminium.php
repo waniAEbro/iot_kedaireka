@@ -15,7 +15,7 @@ class M_aluminium extends CI_Model
         $this->db->where('ds.id_jenis_item', $id_jenis_item);
         $this->db->where('DATE_FORMAT(ds.created,"%Y")', $year);
         $this->db->where('DATE_FORMAT(ds.created,"%m")', $month);
-        $this->db->where('ds.awal_bulan', 1);
+        // $this->db->where('ds.awal_bulan', 1);
         $this->db->where_in('ds.id_gudang', ['2', '4', '58', '59', '79']);
         $this->db->where('ds.qty_in >', 0);
         $this->db->group_by('mi.id');
@@ -35,7 +35,7 @@ class M_aluminium extends CI_Model
         $this->db->where('ds.id_jenis_item', $id_jenis_item);
         $this->db->where('DATE_FORMAT(ds.created,"%Y")', $year);
         $this->db->where('DATE_FORMAT(ds.created,"%m")', $month);
-        $this->db->where('ds.awal_bulan', 1);
+        // $this->db->where('ds.awal_bulan', 1);
         $this->db->where_in('ds.id_gudang', ['2', '4', '58', '59', '79']);
         $this->db->where('ds.qty_in >', 0);
         $this->db->group_by('mi.id');
