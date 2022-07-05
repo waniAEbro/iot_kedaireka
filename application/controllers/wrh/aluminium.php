@@ -123,7 +123,7 @@ class Aluminium extends CI_Controller
             $qtyout          = $this->m_aluminium->getQtyOutDetailTabelMonitoring($key->id_item, $key->id_gudang, $key->keranjang);
             $qtyinmutasi          = $this->m_aluminium->getQtyInDetailTabelMonitoringMutasi($key->id_item, $key->id_gudang, $key->keranjang);
             $qtyoutmutasi          = $this->m_aluminium->getQtyOutDetailTabelMonitoringMutasi($key->id_item, $key->id_gudang, $key->keranjang);
-            if ($stok_awal_bulan > 0) {
+            
                 $temp            = array(
                     "divisi"           => $key->divisi,
                     "gudang"           => $key->gudang,
@@ -138,7 +138,7 @@ class Aluminium extends CI_Controller
                     "rata_pemakaian"   => '0',
                     "min_stock"        => '0',
                 );
-            }
+            
 
             // $this->db->where('id_item', $key->id_item);
             // $this->db->where('id_gudang', $key->id_gudang);
