@@ -10,6 +10,7 @@ class M_aluminium extends CI_Model
         $year  = date('Y');
         $month = date('m');
         $this->db->join('master_item mi', 'mi.id = ds.id_item', 'left');
+        $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
         $this->db->where('mi.kode_warna !=', '01');
         $this->db->where('ds.id_jenis_item', $id_jenis_item);
         $this->db->where('DATE_FORMAT(ds.created,"%Y")', $year);
@@ -29,6 +30,7 @@ class M_aluminium extends CI_Model
         $year  = date('Y');
         $month = date('m');
         $this->db->join('master_item mi', 'mi.id = ds.id_item', 'left');
+        $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
         $this->db->where('mi.kode_warna', '01');
         $this->db->where('ds.id_jenis_item', $id_jenis_item);
         $this->db->where('DATE_FORMAT(ds.created,"%Y")', $year);
