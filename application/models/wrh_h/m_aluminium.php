@@ -906,7 +906,7 @@ class M_aluminium extends CI_Model
         $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
         $this->db->join('master_gudang mg', 'mg.id = ds.id_gudang', 'left');
         $this->db->where('ds.id_jenis_item', $id_jenis_item);
-        $this->db->where_in('dc.id_gudang', ['2', '4', '58', '59', '79']);
+        $this->db->where_in('ds.id_gudang', ['2', '4', '58', '59', '79']);
         $this->db->select('ds.*,ds.id as id_stock,mi.*,mwa.warna,mi.divisi,mg.gudang');
 
         $this->db->order_by('ds.id', 'desc');
