@@ -116,28 +116,34 @@ class wo extends CI_Controller
         $this->load->view('klg/wo/v_wo_edit', $data);
     }
 
-    
-
-    
-
-
-
-
     public function simpan_edit()
     {
 
         $id  = $this->input->post('id');
         $obj = array(
-            'id_supplier'    => $this->input->post('supplier'),
-            'no_surat_jalan' => $this->input->post('no_surat_jalan'),
-            'no_pr'          => $this->input->post('no_pr'),
-            'keterangan'     => $this->input->post('keterangan'),
+            'tgl_order'        => $this->input->post('tgl_order'),
+            'id_divisi'        => $this->input->post('id_divisi'),
+            'no_wo'        => $this->input->post('no_wo'),
+            'id_item'        => $this->input->post('id_item'),
+            'qty_wo'        => $this->input->post('qty_wo'),
+            'keterangan'        => $this->input->post('keterangan'),
         );
-        $this->m_wo->updatestokin($obj, $id);
-        $this->fungsi->catat($obj, "mengubah Stock In dengan id " . $id . " data sbb:", true);
-        $respon = ['msg' => 'Data Berhasil Dihapus'];
+        $this->db->where('id', $id);        
+        $this->db->update('data_wo', $obj);
+        
+        $this->fungsi->catat($obj, "mengubah WO dengan id " . $id . " data sbb:", true);
+        $respon = ['msg' => 'Data Berhasil Diubah'];
         echo json_encode($respon);
     }
+
+    
+
+    
+
+
+
+
+    
 
     
 

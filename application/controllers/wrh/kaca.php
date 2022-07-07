@@ -196,7 +196,7 @@ class kaca extends CI_Controller
         );
         $this->m_kaca->updatestokin($obj, $id);
         $this->fungsi->catat($obj, "mengubah Stock In dengan id " . $id . " data sbb:", true);
-        $respon = ['msg' => 'Data Berhasil Dihapus'];
+        $respon = ['msg' => 'Data Berhasil Diubah'];
         echo json_encode($respon);
     }
 
