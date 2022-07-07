@@ -721,16 +721,48 @@ class M_aluminium extends CI_Model
 
     public function updateDataCounter($item, $gudang, $keranjang, $qty)
     {
-        // $id_jenis_item = 1;
         $object = array(
             'updated' => date('Y-m-d H:i:s'),
             'qty' => $qty,
         );
-        // $this->db->where('id_jenis_item', $id_jenis_item);
         $this->db->where('id_item', $item);
         $this->db->where('id_gudang', $gudang);
         $this->db->where('keranjang', $keranjang);
         $this->db->update('data_counter', $object);
+        
+        // $object = array(
+        //     'updated' => date('Y-m-d H:i:s'),
+        //     'qty' => $qty,
+        // );
+        // $this->db->where('id_item', $item);
+        // $this->db->where('id_gudang', $gudang);
+        // $this->db->where('keranjang', $keranjang);
+        // $cek_ada = $this->db->get('data_counter')->num_rows();
+        
+        // if ($cek_ada > 0) {
+        //     $object = array(
+        //         'updated' => date('Y-m-d H:i:s'),
+        //         'qty' => $qty,
+        //     );
+        //     $this->db->where('id_item', $item);
+        //     $this->db->where('id_gudang', $gudang);
+        //     $this->db->where('keranjang', $keranjang);
+        //     $this->db->update('data_counter', $object);
+        // } else {
+        //     $simpan = array(
+        //         'id_jenis_item' => 1,
+        //         'id_item'       => $item,
+        //         'id_gudang'     => $gudang,
+        //         'keranjang'     => str_replace(' ', '', $keranjang),
+        //         'qty'           => $qty,
+        //         'created'       => date('Y-m-d H:i:s'),
+        //         'updated' => date('Y-m-d H:i:s'),
+        //         'itm_code'      => $this->m_kaca->getRowItem($this->input->post('item'))->item_code,
+        //     );
+        //     $this->db->insert('data_counter', $simpan);
+        // } 
+
+        
     }
 
     public function updateData($dt)
