@@ -1706,6 +1706,66 @@ class M_aluminium extends CI_Model
         }
     }
 
+    
+public function getListStockPointTest($tgl = '')
+{
+    // $this->db->join('master_item mi', 'mi.id = ds.id_item', 'left');
+    // $this->db->join('master_gudang mg', 'mg.id = ds.id_gudang', 'left');
+    // $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
+    $this->db->limit(10);
+    $this->db->where('ds.id_jenis_item', 1);
+    $this->db->where('ds.created', $tgl);
+    $this->db->select('ds.*');
+
+    $stokPoint =  $this->db->get('data_stok_poin ds');
+    $masterItem =  $this->db->get('master_item');
+    $masterGudang =  $this->db->get('master_gudang');
+    $masterWarna =  $this->db->get('master_warna');
+
+    $array = array();
+    $arrayMI = array();
+    $arrayMG = array();
+    $arrayMW = array();
+
+
+    foreach($masterItem->result() as $mi)
+    {
+        $arrayMI[] = $mi;
+        // echo $sp->id . "ini adalah idnya". $arrayMG[$sp->id_gudang]->gudang;   
+    }
+
+    foreach($masterGudang->result() as $mg)
+    {
+        $arrayMG[] = $mg;
+        // echo $sp->id . "ini adalah idnya". $arrayMG[$sp->id_gudang]->gudang;   
+    }
+
+    foreach($masterWarna->result() as $mw)
+    {
+        $arrayMW[] = $mw;
+        // echo $sp->id . "ini adalah idnya". $arrayMG[$sp->id_gudang]->gudang;   
+    }
+
+    foreach($stokPoint->result() as $sp)
+    {
+        $array[] = $sp;
+        // echo $sp->id . "ini adalah idnya". $arrayMG[$sp->id_gudang]->gudang;  
+        // echo "<br>";        
+    }
+    
+
+    // $gudang = $array[]
+    
+    // var_dump($array);
+        
+    
+    // var_dump($array);
+
+    // die();
+
+    return $array;
+}
+
     public function updateQtyStockPoin($tgl_aktual, $datapost)
     {
         $this->db->where('awal_bulan', 1);

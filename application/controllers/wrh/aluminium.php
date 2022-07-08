@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Aluminium extends CI_Controller
 {
-
+    
     public function __construct()
     {
         parent::__construct();
@@ -1290,6 +1290,15 @@ class Aluminium extends CI_Controller
         $buttons[]          = button('', 'Tutup', 'btn btn-default', 'data-dismiss="modal"');
         echo $this->fungsi->parse_modal($header, $subheader, $content, $buttons, '');
         $this->fungsi->run_js('load_silent("wrh/aluminium/mutasi_stock_history_show/' . $id . '","#divsubcontent")');
+    }
+
+    public function indexStokPoint()
+    {
+        $this->fungsi->check_previleges('aluminium');
+
+        $data['list_data'] = $this->m_aluminium->getListStockPointTest('2022-02-03 23:59:00');
+        // var_dump($data);
+        $this->load->view('wrh/aluminium/v_alumunium_stok_point', $data);
     }
 
     public function mutasi_stock_history_show($id = '')
