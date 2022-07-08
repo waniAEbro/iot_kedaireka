@@ -806,7 +806,7 @@ class M_aluminium extends CI_Model
         $this->db->where('df.wh_aluminium <', 3);
         $this->db->where('df.bom_aluminium', 1);
         $this->db->where('ds.id_fppp !=', 0);
-        $this->db->where_in('ds.id_gudang', ['1','3']);
+        // $this->db->where_in('ds.id_gudang', ['1','3']);
         $this->db->select('df.*');
         $this->db->group_by('ds.id_fppp');
         $this->db->order_by('ds.created', 'desc');
