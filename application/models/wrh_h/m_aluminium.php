@@ -859,7 +859,7 @@ class M_aluminium extends CI_Model
         $this->db->where('ds.id_fppp', $id_fppp);
         $this->db->where('ds.id_jenis_item', $id_jenis_item);
         $this->db->where('ds.is_bom', 1);
-        $this->db->where_in('ds.id_gudang', ['2', '4', '58', '59', '79']);
+        // $this->db->where_in('ds.id_gudang', ['2', '4', '58', '59', '79']);
         $this->db->where('ds.ke_mf', 0);
         $this->db->select('ds.*,ds.id as id_stock,mi.*,mwa.warna,mi.divisi,mg.gudang,ds.created as created_,ds.updated as updated_,mb.brand');
 
@@ -882,7 +882,7 @@ class M_aluminium extends CI_Model
         // $this->db->where('ds.is_bom', 1);
         // $this->db->where('ds.id_surat_jalan', 0);
         $this->db->where('ds.ke_mf', 1);
-        $this->db->where_in('ds.id_gudang', ['2', '4', '58', '59', '79']);
+        // $this->db->where_in('ds.id_gudang', ['2', '4', '58', '59', '79']);
         $this->db->select('ds.*,ds.id as id_stock,mi.*,mwa.warna,mi.divisi,mg.gudang,ds.created as created_,ds.updated as updated_,mb.brand');
 
         $this->db->order_by('ds.id', 'asc');
