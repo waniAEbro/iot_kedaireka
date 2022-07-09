@@ -21,6 +21,7 @@ class wo extends CI_Controller
         $data['tgl_awal']  = $tahun . '-' . $bulan . '-01';
         $data['tgl_akhir'] = date("Y-m-t", strtotime($data['tgl_awal']));
         $data['wo'] = $this->m_wo->getData($data['tgl_awal'], $data['tgl_akhir']);
+        $data['total_in']  = $this->m_wo->getTotalIn();
 
         $this->load->view('klg/wo/v_wo_list', $data);
     }
@@ -55,11 +56,12 @@ class wo extends CI_Controller
             'qty_wo'        => $this->input->post('qty_wo'),
             'keterangan'        => $this->input->post('keterangan'),
             'created'        => date('Y-m-d H:i:s'),
+            'id_penginput'   => from_session('id'),
         );
         $this->db->insert('data_wo', $datapost);
         $data['id'] = $this->db->insert_id();
         $this->fungsi->catat($datapost, "Menyimpan wo_id " . $data['id'] . " sbb:", true);
-        
+
         $data['msg'] = "wo Disimpan";
         echo json_encode($data);
     }
@@ -128,24 +130,24 @@ class wo extends CI_Controller
             'qty_wo'        => $this->input->post('qty_wo'),
             'keterangan'        => $this->input->post('keterangan'),
         );
-        $this->db->where('id', $id);        
+        $this->db->where('id', $id);
         $this->db->update('data_wo', $obj);
-        
+
         $this->fungsi->catat($obj, "mengubah WO dengan id " . $id . " data sbb:", true);
         $respon = ['msg' => 'Data Berhasil Diubah'];
         echo json_encode($respon);
     }
 
-    
-
-    
 
 
 
 
-    
 
-    
+
+
+
+
+
 
     public function inOptionGetKeranjang()
     {
@@ -167,9 +169,9 @@ class wo extends CI_Controller
         echo json_encode($respon);
     }
 
-    
 
-    
+
+
 
     public function stok_out()
     {

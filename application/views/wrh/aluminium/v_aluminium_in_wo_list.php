@@ -3,11 +3,15 @@
     <div class="col-lg-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">WO</h3>
+                <h3 class="box-title">Stok IN WO</h3>
                 <div class="box-tools pull-right">
                     <?php
-
-                    echo button('load_silent("klg/wo/add/","#content")', 'Tambah WO', 'btn btn-primary', 'data-toggle="tooltip" title="Tambah WO"');
+                    $sesi = from_session('level');
+                    if ($sesi <= 3) {
+                        echo button('load_silent("wrh/aluminium/stok_in_wo_add/","#content")', 'Tambah Stock', 'btn btn-primary', 'data-toggle="tooltip" title="Tambah Stock"');
+                    } else {
+                        # code...
+                    }
                     ?>
                 </div>
             </div>
@@ -38,52 +42,45 @@
                     <thead>
                         <th width="5%">No</th>
                         <th>Tgl Input</th>
-                        <th>Tgl Order</th>
-                        <th>Divisi</th>
-                        <th>NO PR / WO / PO:</th>
-                        <th>Item Code</th>
-                        <th>Qty WO</th>
-                        <th>Qty In</th>
-                        <th>Qty Sisa</th>
+                        <th>Tgl Aktual</th>
+                        <th>User</th>
+                        <th>No WO</th>
+                        <th>Item</th>
+                        <th>Gudang</th>
+                        <th>Keranjang</th>
+                        <th>Qty</th>
+                        <th>Supplier</th>
+                        <th>No Surat Jalan</th>
                         <th>Keterangan</th>
-                        <th>Status</th>
-                        <th></th>
+                        <th>Edit</th>
 
                     </thead>
                     <tbody>
                         <?php
                         $i = 1;
-                        foreach ($wo->result() as $row) :
-                            $qty_in = @$total_in[$row->id_item][$row->no_wo];
-                            $qty_sisa = $row->qty_wo - $qty_in;
-
-                            if ($qty_sisa == 0) {
-                                $status = 'Lunas';
-                            } elseif($qty_sisa > 0){
-                                $status = 'Kurang';
-                            } else {
-                                $status = 'Lebih';  
-                            }
-                            
+                        foreach ($aluminium->result() as $row) :
+                            $bln = date('m', strtotime($row->created));
+                            $now = date('m');
                         ?>
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
                                 <td><?= $row->created ?></td>
-                                <td><?= $row->tgl_order ?></td>
-                                <td><?= $row->divisi ?></td>
+                                <td><?= $row->tgl_aktual ?></td>
+                                <td><?= $row->nama ?></td>
                                 <td><?= $row->no_wo ?></td>
-                                <td><?= $row->item_code ?></td>
-                                <td align="center"><?= $row->qty_wo ?></td>
-                                <td align="center"><?= $qty_in ?></td>
-                                <td align="center"><?= $qty_sisa ?></td>
+                                <td><?= $row->section_ata ?>-<?= $row->section_allure ?>-<?= $row->temper ?>-<?= $row->kode_warna ?>-<?= $row->ukuran ?></td>
+                                <td><?= $row->gudang ?></td>
+                                <td><?= $row->keranjang ?></td>
+                                <td><?= $row->qty ?></td>
+                                <td><?= $row->supplier ?></td>
+                                <td><?= $row->no_surat_jalan ?></td>
                                 <td><?= $row->keterangan ?></td>
-                                <td><?= $status ?></td>
                                 <td>
-
-                                    <?= button('load_silent("klg/wo/stok_in_edit/' . $row->id . '","#content")', 'Edit', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Edit"'); ?>
-                                    <?= button_confirm("Apakah anda yakin menghapus Stock ini?", "klg/wo/deleteIn/" . $row->id, "#content", "Hapus", "btn btn-xs btn-danger", "") ?>
-
+                                    <?php if ($bln == $now) { ?>
+                                        <?= button_confirm("Apakah anda yakin menghapus Stock ini?", "wrh/aluminium/deleteIn_wo/" . $row->id, "#content", "Hapus", "btn btn-xs btn-danger", "") ?>
+                                    <?php } ?>
                                 </td>
+
 
                             </tr>
 
@@ -95,10 +92,10 @@
     </div>
 </div>
 <script type="text/javascript">
-    $('.datepicker').datepicker({
-        autoclose: true
-    });
     $(document).ready(function() {
+        $('.datepicker').datepicker({
+            autoclose: true
+        });
         var table = $('#tableku').DataTable({
             "ordering": true,
             "scrollX": true,
@@ -118,7 +115,7 @@
         } else {
             var tgl2 = '<?= $tgl_akhir ?>';
         };
-        load_silent("klg/wo/set/" + tlg1 + "/" + tgl2, "#content");
+        load_silent("wrh/aluminium/stok_in_wo_set/" + tlg1 + "/" + tgl2, "#content");
 
     }
 </script>

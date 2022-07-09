@@ -27,6 +27,20 @@ class M_wo extends CI_Model
         return $this->db->get('master_item mi');
     }
 
+    public function getTotalIn()
+    {
+        $res  = $this->db->get('data_wo_in');
+        $data = array();
+        foreach ($res->result() as $key) {
+
+            if (!isset($data[$key->id_item][$key->no_wo])) {
+                $data[$key->id_item][$key->no_wo] = 0;
+            }
+            $data[$key->id_item][$key->no_wo] = $data[$key->id_item][$key->no_wo] + $key->qty;
+        }
+        return $data;
+    }
+
 
 
     
