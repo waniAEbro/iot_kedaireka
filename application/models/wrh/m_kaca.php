@@ -214,8 +214,8 @@ class M_kaca extends CI_Model
     {
         $year  = date('Y');
         $month = date('m');
-        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
-        $this->db->where('DATE_FORMAT(created,"%m")', $month);
+        $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
         $this->db->where('inout', 1);
         $this->db->where('awal_bulan', 0);
         $this->db->where('mutasi', 0);
@@ -256,8 +256,8 @@ class M_kaca extends CI_Model
     {
         $year  = date('Y');
         $month = date('m');
-        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
-        $this->db->where('DATE_FORMAT(created,"%m")', $month);
+        $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
         $this->db->where('mutasi', 0);
         $this->db->where('inout', 2);
         // $this->db->where('id_surat_jalan !=', 0);
@@ -345,8 +345,8 @@ class M_kaca extends CI_Model
     {
         $year  = date('Y');
         $month = date('m');
-        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
-        $this->db->where('DATE_FORMAT(created,"%m")', $month);
+        $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
         $this->db->where('id_item', $id);
         $this->db->where('id_divisi', $id_divisi);
         $this->db->where('id_gudang', $id_gudang);
@@ -398,8 +398,8 @@ class M_kaca extends CI_Model
     {
         $year  = date('Y');
         $month = date('m');
-        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
-        $this->db->where('DATE_FORMAT(created,"%m")', $month);
+        $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
         $this->db->where('id_item', $id);
         $this->db->where('id_divisi', $id_divisi);
         $this->db->where('id_gudang', $id_gudang);
@@ -418,8 +418,8 @@ class M_kaca extends CI_Model
     {
         $year  = date('Y');
         $month = date('m');
-        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
-        $this->db->where('DATE_FORMAT(created,"%m")', $month);
+        $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
         $this->db->where('id_item', $id);
         $this->db->where('id_divisi', $id_divisi);
         $this->db->where('id_gudang', $id_gudang);
@@ -437,8 +437,8 @@ class M_kaca extends CI_Model
     {
         $year  = date('Y');
         $month = date('m');
-        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
-        $this->db->where('DATE_FORMAT(created,"%m")', $month);
+        $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
         $this->db->where('id_item', $id);
         $this->db->where('id_divisi', $id_divisi);
         $this->db->where('id_gudang', $id_gudang);
@@ -1345,9 +1345,79 @@ class M_kaca extends CI_Model
         $this->db->join('master_divisi_stock mds', 'mds.id = ds.id_divisi', 'left');
         $this->db->join('master_gudang mg', 'mg.id = ds.id_gudang', 'left');
         $this->db->where('ds.id_jenis_item', 3);
-        $this->db->where('DATE(ds.created)', $tgl);
+        // $this->db->where('DATE(ds.created)', $tgl);
         $this->db->select('ds.*,mds.divisi,mg.gudang,mi.item_code,mi.deskripsi');
-        return $this->db->get('data_stok_poin ds');
+        return $this->db->get('data_counter ds');
+    }
+
+    public function getQtyAwalBulan($tgl)
+    {
+        
+        $year  = date('Y',strtotime($tgl));
+        $month = date('m',strtotime($tgl));
+        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(created,"%m")', $month);
+        $this->db->where('awal_bulan', 1);
+        $res   = $this->db->get('data_stock');
+        $data  = array();
+        $nilai = 0;
+        foreach ($res->result() as $key) {
+            if (isset($data[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang])) {
+                $nilai = $data[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
+            } else {
+                $nilai = 0;
+            }
+            $data[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang] = $key->qty_in + $nilai;
+        }
+        return $data;
+    }
+
+    public function getQtyMasuk($tgl)
+    {
+        
+        $year  = date('Y',strtotime($tgl));
+        $month = date('m',strtotime($tgl));
+        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(created,"%m")', $month);
+        $this->db->where('aktual <=', $tgl);
+        $this->db->where('inout', 1);
+
+        $res   = $this->db->get('data_stock');
+        $data  = array();
+        $nilai = 0;
+        foreach ($res->result() as $key) {
+            if (isset($data[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang])) {
+                $nilai = $data[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
+            } else {
+                $nilai = 0;
+            }
+            $data[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang] = $key->qty_in + $nilai;
+        }
+        return $data;
+    }
+
+    public function getQtyKeluar($tgl)
+    {
+        
+        $year  = date('Y',strtotime($tgl));
+        $month = date('m',strtotime($tgl));
+        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(created,"%m")', $month);
+        $this->db->where('aktual <=', $tgl);
+        $this->db->where('inout', 2);
+        
+        $res   = $this->db->get('data_stock');
+        $data  = array();
+        $nilai = 0;
+        foreach ($res->result() as $key) {
+            if (isset($data[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang])) {
+                $nilai = $data[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
+            } else {
+                $nilai = 0;
+            }
+            $data[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang] = $key->qty_out + $nilai;
+        }
+        return $data;
     }
 }
 

@@ -1311,7 +1311,9 @@ class kaca extends CI_Controller
         } else {
             $data['tgl'] = $tgl;
         }
-
+        $data['qty_awal_bulan'] = $this->m_kaca->getQtyAwalBulan($data['tgl']);
+        $data['qty_masuk'] = $this->m_kaca->getQtyMasuk($data['tgl']);
+        $data['qty_keluar'] = $this->m_kaca->getQtyKeluar($data['tgl']);
         $data['list_data'] = $this->m_kaca->getListStockPoint($data['tgl']);
 
         $this->load->view('wrh/kaca/v_kaca_stock_point', $data);
