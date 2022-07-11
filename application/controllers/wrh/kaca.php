@@ -14,9 +14,13 @@ class kaca extends CI_Controller
 
     public function index()
     {
-
+        $bulan       = date('m');
+        $tahun       = date('Y');
+        $tgl_lalu = date('Y-m-d', strtotime('-1 month', strtotime($tahun . '-' . $bulan . '-01')));
         $data['kaca']           = $this->m_kaca->getData();
-        $data['s_awal_bulan']        = $this->m_kaca->getStockAwalBulan();
+        $data['s_awal_bulan_lalu']        = $this->m_kaca->getQtyAwalBulanItemLalu($tgl_lalu);
+        $data['s_masuk_lalu']        = $this->m_kaca->getQtyMasukLaluItem($tgl_lalu);
+        $data['s_keluar_lalu']        = $this->m_kaca->getQtyKeluarLaluItem($tgl_lalu);
         $data['s_akhir_bulan'] = $this->m_kaca->getStockAkhirBulan();
         $data['total_bom']           = $this->m_kaca->getTotalBOM();
         $data['total_in_per_bulan']  = $this->m_kaca->getTotalInPerBulan();
@@ -76,9 +80,19 @@ class kaca extends CI_Controller
     public function cetakExcelMonitoring()
     {
         $data['kaca']    = $this->m_kaca->getCetakMonitoring(3);
-        $data['s_awal_bulan']    = $this->m_kaca->getStockAwalBulanCetak();
-        $data['s_total_in']  = $this->m_kaca->getTotalInPerBulanCetak();
-        $data['s_total_out'] = $this->m_kaca->getTotalOutPerBulanCetak();
+        $bulan       = date('m');
+        $tahun       = date('Y');
+        $tgl = date('Y-m-d', strtotime('-1 month', strtotime($tahun . '-' . $bulan . '-01')));
+
+        // $qty_awal_bulan = $this->m_kaca->getQtyAwalBulan($tgl);
+        // $qty_masuk = $this->m_kaca->getQtyMasukLalu($tgl);
+        // $qty_keluar = $this->m_kaca->getQtyKeluarLalu($tgl);
+        $data['qty_awal_bulan']    = $this->m_kaca->getQtyAwalBulan($tgl);
+        $data['qty_masuk']    = $this->m_kaca->getQtyMasukLalu($tgl);
+        $data['qty_keluar']    = $this->m_kaca->getQtyKeluarLalu($tgl);
+        // $data['s_awal_bulan']    = $this->m_kaca->getStockAwalBulanCetak();
+        $data['s_total_in']  = $this->m_kaca->getQtyMasuk(date('Y-m-d'));
+        $data['s_total_out'] = $this->m_kaca->getQtyKeluar(date('Y-m-d'));
         $data['jenis_barang'] = "kaca";
         $this->load->view('wrh/kaca/v_kaca_cetak_monitoring', $data);
     }
@@ -87,31 +101,44 @@ class kaca extends CI_Controller
     {
 
         $id = $this->input->post('id');
+        $bulan       = date('m');
+        $tahun       = date('Y');
+        $tgl = date('Y-m-d', strtotime('-1 month', strtotime($tahun . '-' . $bulan . '-01')));
+
+        $qty_awal_bulan = $this->m_kaca->getQtyAwalBulan($tgl);
+        $qty_masuk = $this->m_kaca->getQtyMasukLalu($tgl);
+        $qty_keluar = $this->m_kaca->getQtyKeluarLalu($tgl);
 
         $data_kaca_in = $this->m_kaca->getDataDetailTabel($id);
         $arr               = array();
         foreach ($data_kaca_in as $key) {
-            $stok_awal_bulan = $this->m_kaca->getAwalBulanDetailTabel($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
+            // $stok_awal_bulan = $this->m_kaca->getAwalBulanDetailTabel($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
+            $stok_awal_bulan = @$qty_awal_bulan[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
+            $stok_masuk = @$qty_masuk[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
+            $stok_keluar = @$qty_keluar[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
+            $stok_awal_bulan_jadi = $stok_awal_bulan + $stok_masuk - $stok_keluar;
+
             $qtyin           = $this->m_kaca->getQtyInDetailTabelMonitoring($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
             $qtyout          = $this->m_kaca->getQtyOutDetailTabelMonitoring($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
             $qtyinmutasi          = $this->m_kaca->getQtyInDetailTabelMonitoringMutasi($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
             $qtyoutmutasi          = $this->m_kaca->getQtyOutDetailTabelMonitoringMutasi($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
-            
-                $temp            = array(
-                    "divisi"           => $key->divisi,
-                    "gudang"           => $key->gudang,
-                    "keranjang"        => $key->keranjang,
-                    "stok_awal_bulan"  => $stok_awal_bulan,
-                    "tot_in"           => $qtyin,
-                    "tot_out"          => $qtyout,
-                    "mutasi_in"          => $qtyinmutasi,
-                    "mutasi_out"          => $qtyoutmutasi,
-                    // "stok_akhir_bulan" => $key->qty,
-                    "stok_akhir_bulan" => ($stok_awal_bulan + $qtyin + $qtyinmutasi) - $qtyout - $qtyoutmutasi,
-                    "rata_pemakaian"   => $key->rata_pemakaian,
-                    "min_stock"        => '0',
-                );
-            
+
+            $stok_akhir_bulan = ($stok_awal_bulan_jadi + $qtyin + $qtyinmutasi) - $qtyout - $qtyoutmutasi;
+
+            $temp            = array(
+                "divisi"           => $key->divisi,
+                "gudang"           => $key->gudang,
+                "keranjang"        => $key->keranjang,
+                "stok_awal_bulan"  => $stok_awal_bulan_jadi,
+                "tot_in"           => $qtyin,
+                "tot_out"          => $qtyout,
+                "mutasi_in"          => $qtyinmutasi,
+                "mutasi_out"          => $qtyoutmutasi,
+                "stok_akhir_bulan" =>  $stok_akhir_bulan,
+                "rata_pemakaian"   => $key->rata_pemakaian,
+                "min_stock"        => '0',
+            );
+
 
             // $this->db->where('id_item', $key->id_item);
             // $this->db->where('id_divisi', $key->id_divisi);
@@ -119,6 +146,17 @@ class kaca extends CI_Controller
             // $this->db->where('keranjang', $key->keranjang);
             // $object = array('qty' => $temp['stok_akhir_bulan']);
             // $this->db->update('data_counter', $object);
+
+            //     $this->db->where('id_item', $key->id_item);
+            //     $this->db->where('id_divisi', $key->id_divisi);
+            //     $this->db->where('id_gudang', $key->id_gudang);
+            //     $this->db->where('keranjang', $key->keranjang);
+            //     $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
+            // $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
+            // $this->db->where('awal_bulan', 1);
+            // $object2 = array('qty_in' => $temp['stok_akhir_bulan']);
+            //     $this->db->update('data_stock', $object2);
+
 
 
             array_push($arr, $temp);
