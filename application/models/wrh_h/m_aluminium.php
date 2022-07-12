@@ -1684,6 +1684,39 @@ class M_aluminium extends CI_Model
             }
         }
     }
+
+    public function getDataWoIn($tgl_awal, $tgl_akhir)
+    {
+        $this->db->join('master_gudang mg', 'mg.id = dwi.id_gudang', 'left');
+        $this->db->join('master_item mi', 'mi.id = dwi.id_item', 'left');
+        $this->db->join('master_supplier ms', 'ms.id = dwi.id_supplier', 'left');
+        $this->db->join('cms_user cu', 'cu.id = dwi.id_penginput', 'left');
+        $this->db->where('DATE(dwi.aktual) >=', $tgl_awal);
+        $this->db->where('DATE(dwi.aktual) <=', $tgl_akhir);
+        $this->db->where_in('dwi.id_gudang', ['2', '4', '58', '59', '79']);
+        $this->db->order_by('dwi.id', 'desc');
+        $this->db->where('dwi.is_wo', 1);
+        
+        $this->db->select('dwi.*,cu.nama,ms.supplier,mg.gudang,mi.section_ata,mi.section_allure,mi.temper,mi.ukuran,mi.kode_warna');
+
+        return $this->db->get('data_stock dwi');
+    }
+
+    public function getDropDownWo()
+    {
+        $this->db->group_by('no_wo');
+        $this->db->where('id_divisi >=', 6);
+        
+        return $this->db->get('data_wo');
+    }
+
+    public function getItemWo($no_wo)
+    {
+        $this->db->join('master_item mi', 'mi.id = dw.id_item', 'left');
+        $this->db->where('dw.no_wo', $no_wo);
+        $this->db->select('mi.*');
+        return $this->db->get('data_wo dw')->result();
+    }
 }
 
 /* End of file m_aluminium.php */

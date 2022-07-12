@@ -37,6 +37,17 @@ class wo extends CI_Controller
         $this->load->view('klg/wo/v_wo_list', $data);
     }
 
+    public function cetak($tgl_awal = '', $tgl_akhir = '')
+    {
+
+        $data['tgl_awal']  = $tgl_awal;
+        $data['tgl_akhir'] = $tgl_akhir;
+        $data['tbl_del']   = 0;
+        $data['wo'] = $this->m_wo->getData($data['tgl_awal'], $data['tgl_akhir']);
+
+        $this->load->view('klg/wo/v_wo_cetak', $data);
+    }
+
     public function add()
     {
 

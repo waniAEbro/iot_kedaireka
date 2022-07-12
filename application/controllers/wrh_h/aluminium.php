@@ -1315,6 +1315,181 @@ class Aluminium extends CI_Controller
 
         $this->load->view('wrh_h/aluminium/v_aluminium_stock_point', $data);
     }
+
+    public function stok_in_wo()
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $bulan       = date('m');
+        $tahun       = date('Y');
+        $data['tgl_awal']  = $tahun . '-' . $bulan . '-01';
+        $data['tgl_akhir'] = date("Y-m-t", strtotime($data['tgl_awal']));
+        $data['aluminium'] = $this->m_aluminium->getDataWoIn($data['tgl_awal'], $data['tgl_akhir']);
+
+        $this->load->view('wrh_h/aluminium/v_aluminium_in_wo_list', $data);
+    }
+
+    public function stok_in_wo_set($tgl_awal = '', $tgl_akhir = '')
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $data['tgl_awal']  = $tgl_awal;
+        $data['tgl_akhir'] = $tgl_akhir;
+        $data['aluminium'] = $this->m_aluminium->getDataWoIn($data['tgl_awal'], $data['tgl_akhir']);
+
+        $this->load->view('wrh_h/aluminium/v_aluminium_in_wo_list', $data);
+    }
+
+    public function stok_in_wo_add()
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $data['wo']     = $this->m_aluminium->getDropDownWo();
+        $this->db->where_in('id', ['2', '4', '58', '59', '79']);
+        $data['gudang']   = $this->db->get('master_gudang');
+        // $data['gudang']   = $this->db->get_where('master_gudang', array('id_jenis_item' => 1));
+        $data['supplier'] = $this->db->get('master_supplier');
+
+        $this->load->view('wrh_h/aluminium/v_aluminium_in_wo', $data);
+    }
+
+    public function finish_stok_in_wo()
+    {
+        $this->stok_in_wo();
+    }
+
+    
+
+    public function stok_in_wo_edit($id)
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $data['id']       = $id;
+        $data['row']      = $this->m_aluminium->getDataStockRow($id)->row();
+        $data['supplier'] = $this->db->get('master_supplier');
+        $this->load->view('wrh_h/aluminium/v_aluminium_edit', $data);
+    }
+
+    public function simpan_wo_edit()
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $id  = $this->input->post('id');
+        $obj = array(
+            'id_supplier'    => $this->input->post('supplier'),
+            'no_surat_jalan' => $this->input->post('no_surat_jalan'),
+            'no_pr'          => $this->input->post('no_pr'),
+            'keterangan'     => $this->input->post('keterangan'),
+        );
+        $this->m_aluminium->updatestokin($obj, $id);
+        $this->fungsi->catat($obj, "mengubah Stock In dengan id " . $id . " data sbb:", true);
+        $respon = ['msg' => 'Data Berhasil Diubah'];
+        echo json_encode($respon);
+    }
+
+    public function savestokin_wo()
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $no_wo = $this->db->get_where('data_wo', array('id' => $this->input->post('id_wo')))->row()->no_wo;
+        $datapost = array(
+            'aktual'         => $this->input->post('tgl_aktual'),
+            'id_supplier'    => $this->input->post('id_supplier'),
+            'no_surat_jalan' => $this->input->post('no_surat_jalan'),
+            'id_jenis_item'          => 1,
+            'inout'          => 1,
+            'is_wo'          => 1,
+            'no_wo'          => $no_wo,
+            'id_item'        => $this->input->post('id_item'),
+            'qty_in'         => $this->input->post('qty'),    
+            'id_gudang'      => $this->input->post('id_gudang'),
+            'keranjang'      => str_replace(' ', '', $this->input->post('keranjang')),
+            'keterangan'     => $this->input->post('keterangan'),
+            'id_penginput'   => from_session('id'),
+            'created'        => date('Y-m-d H:i:s'),
+        );
+        $this->db->insert('data_stock', $datapost);        
+        $data['id'] = $this->db->insert_id();
+        $this->fungsi->catat($datapost, "Menyimpan stock in WO Aluminium sbb:", true);
+
+        $cekDataCounter = $this->m_aluminium->getDataCounter($datapost['id_item'], $datapost['id_gudang'], $datapost['keranjang'])->num_rows();
+        if ($cekDataCounter == 0) {
+            $simpan = array(
+                'id_jenis_item' => 1,
+                'id_item'       => $this->input->post('id_item'),
+                'id_gudang'     => $this->input->post('id_gudang'),
+                'keranjang'     => str_replace(' ', '', $this->input->post('keranjang')),
+                'qty'           => $this->input->post('qty'),
+                'created'       => date('Y-m-d H:i:s'),
+                'itm_code'      => $this->m_aksesoris->getRowItem($this->input->post('id_item'))->item_code,
+            );
+            $this->db->insert('data_counter', $simpan);
+        } else {
+            $cekQtyCounter = $this->m_aluminium->getDataCounter($datapost['id_item'],  $datapost['id_gudang'], $datapost['keranjang'])->row()->qty;
+            $qty_jadi      = (int)$datapost['qty_in'] + (int)$cekQtyCounter;
+            $this->m_aluminium->updateDataCounter($datapost['id_item'],  $datapost['id_gudang'], $datapost['keranjang'], $qty_jadi);
+        }
+
+        $data['msg'] = "stock wo Disimpan";
+        echo json_encode($data);
+    }
+
+    public function deleteIn_wo($id)
+    {
+        $this->fungsi->check_previleges('aluminium');
+
+        $id_item   = $this->db->get_where('data_stock', array('id' => $id))->row()->id_item;
+        $id_gudang = $this->db->get_where('data_stock', array('id' => $id))->row()->id_gudang;
+        $keranjang = $this->db->get_where('data_stock', array('id' => $id))->row()->keranjang;
+        $qty_in   = $this->db->get_where('data_stock', array('id' => $id))->row()->qty_in;
+
+        $cekQtyCounter = $this->m_aluminium->getDataCounter($id_item,  $id_gudang, $keranjang)->row()->qty;
+        $qty_jadi      = (int)$cekQtyCounter - (int)$qty_in;
+        $this->m_aluminium->updateDataCounter($id_item,  $id_gudang, $keranjang, $qty_jadi);
+        
+        $data = array(
+            'id' => $id,
+        );
+        $this->db->where('id', $id);
+        $this->db->delete('data_stock');
+
+        $this->fungsi->catat($data, "Menghapus Stock WO Aluminium dengan data sbb:", true);
+        $this->fungsi->run_js('load_silent("wrh_h/aluminium/stok_in_wo","#content")');
+        $this->fungsi->message_box("Menghapus Stock WO Aluminium", "success");
+    }
+
+
+    public function deleteItemIn_wo()
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $id            = $this->input->post('id');
+
+        $id_item   = $this->db->get_where('data_stock', array('id' => $id))->row()->id_item;
+        $id_gudang = $this->db->get_where('data_stock', array('id' => $id))->row()->id_gudang;
+        $keranjang = $this->db->get_where('data_stock', array('id' => $id))->row()->keranjang;
+        $qty_in   = $this->db->get_where('data_stock', array('id' => $id))->row()->qty_in;
+
+        $cekQtyCounter = $this->m_aluminium->getDataCounter($id_item,  $id_gudang, $keranjang)->row()->qty;
+        $qty_jadi      = (int)$cekQtyCounter - (int)$qty_in;
+        $this->m_aluminium->updateDataCounter($id_item,  $id_gudang, $keranjang, $qty_jadi);
+
+        $data = array(
+            'id' => $id,
+        );
+        $this->db->where('id', $id);
+        $this->db->delete('data_stock');
+
+        $this->fungsi->catat($data, "Menghapus Stock WO Aluminium dengan data sbb:", true);
+        $respon = ['msg' => 'Data Berhasil Dihapus'];
+        echo json_encode($respon);
+    }
+
+    public function optionGetItemWo()
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $id_wo  = $this->input->post('id_wo');
+        $no_wo = $this->db->get_where('data_wo', array('id' => $id_wo))->row()->no_wo;
+        $get_data = $this->m_aluminium->getItemWo($no_wo);
+        $data     = array();
+        foreach ($get_data as $val) {
+            $data[] = $val;
+        }
+        echo json_encode($data, JSON_PRETTY_PRINT);
+    }
 }
 
 /* End of file aluminium.php */

@@ -1791,6 +1791,7 @@ class M_aluminium extends CI_Model
         $this->db->join('cms_user cu', 'cu.id = dwi.id_penginput', 'left');
         $this->db->where('DATE(dwi.aktual) >=', $tgl_awal);
         $this->db->where('DATE(dwi.aktual) <=', $tgl_akhir);
+        $this->db->where_in('dwi.id_gudang', ['1', '3']);
         $this->db->order_by('dwi.id', 'desc');
         $this->db->where('dwi.is_wo', 1);
         
@@ -1802,7 +1803,9 @@ class M_aluminium extends CI_Model
     public function getDropDownWo()
     {
         $this->db->group_by('no_wo');
-        return $this->db->get('data_wo dw');
+        $this->db->where('id_divisi <=', 5);
+        
+        return $this->db->get('data_wo');
     }
 
     public function getItemWo($no_wo)

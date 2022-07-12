@@ -2,7 +2,7 @@
     <div class="col-lg-3">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Input Stock Aluminium RSD</h3>
+                <h3 class="box-title">Input Stock Aluminium HRB</h3>
             </div>
             <div class="div-pembelian">
                 <form method="post" class="form-vertical form" role="form" id="formid">
@@ -110,7 +110,7 @@
                 title: 'Berhasil',
                 message: "Tambah Stock WO selesai!"
             });
-            load_silent("wrh/aluminium/finish_stok_in_wo", "#content");
+            load_silent("wrh_h/aluminium/finish_stok_in_wo", "#content");
         }
     }
     $(document).ready(function() {
@@ -138,7 +138,7 @@
         } else {
             z = "<option>-- Select --</option>";
             $.ajax({
-                url: "<?= site_url('wrh/aluminium/optionGetItemWo') ?>",
+                url: "<?= site_url('wrh_h/aluminium/optionGetItemWo') ?>",
                 dataType: "json",
                 type: "POST",
                 data: {
@@ -163,7 +163,7 @@
 
             $.ajax({
                     type: "POST",
-                    url: "<?= site_url('wrh/aluminium/savestokin_wo') ?>",
+                    url: "<?= site_url('wrh_h/aluminium/savestokin_wo') ?>",
                     dataType: 'json',
                     data: {
                         'tgl_aktual': $('#tgl_aktual').val(),
@@ -258,7 +258,7 @@
         if (confirm('Lanjutkan Proses Hapus?')) {
             $.ajax({
                     type: "POST",
-                    url: "<?= site_url('wrh/aluminium/deleteItemIn_wo') ?>",
+                    url: "<?= site_url('wrh_h/aluminium/deleteItemIn_wo') ?>",
                     dataType: 'json',
                     data: {
                         'id': i
