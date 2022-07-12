@@ -40,6 +40,8 @@ class M_aluminium extends CI_Model
         $this->db->group_by('mi.id');
         $this->db->select('mi.*,mwa.warna');
         return $this->db->get('data_stock ds');
+
+        
         // $id_jenis_item = 1;
         // $this->db->join('master_item mi', 'mi.id = dc.id_item', 'left');
         // $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
@@ -1787,12 +1789,14 @@ class M_aluminium extends CI_Model
         $this->db->join('master_item mi', 'mi.id = dwi.id_item', 'left');
         $this->db->join('master_supplier ms', 'ms.id = dwi.id_supplier', 'left');
         $this->db->join('cms_user cu', 'cu.id = dwi.id_penginput', 'left');
-        $this->db->where('DATE(dwi.tgl_aktual) >=', $tgl_awal);
-        $this->db->where('DATE(dwi.tgl_aktual) <=', $tgl_akhir);
+        $this->db->where('DATE(dwi.aktual) >=', $tgl_awal);
+        $this->db->where('DATE(dwi.aktual) <=', $tgl_akhir);
         $this->db->order_by('dwi.id', 'desc');
+        $this->db->where('dwi.is_wo', 1);
+        
         $this->db->select('dwi.*,cu.nama,ms.supplier,mg.gudang,mi.section_ata,mi.section_allure,mi.temper,mi.ukuran,mi.kode_warna');
 
-        return $this->db->get('data_wo_in dwi');
+        return $this->db->get('data_stock dwi');
     }
 
     public function getDropDownWo()

@@ -65,13 +65,13 @@
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
                                 <td><?= $row->created ?></td>
-                                <td><?= $row->tgl_aktual ?></td>
+                                <td><?= $row->aktual ?></td>
                                 <td><?= $row->nama ?></td>
                                 <td><?= $row->no_wo ?></td>
                                 <td><?= $row->section_ata ?>-<?= $row->section_allure ?>-<?= $row->temper ?>-<?= $row->kode_warna ?>-<?= $row->ukuran ?></td>
                                 <td><?= $row->gudang ?></td>
                                 <td><?= $row->keranjang ?></td>
-                                <td><?= $row->qty ?></td>
+                                <td><?= $row->qty_in ?></td>
                                 <td><?= $row->supplier ?></td>
                                 <td><?= $row->no_surat_jalan ?></td>
                                 <td><?= $row->keterangan ?></td>

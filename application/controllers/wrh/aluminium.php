@@ -1394,21 +1394,43 @@ class Aluminium extends CI_Controller
         $this->fungsi->check_previleges('aluminium');
         $no_wo = $this->db->get_where('data_wo', array('id' => $this->input->post('id_wo')))->row()->no_wo;
         $datapost = array(
-            'tgl_aktual'         => $this->input->post('tgl_aktual'),
+            'aktual'         => $this->input->post('tgl_aktual'),
             'id_supplier'    => $this->input->post('id_supplier'),
             'no_surat_jalan' => $this->input->post('no_surat_jalan'),
+            'id_jenis_item'          => 1,
+            'inout'          => 1,
+            'is_wo'          => 1,
             'no_wo'          => $no_wo,
             'id_item'        => $this->input->post('id_item'),
-            'qty'         => $this->input->post('qty'),    
+            'qty_in'         => $this->input->post('qty'),    
             'id_gudang'      => $this->input->post('id_gudang'),
             'keranjang'      => str_replace(' ', '', $this->input->post('keranjang')),
             'keterangan'     => $this->input->post('keterangan'),
             'id_penginput'   => from_session('id'),
             'created'        => date('Y-m-d H:i:s'),
         );
-        $this->db->insert('data_wo_in', $datapost);        
+        $this->db->insert('data_stock', $datapost);        
         $data['id'] = $this->db->insert_id();
         $this->fungsi->catat($datapost, "Menyimpan stock in WO Aluminium sbb:", true);
+
+        $cekDataCounter = $this->m_aluminium->getDataCounter($datapost['id_item'], $datapost['id_gudang'], $datapost['keranjang'])->num_rows();
+        if ($cekDataCounter == 0) {
+            $simpan = array(
+                'id_jenis_item' => 1,
+                'id_item'       => $this->input->post('id_item'),
+                'id_gudang'     => $this->input->post('id_gudang'),
+                'keranjang'     => str_replace(' ', '', $this->input->post('keranjang')),
+                'qty'           => $this->input->post('qty'),
+                'created'       => date('Y-m-d H:i:s'),
+                'itm_code'      => $this->m_aksesoris->getRowItem($this->input->post('id_item'))->item_code,
+            );
+            $this->db->insert('data_counter', $simpan);
+        } else {
+            $cekQtyCounter = $this->m_aluminium->getDataCounter($datapost['id_item'],  $datapost['id_gudang'], $datapost['keranjang'])->row()->qty;
+            $qty_jadi      = (int)$datapost['qty_in'] + (int)$cekQtyCounter;
+            $this->m_aluminium->updateDataCounter($datapost['id_item'],  $datapost['id_gudang'], $datapost['keranjang'], $qty_jadi);
+        }
+
         $data['msg'] = "stock wo Disimpan";
         echo json_encode($data);
     }
@@ -1416,12 +1438,21 @@ class Aluminium extends CI_Controller
     public function deleteIn_wo($id)
     {
         $this->fungsi->check_previleges('aluminium');
+
+        $id_item   = $this->db->get_where('data_stock', array('id' => $id))->row()->id_item;
+        $id_gudang = $this->db->get_where('data_stock', array('id' => $id))->row()->id_gudang;
+        $keranjang = $this->db->get_where('data_stock', array('id' => $id))->row()->keranjang;
+        $qty_in   = $this->db->get_where('data_stock', array('id' => $id))->row()->qty_in;
+
+        $cekQtyCounter = $this->m_aluminium->getDataCounter($id_item,  $id_gudang, $keranjang)->row()->qty;
+        $qty_jadi      = (int)$cekQtyCounter - (int)$qty_in;
+        $this->m_aluminium->updateDataCounter($id_item,  $id_gudang, $keranjang, $qty_jadi);
         
         $data = array(
             'id' => $id,
         );
         $this->db->where('id', $id);
-        $this->db->delete('data_wo_in');
+        $this->db->delete('data_stock');
 
         $this->fungsi->catat($data, "Menghapus Stock WO Aluminium dengan data sbb:", true);
         $this->fungsi->run_js('load_silent("wrh/aluminium/stok_in_wo","#content")');
@@ -1433,11 +1464,21 @@ class Aluminium extends CI_Controller
     {
         $this->fungsi->check_previleges('aluminium');
         $id            = $this->input->post('id');
+
+        $id_item   = $this->db->get_where('data_stock', array('id' => $id))->row()->id_item;
+        $id_gudang = $this->db->get_where('data_stock', array('id' => $id))->row()->id_gudang;
+        $keranjang = $this->db->get_where('data_stock', array('id' => $id))->row()->keranjang;
+        $qty_in   = $this->db->get_where('data_stock', array('id' => $id))->row()->qty_in;
+
+        $cekQtyCounter = $this->m_aluminium->getDataCounter($id_item,  $id_gudang, $keranjang)->row()->qty;
+        $qty_jadi      = (int)$cekQtyCounter - (int)$qty_in;
+        $this->m_aluminium->updateDataCounter($id_item,  $id_gudang, $keranjang, $qty_jadi);
+
         $data = array(
             'id' => $id,
         );
         $this->db->where('id', $id);
-        $this->db->delete('data_wo_in');
+        $this->db->delete('data_stock');
 
         $this->fungsi->catat($data, "Menghapus Stock WO Aluminium dengan data sbb:", true);
         $respon = ['msg' => 'Data Berhasil Dihapus'];

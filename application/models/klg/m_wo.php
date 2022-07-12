@@ -29,14 +29,16 @@ class M_wo extends CI_Model
 
     public function getTotalIn()
     {
-        $res  = $this->db->get('data_wo_in');
+        $this->db->where('is_wo', 1);
+        $res  = $this->db->get('data_stock');
+        
         $data = array();
         foreach ($res->result() as $key) {
 
             if (!isset($data[$key->id_item][$key->no_wo])) {
                 $data[$key->id_item][$key->no_wo] = 0;
             }
-            $data[$key->id_item][$key->no_wo] = $data[$key->id_item][$key->no_wo] + $key->qty;
+            $data[$key->id_item][$key->no_wo] = $data[$key->id_item][$key->no_wo] + $key->qty_in;
         }
         return $data;
     }
