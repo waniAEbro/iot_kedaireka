@@ -16,13 +16,15 @@
                 <table width="100%" id="tableku" class="table table-striped">
                     <thead>
                         <th width="5%">No</th>
-                        <th>Divisi</th>
                         <th>Section ATA</th>
                         <th>Section Allure</th>
                         <th>Temper</th>
                         <th>Warna</th>
                         <th width="25%">Deskripsi Warna</th>
                         <th>Ukuran</th>
+                        <th>Perimeter Berat</th>
+                        <th>Perimeter MF</th>
+                        <th>Perimeter Coating</th>
                         <th>Satuan</th>
                         <th>Supplier</th>
                         <th>Lead Time</th>
@@ -34,13 +36,15 @@
                         foreach ($aluminium->result() as $row) : ?>
                             <tr id="output_data_<?= $row->id ?>" class="output_data">
                                 <td align="center"><?= $i++ ?></td>
-                                <td><?= $row->divisi ?></td>
                                 <td><?= $row->section_ata ?></td>
                                 <td><?= $row->section_allure ?></td>
                                 <td><?= $row->temper ?></td>
                                 <td><?= $row->kode_warna ?></td>
                                 <td><?= $row->warna ?></td>
                                 <td><?= $row->ukuran ?></td>
+                                <td><?= $row->perimeter_berat ?></td>
+                                <td><?= $row->perimeter_mf ?></td>
+                                <td><?= $row->perimeter_coating ?></td>
                                 <td><?= $row->satuan ?></td>
                                 <td><?= $row->supplier ?></td>
                                 <td><?= $row->lead_time ?></td>
