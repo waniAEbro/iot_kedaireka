@@ -376,7 +376,6 @@ class Mockup extends CI_Controller
         $datapost = array(
             'id_divisi'              => $this->input->post('id_divisi'),
             'tgl_pembuatan'          => $this->input->post('tgl_pembuatan'),
-            'no_fppp'                => $this->input->post('no_fppp'),
             'multi_brand'            => $this->input->post('multi_brand'),
             'applicant'              => $this->input->post('applicant'),
             'no_co'                  => $this->input->post('no_co'),
@@ -464,7 +463,6 @@ class Mockup extends CI_Controller
                 'applicant_sector'       => $this->input->post('applicant_sector'),
                 'authorized_distributor' => $this->input->post('authorized_distributor'),
                 'multi_brand'            => $this->input->post('multi_brand'),
-                'no_fppp'                => $this->input->post('no_fppp'),
                 'no_co'                  => $this->input->post('no_co'),
                 'kode_proyek'            => $this->input->post('kode_proyek'),
                 'nama_proyek'            => $this->input->post('nama_proyek'),
