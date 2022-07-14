@@ -34,7 +34,7 @@
                     <div class="col-md-12">
                         <div class="box-tools pull-right">
                             <a class="btn btn-success" onclick="setFilter()">Set Filter</a>
-                            <!-- <a class="btn btn-success" onclick="setCetakAlu()">Cetak</a> -->
+                            <a class="btn btn-success" onclick="setCetakAlu()">Cetak</a>
                         </div>
                     </div>
                     </>
@@ -44,7 +44,8 @@
                 <table width="100%" id="tableku" class="table table-striped">
                     <thead>
                         <th width="5%">No</th>
-                        <th>Tgl</th>
+                        <th>Tgl Sistem</th>
+                        <th>Tgl Aktual</th>
                         <th>No Surat Jalan</th>
                         <th>No FPPP</th>
                         <th>Nama Proyek</th>
@@ -67,6 +68,7 @@
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
                                 <td align="center"><?= $row->created ?></td>
+                                <td align="center"><?= $row->tgl_aktual ?></td>
                                 <td><?= $row->no_surat_jalan ?></td>
                                 <td><?= $row->no_fppp ?></td>
                                 <td><?= $row->nama_proyek ?></td>
@@ -115,5 +117,14 @@
 
 
         
+    }
+
+    function setCetakAlu() {
+        var tgl_awal = $('#tgl_awal').val();
+
+        var tgl_akhir = $('#tgl_akhir').val();
+
+        var url = "<?= site_url('wrh_h/aluminium/list_surat_jalan_set_cetak/"+tgl_awal+"/"+tgl_akhir+"') ?>";
+        window.open(url, "_blank");
     }
 </script>
