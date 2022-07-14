@@ -76,6 +76,14 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Tgl Aktual</label>
+                        <input type="text" data-date-format="yyyy-mm-dd" class="form-control datepicker" value="<?= date('Y-m-d') ?>" id="tgl_aktual">
+                    </div>
+                </div>
+            </div>
     </div>
     <!-- /.box-body -->
     <div class="box-footer">
@@ -98,6 +106,7 @@
                 "alamat_pengiriman": $("#alamat_pengiriman").val(),
                 "sopir": $("#sopir").val(),
                 "no_kendaraan": $("#no_kendaraan").val(),
+                "tgl_aktual": $("#tgl_aktual").val(),
             },
             success: function(img) {
                 $.growl.notice({

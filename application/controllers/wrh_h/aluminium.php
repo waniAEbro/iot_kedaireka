@@ -705,6 +705,7 @@ class Aluminium extends CI_Controller
             'no_kendaraan'      => $no_kendaraan,
             'id_jenis_item'     => $id_jenis_item,
             'tipe'              => 1,
+            'tgl_aktual'              =>  $this->input->post('tgl_aktual'),
             'jenis_aluminium'              => 2,
             'created'           => date('Y-m-d H:i:s'),
         );
@@ -734,6 +735,7 @@ class Aluminium extends CI_Controller
             'no_kendaraan'      => $no_kendaraan,
             'id_jenis_item'     => $id_jenis_item,
             'tipe'              => 1,
+            'tgl_aktual'              =>  $this->input->post('tgl_aktual'),
             'jenis_aluminium'              => 2,
             'created'           => date('Y-m-d H:i:s'),
         );
