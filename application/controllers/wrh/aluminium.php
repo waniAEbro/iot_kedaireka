@@ -637,14 +637,7 @@ class Aluminium extends CI_Controller
         $this->load->view('wrh/aluminium/v_aluminium_buat_surat_jalan_mf', $data);
     }
 
-    public function stok_out_add()
-    {
-        $this->fungsi->check_previleges('aluminium');
-        $data['no_fppp']        = $this->db->get_where('data_fppp', array('id_status' => 1));
-        $data['no_surat_jalan'] = str_pad($this->m_aluminium->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJ/AL/SJRSD/' . date('m') . '/' . date('Y');
-
-        $this->load->view('wrh/aluminium/v_aluminium_out', $data);
-    }
+    
 
     public function list_surat_jalan()
     {
@@ -716,6 +709,7 @@ class Aluminium extends CI_Controller
             'id_jenis_item'     => $id_jenis_item,
             'tipe'              => 1,
             'tgl_aktual'              =>  $this->input->post('tgl_aktual'),
+            'keterangan_sj'              =>  $this->input->post('keterangan'),
             'jenis_aluminium'              => 1,
             'created'           => date('Y-m-d H:i:s'),
         );
@@ -746,6 +740,7 @@ class Aluminium extends CI_Controller
             'id_jenis_item'     => $id_jenis_item,
             'tipe'              => 1,
             'tgl_aktual'              =>  $this->input->post('tgl_aktual'),
+            'keterangan_sj'              =>  $this->input->post('keterangan'),
             'jenis_aluminium'              => 1,
             'created'           => date('Y-m-d H:i:s'),
         );

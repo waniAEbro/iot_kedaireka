@@ -26,6 +26,7 @@
             <th>Alamat Pengiriman</th>
             <th>Sopir</th>
             <th>No Kendaraan</th>
+            <th>Kategori</th>
             <th>Keterangan</th>
         </tr>
     </thead>
@@ -50,6 +51,7 @@
                 <td><?= $row->sopir ?></td>
                 <td><?= $row->no_kendaraan ?></td>
                 <td><?= $ket ?></td>
+                <td><?= $row->keterangan_sj ?></td>
 
 
             </tr>

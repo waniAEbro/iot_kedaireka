@@ -84,6 +84,14 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Keterangan</label>
+                        <input type="text" class="form-control" id="keterangan">
+                    </div>
+                </div>
+            </div>
     </div>
     <!-- /.box-body -->
     <div class="box-footer">
@@ -107,6 +115,7 @@
                 "sopir": $("#sopir").val(),
                 "no_kendaraan": $("#no_kendaraan").val(),
                 "tgl_aktual": $("#tgl_aktual").val(),
+                "keterangan": $("#keterangan").val(),
             },
             success: function(img) {
                 $.growl.notice({

@@ -55,6 +55,7 @@
                         <th>Alamat Pengiriman</th>
                         <th>Sopir</th>
                         <th>No Kendaraan</th>
+                        <th>Kategori</th>
                         <th>Keterangan</th>
                         <th></th>
                     </thead>
@@ -79,6 +80,7 @@
                                 <td><?= $row->sopir ?></td>
                                 <td><?= $row->no_kendaraan ?></td>
                                 <td><?= $ket ?></td>
+                                <td><?= $row->keterangan_sj ?></td>
                                 <td>
                                     <?php echo button('load_silent("wrh_h/aluminium/lihat_item_stok_out/' . $row->id . '","#modal")', 'Lihat Item', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Lihat Item Stock OUT"');
                                     ?>

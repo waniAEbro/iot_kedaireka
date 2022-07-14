@@ -5,14 +5,7 @@
             <div class="box-header with-border">
                 <h3 class="box-title">Surat Jalan BOM Aluminium</h3>
                 <div class="box-tools pull-right">
-                    <?php
-                    $sesi = from_session('level');
-                    if ($sesi <= 3) {
-                        //echo button('load_silent("wrh/aluminium/stok_out_add/","#content")', 'Add Stock OUT', 'btn btn-primary', 'data-toggle="tooltip" title="Stock OUT"');
-                    } else {
-                        # code...
-                    }
-                    ?>
+                    
                 </div>
             </div>
             <div class="box-body">

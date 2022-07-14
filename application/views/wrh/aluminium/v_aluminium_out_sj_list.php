@@ -5,14 +5,7 @@
             <div class="box-header with-border">
                 <h3 class="box-title">Stock Out List Aluminium RSD</h3>
                 <div class="box-tools pull-right">
-                    <?php
-                    $sesi = from_session('level');
-                    if ($sesi <= 3) {
-                        //echo button('load_silent("wrh/aluminium/stok_out_add/","#content")', 'Add Stock OUT', 'btn btn-primary', 'data-toggle="tooltip" title="Stock OUT"');
-                    } else {
-                        # code...
-                    }
-                    ?>
+
                 </div>
             </div>
             <div class="box-body">
@@ -55,6 +48,7 @@
                         <th>Alamat Pengiriman</th>
                         <th>Sopir</th>
                         <th>No Kendaraan</th>
+                        <th>Kategori</th>
                         <th>Keterangan</th>
                         <th></th>
                     </thead>
@@ -79,6 +73,7 @@
                                 <td><?= $row->sopir ?></td>
                                 <td><?= $row->no_kendaraan ?></td>
                                 <td><?= $ket ?></td>
+                                <td><?= $row->keterangan_sj ?></td>
                                 <td>
                                     <?php echo button('load_silent("wrh/aluminium/lihat_item_stok_out/' . $row->id . '","#modal")', 'Lihat Item', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Lihat Item Stock OUT"');
                                     ?>
@@ -116,7 +111,7 @@
         load_silent("wrh/aluminium/list_surat_jalan_set/" + tlg1 + "/" + tgl2, "#content");
 
 
-        
+
     }
 
     function setCetakAlu() {
