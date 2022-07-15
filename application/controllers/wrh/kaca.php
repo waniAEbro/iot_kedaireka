@@ -295,6 +295,57 @@ class kaca extends CI_Controller
             $qty_jadi      = (int)$datapost['qty_in'] + (int)$cekQtyCounter;
             $this->m_kaca->updateDataCounter($datapost['id_item'], $datapost['id_divisi'], $datapost['id_gudang'], $datapost['keranjang'], $qty_jadi);
         }
+
+        //update awal bulan
+        $tgl_awalbulan_ini = date('Y-m') . '-01';
+        $tgl_aktual = $this->input->post('aktual');
+        $s = strtotime($tgl_awalbulan_ini);
+        $tgl_awalbulan_aktual = date('Y-m', $s) . '-01';
+        if ($this->input->post('aktual') < $tgl_awalbulan_ini) {
+            $this->db->where('DATE(created) <', $tgl_aktual);
+            $this->db->where('awal_bulan', 1);
+            $this->db->where('id_item', $this->input->post('item'));
+            $this->db->where('id_divisi', $this->input->post('id_divisi'));
+            $this->db->where('id_gudang', $this->input->post('id_gudang'));
+            $this->db->where('keranjang', $this->input->post('keranjang'));
+
+            $get_awal_bulan_sblm = $this->db->get('data_stock');
+            $object_sblm = array(
+                'id_item'        => $this->input->post('item'),
+                'awal_bulan'          => 1,
+                'inout'          => 1,
+                'id_jenis_item'  => 3,
+                'qty_in'         => $this->input->post('qty'),
+                'id_divisi'      => $this->input->post('id_divisi'),
+                'id_gudang'      => $this->input->post('id_gudang'),
+                'keranjang'      => str_replace(' ', '', $this->input->post('keranjang')),
+                'keterangan'     => $data['id'],
+                'id_penginput'   => from_session('id'),
+                'created'        =>  $tgl_awalbulan_aktual,
+                'updated'        =>  $tgl_awalbulan_aktual,
+                'aktual'         =>  $tgl_awalbulan_aktual,
+            );
+
+            foreach ($get_awal_bulan_sblm->result() as $key) {
+                $tgl_awalbulan_key = $key->created;
+                $object_sblm = array(
+                    'id_item'        => $this->input->post('item'),
+                    'awal_bulan'          => 1,
+                    'inout'          => 1,
+                    'id_jenis_item'  => 3,
+                    'qty_in'         => $this->input->post('qty'),
+                    'id_divisi'      => $this->input->post('id_divisi'),
+                    'id_gudang'      => $this->input->post('id_gudang'),
+                    'keranjang'      => str_replace(' ', '', $this->input->post('keranjang')),
+                    'keterangan'     => $data['id'],
+                    'id_penginput'   => from_session('id'),
+                    'created'        =>  $tgl_awalbulan_key,
+                    'updated'        =>  $tgl_awalbulan_key,
+                    'aktual'         =>  $tgl_aktual,
+                );
+                $this->db->insert('data_stock', $object_sblm);
+            }
+        }
         $data['msg'] = "stock Disimpan";
         echo json_encode($data);
     }
@@ -334,6 +385,12 @@ class kaca extends CI_Controller
         $this->db->where('id', $id);
         $this->db->delete('data_stock');
 
+        $this->db->where('awal_bulan', 1);
+        $this->db->where('keterangan', $id);
+        $this->db->delete('data_stock');
+        
+        
+
         $this->fungsi->catat($data, "Menghapus Stock In kaca dengan data sbb:", true);
         $this->fungsi->run_js('load_silent("wrh/kaca/stok_in","#content")');
         $this->fungsi->message_box("Menghapus Stock In kaca", "success");
@@ -353,6 +410,10 @@ class kaca extends CI_Controller
             'qty_dihapus' => $getRow->qty_in,
         );
         $this->db->where('id', $id);
+        $this->db->delete('data_stock');
+
+        $this->db->where('awal_bulan', 1);
+        $this->db->where('keterangan', $id);
         $this->db->delete('data_stock');
 
         $this->fungsi->catat($data, "Menghapus Stock In kaca dengan data sbb:", true);
