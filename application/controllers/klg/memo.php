@@ -374,7 +374,7 @@ class Memo extends CI_Controller
 		$id_fppp     = $this->input->post('id_fppp');
 		$param       = $this->input->post('id_divisi');
 		$nama_divisi = $this->m_fppp->getRowNamaDivisi($param)->divisi_pendek;
-		$nofppp      = str_pad($this->m_fppp->getNoMemo($param), 3, '0', STR_PAD_LEFT) . '/MEMO/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
+		// $nofppp      = str_pad($this->m_fppp->getNoMemo($param), 3, '0', STR_PAD_LEFT) . '/MEMO/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
 
 		$datapost = array(
 			'id_divisi'              => $this->input->post('id_divisi'),
@@ -382,6 +382,7 @@ class Memo extends CI_Controller
 			'multi_brand'            => $this->input->post('multi_brand'),
 			'applicant'              => $this->input->post('applicant'),
 			'no_co'                  => $this->input->post('no_co'),
+			'no_fppp'                  => $this->input->post('no_fppp'),
 			'applicant_sector'       => $this->input->post('applicant_sector'),
 			'authorized_distributor' => $this->input->post('authorized_distributor'),
 			'type_fppp'              => $this->input->post('type_fppp'),
@@ -457,7 +458,7 @@ class Memo extends CI_Controller
 			$data        = $this->upload->data();
 			$param       = $this->input->post('id_divisi');
 			$nama_divisi = $this->m_fppp->getRowNamaDivisi($param)->divisi_pendek;
-			$nofppp      = str_pad($this->m_fppp->getNoMemo($param), 3, '0', STR_PAD_LEFT) . '/MEMO/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
+			// $nofppp      = str_pad($this->m_fppp->getNoMemo($param), 3, '0', STR_PAD_LEFT) . '/MEMO/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
 
 			$datapost = array(
 				'id_divisi'              => $this->input->post('id_divisi'),
@@ -467,6 +468,7 @@ class Memo extends CI_Controller
 				'authorized_distributor' => $this->input->post('authorized_distributor'),
 				'multi_brand'            => $this->input->post('multi_brand'),
 				'no_co'                  => $this->input->post('no_co'),
+				'no_fppp'                  => $this->input->post('no_fppp'),
 				'kode_proyek'            => $this->input->post('kode_proyek'),
 				'nama_proyek'            => $this->input->post('nama_proyek'),
 				'tahap'                  => $this->input->post('tahap'),

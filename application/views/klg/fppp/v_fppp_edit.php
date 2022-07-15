@@ -29,7 +29,7 @@
         <div class="col-md-6">
           <div class="form-group">
             <label>No FPPP</label>
-            <input type="text" id="no_fppp" class="form-control" value="<?= $row->no_fppp ?>" autocomplete="off" readonly>
+            <input type="text" id="no_fppp" class="form-control" value="<?= $row->no_fppp ?>" autocomplete="off">
           </div>
         </div>
         <div class="col-md-6">

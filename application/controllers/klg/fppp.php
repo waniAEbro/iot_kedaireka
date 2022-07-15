@@ -382,91 +382,9 @@ class Fppp extends CI_Controller
 		$this->fungsi->check_previleges('fppp');
 		$id_fppp = $this->input->post('id_fppp');
 
-
-
-		$datapost = array(
-			'id_divisi'              => $this->input->post('id_divisi'),
-			'tgl_pembuatan'          => $this->input->post('tgl_pembuatan'),
-			'applicant'              => $this->input->post('applicant'),
-			'applicant_sector'       => $this->input->post('applicant_sector'),
-			'authorized_distributor' => $this->input->post('authorized_distributor'),
-			'multi_brand'            => $this->input->post('multi_brand'),
-			'applicant'              => $this->input->post('applicant'),
-			'no_co'                  => $this->input->post('no_co'),
-			'applicant_sector'       => $this->input->post('applicant_sector'),
-			'authorized_distributor' => $this->input->post('authorized_distributor'),
-			'type_fppp'              => $this->input->post('type_fppp'),
-			'tahap_produksi'         => $this->input->post('tahap_produksi'),
-			'nama_aplikator'         => $this->input->post('nama_aplikator'),
-			'kode_proyek'            => $this->input->post('kode_proyek'),
-			'nama_proyek'            => $this->input->post('nama_proyek'),
-			'tahap'                  => $this->input->post('tahap'),
-			'alamat_proyek'          => $this->input->post('alamat_proyek'),
-			'status_order'           => $this->input->post('status_order'),
-			'note_ncr'               => $this->input->post('note_ncr'),
-			'id_pengiriman'          => $this->input->post('id_pengiriman'),
-			'deadline_pengiriman'    => $this->input->post('deadline_pengiriman'),
-			'id_metode_pengiriman'   => $this->input->post('id_metode_pengiriman'),
-			'id_penggunaan_peti'     => $this->input->post('id_penggunaan_peti'),
-			'id_penggunaan_sealant'  => $this->input->post('id_penggunaan_sealant'),
-			'id_warna'               => $this->input->post('id_warna'),
-			'id_warna_lainya'        => $this->input->post('id_warna_lainya'),
-			'warna_sealant'          => $this->input->post('warna_sealant'),
-			'ditujukan_kepada'       => $this->input->post('ditujukan_kepada'),
-			'no_telp_tujuan'         => $this->input->post('no_telp_tujuan'),
-			'pengiriman_ekspedisi'   => $this->input->post('pengiriman_ekspedisi'),
-			'alamat_ekspedisi'       => $this->input->post('alamat_ekspedisi'),
-			'sales'                  => $this->input->post('sales'),
-			'pic_project'            => $this->input->post('pic_project'),
-			'admin_koordinator'      => $this->input->post('admin_koordinator'),
-			'id_kaca'                => $this->input->post('id_kaca'),
-			'jenis_kaca'             => $this->input->post('jenis_kaca'),
-			'id_logo_kaca'           => $this->input->post('id_logo_kaca'),
-			'jumlah_gambar'          => $this->input->post('jumlah_gambar'),
-			'jumlah_unit'            => $this->input->post('jumlah_unit'),
-			'note'                   => $this->input->post('note'),
-			'updated'                => date('Y-m-d H:i:s'),
-			'tgl_modified'           => date('Y-m-d H:i:s'),
-		);
-		$this->m_fppp->updateFppp($id_fppp, $datapost);
-		$data['id'] = $id_fppp;
-
-		$mbq = explode("-", $this->input->post('multi_brand'));
-		$this->db->where_in('id', $mbq);
-		$res_brand = $this->db->get('master_brand')->result();
-		$b         = array();
-		foreach ($res_brand as $keyq) {
-			$b[] = '*' . $keyq->brand . '<br>';
-		};
-		$data_multi_brand_string = array('multi_brand_string' => implode($b));
-		$this->m_fppp->updateFppp($data['id'], $data_multi_brand_string);
-
-		$this->fungsi->catat($datapost, "Mengupdate fppp sbb:", true);
-		$data['msg'] = "fppp Disimpan";
-		echo json_encode($data);
-	}
-
-	public function updatefpppImage($value = '')
-	{
-		$this->fungsi->check_previleges('fppp');
-		$id_fppp       = $this->input->post('id_fppp');
-		$upload_folder = get_upload_folder('./files/');
-
-		$config['upload_path']   = $upload_folder;
-		$config['allowed_types'] = 'pdf|xlsx|xls|doc|docx|jpeg|jpg|png';
-		$config['max_size']      = '35840';
-		// $config['max_width']     = '1024';
-		// $config['max_height']    = '1024';
-		$config['encrypt_name'] = true;
-
-		$this->load->library('upload', $config);
-		$err = "";
-		$msg = "";
-		if (!$this->upload->do_upload('lampiran')) {
-			$err = $this->upload->display_errors('<span class="error_string">', '</span>');
-		} else {
-			$data = $this->upload->data();
-
+		$this->db->where('no_fppp', $this->input->post('no_fppp'));
+		$cek = $this->db->get('data_fppp')->num_rows();
+		if ($cek < 1) {
 			$datapost = array(
 				'id_divisi'              => $this->input->post('id_divisi'),
 				'tgl_pembuatan'          => $this->input->post('tgl_pembuatan'),
@@ -474,7 +392,14 @@ class Fppp extends CI_Controller
 				'applicant_sector'       => $this->input->post('applicant_sector'),
 				'authorized_distributor' => $this->input->post('authorized_distributor'),
 				'multi_brand'            => $this->input->post('multi_brand'),
+				'applicant'              => $this->input->post('applicant'),
+				'no_fppp'                  => $this->input->post('no_fppp'),
 				'no_co'                  => $this->input->post('no_co'),
+				'applicant_sector'       => $this->input->post('applicant_sector'),
+				'authorized_distributor' => $this->input->post('authorized_distributor'),
+				'type_fppp'              => $this->input->post('type_fppp'),
+				'tahap_produksi'         => $this->input->post('tahap_produksi'),
+				'nama_aplikator'         => $this->input->post('nama_aplikator'),
 				'kode_proyek'            => $this->input->post('kode_proyek'),
 				'nama_proyek'            => $this->input->post('nama_proyek'),
 				'tahap'                  => $this->input->post('tahap'),
@@ -501,9 +426,9 @@ class Fppp extends CI_Controller
 				'id_logo_kaca'           => $this->input->post('id_logo_kaca'),
 				'jumlah_gambar'          => $this->input->post('jumlah_gambar'),
 				'jumlah_unit'            => $this->input->post('jumlah_unit'),
-				'lampiran'               => substr($upload_folder, 2) . $data['file_name'],
 				'note'                   => $this->input->post('note'),
 				'updated'                => date('Y-m-d H:i:s'),
+				'tgl_modified'           => date('Y-m-d H:i:s'),
 			);
 			$this->m_fppp->updateFppp($id_fppp, $datapost);
 			$data['id'] = $id_fppp;
@@ -518,8 +443,95 @@ class Fppp extends CI_Controller
 			$data_multi_brand_string = array('multi_brand_string' => implode($b));
 			$this->m_fppp->updateFppp($data['id'], $data_multi_brand_string);
 
-			$this->fungsi->catat($datapost, "Mengupdate fppp dengan file sbb:", true);
+			$this->fungsi->catat($datapost, "Mengupdate fppp sbb:", true);
 			$data['msg'] = "fppp Disimpan";
+		} else {
+			$data['msg'] = "fppp gagal disimpan karena sudah ada";
+		}
+		echo json_encode($data);
+	}
+
+	public function updatefpppImage($value = '')
+	{
+		$this->fungsi->check_previleges('fppp');
+		$id_fppp       = $this->input->post('id_fppp');
+		$upload_folder = get_upload_folder('./files/');
+
+		$config['upload_path']   = $upload_folder;
+		$config['allowed_types'] = 'pdf|xlsx|xls|doc|docx|jpeg|jpg|png';
+		$config['max_size']      = '35840';
+		// $config['max_width']     = '1024';
+		// $config['max_height']    = '1024';
+		$config['encrypt_name'] = true;
+
+		$this->load->library('upload', $config);
+		$err = "";
+		$msg = "";
+		if (!$this->upload->do_upload('lampiran')) {
+			$err = $this->upload->display_errors('<span class="error_string">', '</span>');
+		} else {
+			$data = $this->upload->data();
+			$this->db->where('no_fppp', $this->input->post('no_fppp'));
+			$cek = $this->db->get('data_fppp')->num_rows();
+			if ($cek < 1) {
+
+				$datapost = array(
+					'id_divisi'              => $this->input->post('id_divisi'),
+					'tgl_pembuatan'          => $this->input->post('tgl_pembuatan'),
+					'applicant'              => $this->input->post('applicant'),
+					'applicant_sector'       => $this->input->post('applicant_sector'),
+					'authorized_distributor' => $this->input->post('authorized_distributor'),
+					'multi_brand'            => $this->input->post('multi_brand'),
+					'no_fppp'                  => $this->input->post('no_fppp'),
+					'no_co'                  => $this->input->post('no_co'),
+					'kode_proyek'            => $this->input->post('kode_proyek'),
+					'nama_proyek'            => $this->input->post('nama_proyek'),
+					'tahap'                  => $this->input->post('tahap'),
+					'alamat_proyek'          => $this->input->post('alamat_proyek'),
+					'status_order'           => $this->input->post('status_order'),
+					'note_ncr'               => $this->input->post('note_ncr'),
+					'id_pengiriman'          => $this->input->post('id_pengiriman'),
+					'deadline_pengiriman'    => $this->input->post('deadline_pengiriman'),
+					'id_metode_pengiriman'   => $this->input->post('id_metode_pengiriman'),
+					'id_penggunaan_peti'     => $this->input->post('id_penggunaan_peti'),
+					'id_penggunaan_sealant'  => $this->input->post('id_penggunaan_sealant'),
+					'id_warna'               => $this->input->post('id_warna'),
+					'id_warna_lainya'        => $this->input->post('id_warna_lainya'),
+					'warna_sealant'          => $this->input->post('warna_sealant'),
+					'ditujukan_kepada'       => $this->input->post('ditujukan_kepada'),
+					'no_telp_tujuan'         => $this->input->post('no_telp_tujuan'),
+					'pengiriman_ekspedisi'   => $this->input->post('pengiriman_ekspedisi'),
+					'alamat_ekspedisi'       => $this->input->post('alamat_ekspedisi'),
+					'sales'                  => $this->input->post('sales'),
+					'pic_project'            => $this->input->post('pic_project'),
+					'admin_koordinator'      => $this->input->post('admin_koordinator'),
+					'id_kaca'                => $this->input->post('id_kaca'),
+					'jenis_kaca'             => $this->input->post('jenis_kaca'),
+					'id_logo_kaca'           => $this->input->post('id_logo_kaca'),
+					'jumlah_gambar'          => $this->input->post('jumlah_gambar'),
+					'jumlah_unit'            => $this->input->post('jumlah_unit'),
+					'lampiran'               => substr($upload_folder, 2) . $data['file_name'],
+					'note'                   => $this->input->post('note'),
+					'updated'                => date('Y-m-d H:i:s'),
+				);
+				$this->m_fppp->updateFppp($id_fppp, $datapost);
+				$data['id'] = $id_fppp;
+
+				$mbq = explode("-", $this->input->post('multi_brand'));
+				$this->db->where_in('id', $mbq);
+				$res_brand = $this->db->get('master_brand')->result();
+				$b         = array();
+				foreach ($res_brand as $keyq) {
+					$b[] = '*' . $keyq->brand . '<br>';
+				};
+				$data_multi_brand_string = array('multi_brand_string' => implode($b));
+				$this->m_fppp->updateFppp($data['id'], $data_multi_brand_string);
+
+				$this->fungsi->catat($datapost, "Mengupdate fppp dengan file sbb:", true);
+				$data['msg'] = "fppp Disimpan";
+			} else {
+				$data['msg'] = "fppp gagal disimpan karena sudah ada";
+			}
 			echo json_encode($data);
 		}
 	}
@@ -712,7 +724,7 @@ class Fppp extends CI_Controller
 
 				if ($jenis_item == 1) {
 					$itmcode = $rowData[0][8] . '-' . $rowData[0][9] . '-' . $rowData[0][10] . '-' . str_pad($rowData[0][11], 2, '0', STR_PAD_LEFT) . '-' . $rowData[0][12];
-				}else{
+				} else {
 					$itmcode = str_replace(' ', '', $rowData[0][1]);
 				}
 
@@ -766,7 +778,7 @@ class Fppp extends CI_Controller
 				if ($tipe_upload == 1) {
 					if ($cek_item->num_rows() < 1) {
 						$this->db->insert('master_item', $obj_master);
-					} 
+					}
 					// else {
 					// 	$this->db->where('item_code', $obj['item_code']);
 					// 	$this->db->where('id_jenis_item', $obj['id_jenis_item']);
@@ -774,7 +786,7 @@ class Fppp extends CI_Controller
 					// }
 				} else {
 					$iditem  = $cek_item->row()->id;
-					$krjng = ($obj['keranjang']!='') ? $obj['keranjang'] : '-' ;
+					$krjng = ($obj['keranjang'] != '') ? $obj['keranjang'] : '-';
 					$counter = array(
 						'id_jenis_item' => $obj['id_jenis_item'],
 						'id_item'       => $iditem,
@@ -1306,9 +1318,6 @@ class Fppp extends CI_Controller
 				$qty_jadi      = (int)$qty_sebelum + (int)$obj['qty'];
 				$this->m_fppp->updateCounterAlu($obj['id_jenis_item'], $obj['item_code'], $obj['id_gudang'], $obj['keranjang'], $qty_jadi);
 			}
-
-
-			
 		}
 		// unlink($inputFileName);
 		// sleep(1);
@@ -1405,58 +1414,58 @@ class Fppp extends CI_Controller
 	public function kesesuaian_stock()
 	{
 		// $data_aksesoris_in = $this->m_aksesoris->getDataDetailTabel($id);
-        // $arr               = array();
-		
+		// $arr               = array();
+
 		// $this->db->where('keterangan', '');
 		$this->db->where('id_jenis_item', $this->input->post('id_jenis_item'));
 		// if ($this->input->post('id_gudang')!='') {
 		// 	$this->db->where('id_gudang', $this->input->post('id_gudang'));
 		// }
 		$data_aksesoris_in = $this->db->get('data_counter')->result();
-		
-        foreach ($data_aksesoris_in as $key) {
-            $stok_awal_bulan = $this->m_aksesoris->getAwalBulanDetailTabel($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
-            $qtyin           = $this->m_aksesoris->getQtyInDetailTabelMonitoring($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
-            $qtyout          = $this->m_aksesoris->getQtyOutDetailTabelMonitoring($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
-            $qtyinmutasi          = $this->m_aksesoris->getQtyInDetailTabelMonitoringMutasi($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
-            $qtyoutmutasi          = $this->m_aksesoris->getQtyOutDetailTabelMonitoringMutasi($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
-            
+
+		foreach ($data_aksesoris_in as $key) {
+			$stok_awal_bulan = $this->m_aksesoris->getAwalBulanDetailTabel($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
+			$qtyin           = $this->m_aksesoris->getQtyInDetailTabelMonitoring($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
+			$qtyout          = $this->m_aksesoris->getQtyOutDetailTabelMonitoring($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
+			$qtyinmutasi          = $this->m_aksesoris->getQtyInDetailTabelMonitoringMutasi($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
+			$qtyoutmutasi          = $this->m_aksesoris->getQtyOutDetailTabelMonitoringMutasi($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
+
 			// $stok_awal_bulan = $this->m_aluminium->getAwalBulanDetailTabel($key->id_item, $key->id_gudang, $key->keranjang);
-            // $qtyin           = $this->m_aluminium->getQtyInDetailTabelMonitoringP($key->id_item, $key->id_gudang, $key->keranjang);
-            // $qtyout          = $this->m_aluminium->getQtyOutDetailTabelMonitoringP($key->id_item, $key->id_gudang, $key->keranjang);
-            // $qtyinmutasi          = $this->m_aluminium->getQtyInDetailTabelMonitoringMutasiP($key->id_item, $key->id_gudang, $key->keranjang);
-            // $qtyoutmutasi          = $this->m_aluminium->getQtyOutDetailTabelMonitoringMutasiP($key->id_item, $key->id_gudang, $key->keranjang);
-            
+			// $qtyin           = $this->m_aluminium->getQtyInDetailTabelMonitoringP($key->id_item, $key->id_gudang, $key->keranjang);
+			// $qtyout          = $this->m_aluminium->getQtyOutDetailTabelMonitoringP($key->id_item, $key->id_gudang, $key->keranjang);
+			// $qtyinmutasi          = $this->m_aluminium->getQtyInDetailTabelMonitoringMutasiP($key->id_item, $key->id_gudang, $key->keranjang);
+			// $qtyoutmutasi          = $this->m_aluminium->getQtyOutDetailTabelMonitoringMutasiP($key->id_item, $key->id_gudang, $key->keranjang);
+
 			$qty_counter = ($stok_awal_bulan + $qtyin + $qtyinmutasi) - ($qtyout + $qtyoutmutasi);
 			// $temp            = array(
-                // "divisi"           => $key->divisi,
-                // "gudang"           => $key->gudang,
-                // "keranjang"        => $key->keranjang,
-                // "stok_awal_bulan"  => $stok_awal_bulan,
-                // "tot_in"           => $qtyin,
-                // "tot_out"          => $qtyout,
-                // "mutasi_in"          => $qtyinmutasi,
-                // "mutasi_out"          => $qtyoutmutasi,
-                // "stok_akhir_bulan" => $key->qty,
-                // "stok_akhir_bulan" => ($stok_awal_bulan + $qtyin + $qtyinmutasi) - $qtyout - $qtyoutmutasi,
-                // "rata_pemakaian"   => $key->rata_pemakaian,
-                // "min_stock"        => '0',
-            // );
+			// "divisi"           => $key->divisi,
+			// "gudang"           => $key->gudang,
+			// "keranjang"        => $key->keranjang,
+			// "stok_awal_bulan"  => $stok_awal_bulan,
+			// "tot_in"           => $qtyin,
+			// "tot_out"          => $qtyout,
+			// "mutasi_in"          => $qtyinmutasi,
+			// "mutasi_out"          => $qtyoutmutasi,
+			// "stok_akhir_bulan" => $key->qty,
+			// "stok_akhir_bulan" => ($stok_awal_bulan + $qtyin + $qtyinmutasi) - $qtyout - $qtyoutmutasi,
+			// "rata_pemakaian"   => $key->rata_pemakaian,
+			// "min_stock"        => '0',
+			// );
 
-            $this->db->where('id_item', $key->id_item);
-            $this->db->where('id_divisi', $key->id_divisi);
-            $this->db->where('id_gudang', $key->id_gudang);
-            $this->db->where('keranjang', $key->keranjang);
-            $object = array(
+			$this->db->where('id_item', $key->id_item);
+			$this->db->where('id_divisi', $key->id_divisi);
+			$this->db->where('id_gudang', $key->id_gudang);
+			$this->db->where('keranjang', $key->keranjang);
+			$object = array(
 				'qty' => $qty_counter,
-				'keterangan' => 'penyesuaian '.date('Y-m-d H:i:s'),
+				'keterangan' => 'penyesuaian ' . date('Y-m-d H:i:s'),
 			);
-            $this->db->update('data_counter', $object);
+			$this->db->update('data_counter', $object);
 
 
-            // array_push($arr, $temp);
-            // echo $key->gt . '<br>';
-        }
+			// array_push($arr, $temp);
+			// echo $key->gt . '<br>';
+		}
 		$data['msg'] = "sukses";
 		echo json_encode($data);
 	}
