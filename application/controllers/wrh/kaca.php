@@ -387,7 +387,7 @@ class kaca extends CI_Controller
         $this->db->delete('data_stock');
 
         $this->db->where('awal_bulan', 1);
-        $this->db->where('keterangan', $id);
+        $this->db->where('id_seselan', $id);
         $this->db->delete('data_stock');
         
         
@@ -414,7 +414,7 @@ class kaca extends CI_Controller
         $this->db->delete('data_stock');
 
         $this->db->where('awal_bulan', 1);
-        $this->db->where('keterangan', $id);
+        $this->db->where('id_seselan', $id);
         $this->db->delete('data_stock');
 
         $this->fungsi->catat($data, "Menghapus Stock In kaca dengan data sbb:", true);
