@@ -382,9 +382,10 @@ class Fppp extends CI_Controller
 		$this->fungsi->check_previleges('fppp');
 		$id_fppp = $this->input->post('id_fppp');
 
+		$this->db->where('id !=', $id_fppp);
 		$this->db->where('no_fppp', $this->input->post('no_fppp'));
 		$cek = $this->db->get('data_fppp')->num_rows();
-		if ($cek == 1) {
+		if ($cek == 0) {
 			$datapost = array(
 				'id_divisi'              => $this->input->post('id_divisi'),
 				'tgl_pembuatan'          => $this->input->post('tgl_pembuatan'),
@@ -471,9 +472,10 @@ class Fppp extends CI_Controller
 			$err = $this->upload->display_errors('<span class="error_string">', '</span>');
 		} else {
 			$data = $this->upload->data();
+			$this->db->where('id !=', $id_fppp);
 			$this->db->where('no_fppp', $this->input->post('no_fppp'));
 			$cek = $this->db->get('data_fppp')->num_rows();
-			if ($cek == 1) {
+			if ($cek == 0) {
 
 				$datapost = array(
 					'id_divisi'              => $this->input->post('id_divisi'),

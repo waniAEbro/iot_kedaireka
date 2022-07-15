@@ -373,9 +373,10 @@ class Mockup extends CI_Controller
         $nama_divisi = $this->m_fppp->getRowNamaDivisi($param)->divisi_pendek;
         // $nofppp      = str_pad($this->m_fppp->getNoMockup($param), 3, '0', STR_PAD_LEFT) . '/MOCKUP/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
 
+        $this->db->where('id !=', $id_fppp);
         $this->db->where('no_fppp', $this->input->post('no_fppp'));
         $cek = $this->db->get('data_fppp')->num_rows();
-        if ($cek == 1) {
+        if ($cek == 0) {
             $datapost = array(
                 'id_divisi'              => $this->input->post('id_divisi'),
                 'tgl_pembuatan'          => $this->input->post('tgl_pembuatan'),
@@ -463,9 +464,10 @@ class Mockup extends CI_Controller
             $param       = $this->input->post('id_divisi');
             $nama_divisi = $this->m_fppp->getRowNamaDivisi($param)->divisi_pendek;
             // $nofppp      = str_pad($this->m_fppp->getNoMockup($param), 3, '0', STR_PAD_LEFT) . '/MOCKUP/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
+            $this->db->where('id !=', $id_fppp);
             $this->db->where('no_fppp', $this->input->post('no_fppp'));
             $cek = $this->db->get('data_fppp')->num_rows();
-            if ($cek == 1) {
+            if ($cek == 0) {
                 $datapost = array(
                     'id_divisi'              => $this->input->post('id_divisi'),
                     'tgl_pembuatan'          => $this->input->post('tgl_pembuatan'),
