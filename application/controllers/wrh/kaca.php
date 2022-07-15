@@ -302,7 +302,7 @@ class kaca extends CI_Controller
         $s = strtotime($tgl_awalbulan_ini);
         $tgl_awalbulan_aktual = date('Y-m', $s) . '-01';
         if ($this->input->post('aktual') < $tgl_awalbulan_ini) {
-            $this->db->where('DATE(created) <', $tgl_aktual);
+            // $this->db->where('DATE(created) <', $tgl_aktual);
             $this->db->where('awal_bulan', 1);
             $this->db->where('id_item', $this->input->post('item'));
             $this->db->where('id_divisi', $this->input->post('id_divisi'));
@@ -319,7 +319,7 @@ class kaca extends CI_Controller
                 'id_divisi'      => $this->input->post('id_divisi'),
                 'id_gudang'      => $this->input->post('id_gudang'),
                 'keranjang'      => str_replace(' ', '', $this->input->post('keranjang')),
-                'keterangan'     => $data['id'],
+                'keterangan'     => $this->input->post('keterangan'),
                 'id_penginput'   => from_session('id'),
                 'created'        =>  $tgl_awalbulan_aktual,
                 'updated'        =>  $tgl_awalbulan_aktual,
@@ -337,7 +337,8 @@ class kaca extends CI_Controller
                     'id_divisi'      => $this->input->post('id_divisi'),
                     'id_gudang'      => $this->input->post('id_gudang'),
                     'keranjang'      => str_replace(' ', '', $this->input->post('keranjang')),
-                    'keterangan'     => $data['id'],
+                    'keterangan'     => $this->input->post('keterangan'),
+                    'id_seselan'     => $data['id'],
                     'id_penginput'   => from_session('id'),
                     'created'        =>  $tgl_awalbulan_key,
                     'updated'        =>  $tgl_awalbulan_key,
