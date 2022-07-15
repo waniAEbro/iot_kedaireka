@@ -384,7 +384,7 @@ class Fppp extends CI_Controller
 
 		$this->db->where('no_fppp', $this->input->post('no_fppp'));
 		$cek = $this->db->get('data_fppp')->num_rows();
-		if ($cek < 1) {
+		if ($cek == 1) {
 			$datapost = array(
 				'id_divisi'              => $this->input->post('id_divisi'),
 				'tgl_pembuatan'          => $this->input->post('tgl_pembuatan'),
@@ -473,7 +473,7 @@ class Fppp extends CI_Controller
 			$data = $this->upload->data();
 			$this->db->where('no_fppp', $this->input->post('no_fppp'));
 			$cek = $this->db->get('data_fppp')->num_rows();
-			if ($cek < 1) {
+			if ($cek == 1) {
 
 				$datapost = array(
 					'id_divisi'              => $this->input->post('id_divisi'),

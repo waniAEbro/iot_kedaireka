@@ -26,18 +26,18 @@ class Mockup extends CI_Controller
     {
         $this->fungsi->check_previleges('fppp');
         $bulan       = date('m');
-		$tahun       = date('Y');
-		if ($this->session->userdata('tgl_awal') != '') {
-			$tgl['tgl_awal'] = $this->session->userdata('tgl_awal');
-		} else {
-			$tgl['tgl_awal'] = date('Y-m-d', strtotime('-3 month', strtotime($tahun . '-' . $bulan . '-01')));
-		}
+        $tahun       = date('Y');
+        if ($this->session->userdata('tgl_awal') != '') {
+            $tgl['tgl_awal'] = $this->session->userdata('tgl_awal');
+        } else {
+            $tgl['tgl_awal'] = date('Y-m-d', strtotime('-3 month', strtotime($tahun . '-' . $bulan . '-01')));
+        }
 
-		if ($this->session->userdata('tgl_akhir') != '') {
-			$tgl['tgl_akhir'] = $this->session->userdata('tgl_akhir');
-		} else {
-			$tgl['tgl_akhir'] = date("Y-m-t", strtotime($tahun . '-' . $bulan . '-01'));
-		}
+        if ($this->session->userdata('tgl_akhir') != '') {
+            $tgl['tgl_akhir'] = $this->session->userdata('tgl_akhir');
+        } else {
+            $tgl['tgl_akhir'] = date("Y-m-t", strtotime($tahun . '-' . $bulan . '-01'));
+        }
         $this->session->set_userdata($tgl);
         $data['param_tab'] = '1';
         $data['divisi']    = $this->db->get('master_divisi');
@@ -46,19 +46,19 @@ class Mockup extends CI_Controller
     }
 
     public function filter($param, $tgl_awal, $tgl_akhir)
-	{
-		$this->fungsi->check_previleges('fppp');
+    {
+        $this->fungsi->check_previleges('fppp');
 
-		$tgl['tgl_awal']  = $tgl_awal;
-		$tgl['tgl_akhir'] = $tgl_akhir;
+        $tgl['tgl_awal']  = $tgl_awal;
+        $tgl['tgl_akhir'] = $tgl_akhir;
 
-		$this->session->set_userdata($tgl);
+        $this->session->set_userdata($tgl);
 
-		$data['param_tab'] = $param;
-		$data['divisi']    = $this->db->get('master_divisi');
-		$data['is_memo']          = 'mockup';
-		$this->load->view('klg/fppp/v_fppp_tab', $data);
-	}
+        $data['param_tab'] = $param;
+        $data['divisi']    = $this->db->get('master_divisi');
+        $data['is_memo']          = 'mockup';
+        $this->load->view('klg/fppp/v_fppp_tab', $data);
+    }
 
     public function hasil_finish($param)
     {
@@ -86,7 +86,7 @@ class Mockup extends CI_Controller
     {
         $this->fungsi->check_previleges('fppp');
         $data['tgl_awal']  = $this->session->userdata('tgl_awal');
-		$data['tgl_akhir'] = $this->session->userdata('tgl_akhir');
+        $data['tgl_akhir'] = $this->session->userdata('tgl_akhir');
         $data['fppp']           = $this->m_fppp->getDataMockup($param);
         $data['get_total_hold'] = $this->m_fppp->getTotalHold();
         $data['param']          = $param;
@@ -95,19 +95,19 @@ class Mockup extends CI_Controller
     }
 
     public function cetakFppp($param, $tgl_awal, $tgl_akhir)
-	{
-		$this->fungsi->check_previleges('fppp');
+    {
+        $this->fungsi->check_previleges('fppp');
 
-		$data['tgl_awal']  = $tgl_awal;
-		$data['tgl_akhir'] = $tgl_akhir;
-		$data['fppp']           = $this->m_fppp->getDataMockup($param);
-		$data['get_total_hold'] = $this->m_fppp->getTotalHold();
-		// $data['param_tab']          = $param;
-		$data['param']          = $param;
-		$data['memo']          = 1;
-		$data['is_memo']          = 'mockup';
-		$this->load->view('klg/fppp/v_fppp_cetak', $data);
-	}
+        $data['tgl_awal']  = $tgl_awal;
+        $data['tgl_akhir'] = $tgl_akhir;
+        $data['fppp']           = $this->m_fppp->getDataMockup($param);
+        $data['get_total_hold'] = $this->m_fppp->getTotalHold();
+        // $data['param_tab']          = $param;
+        $data['param']          = $param;
+        $data['memo']          = 1;
+        $data['is_memo']          = 'mockup';
+        $this->load->view('klg/fppp/v_fppp_cetak', $data);
+    }
 
     public function deadlineWorkshop()
     {
@@ -373,100 +373,21 @@ class Mockup extends CI_Controller
         $nama_divisi = $this->m_fppp->getRowNamaDivisi($param)->divisi_pendek;
         // $nofppp      = str_pad($this->m_fppp->getNoMockup($param), 3, '0', STR_PAD_LEFT) . '/MOCKUP/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
 
-        $datapost = array(
-            'id_divisi'              => $this->input->post('id_divisi'),
-            'tgl_pembuatan'          => $this->input->post('tgl_pembuatan'),
-            'multi_brand'            => $this->input->post('multi_brand'),
-            'applicant'              => $this->input->post('applicant'),
-            'no_co'                  => $this->input->post('no_co'),
-            'no_fppp'                  => $this->input->post('no_fppp'),
-            'applicant_sector'       => $this->input->post('applicant_sector'),
-            'authorized_distributor' => $this->input->post('authorized_distributor'),
-            'type_fppp'              => $this->input->post('type_fppp'),
-            'tahap_produksi'         => $this->input->post('tahap_produksi'),
-            'nama_aplikator'         => $this->input->post('nama_aplikator'),
-            'kode_proyek'            => $this->input->post('kode_proyek'),
-            'nama_proyek'            => $this->input->post('nama_proyek'),
-            'tahap'                  => $this->input->post('tahap'),
-            'alamat_proyek'          => $this->input->post('alamat_proyek'),
-            'status_order'           => $this->input->post('status_order'),
-            'note_ncr'               => $this->input->post('note_ncr'),
-            'id_pengiriman'          => $this->input->post('id_pengiriman'),
-            'deadline_pengiriman'    => $this->input->post('deadline_pengiriman'),
-            'id_metode_pengiriman'   => $this->input->post('id_metode_pengiriman'),
-            'id_penggunaan_peti'     => $this->input->post('id_penggunaan_peti'),
-            'id_penggunaan_sealant'  => $this->input->post('id_penggunaan_sealant'),
-            'id_warna'               => $this->input->post('id_warna'),
-            'id_warna_lainya'        => $this->input->post('id_warna_lainya'),
-            'warna_sealant'          => $this->input->post('warna_sealant'),
-            'ditujukan_kepada'       => $this->input->post('ditujukan_kepada'),
-            'no_telp_tujuan'         => $this->input->post('no_telp_tujuan'),
-            'pengiriman_ekspedisi'   => $this->input->post('pengiriman_ekspedisi'),
-            'alamat_ekspedisi'       => $this->input->post('alamat_ekspedisi'),
-            'sales'                  => $this->input->post('sales'),
-            'pic_project'            => $this->input->post('pic_project'),
-            'admin_koordinator'      => $this->input->post('admin_koordinator'),
-            'id_kaca'                => $this->input->post('id_kaca'),
-            'jenis_kaca'             => $this->input->post('jenis_kaca'),
-            'id_logo_kaca'           => $this->input->post('id_logo_kaca'),
-            'jumlah_gambar'          => $this->input->post('jumlah_gambar'),
-            'jumlah_unit'            => $this->input->post('jumlah_unit'),
-            'note'                   => $this->input->post('note'),
-            'updated'                => date('Y-m-d H:i:s'),
-            'tgl_modified'           => date('Y-m-d H:i:s'),
-        );
-        
-        $this->m_fppp->updateFppp($id_fppp, $datapost);
-        $data['id'] = $id_fppp;
-
-        $mbq = explode("-", $this->input->post('multi_brand'));
-        $this->db->where_in('id', $mbq);
-        $res_brand = $this->db->get('master_brand')->result();
-        $b = array();
-        foreach ($res_brand as $keyq) {
-            $b[] = '*' . $keyq->brand . '<br>';
-        };
-        $data_multi_brand_string = array('multi_brand_string' => implode($b));
-        $this->m_fppp->updateFppp($data['id'], $data_multi_brand_string);
-
-        $this->fungsi->catat($datapost, "mengupdate Mock Up sbb:", true);
-        $data['msg'] = "Mock Up diupdate";
-        echo json_encode($data);
-    }
-
-    public function updatefpppImage($value = '')
-    {
-        $this->fungsi->check_previleges('fppp');
-        $id_fppp       = $this->input->post('id_fppp');
-        $upload_folder = get_upload_folder('./files/');
-
-        $config['upload_path']   = $upload_folder;
-        $config['allowed_types'] = 'pdf|xlsx|xls|doc|docx|jpeg|jpg|png';
-        $config['max_size']      = '35840';
-        // $config['max_width']     = '1024';
-        // $config['max_height']    = '1024';
-        $config['encrypt_name'] = true;
-
-        $this->load->library('upload', $config);
-        $err = "";
-        $msg = "";
-        if (!$this->upload->do_upload('lampiran')) {
-            $err = $this->upload->display_errors('<span class="error_string">', '</span>');
-        } else {
-            $data        = $this->upload->data();
-            $param       = $this->input->post('id_divisi');
-            $nama_divisi = $this->m_fppp->getRowNamaDivisi($param)->divisi_pendek;
-            // $nofppp      = str_pad($this->m_fppp->getNoMockup($param), 3, '0', STR_PAD_LEFT) . '/MOCKUP/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
-
+        $this->db->where('no_fppp', $this->input->post('no_fppp'));
+        $cek = $this->db->get('data_fppp')->num_rows();
+        if ($cek == 1) {
             $datapost = array(
                 'id_divisi'              => $this->input->post('id_divisi'),
                 'tgl_pembuatan'          => $this->input->post('tgl_pembuatan'),
-                'applicant'              => $this->input->post('applicant'),
-                'applicant_sector'       => $this->input->post('applicant_sector'),
-                'authorized_distributor' => $this->input->post('authorized_distributor'),
                 'multi_brand'            => $this->input->post('multi_brand'),
+                'applicant'              => $this->input->post('applicant'),
                 'no_co'                  => $this->input->post('no_co'),
                 'no_fppp'                  => $this->input->post('no_fppp'),
+                'applicant_sector'       => $this->input->post('applicant_sector'),
+                'authorized_distributor' => $this->input->post('authorized_distributor'),
+                'type_fppp'              => $this->input->post('type_fppp'),
+                'tahap_produksi'         => $this->input->post('tahap_produksi'),
+                'nama_aplikator'         => $this->input->post('nama_aplikator'),
                 'kode_proyek'            => $this->input->post('kode_proyek'),
                 'nama_proyek'            => $this->input->post('nama_proyek'),
                 'tahap'                  => $this->input->post('tahap'),
@@ -493,10 +414,11 @@ class Mockup extends CI_Controller
                 'id_logo_kaca'           => $this->input->post('id_logo_kaca'),
                 'jumlah_gambar'          => $this->input->post('jumlah_gambar'),
                 'jumlah_unit'            => $this->input->post('jumlah_unit'),
-                'lampiran'               => substr($upload_folder, 2) . $data['file_name'],
                 'note'                   => $this->input->post('note'),
                 'updated'                => date('Y-m-d H:i:s'),
+                'tgl_modified'           => date('Y-m-d H:i:s'),
             );
+
             $this->m_fppp->updateFppp($id_fppp, $datapost);
             $data['id'] = $id_fppp;
 
@@ -510,9 +432,98 @@ class Mockup extends CI_Controller
             $data_multi_brand_string = array('multi_brand_string' => implode($b));
             $this->m_fppp->updateFppp($data['id'], $data_multi_brand_string);
 
-
             $this->fungsi->catat($datapost, "mengupdate Mock Up sbb:", true);
             $data['msg'] = "Mock Up diupdate";
+        } else {
+            $data['msg'] = "fppp gagal disimpan karena sudah ada";
+        }
+        echo json_encode($data);
+    }
+
+    public function updatefpppImage($value = '')
+    {
+        $this->fungsi->check_previleges('fppp');
+        $id_fppp       = $this->input->post('id_fppp');
+        $upload_folder = get_upload_folder('./files/');
+
+        $config['upload_path']   = $upload_folder;
+        $config['allowed_types'] = 'pdf|xlsx|xls|doc|docx|jpeg|jpg|png';
+        $config['max_size']      = '35840';
+        // $config['max_width']     = '1024';
+        // $config['max_height']    = '1024';
+        $config['encrypt_name'] = true;
+
+        $this->load->library('upload', $config);
+        $err = "";
+        $msg = "";
+        if (!$this->upload->do_upload('lampiran')) {
+            $err = $this->upload->display_errors('<span class="error_string">', '</span>');
+        } else {
+            $data        = $this->upload->data();
+            $param       = $this->input->post('id_divisi');
+            $nama_divisi = $this->m_fppp->getRowNamaDivisi($param)->divisi_pendek;
+            // $nofppp      = str_pad($this->m_fppp->getNoMockup($param), 3, '0', STR_PAD_LEFT) . '/MOCKUP/' . $nama_divisi . '/' . date('m') . '/' . date('Y');
+            $this->db->where('no_fppp', $this->input->post('no_fppp'));
+            $cek = $this->db->get('data_fppp')->num_rows();
+            if ($cek == 1) {
+                $datapost = array(
+                    'id_divisi'              => $this->input->post('id_divisi'),
+                    'tgl_pembuatan'          => $this->input->post('tgl_pembuatan'),
+                    'applicant'              => $this->input->post('applicant'),
+                    'applicant_sector'       => $this->input->post('applicant_sector'),
+                    'authorized_distributor' => $this->input->post('authorized_distributor'),
+                    'multi_brand'            => $this->input->post('multi_brand'),
+                    'no_co'                  => $this->input->post('no_co'),
+                    'no_fppp'                  => $this->input->post('no_fppp'),
+                    'kode_proyek'            => $this->input->post('kode_proyek'),
+                    'nama_proyek'            => $this->input->post('nama_proyek'),
+                    'tahap'                  => $this->input->post('tahap'),
+                    'alamat_proyek'          => $this->input->post('alamat_proyek'),
+                    'status_order'           => $this->input->post('status_order'),
+                    'note_ncr'               => $this->input->post('note_ncr'),
+                    'id_pengiriman'          => $this->input->post('id_pengiriman'),
+                    'deadline_pengiriman'    => $this->input->post('deadline_pengiriman'),
+                    'id_metode_pengiriman'   => $this->input->post('id_metode_pengiriman'),
+                    'id_penggunaan_peti'     => $this->input->post('id_penggunaan_peti'),
+                    'id_penggunaan_sealant'  => $this->input->post('id_penggunaan_sealant'),
+                    'id_warna'               => $this->input->post('id_warna'),
+                    'id_warna_lainya'        => $this->input->post('id_warna_lainya'),
+                    'warna_sealant'          => $this->input->post('warna_sealant'),
+                    'ditujukan_kepada'       => $this->input->post('ditujukan_kepada'),
+                    'no_telp_tujuan'         => $this->input->post('no_telp_tujuan'),
+                    'pengiriman_ekspedisi'   => $this->input->post('pengiriman_ekspedisi'),
+                    'alamat_ekspedisi'       => $this->input->post('alamat_ekspedisi'),
+                    'sales'                  => $this->input->post('sales'),
+                    'pic_project'            => $this->input->post('pic_project'),
+                    'admin_koordinator'      => $this->input->post('admin_koordinator'),
+                    'id_kaca'                => $this->input->post('id_kaca'),
+                    'jenis_kaca'             => $this->input->post('jenis_kaca'),
+                    'id_logo_kaca'           => $this->input->post('id_logo_kaca'),
+                    'jumlah_gambar'          => $this->input->post('jumlah_gambar'),
+                    'jumlah_unit'            => $this->input->post('jumlah_unit'),
+                    'lampiran'               => substr($upload_folder, 2) . $data['file_name'],
+                    'note'                   => $this->input->post('note'),
+                    'updated'                => date('Y-m-d H:i:s'),
+                );
+                $this->m_fppp->updateFppp($id_fppp, $datapost);
+                $data['id'] = $id_fppp;
+
+                $mbq = explode("-", $this->input->post('multi_brand'));
+                $this->db->where_in('id', $mbq);
+                $res_brand = $this->db->get('master_brand')->result();
+                $b = array();
+                foreach ($res_brand as $keyq) {
+                    $b[] = '*' . $keyq->brand . '<br>';
+                };
+                $data_multi_brand_string = array('multi_brand_string' => implode($b));
+                $this->m_fppp->updateFppp($data['id'], $data_multi_brand_string);
+
+
+                $this->fungsi->catat($datapost, "mengupdate Mock Up sbb:", true);
+                $data['msg'] = "Mock Up diupdate";
+            } else {
+                $data['msg'] = "fppp gagal disimpan karena sudah ada";
+            }
             echo json_encode($data);
         }
     }
