@@ -7,6 +7,7 @@
                 <div class="box-tools pull-right">
                     <?php
 
+                    echo button('load_silent("klg/wo/upload/","#content")', 'Upload WO', 'btn btn-info', 'data-toggle="tooltip" title="Upload WO"');
                     echo button('load_silent("klg/wo/add/","#content")', 'Tambah WO', 'btn btn-primary', 'data-toggle="tooltip" title="Tambah WO"');
                     ?>
                 </div>

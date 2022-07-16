@@ -43,6 +43,12 @@ class M_wo extends CI_Model
         return $data;
     }
 
+    public function getTemp()
+	{
+		$this->db->where('id_penginput', from_session('id'));
+		return $this->db->get('data_wo_temp')->result();
+	}
+
 
 
     
