@@ -198,7 +198,9 @@ class wo extends CI_Controller
                 FALSE
             );
 
-            $this->db->where('item_code', $rowData[0][3]);
+            $item_code = $rowData[0][3] . '-' . $rowData[0][4] . '-' . $rowData[0][5] . '-' . str_pad($rowData[0][6], 2, '0', STR_PAD_LEFT) . '-' . $rowData[0][7];
+
+            $this->db->where('item_code', $item_code);
             $cek = $this->db->get('master_item');
 
             $cek_ada = $cek->num_rows();
@@ -210,8 +212,8 @@ class wo extends CI_Controller
                     'id_divisi'    => $rowData[0][1],
                     'no_wo'        => $rowData[0][2],
                     'id_item'      => $cek_id,
-                    'qty_wo'       => $rowData[0][4],
-                    'keterangan'   => $rowData[0][5],
+                    'qty_wo'       => $rowData[0][8],
+                    'keterangan'   => $rowData[0][9],
                     'created'      => date('Y-m-d H:i:s'),
                     'id_penginput' => from_session('id'),
                 );
@@ -222,7 +224,7 @@ class wo extends CI_Controller
                     'tgl_order'    => $rowData[0][0],
                     'id_divisi'    => $rowData[0][1],
                     'no_wo'        => $rowData[0][2],
-                    'id_item'      => $rowData[0][3],
+                    'id_item'      => $item_code,
                     'qty_wo'       => $rowData[0][4],
                     'keterangan'   => $rowData[0][5],
                     'created'      => date('Y-m-d H:i:s'),
