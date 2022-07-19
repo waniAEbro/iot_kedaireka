@@ -3,7 +3,7 @@
     <div class="col-lg-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Surat Jalan BOM Aluminium</h3>
+                <h3 class="box-title">Surat Jalan BOM Aluminium RSD</h3>
                 <div class="box-tools pull-right">
                     
                 </div>
