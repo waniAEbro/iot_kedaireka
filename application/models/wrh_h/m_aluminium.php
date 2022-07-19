@@ -1300,7 +1300,7 @@ class M_aluminium extends CI_Model
         $this->db->join('master_gudang mg', 'mg.id = dc.id_gudang', 'left');
         $this->db->where('dc.id_jenis_item', $jenis_item);
         $this->db->where('dc.id_item', $id_item);
-        // $this->db->where_in('dc.id_gudang', ['2', '4', '58', '59', '79']);
+        $this->db->where_in('dc.id_gudang', ['2', '4', '58', '59', '79']);
         $this->db->group_by('dc.id_gudang');
         $this->db->select('mg.*');
         return $this->db->get('data_counter dc');

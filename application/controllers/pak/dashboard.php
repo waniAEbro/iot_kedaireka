@@ -46,7 +46,7 @@ class Dashboard extends CI_Controller
 		// 			$this->m_aluminium->updateDataCounter($key->id_item,  $key->id_gudang, $key->keranjang, $qty_jadi);
 		// 		}
 		// 	}
-			
+
 		// }
 
 
@@ -318,6 +318,18 @@ class Dashboard extends CI_Controller
 		// 		'image_barcode' => $pathBarcode
 		// 	);
 		// 	$this->m_aluminium->updateData($data);
+		// }
+
+		// $this->db->where('kode_warna', 145);
+		// $this->db->where('id_jenis_item', 1);
+		// $xx = $this->db->get('master_item');
+		// foreach ($xx->result() as $key) {
+		// 	$obx = array(
+		// 		'item_code' => $key->section_ata . '-' . $key->section_allure . '-' . $key->temper . '-' . $key->kode_warna . '-' . $key->ukuran,
+		// 	);
+		// 	$this->db->where('kode_warna', 145);
+		// 	$this->db->where('id_jenis_item', 1);
+		// 	$this->db->update('master_item', $obx);
 		// }
 
 
