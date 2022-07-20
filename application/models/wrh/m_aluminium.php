@@ -91,7 +91,7 @@ class M_aluminium extends CI_Model
 
         $this->db->where('mi.kode_warna !=', '01');
         $this->db->where_in('dc.id_gudang', ['1', '3']);
-        $this->db->select('dc.*,mg.gudang,mi.item_code,mi.supplier,mi.lead_time,mi.satuan,mw.warna');
+        $this->db->select('dc.*,mg.gudang,mi.*,mw.warna');
 
         $this->db->where('dc.id_jenis_item', $id_jenis_barang);
         return $this->db->get('data_counter dc');
@@ -104,7 +104,7 @@ class M_aluminium extends CI_Model
         $this->db->join('master_warna mw', 'mw.kode = mi.kode_warna', 'left');
         $this->db->where('mi.kode_warna', '01');
         $this->db->where_in('dc.id_gudang', ['1', '3']);
-        $this->db->select('dc.*,mg.gudang,mi.item_code,mi.supplier,mi.lead_time,mi.satuan,mw.warna');
+        $this->db->select('dc.*,mg.gudang,mi.*,mw.warna');
 
         $this->db->where('dc.id_jenis_item', $id_jenis_barang);
         return $this->db->get('data_counter dc');

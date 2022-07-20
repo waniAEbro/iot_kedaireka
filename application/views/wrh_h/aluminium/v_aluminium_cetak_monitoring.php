@@ -16,6 +16,11 @@
         <tr bgcolor="#ffe357">
             <th width="5%">No</th>
             <th>Item Code</th>
+            <th>Section ATA</th>
+            <th>Section Allure</th>
+            <th>Temper</th>
+            <th>Kode Warna</th>
+            <th>Ukuran</th>
             
             <th>Deskripsi Warna</th>
             <th>Satuan</th>
@@ -40,6 +45,12 @@
             <tr>
                 <td align="center"><?= $i++ ?></td>
                 <td><?= $row->item_code ?></td>
+                <td><?= $row->item_code ?></td>
+                <td><?= $row->section_ata ?></td>
+                <td><?= $row->section_allure ?></td>
+                <td><?= $row->temper ?></td>
+                <td><?= $row->kode_warna ?></td>
+                <td><?= $row->ukuran ?></td>
                 
                 <td><?= $row->warna ?></td>
                 <td><?= $row->satuan ?></td>
