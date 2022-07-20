@@ -29,7 +29,8 @@
                         foreach ($dataFpppOut->result() as $row) :
                             $qtybom           = @$qty_bom[$row->id];
                             $qtyout           = @$qty_out[$row->id];
-                            $qtyoutproses           = @$qty_out_proses[$row->id];
+                            $qtyoutproses           = $qtybom-$qtyout;
+                            // $qtyoutproses           = @$qty_out_proses[$row->id];
                             if ($row->id_status == 1) {
                                 $status = "PROSES";
                             } else if ($row->id_status == 2) {
