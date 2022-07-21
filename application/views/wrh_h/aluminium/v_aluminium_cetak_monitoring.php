@@ -45,7 +45,6 @@
             <tr>
                 <td align="center"><?= $i++ ?></td>
                 <td><?= $row->item_code ?></td>
-                <td><?= $row->item_code ?></td>
                 <td><?= $row->section_ata ?></td>
                 <td><?= $row->section_allure ?></td>
                 <td><?= $row->temper ?></td>

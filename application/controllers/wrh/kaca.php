@@ -83,11 +83,12 @@ class kaca extends CI_Controller
         $bulan       = date('m');
         $tahun       = date('Y');
         $tgl = date('Y-m-d', strtotime('-1 month', strtotime($tahun . '-' . $bulan . '-01')));
+        // $tgl = date('Y-m-d', strtotime('-1 month', strtotime($tahun . '-' . $bulan . '-01')));
 
         // $qty_awal_bulan = $this->m_kaca->getQtyAwalBulan($tgl);
         // $qty_masuk = $this->m_kaca->getQtyMasukLalu($tgl);
         // $qty_keluar = $this->m_kaca->getQtyKeluarLalu($tgl);
-        $data['qty_awal_bulan']    = $this->m_kaca->getQtyAwalBulan($tgl);
+        $data['qty_awal_bulan']    = $this->m_kaca->getQtyAwalBulan(date('Y-m-d'));
         $data['qty_masuk']    = $this->m_kaca->getQtyMasukLalu($tgl);
         $data['qty_keluar']    = $this->m_kaca->getQtyKeluarLalu($tgl);
         // $data['s_awal_bulan']    = $this->m_kaca->getStockAwalBulanCetak();
@@ -105,7 +106,7 @@ class kaca extends CI_Controller
         $tahun       = date('Y');
         $tgl = date('Y-m-d', strtotime('-1 month', strtotime($tahun . '-' . $bulan . '-01')));
 
-        $qty_awal_bulan = $this->m_kaca->getQtyAwalBulan($tgl);
+        $qty_awal_bulan = $this->m_kaca->getQtyAwalBulan(date('Y-m-d'));
         $qty_masuk = $this->m_kaca->getQtyMasukLalu($tgl);
         $qty_keluar = $this->m_kaca->getQtyKeluarLalu($tgl);
 
@@ -116,20 +117,20 @@ class kaca extends CI_Controller
             $stok_awal_bulan = @$qty_awal_bulan[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
             $stok_masuk = @$qty_masuk[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
             $stok_keluar = @$qty_keluar[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
-            $stok_awal_bulan_jadi = $stok_awal_bulan + $stok_masuk - $stok_keluar;
+            // $stok_awal_bulan_jadi = $stok_awal_bulan + $stok_masuk - $stok_keluar;
 
             $qtyin           = $this->m_kaca->getQtyInDetailTabelMonitoring($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
             $qtyout          = $this->m_kaca->getQtyOutDetailTabelMonitoring($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
             $qtyinmutasi          = $this->m_kaca->getQtyInDetailTabelMonitoringMutasi($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
             $qtyoutmutasi          = $this->m_kaca->getQtyOutDetailTabelMonitoringMutasi($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
 
-            $stok_akhir_bulan = ($stok_awal_bulan_jadi + $qtyin + $qtyinmutasi) - $qtyout - $qtyoutmutasi;
+            $stok_akhir_bulan = ($stok_awal_bulan + $qtyin + $qtyinmutasi) - $qtyout - $qtyoutmutasi;
 
             $temp            = array(
                 "divisi"           => $key->divisi,
                 "gudang"           => $key->gudang,
                 "keranjang"        => $key->keranjang,
-                "stok_awal_bulan"  => $stok_awal_bulan_jadi,
+                "stok_awal_bulan"  => $stok_awal_bulan,
                 "tot_in"           => $qtyin,
                 "tot_out"          => $qtyout,
                 "mutasi_in"          => $qtyinmutasi,

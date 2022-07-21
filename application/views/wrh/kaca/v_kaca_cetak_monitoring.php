@@ -38,7 +38,7 @@
             $stok_awal_bulan = @$qty_awal_bulan[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
             $stok_masuk = @$qty_masuk[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
             $stok_keluar = @$qty_keluar[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
-            $stock_awal_bulan = $stok_awal_bulan + $stok_masuk - $stok_keluar;
+            // $stock_awal_bulan = $stok_awal_bulan + $stok_masuk - $stok_keluar;
             // $stock_awal_bulan = @$s_awal_bulan[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
             $total_in = @$s_total_in[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
             $total_out = @$s_total_out[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
@@ -54,7 +54,7 @@
                 <td><?= $row->divisi ?></td>
                 <td><?= $row->gudang ?></td>
                 <td><?= $row->keranjang ?></td>
-                <td><?= $stock_awal_bulan ?></td>
+                <td><?= $stok_awal_bulan ?></td>
                 <td><?= $total_in ?></td>
                 <td><?= $total_out ?></td>
                 <td><?= $row->rata_pemakaian ?></td>
