@@ -293,7 +293,7 @@ class Fppp extends CI_Controller
 
 		$config['upload_path']   = $upload_folder;
 		$config['allowed_types'] = 'pdf|xlsx|xls|doc|docx|jpeg|jpg|png';
-		$config['max_size']      = '35840';
+		$config['max_size']      = '9999999999';
 		// $config['max_width']     = '1024';
 		// $config['max_height']    = '1024';
 		$config['encrypt_name'] = true;
@@ -460,7 +460,7 @@ class Fppp extends CI_Controller
 
 		$config['upload_path']   = $upload_folder;
 		$config['allowed_types'] = 'pdf|xlsx|xls|doc|docx|jpeg|jpg|png';
-		$config['max_size']      = '35840';
+		$config['max_size']      = '9999999999';
 		// $config['max_width']     = '1024';
 		// $config['max_height']    = '1024';
 		$config['encrypt_name'] = true;
