@@ -34,11 +34,11 @@ class MYPDF extends TCPDF
 
 $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
-$pdf->SetFont('times', '', 10);
+$pdf->SetFont('times', '', 12);
 $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE . ' 001', PDF_HEADER_STRING, array(0, 64, 255), array(0, 64, 128));
 
 
-$pdf->SetMargins(PDF_MARGIN_LEFT, 2, PDF_MARGIN_RIGHT);
+$pdf->SetMargins(1, 2, 1);
 $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
 
 
@@ -59,7 +59,7 @@ $hed .= '</table><hr>';
 // output the HTML content
 $pdf->writeHTML($hed, true, false, true, false, '');
 // $this->Line(15, 20, 190, 20);
-$pdf->SetFont('Helvetica', '', 8, '', 'false');
+$pdf->SetFont('Helvetica', '', 10, '', 'false');
 $html = '
 <style>
 
