@@ -366,7 +366,7 @@ class M_aluminium extends CI_Model
         $this->db->where('inout', 2);
         // $this->db->where('is_bom', 1);
         $this->db->where('status_fppp', 0);
-        $this->db->where('id_surat_jalan !=', 0);
+        // $this->db->where('id_surat_jalan !=', 0);
         $this->db->where_in('id_gudang', ['1', '3']);
 
         $res = $this->db->get('data_stock');
@@ -560,7 +560,7 @@ class M_aluminium extends CI_Model
         $this->db->where('keranjang', $keranjang);
         $this->db->select('sum(qty_out) as stock_out');
         $this->db->where('inout', 2);
-        $this->db->where('id_surat_jalan !=', 0);
+        // $this->db->where('id_surat_jalan !=', 0);
         // $this->db->where('mutasi', 0);
 
         $res = $this->db->get('data_stock');
@@ -579,7 +579,7 @@ class M_aluminium extends CI_Model
         $this->db->where('keranjang', $keranjang);
         $this->db->select('sum(qty_out) as stock_out');
         $this->db->where('inout', 2);
-        $this->db->where('id_surat_jalan !=', 0);
+        // $this->db->where('id_surat_jalan !=', 0);
         // $this->db->where('mutasi', 0);
 
         $res = $this->db->get('data_stock');
@@ -858,7 +858,7 @@ class M_aluminium extends CI_Model
     {
         $this->db->where('is_bom', 1);
         $this->db->where('id_jenis_item', $jenis_item);
-        $this->db->where('id_surat_jalan !=', 0);
+        // $this->db->where('id_surat_jalan !=', 0);
         // $this->db->where_in('id_gudang', ['1', '3']);
         $res = $this->db->get('data_stock');
         $data = array();
