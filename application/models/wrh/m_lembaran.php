@@ -1245,11 +1245,10 @@ class M_lembaran extends CI_Model
         $object = array('id_surat_jalan' => $id_sj);
         $this->db->where('id_fppp', $id_fppp);
         $this->db->where('inout', 2);
-        // $this->db->where('lapangan', 1);
         $this->db->where('id_surat_jalan', 0);
-        $this->db->where('sj_mf', 0);
         $this->db->where('id_jenis_item', 4);
         $this->db->where('mutasi', 0);
+        $this->db->where('is_bom', 1);
         $this->db->where('id_penginput', from_session('id'));
         $this->db->update('data_stock', $object);
     }
