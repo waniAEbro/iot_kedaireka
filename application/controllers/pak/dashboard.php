@@ -17,6 +17,23 @@ class Dashboard extends CI_Controller
 		$this->status_pak();
 	}
 
+	public function domagic()
+	{
+		$this->db->where('id_jenis_item', 1);
+		$variable = $this->db->get('master_item');
+
+		foreach ($variable->result() as $key) {
+			$object = array(
+				'item_code' => $key->section_ata . '-' . $key->section_allure . '-' . $key->temper . '-' . str_pad($key->kode_warna, 2, '0', STR_PAD_LEFT) . '-' . $key->ukuran,
+			);
+			$this->db->where('id', $key->id);			
+			$this->db->update('master_item', $object);
+			
+		}
+		
+		echo "berhasil";
+	}
+
 	public function status_pak()
 	{
 		// $this->db->where('id_jenis_item', 1);
