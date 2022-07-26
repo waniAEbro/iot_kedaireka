@@ -118,10 +118,10 @@ class M_surat_jalan extends CI_Model
 
         foreach ($res->result() as $key) {
 
-            if (!isset($data[$key->id_sj])) {
-                $data[$key->id_sj] = 0;
+            if (!isset($data[$key->id_sj_fppp])) {
+                $data[$key->id_sj_fppp] = 0;
             }
-            $data[$key->id_sj] = $data[$key->id_sj] + $key->qty;
+            $data[$key->id_sj_fppp] = $data[$key->id_sj_fppp] + $key->qty;
         }
         return $data;
     }
