@@ -75,7 +75,7 @@ class Surat_jalan extends CI_Controller
 
         $this->db->where('id', $datapost['id_fppp_detail']);
         $object = array(
-            'pengiriman' => 'PARSIAL',
+            'pengiriman' => date('Y-m-d'),
         );
         $this->db->update('data_fppp_detail', $object);
 
