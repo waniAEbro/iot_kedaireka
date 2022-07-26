@@ -1187,6 +1187,7 @@ class Aluminium extends CI_Controller
     {
         $this->fungsi->check_previleges('aluminium');
         $id_item  = $this->input->post('item');
+        
         $get_data = $this->m_aluminium->getGudangItem($id_item);
         $data     = array();
         foreach ($get_data as $val) {
