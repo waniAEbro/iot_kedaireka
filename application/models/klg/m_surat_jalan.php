@@ -110,4 +110,19 @@ class M_surat_jalan extends CI_Model
 
         return $this->db->get('data_sj_fppp_detail dsd');
     }
+
+    public function getTotalOut()
+    {
+        $res  = $this->db->get('data_sj_fppp_detail');
+        $data = array();
+
+        foreach ($res->result() as $key) {
+
+            if (!isset($data[$key->id_sj])) {
+                $data[$key->id_sj] = 0;
+            }
+            $data[$key->id_sj] = $data[$key->id_sj] + $key->qty;
+        }
+        return $data;
+    }
 }

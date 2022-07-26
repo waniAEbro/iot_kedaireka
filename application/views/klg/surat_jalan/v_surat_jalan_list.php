@@ -48,6 +48,7 @@
                         <th>Alamat Pengiriman</th>
                         <th>Sopir</th>
                         <th>No Kendaraan</th>
+                        <th>Qty</th>
                         <th>Keterangan</th>
                         <th></th>
                     </thead>
@@ -55,6 +56,7 @@
                         <?php
                         $i = 1;
                         foreach ($surat_jalan->result() as $row) :
+                            $total_qty = @$total_out[$row->id];
                         ?>
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
@@ -66,6 +68,7 @@
                                 <td><?= $row->alamat ?></td>
                                 <td><?= $row->sopir ?></td>
                                 <td><?= $row->no_kendaraan ?></td>
+                                <td><?= $total_qty ?></td>
                                 <td><?= $row->keterangan ?></td>
                                 <td>
                                     <?php

@@ -21,7 +21,7 @@
             <th>Temper</th>
             <th>Kode Warna</th>
             <th>Ukuran</th>
-            
+
             <th>Deskripsi Warna</th>
             <th>Satuan</th>
             <th>Lead Time</th>
@@ -41,6 +41,8 @@
             $stock_awal_bulan = @$s_awal_bulan[$row->id_item][$row->id_gudang][$row->keranjang];
             $total_in = @$s_total_in[$row->id_item][$row->id_gudang][$row->keranjang];
             $total_out = @$s_total_out[$row->id_item][$row->id_gudang][$row->keranjang];
+
+            $total_akhir = $stock_awal_bulan + $total_in - $total_out;
         ?>
             <tr>
                 <td align="center"><?= $i++ ?></td>
@@ -50,7 +52,7 @@
                 <td><?= $row->temper ?></td>
                 <td><?= $row->kode_warna ?></td>
                 <td><?= $row->ukuran ?></td>
-                
+
                 <td><?= $row->warna ?></td>
                 <td><?= $row->satuan ?></td>
                 <td><?= $row->lead_time ?></td>
@@ -60,7 +62,7 @@
                 <td><?= $total_in ?></td>
                 <td><?= $total_out ?></td>
                 <td><?= $row->rata_pemakaian ?></td>
-                <td align="center"><?= $row->qty ?></td>
+                <td align="center"><?= $total_akhir ?></td>
             </tr>
         <?php } ?>
     </tbody>

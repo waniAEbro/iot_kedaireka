@@ -475,10 +475,10 @@ class Aluminium extends CI_Controller
         $id_item      = $this->db->get_where('data_stock', array('id' => $editid))->row()->id_item;
         $id_gudang    = $this->input->post('gudang');
         $keranjang    = str_replace(' ', '', $this->input->post('keranjang'));
-        $qtyin        = $this->m_aluminium->getQtyInDetailTabel($id_item,  $id_gudang, $keranjang);
-        $qtyout       = $this->m_aluminium->getQtyOutDetailTabel($id_item,  $id_gudang, $keranjang);
-        $data['qty_gudang'] = $qtyin - $qtyout;
-        $this->m_aluminium->updateDataCounter($id_item,  $id_gudang, $keranjang, $data['qty_gudang']);
+        // $qtyin        = $this->m_aluminium->getQtyInDetailTabel($id_item,  $id_gudang, $keranjang);
+        // $qtyout       = $this->m_aluminium->getQtyOutDetailTabel($id_item,  $id_gudang, $keranjang);
+        // $data['qty_gudang'] = $qtyin - $qtyout;
+        // $this->m_aluminium->updateDataCounter($id_item,  $id_gudang, $keranjang, $data['qty_gudang']);
 
         $data['status'] = "berhasil";
         echo json_encode($data);
@@ -515,10 +515,10 @@ class Aluminium extends CI_Controller
         $id_item      = $this->db->get_where('data_stock', array('id' => $editid))->row()->id_item;
         $id_gudang    = $this->input->post('gudang');
         $keranjang    = str_replace(' ', '', $this->input->post('keranjang'));
-        $qtyin        = $this->m_aluminium->getQtyInDetailTabel($id_item,  $id_gudang, $keranjang);
-        $qtyout       = $this->m_aluminium->getQtyOutDetailTabel($id_item,  $id_gudang, $keranjang);
-        $data['qty_gudang'] = $qtyin - $qtyout;
-        $this->m_aluminium->updateDataCounter($id_item,  $id_gudang, $keranjang, $data['qty_gudang']);
+        // $qtyin        = $this->m_aluminium->getQtyInDetailTabel($id_item,  $id_gudang, $keranjang);
+        // $qtyout       = $this->m_aluminium->getQtyOutDetailTabel($id_item,  $id_gudang, $keranjang);
+        // $data['qty_gudang'] = $qtyin - $qtyout;
+        // $this->m_aluminium->updateDataCounter($id_item,  $id_gudang, $keranjang, $data['qty_gudang']);
 
         $id_stock_sblm = $this->db->get_where('data_stock', array('id' => $editid))->row()->id_stock_sblm;
         $this->m_aluminium->updateIsBom($id_stock_sblm);

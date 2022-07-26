@@ -19,6 +19,7 @@ class Surat_jalan extends CI_Controller
         $data['tgl_awal']  = $tahun . '-' . $bulan . '-01';
         $data['tgl_akhir'] = date("Y-m-t", strtotime($data['tgl_awal']));
         $data['surat_jalan'] = $this->m_surat_jalan->getData($data['tgl_awal'], $data['tgl_akhir']);
+        $data['total_out'] = $this->m_surat_jalan->getTotalOut();
         $this->load->view('klg/surat_jalan/v_surat_jalan_list', $data);
     }
 
@@ -28,6 +29,7 @@ class Surat_jalan extends CI_Controller
         $data['tgl_awal']  = $tgl_awal;
         $data['tgl_akhir'] = $tgl_akhir;
         $data['surat_jalan'] = $this->m_surat_jalan->getData($data['tgl_awal'], $data['tgl_akhir']);
+        $data['total_out'] = $this->m_surat_jalan->getTotalOut();
         $this->load->view('klg/surat_jalan/v_surat_jalan_list', $data);
     }
 
