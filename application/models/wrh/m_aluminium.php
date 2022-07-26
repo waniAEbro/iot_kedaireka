@@ -1061,7 +1061,7 @@ class M_aluminium extends CI_Model
         $this->db->where('DATE(dsj.tgl_aktual) >=', $tgl_awal);
         $this->db->where('DATE(dsj.tgl_aktual) <=', $tgl_akhir);
         $this->db->where('jenis_aluminium', '1');
-        $this->db->like('dsj.no_surat_jalan', 'SJRSD');
+        // $this->db->like('dsj.no_surat_jalan', 'SJRSD');
 
 
         $this->db->order_by('dsj.id', 'desc');
