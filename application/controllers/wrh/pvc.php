@@ -799,7 +799,7 @@ class pvc extends CI_Controller
 
     public function bon_manual_diSet($tgl_awal = '', $tgl_akhir = '')
     {
-        $this->fungsi->check_previleges('inout');
+        
         $id_jenis_item = 5;
         $data['tgl_awal']  = $tgl_awal;
         $data['tgl_akhir'] = $tgl_akhir;
@@ -810,7 +810,7 @@ class pvc extends CI_Controller
 
     public function bon_manual_diSet_cetak($tgl_awal = '', $tgl_akhir = '')
     {
-        $this->fungsi->check_previleges('inout');
+        
         $id_jenis_item = 5;
         $data['tgl_awal']  = $tgl_awal;
         $data['tgl_akhir'] = $tgl_akhir;
