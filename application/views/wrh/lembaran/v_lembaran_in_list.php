@@ -81,9 +81,9 @@
                                 <td>
                                     <?php if ($bln == $now) { ?>
 
-                                        <?= button('load_silent("wrh/lembaran/stok_in_edit/' . $row->id . '","#content")', 'Edit', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Edit"'); ?>
                                         <?= button_confirm("Apakah anda yakin menghapus Stock ini?", "wrh/lembaran/deleteIn/" . $row->id, "#content", "Hapus", "btn btn-xs btn-danger", "") ?>
-                                    <?php } ?>
+                                        <?php } ?>
+                                        <?= button('load_silent("wrh/lembaran/stok_in_edit/' . $row->id . '","#content")', 'Edit', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Edit"'); ?>
                                 </td>
 
                             </tr>
