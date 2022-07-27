@@ -30,6 +30,9 @@
             <th>Total Out</th>
             <th>Rata-rata</th>
             <th>Qty</th>
+            <?php if (from_session('id') == 2) { ?>
+            <th>Qty Counter</th>
+            <?php } ?>
         </tr>
     </thead>
     <tbody>
@@ -39,6 +42,7 @@
             $stock_awal_bulan = @$s_awal_bulan[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
             $total_in = @$s_total_in[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
             $total_out = @$s_total_out[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
+            $total_akhir = $stock_awal_bulan + $total_in - $total_out;
         ?>
             <tr>
                 <td align="center"><?= $i++ ?></td>
@@ -56,7 +60,10 @@
                 <td><?= $total_in ?></td>
                 <td><?= $total_out ?></td>
                 <td><?= $row->rata_pemakaian ?></td>
+                <td align="center"><?= $total_akhir ?></td>
+                <?php if (from_session('id') == 2) { ?>
                 <td align="center"><?= $row->qty ?></td>
+                <?php } ?>
             </tr>
         <?php } ?>
     </tbody>

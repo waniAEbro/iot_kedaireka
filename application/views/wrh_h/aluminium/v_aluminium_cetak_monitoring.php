@@ -32,6 +32,9 @@
             <th>Total Out</th>
             <th>Rata-rata</th>
             <th>Qty</th>
+            <?php if (from_session('id') == 2) { ?>
+            <th>Qty Counter</th>
+            <?php } ?>
         </tr>
     </thead>
     <tbody>
@@ -63,6 +66,9 @@
                 <td><?= $total_out ?></td>
                 <td><?= $row->rata_pemakaian ?></td>
                 <td align="center"><?= $total_akhir ?></td>
+                <?php if (from_session('id') == 2) { ?>
+                <td align="center"><?= $row->qty ?></td>
+                <?php } ?>
             </tr>
         <?php } ?>
     </tbody>
