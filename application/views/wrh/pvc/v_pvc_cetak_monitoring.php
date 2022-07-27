@@ -48,7 +48,7 @@
             $total_akhir = $stock_awal_bulan + $total_in - $total_out;
             if ($total_akhir != $row->qty) {
                 $beda = 1;
-                $this->m_pvc->updateDataCounter($row->id_item,$row->id_divisi,  $row->id_gudang, $row->keranjang, $total_akhir);
+                // $this->m_pvc->updateDataCounter($row->id_item,$row->id_divisi,  $row->id_gudang, $row->keranjang, $total_akhir);
             } else {
                 $beda = 0;
             }
