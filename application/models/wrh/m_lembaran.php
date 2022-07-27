@@ -124,8 +124,8 @@ class M_lembaran extends CI_Model
     {
         $year  = date('Y');
         $month = date('m');
-        $this->db->where('DATE_FORMAT(ds.aktual,"%Y")', $year);
-        $this->db->where('DATE_FORMAT(ds.aktual,"%m")', $month);
+        $this->db->where('DATE_FORMAT(ds.created,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(ds.created,"%m")', $month);
         $this->db->where('ds.awal_bulan', 1);
         $this->db->select('*');
 
