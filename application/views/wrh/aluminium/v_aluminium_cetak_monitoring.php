@@ -55,7 +55,7 @@
 
             if ($total_akhir != $row->qty) {
                 $beda = 1;
-                // $this->m_aluminium->updateDataCounter($row->id_item,  $row->id_gudang, $row->keranjang, $total_akhir);
+                $this->m_aluminium->updateDataCounter($row->id_item,  $row->id_gudang, $row->keranjang, $total_akhir);
             } else {
                 $beda = 0;
             }
