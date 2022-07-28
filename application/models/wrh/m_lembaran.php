@@ -184,6 +184,52 @@ class M_lembaran extends CI_Model
         return $data;
     }
 
+    public function getTotalInPerBulanCetakLalu()
+    {
+        $year  = date('Y');
+        $month = date('m');
+        $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
+        $this->db->where('DATE_FORMAT(aktual,"%Y") !=', $year);
+        $this->db->where('DATE_FORMAT(aktual,"%m") !=', $month);
+        $this->db->where('inout', 1);
+        $this->db->where('awal_bulan', 0);
+
+        $res  = $this->db->get('data_stock');
+        $data = array();
+        foreach ($res->result() as $key) {
+
+            if (!isset($data[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang])) {
+                $data[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang] = 0;
+            }
+            $data[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang] = $data[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang] + $key->qty_in;
+        }
+        return $data;
+    }
+
+    public function getTotalOutPerBulanCetakLalu()
+    {
+        $year  = date('Y');
+        $month = date('m');
+        $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
+        $this->db->where('DATE_FORMAT(aktual,"%Y") !=', $year);
+        $this->db->where('DATE_FORMAT(aktual,"%m") !=', $month);
+        $this->db->where('inout', 2);
+        $this->db->where('awal_bulan', 0);
+
+        $res  = $this->db->get('data_stock');
+        $data = array();
+        foreach ($res->result() as $key) {
+
+            if (!isset($data[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang])) {
+                $data[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang] = 0;
+            }
+            $data[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang] = $data[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang] + $key->qty_out;
+        }
+        return $data;
+    }
+
     public function getStockAkhirBulan()
     {
         $res  = $this->db->get('data_counter');

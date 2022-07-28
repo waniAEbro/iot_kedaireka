@@ -98,6 +98,8 @@ class Aluminium extends CI_Controller
         $data['s_awal_bulan']    = $this->m_aluminium->getStockAwalBulanCetak();
         $data['s_total_in']  = $this->m_aluminium->getTotalInPerBulanCetak();
         $data['s_total_out'] = $this->m_aluminium->getTotalOutPerBulanCetak();
+        $data['s_total_in_lalu']  = $this->m_aluminium->getTotalInPerBulanCetakLalu();
+        $data['s_total_out_lalu'] = $this->m_aluminium->getTotalOutPerBulanCetakLalu();
         $this->load->view('wrh/aluminium/v_aluminium_cetak_monitoring', $data);
     }
 
@@ -107,6 +109,8 @@ class Aluminium extends CI_Controller
         $data['s_awal_bulan']    = $this->m_aluminium->getStockAwalBulanCetak();
         $data['s_total_in']  = $this->m_aluminium->getTotalInPerBulanCetak();
         $data['s_total_out'] = $this->m_aluminium->getTotalOutPerBulanCetak();
+        $data['s_total_in_lalu']  = $this->m_aluminium->getTotalInPerBulanCetakLalu();
+        $data['s_total_out_lalu'] = $this->m_aluminium->getTotalOutPerBulanCetakLalu();
         $data['jenis_barang'] = "Aluminium MF";
         $this->load->view('wrh/aluminium/v_aluminium_cetak_monitoring', $data);
     }

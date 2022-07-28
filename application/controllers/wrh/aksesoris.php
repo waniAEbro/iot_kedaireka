@@ -79,6 +79,8 @@ class aksesoris extends CI_Controller
         $data['s_awal_bulan']    = $this->m_aksesoris->getStockAwalBulanCetak();
         $data['s_total_in']  = $this->m_aksesoris->getTotalInPerBulanCetak();
         $data['s_total_out'] = $this->m_aksesoris->getTotalOutPerBulanCetak();
+        $data['s_total_in_lalu']  = $this->m_aluminium->getTotalInPerBulanCetakLalu();
+        $data['s_total_out_lalu'] = $this->m_aluminium->getTotalOutPerBulanCetakLalu();
         $data['jenis_barang'] = "Aksesoris";
         $this->load->view('wrh/aksesoris/v_aksesoris_cetak_monitoring', $data);
     }
