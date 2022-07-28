@@ -222,6 +222,28 @@ class M_aluminium extends CI_Model
         return $data;
     }
 
+    public function getTotalOutPerBulanCetakProses()
+    {
+        $year  = date('Y');
+        $month = date('m');
+        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(created,"%m")', $month);
+        $this->db->where('inout', 2);
+        $this->db->where('id_surat_jalan', 0);
+        $this->db->where('awal_bulan', 0);
+
+        $res  = $this->db->get('data_stock');
+        $data = array();
+        foreach ($res->result() as $key) {
+
+            if (!isset($data[$key->id_item][$key->id_gudang][$key->keranjang])) {
+                $data[$key->id_item][$key->id_gudang][$key->keranjang] = 0;
+            }
+            $data[$key->id_item][$key->id_gudang][$key->keranjang] = $data[$key->id_item][$key->id_gudang][$key->keranjang] + $key->qty_out;
+        }
+        return $data;
+    }
+
     public function getdataItem()
     {
         $id_jenis_item = 1;

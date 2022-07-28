@@ -34,6 +34,7 @@
             <th>Qty</th>
             <?php if (from_session('id') == 2) { ?>
             <th>Qty Counter</th>
+            <th>Qty out proses</th>
             <th>beda</th>
             <?php } ?>
         </tr>
@@ -52,6 +53,8 @@
 
             $total_in = @$s_total_in[$row->id_item][$row->id_gudang][$row->keranjang];
             $total_out = @$s_total_out[$row->id_item][$row->id_gudang][$row->keranjang];
+
+            $qty_out_proses = @$s_total_out_proses[$row->id_item][$row->id_gudang][$row->keranjang];
 
             $total_akhir = $stock_awal_bulan + $total_in - $total_out;
             if ($total_akhir != $row->qty) {
@@ -82,6 +85,7 @@
                 <td align="center"><?= $row->qty ?></td>
                 <?php if (from_session('id') == 2) { ?>
                 <td align="center"><?= $total_akhir ?></td>
+                <td align="center"><?= $qty_out_proses ?></td>
                 <td align="center"><?= $beda ?></td>
                 <?php } ?>
             </tr>
