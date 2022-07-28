@@ -146,6 +146,8 @@ class M_lembaran extends CI_Model
     {
         $year  = date('Y');
         $month = date('m');
+        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(created,"%m")', $month);
         $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
         $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
         $this->db->where('inout', 1);
@@ -167,6 +169,8 @@ class M_lembaran extends CI_Model
     {
         $year  = date('Y');
         $month = date('m');
+        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(created,"%m")', $month);
         $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
         $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
         $this->db->where('inout', 2);
@@ -195,7 +199,7 @@ class M_lembaran extends CI_Model
         $this->db->where('inout', 1);
         $this->db->where('awal_bulan', 0);
 
-        $res  = $this->db->get('data_stock');
+        $res  = $this->db->get('ata_stock');
         $data = array();
         foreach ($res->result() as $key) {
 
