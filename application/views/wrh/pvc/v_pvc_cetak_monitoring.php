@@ -30,6 +30,7 @@
             <th>Stock Awal Bulan</th>
             <th>Total In</th>
             <th>Total Out</th>
+            <th>Qty out proses</th>
             <th>Rata-rata</th>
             <th>Qty</th>
             <?php if (from_session('id') == 2) { ?>
@@ -50,11 +51,18 @@
             $total_in = @$s_total_in[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
             $total_out = @$s_total_out[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
             $total_akhir = $stock_awal_bulan + $total_in - $total_out;
+
+            $qty_out_proses = @$s_total_out_proses[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
+
+
             if ($total_akhir != $row->qty) {
                 $beda = 1;
-                // $this->m_pvc->updateDataCounter($row->id_item,$row->id_divisi,  $row->id_gudang, $row->keranjang, $total_akhir);
             } else {
                 $beda = 0;
+            }
+
+            if ($beda == 1 && $qty_out_proses < 1) {
+                $this->m_pvc->updateDataCounter($row->id_item,$row->id_divisi,  $row->id_gudang, $row->keranjang, $total_akhir);
             }
             
         ?>
@@ -75,11 +83,12 @@
                 <td><?= $stock_awal_bulan ?></td>
                 <td><?= $total_in ?></td>
                 <td><?= $total_out ?></td>
+                <td align="center"><?= $qty_out_proses ?></td>
                 <td><?= $row->rata_pemakaian ?></td>
                 <td align="center"><?= $row->qty ?></td>
                 <?php if (from_session('id') == 2) { ?>
-                <td align="center"><?= $total_akhir ?></td>
-                <td align="center"><?= $beda ?></td>
+                    <td align="center"><?= $total_in_lalu ?>-<?= $total_out_lalu ?> = <?= $total_akhir ?></td>
+                    <td align="center"><?= $beda ?></td>
                 <?php } ?>
             </tr>
         <?php } ?>

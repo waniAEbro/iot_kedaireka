@@ -80,20 +80,21 @@ class kaca extends CI_Controller
     public function cetakExcelMonitoring()
     {
         $data['kaca']    = $this->m_kaca->getCetakMonitoring(3);
-        $bulan       = date('m');
-        $tahun       = date('Y');
-        $tgl = date('Y-m-d', strtotime('-1 month', strtotime($tahun . '-' . $bulan . '-01')));
+        // $bulan       = date('m');
+        // $tahun       = date('Y');
         // $tgl = date('Y-m-d', strtotime('-1 month', strtotime($tahun . '-' . $bulan . '-01')));
+        // $data['qty_awal_bulan']    = $this->m_kaca->getQtyAwalBulan(date('Y-m-d'));
+        // $data['qty_masuk']    = $this->m_kaca->getQtyMasukLalu($tgl);
+        // $data['qty_keluar']    = $this->m_kaca->getQtyKeluarLalu($tgl);
+        // $data['s_total_in']  = $this->m_kaca->getQtyMasuk(date('Y-m-d'));
+        // $data['s_total_out'] = $this->m_kaca->getQtyKeluar(date('Y-m-d'));
 
-        // $qty_awal_bulan = $this->m_kaca->getQtyAwalBulan($tgl);
-        // $qty_masuk = $this->m_kaca->getQtyMasukLalu($tgl);
-        // $qty_keluar = $this->m_kaca->getQtyKeluarLalu($tgl);
-        $data['qty_awal_bulan']    = $this->m_kaca->getQtyAwalBulan(date('Y-m-d'));
-        $data['qty_masuk']    = $this->m_kaca->getQtyMasukLalu($tgl);
-        $data['qty_keluar']    = $this->m_kaca->getQtyKeluarLalu($tgl);
-        // $data['s_awal_bulan']    = $this->m_kaca->getStockAwalBulanCetak();
-        $data['s_total_in']  = $this->m_kaca->getQtyMasuk(date('Y-m-d'));
-        $data['s_total_out'] = $this->m_kaca->getQtyKeluar(date('Y-m-d'));
+        $data['s_awal_bulan']    = $this->m_kaca->getStockAwalBulanCetak();
+        $data['s_total_in']  = $this->m_kaca->getTotalInPerBulanCetak();
+        $data['s_total_out'] = $this->m_kaca->getTotalOutPerBulanCetak();
+        $data['s_total_in_lalu']  = $this->m_kaca->getTotalInPerBulanCetakLalu();
+        $data['s_total_out_lalu'] = $this->m_kaca->getTotalOutPerBulanCetakLalu();
+        $data['s_total_out_proses'] = $this->m_kaca->getTotalOutPerBulanCetakProses();
         $data['jenis_barang'] = "kaca";
         $this->load->view('wrh/kaca/v_kaca_cetak_monitoring', $data);
     }

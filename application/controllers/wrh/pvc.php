@@ -81,6 +81,7 @@ class pvc extends CI_Controller
         $data['s_total_out'] = $this->m_pvc->getTotalOutPerBulanCetak();
         $data['s_total_in_lalu']  = $this->m_pvc->getTotalInPerBulanCetakLalu();
         $data['s_total_out_lalu'] = $this->m_pvc->getTotalOutPerBulanCetakLalu();
+        $data['s_total_out_proses'] = $this->m_pvc->getTotalOutPerBulanCetakProses();
         $data['jenis_barang'] = "pvc";
         $this->load->view('wrh/pvc/v_pvc_cetak_monitoring', $data);
     }

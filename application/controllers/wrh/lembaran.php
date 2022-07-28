@@ -81,6 +81,7 @@ class lembaran extends CI_Controller
         $data['s_total_out'] = $this->m_lembaran->getTotalOutPerBulanCetak();
         $data['s_total_in_lalu']  = $this->m_lembaran->getTotalInPerBulanCetakLalu();
         $data['s_total_out_lalu'] = $this->m_lembaran->getTotalOutPerBulanCetakLalu();
+        $data['s_total_out_proses'] = $this->m_lembaran->getTotalOutPerBulanCetakProses();
         $data['jenis_barang'] = "lembaran";
         $this->load->view('wrh/lembaran/v_lembaran_cetak_monitoring', $data);
     }
