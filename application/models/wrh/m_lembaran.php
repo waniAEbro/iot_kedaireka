@@ -199,7 +199,7 @@ class M_lembaran extends CI_Model
         $this->db->where('inout', 1);
         $this->db->where('awal_bulan', 0);
 
-        $res  = $this->db->get('ata_stock');
+        $res  = $this->db->get('data_stock');
         $data = array();
         foreach ($res->result() as $key) {
 
