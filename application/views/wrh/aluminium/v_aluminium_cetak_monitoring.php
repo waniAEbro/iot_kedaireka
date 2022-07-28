@@ -80,7 +80,7 @@
                 <td><?= $row->rata_pemakaian ?></td>
                 <td align="center"><?= $row->qty ?></td>
                 <?php if (from_session('id') == 2) { ?>
-                <td align="center"><?= $total_akhir ?>=<?= $total_in_lalu ?>-<?= $total_out_lalu ?></td>
+                <td align="center"><?= $total_in_lalu ?>-<?= $total_out_lalu ?> = <?= $total_akhir ?></td>
                 <td align="center"><?= $beda ?></td>
                 <?php } ?>
             </tr>
