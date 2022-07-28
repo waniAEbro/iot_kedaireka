@@ -60,7 +60,7 @@
                 $beda = 0;
             }
 
-            if ($beda == 1 && $qty_out_proses < 1) {
+            if ($beda == 1 ) {
                 $this->m_lembaran->updateDataCounter($row->id_item,$row->id_divisi,  $row->id_gudang, $row->keranjang, $total_akhir);
             }
         ?>
