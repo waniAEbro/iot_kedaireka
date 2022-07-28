@@ -73,9 +73,9 @@
                 <td><?= $total_in ?></td>
                 <td><?= $total_out ?></td>
                 <td><?= $row->rata_pemakaian ?></td>
-                <td align="center"><?= $total_akhir ?></td>
-                <?php if (from_session('id') == 2) { ?>
                 <td align="center"><?= $row->qty ?></td>
+                <?php if (from_session('id') == 2) { ?>
+                <td align="center"><?= $total_akhir ?></td>
                 <td align="center"><?= $beda ?></td>
                 <?php } ?>
             </tr>
