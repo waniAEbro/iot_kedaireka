@@ -30,11 +30,11 @@
             <th>Stock Awal Bulan</th>
             <th>Total In</th>
             <th>Total Out</th>
+            <th>Qty out proses</th>
             <th>Rata-rata</th>
             <th>Qty</th>
             <?php if (from_session('id') == 2) { ?>
             <th>Qty Counter</th>
-            <th>Qty out proses</th>
             <th>beda</th>
             <?php } ?>
         </tr>
@@ -82,11 +82,11 @@
                 <td><?= $stock_awal_bulan ?></td>
                 <td><?= $total_in ?></td>
                 <td><?= $total_out ?></td>
+                <td align="center"><?= $qty_out_proses ?></td>
                 <td><?= $row->rata_pemakaian ?></td>
                 <td align="center"><?= $row->qty ?></td>
                 <?php if (from_session('id') == 2) { ?>
                 <td align="center"><?= $total_in_lalu ?>-<?= $total_out_lalu ?> = <?= $total_akhir ?></td>
-                <td align="center"><?= $qty_out_proses ?></td>
                 <td align="center"><?= $beda ?></td>
                 <?php } ?>
             </tr>
