@@ -47,6 +47,7 @@
             $total_in = @$s_total_in[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
             $total_out = @$s_total_out[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
             $total_akhir = $stock_awal_bulan + $total_in - $total_out;
+            
             $qty_out_proses = @$s_total_out_proses[$row->id_item][$row->id_gudang][$row->keranjang];
 
             if ($total_akhir != $row->qty) {
