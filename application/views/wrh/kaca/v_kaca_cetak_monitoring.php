@@ -74,7 +74,7 @@
                 <td><?= $row->divisi ?></td>
                 <td><?= $row->gudang ?></td>
                 <td><?= $row->keranjang ?></td>
-                <td><?= $stok_awal_bulan ?></td>
+                <td><?= $stock_awal_bulan ?></td>
                 <td><?= $total_in ?></td>
                 <td><?= $total_out ?></td>
                 <td align="center"><?= $qty_out_proses ?></td>
