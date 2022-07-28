@@ -30,8 +30,8 @@
             <th>Rata-rata</th>
             <th>Qty</th>
             <?php if (from_session('id') == 2) { ?>
-            <th>Qty Counter</th>
-            <th>beda</th>
+                <th>Qty Counter</th>
+                <th>beda</th>
             <?php } ?>
         </tr>
     </thead>
@@ -43,7 +43,7 @@
             $total_in_lalu = @$s_total_in[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
             $total_out_lalu = @$s_total_out[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
             $stock_awal_bulan = $stock_awal_bulan_now + $total_in_lalu - $total_out_lalu;
-            
+
             $total_in = @$s_total_in[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
             $total_out = @$s_total_out[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
             $total_akhir = $stock_awal_bulan + $total_in - $total_out;
@@ -57,7 +57,7 @@
             }
 
             if ($beda == 1 && $qty_out_proses < 1) {
-                $this->m_aluminium->updateDataCounter($row->id_item,  $row->id_gudang, $row->keranjang, $total_akhir);
+                $this->m_aksesoris->updateDataCounter($row->id_item,  $row->id_gudang, $row->keranjang, $total_akhir);
             }
         ?>
             <tr>
@@ -77,8 +77,8 @@
                 <td><?= $row->rata_pemakaian ?></td>
                 <td align="center"><?= $row->qty ?></td>
                 <?php if (from_session('id') == 2) { ?>
-                <td align="center"><?= $total_akhir ?></td>
-                <td align="center"><?= $beda ?></td>
+                    <td align="center"><?= $total_in_lalu ?>-<?= $total_out_lalu ?> = <?= $total_akhir ?></td>
+                    <td align="center"><?= $beda ?></td>
                 <?php } ?>
             </tr>
         <?php } ?>

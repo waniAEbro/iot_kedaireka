@@ -21,7 +21,7 @@
             <th>Temper</th>
             <th>Kode Warna</th>
             <th>Ukuran</th>
-            
+
             <th>Deskripsi Warna</th>
             <th>Satuan</th>
             <th>Lead Time</th>
@@ -34,8 +34,8 @@
             <th>Rata-rata</th>
             <th>Qty</th>
             <?php if (from_session('id') == 2) { ?>
-            <th>Qty Counter</th>
-            <th>beda</th>
+                <th>Qty Counter</th>
+                <th>beda</th>
             <?php } ?>
         </tr>
     </thead>
@@ -74,7 +74,7 @@
                 <td><?= $row->temper ?></td>
                 <td><?= $row->kode_warna ?></td>
                 <td><?= $row->ukuran ?></td>
-                
+
                 <td><?= $row->warna ?></td>
                 <td><?= $row->satuan ?></td>
                 <td><?= $row->lead_time ?></td>
@@ -87,8 +87,8 @@
                 <td><?= $row->rata_pemakaian ?></td>
                 <td align="center"><?= $row->qty ?></td>
                 <?php if (from_session('id') == 2) { ?>
-                <td align="center"><?= $total_akhir ?></td>
-                <td align="center"><?= $beda ?></td>
+                    <td align="center"><?= $total_in_lalu ?>-<?= $total_out_lalu ?> = <?= $total_akhir ?></td>
+                    <td align="center"><?= $beda ?></td>
                 <?php } ?>
             </tr>
         <?php } ?>
