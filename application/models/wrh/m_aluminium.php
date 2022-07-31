@@ -325,7 +325,7 @@ class M_aluminium extends CI_Model
     public function getlistStock()
     {
 
-
+        $this->db->where('qty >', 0);        
         return $this->db->get('data_counter');
     }
 
