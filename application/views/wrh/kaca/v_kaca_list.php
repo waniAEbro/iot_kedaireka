@@ -89,8 +89,8 @@
                             $tgl_lalu = date('Y-m-d', strtotime('-1 month', strtotime($tahun . '-' . $bulan . '-01')));
                             foreach ($kaca->result() as $row) {
                                 $ada                     = 1;
-                                $stock_awal_bulan        = @$s_awal_bulan_lalu[$row->id] + @$s_masuk_lalu[$row->id] - @$s_keluar_lalu[$row->id];
-                                // $tampil_stock_awal_bulan = ($stock_awal_bulan != '') ? $stock_awal_bulan : 0;
+                                $stock_awal_bulan        = @$s_awal_bulan[$row->id];
+                                $tampil_stock_awal_bulan = ($stock_awal_bulan != '') ? $stock_awal_bulan : 0;
 
                                 $tot_in_per_bulan          = @$total_in_per_bulan[$row->id];
                                 $tampil_total_in_per_bulan = ($tot_in_per_bulan != '') ? $tot_in_per_bulan : 0;
