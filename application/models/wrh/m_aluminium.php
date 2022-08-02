@@ -1747,15 +1747,14 @@ class M_aluminium extends CI_Model
         return $this->db->get('data_counter')->num_rows();
     }
 
-    public function getListStockPoint($tgl = '')
+    public function getListStockPoint($id_jenis_item = '')
     {
         $this->db->join('master_item mi', 'mi.id = ds.id_item', 'left');
-        $this->db->join('master_gudang mg', 'mg.id = ds.id_gudang', 'left');
         $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
-        $this->db->where('ds.id_jenis_item', 1);
-        $this->db->where('DATE(ds.created)', $tgl);
+        $this->db->join('master_gudang mg', 'mg.id = ds.id_gudang', 'left');
+        $this->db->where('ds.id_jenis_item', $id_jenis_item);
         $this->db->select('ds.*,mg.gudang,mi.item_code,mwa.warna');
-        return $this->db->get('data_stok_poin ds');
+        return $this->db->get('data_counter ds');
     }
 
     public function updateQtyAwalBulan($tgl_aktual, $datapost)
@@ -1889,6 +1888,71 @@ class M_aluminium extends CI_Model
         $this->db->where('dw.no_wo', $no_wo);
         $this->db->select('mi.*');
         return $this->db->get('data_wo dw')->result();
+    }
+
+    public function getQtyAwalBulan($tgl)
+    {
+        
+        $year  = date('Y',strtotime($tgl));
+        $month = date('m',strtotime($tgl));
+        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(created,"%m")', $month);
+        $this->db->where('awal_bulan', 1);
+        $res   = $this->db->get('data_stock');
+        $data  = array();
+        $nilai = 0;
+        foreach ($res->result() as $key) {
+            if (isset($data[$key->id_item][$key->id_gudang][$key->keranjang])) {
+                $nilai = $data[$key->id_item][$key->id_gudang][$key->keranjang];
+            } else {
+                $nilai = 0;
+            }
+            $data[$key->id_item][$key->id_gudang][$key->keranjang] = $key->qty_in + $nilai;
+        }
+        return $data;
+    }
+
+    public function getQtyMasuk($tgl,$id)
+    {
+        $this->db->where('id >', $id);        
+        $this->db->where('aktual <=', $tgl);
+        $this->db->where('awal_bulan', 0);
+        $this->db->where('inout', 1);
+
+        $res   = $this->db->get('data_stock');
+        $data  = array();
+        $nilai = 0;
+        foreach ($res->result() as $key) {
+            if (isset($data[$key->id_item][$key->id_gudang][$key->keranjang])) {
+                $nilai = $data[$key->id_item][$key->id_gudang][$key->keranjang];
+            } else {
+                $nilai = 0;
+            }
+            $data[$key->id_item][$key->id_gudang][$key->keranjang] = $key->qty_in + $nilai;
+        }
+        return $data;
+    }
+
+    public function getQtyKeluar($tgl,$id)
+    {
+        
+        $this->db->where('id >', $id);
+        $this->db->where('aktual <=', $tgl);
+        $this->db->where('awal_bulan', 0);
+        $this->db->where('inout', 2);
+        
+        $res   = $this->db->get('data_stock');
+        $data  = array();
+        $nilai = 0;
+        foreach ($res->result() as $key) {
+            if (isset($data[$key->id_item][$key->id_gudang][$key->keranjang])) {
+                $nilai = $data[$key->id_item][$key->id_gudang][$key->keranjang];
+            } else {
+                $nilai = 0;
+            }
+            $data[$key->id_item][$key->id_gudang][$key->keranjang] = $key->qty_out + $nilai;
+        }
+        return $data;
     }
 }
 

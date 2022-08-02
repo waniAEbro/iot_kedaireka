@@ -37,6 +37,10 @@
                         <?php
                         $i = 1;
                         foreach ($list_data->result() as $row) :
+                            $stok_awal_bulan = @$qty_awal_bulan[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
+                            $stok_masuk = @$qty_masuk[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
+                            $stok_keluar = @$qty_keluar[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
+                            $qty_total = $stok_awal_bulan + $stok_masuk - $stok_keluar;
                         ?>
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
@@ -45,7 +49,9 @@
                                 <td><?= $row->divisi ?></td>
                                 <td><?= $row->gudang ?></td>
                                 <td align="center"><?= $row->keranjang ?></td>
-                                <td align="center"><?= $row->qty ?></td>
+                                <td align="center">
+                                    <?= $qty_total ?>
+                                </td>
                             </tr>
 
                         <?php endforeach; ?>

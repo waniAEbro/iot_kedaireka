@@ -1340,7 +1340,18 @@ class Aluminium extends CI_Controller
             $data['tgl'] = $tgl;
         }
 
-        $data['list_data'] = $this->m_aluminium->getListStockPoint($data['tgl']);
+        $year  = date('Y',strtotime($data['tgl']));
+        $month = date('m',strtotime($data['tgl']));
+        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(created,"%m")', $month);
+        $this->db->where('awal_bulan', 1);
+        $this->db->where('id_jenis_item', 1);
+        $id_awal_bulan = $this->db->get('data_stock')->row()->id;
+
+        $data['qty_awal_bulan'] = $this->m_aluminium->getQtyAwalBulan($data['tgl']);
+        $data['qty_masuk'] = $this->m_aluminium->getQtyMasuk($data['tgl'],$id_awal_bulan);
+        $data['qty_keluar'] = $this->m_aluminium->getQtyKeluar($data['tgl'],$id_awal_bulan);
+        $data['list_data'] = $this->m_aluminium->getListStockPoint(1);
 
         $this->load->view('wrh_h/aluminium/v_aluminium_stock_point', $data);
     }

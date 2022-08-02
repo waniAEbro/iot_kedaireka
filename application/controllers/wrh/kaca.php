@@ -9,6 +9,7 @@ class kaca extends CI_Controller
         parent::__construct();
         $this->fungsi->restrict();
         $this->load->model('wrh/m_kaca');
+        $this->load->model('wrh/m_aksesoris');
         $this->load->model('klg/m_fppp');
     }
 
@@ -1422,10 +1423,18 @@ class kaca extends CI_Controller
         } else {
             $data['tgl'] = $tgl;
         }
-        $data['qty_awal_bulan'] = $this->m_kaca->getQtyAwalBulan($data['tgl']);
-        $data['qty_masuk'] = $this->m_kaca->getQtyMasuk($data['tgl']);
-        $data['qty_keluar'] = $this->m_kaca->getQtyKeluar($data['tgl']);
-        $data['list_data'] = $this->m_kaca->getListStockPoint($data['tgl']);
+        $year  = date('Y',strtotime($data['tgl']));
+        $month = date('m',strtotime($data['tgl']));
+        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(created,"%m")', $month);
+        $this->db->where('awal_bulan', 1);
+        $this->db->where('id_jenis_item', 3);
+        $id_awal_bulan = $this->db->get('data_stock')->row()->id;
+
+        $data['qty_awal_bulan'] = $this->m_aksesoris->getQtyAwalBulan($data['tgl']);
+        $data['qty_masuk'] = $this->m_aksesoris->getQtyMasuk($data['tgl'],$id_awal_bulan);
+        $data['qty_keluar'] = $this->m_aksesoris->getQtyKeluar($data['tgl'],$id_awal_bulan);
+        $data['list_data'] = $this->m_aksesoris->getListStockPoint(3);
 
         $this->load->view('wrh/kaca/v_kaca_stock_point', $data);
     }

@@ -1417,77 +1417,7 @@ class M_kaca extends CI_Model
         return $this->db->get('data_counter ds');
     }
 
-    public function getQtyAwalBulan($tgl)
-    {
-        
-        $year  = date('Y',strtotime($tgl));
-        $month = date('m',strtotime($tgl));
-        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
-        $this->db->where('DATE_FORMAT(created,"%m")', $month);
-        $this->db->where('awal_bulan', 1);
-        $res   = $this->db->get('data_stock');
-        $data  = array();
-        $nilai = 0;
-        foreach ($res->result() as $key) {
-            if (isset($data[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang])) {
-                $nilai = $data[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
-            } else {
-                $nilai = 0;
-            }
-            $data[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang] = $key->qty_in + $nilai;
-        }
-        return $data;
-    }
-
-    public function getQtyMasuk($tgl)
-    {
-        
-        $year  = date('Y',strtotime($tgl));
-        $month = date('m',strtotime($tgl));
-        $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
-        $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
-        $this->db->where('aktual <=', $tgl);
-        $this->db->where('awal_bulan', 0);
-        $this->db->where('inout', 1);
-
-        $res   = $this->db->get('data_stock');
-        $data  = array();
-        $nilai = 0;
-        foreach ($res->result() as $key) {
-            if (isset($data[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang])) {
-                $nilai = $data[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
-            } else {
-                $nilai = 0;
-            }
-            $data[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang] = $key->qty_in + $nilai;
-        }
-        return $data;
-    }
-
-    public function getQtyKeluar($tgl)
-    {
-        
-        $year  = date('Y',strtotime($tgl));
-        $month = date('m',strtotime($tgl));
-        $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
-        $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
-        $this->db->where('aktual <=', $tgl);
-        $this->db->where('awal_bulan', 0);
-        $this->db->where('inout', 2);
-        
-        $res   = $this->db->get('data_stock');
-        $data  = array();
-        $nilai = 0;
-        foreach ($res->result() as $key) {
-            if (isset($data[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang])) {
-                $nilai = $data[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
-            } else {
-                $nilai = 0;
-            }
-            $data[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang] = $key->qty_out + $nilai;
-        }
-        return $data;
-    }
+    
 
     public function getQtyMasukLalu($tgl)
     {

@@ -9,6 +9,7 @@ class lembaran extends CI_Controller
         parent::__construct();
         $this->fungsi->restrict();
         $this->load->model('wrh/m_lembaran');
+        $this->load->model('wrh/m_aksesoris');
         $this->load->model('klg/m_fppp');
     }
 
@@ -1316,7 +1317,18 @@ class lembaran extends CI_Controller
             $data['tgl'] = $tgl;
         }
 
-        $data['list_data'] = $this->m_lembaran->getListStockPoint($data['tgl']);
+        $year  = date('Y',strtotime($data['tgl']));
+        $month = date('m',strtotime($data['tgl']));
+        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(created,"%m")', $month);
+        $this->db->where('awal_bulan', 1);
+        $this->db->where('id_jenis_item', 4);
+        $id_awal_bulan = $this->db->get('data_stock')->row()->id;
+
+        $data['qty_awal_bulan'] = $this->m_aksesoris->getQtyAwalBulan($data['tgl']);
+        $data['qty_masuk'] = $this->m_aksesoris->getQtyMasuk($data['tgl'],$id_awal_bulan);
+        $data['qty_keluar'] = $this->m_aksesoris->getQtyKeluar($data['tgl'],$id_awal_bulan);
+        $data['list_data'] = $this->m_aksesoris->getListStockPoint(4);
 
         $this->load->view('wrh/lembaran/v_lembaran_stock_point', $data);
     }

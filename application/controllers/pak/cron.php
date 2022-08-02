@@ -14,7 +14,7 @@ class Cron extends CI_Controller
     {
         // $this->db->where('qty <', 1);
         // $this->db->delete('data_counter');
-        $this->m_aksesoris->cekAdaStockPoint(1);
-        $this->m_aksesoris->cekAdaStockPoint(2);
+        // $this->m_aksesoris->cekAdaStockPoint(1);
+        // $this->m_aksesoris->cekAdaStockPoint(2);
     }
 }
