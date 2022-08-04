@@ -18,6 +18,7 @@
                     <div class="col-md-12">
                         <div class="box-tools pull-right">
                             <a class="btn btn-success" onclick="setAplikator()">Set Filter</a>
+                            <a class="btn btn-primary" onclick="setCetak()">Cetak</a>
                         </div>
                     </div>
                     </>
@@ -81,5 +82,16 @@
         };
         load_silent("wrh/aksesoris/stockPointList/" + tgl, "#content");
 
+    }
+    function setCetak() {
+        var tgl = $('#tgl').val();
+        if (tgl != '') {
+            var tgl = tgl;
+        } else {
+            var tgl = '<?= $tgl ?>';
+        };
+
+        var url = "<?= site_url('wrh/aksesoris/stockPointListCetak/"+tgl+"') ?>";
+        window.open(url, "_blank");
     }
 </script>

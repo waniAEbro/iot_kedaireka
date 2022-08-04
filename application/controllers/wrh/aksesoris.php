@@ -1330,6 +1330,33 @@ class aksesoris extends CI_Controller
 
         $this->load->view('wrh/aksesoris/v_aksesoris_stock_point', $data);
     }
+
+    public function stockPointListCetak($tgl = '')
+    {
+        $this->fungsi->check_previleges('aksesoris');
+        $tgl_def = date('Y-m-d');
+
+        if ($tgl == '') {
+            $data['tgl'] = $tgl_def;
+        } else {
+            $data['tgl'] = $tgl;
+        }
+
+        $year  = date('Y',strtotime($data['tgl']));
+        $month = date('m',strtotime($data['tgl']));
+        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(created,"%m")', $month);
+        $this->db->where('awal_bulan', 1);
+        $this->db->where('id_jenis_item', 2);
+        $id_awal_bulan = $this->db->get('data_stock')->row()->id;
+
+        $data['qty_awal_bulan'] = $this->m_aksesoris->getQtyAwalBulan($data['tgl']);
+        $data['qty_masuk'] = $this->m_aksesoris->getQtyMasuk($data['tgl'],$id_awal_bulan);
+        $data['qty_keluar'] = $this->m_aksesoris->getQtyKeluar($data['tgl'],$id_awal_bulan);
+        $data['list_data'] = $this->m_aksesoris->getListStockPoint(2);
+
+        $this->load->view('wrh/aksesoris/v_aksesoris_stock_point_cetak', $data);
+    }
 }
 
 /* End of file aksesoris.php */
