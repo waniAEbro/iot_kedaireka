@@ -139,7 +139,7 @@ foreach ($detail as $key) {
     $html .= '<tr>
                     <td align="center">' . $i++ . '</td>
                     <td align="center"> ' . $key->nama_proyek . '<br>' . $key->no_fppp . '</td>
-                    <td align="center"> ' . $itm . '-' . $key->temper . '-' . $key->ukuran . '</td>
+                    <td align="center"> ' . $itm . '-' . $key->temper . '-'.$key->kode_warna . '-' . $key->ukuran . '</td>
                     <td align="center">' . $key->qty_out . '</td>
                     <td align="center">1</td>
                     <td align="center">' . $key->satuan . '</td>
