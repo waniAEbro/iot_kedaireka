@@ -51,7 +51,10 @@
                                 <td><?= $row->gudang ?></td>
                                 <td align="center"><?= $row->keranjang ?></td>
                                 <td align="center">
-                                    <?= $qty_total ?>
+                                    <?= $qty_total ?><br>
+                                    AB:<?= $stok_awal_bulan ?><br>
+                                    M:<?= $stok_masuk ?><br>
+                                    K:<?= $stok_keluar ?><br>
                                 </td>
                             </tr>
 
