@@ -24,23 +24,51 @@
                     </div>
                 </div>
             </div>
+            <?php
+            $ronly = (from_session('level') > 1) ? 'readonly' : '';
+            ?>
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Gudang</label>
-                        <input type="text" class="form-control" value="<?= $row->gudang ?>" readonly>
+                        <?php
+                        if (from_session('level') > 1) { ?>
+                            <div style="display:none;">
+                                <select id="id_gudang" name="id_gudang" class="form-control" style="width:100%;">
+                                    <option value="">-- Select --</option>
+                                    <?php foreach ($gudang->result() as $valap) :
+                                        $selected = ($row->id_gudang == $valap->id) ? 'selected' : ''; ?>
+                                        <option value="<?= $valap->id ?>" <?= $selected ?>><?= $valap->gudang ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <input type="text" id="keranjang" class="form-control" value="<?= $row->keranjang ?>" readonly>
+                        <?php } else { ?>
+                            <select id="id_gudang" name="id_gudang" class="form-control" style="width:100%;">
+                                <option value="">-- Select --</option>
+                                <?php foreach ($gudang->result() as $valap) :
+                                    $selected = ($row->id_gudang == $valap->id) ? 'selected' : ''; ?>
+                                    <option value="<?= $valap->id ?>" <?= $selected ?>><?= $valap->gudang ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        <?php }
+
+                        ?>
+
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Keranjang</label>
-                        <input type="text" class="form-control" value="<?= $row->keranjang ?>" readonly>
+                        <input type="text" id="keranjang" class="form-control" value="<?= $row->keranjang ?>" <?= $ronly ?>>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Qty</label>
-                        <input type="text" class="form-control" value="<?= $row->qty_in ?>" readonly>
+                        <input type="text" id="qty" class="form-control" value="<?= $row->qty_in ?>" <?= $ronly ?>>
                     </div>
                 </div>
             </div>
@@ -96,6 +124,9 @@
             type: "POST",
             data: {
                 "id": $("#id").val(),
+                'id_gudang': $("#id_gudang").val(),
+                'keranjang': $("#keranjang").val(),
+                'qty': $("#qty").val(),
                 'supplier': $("#supplier").val(),
                 'no_surat_jalan': $("#no_surat_jalan").val(),
                 'no_pr': $("#no_pr").val(),

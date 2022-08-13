@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Aluminium extends CI_Controller
 {
-    
+
     public function __construct()
     {
         parent::__construct();
@@ -129,22 +129,22 @@ class Aluminium extends CI_Controller
             $qtyout          = $this->m_aluminium->getQtyOutDetailTabelMonitoring($key->id_item, $key->id_gudang, $key->keranjang);
             $qtyinmutasi          = $this->m_aluminium->getQtyInDetailTabelMonitoringMutasi($key->id_item, $key->id_gudang, $key->keranjang);
             $qtyoutmutasi          = $this->m_aluminium->getQtyOutDetailTabelMonitoringMutasi($key->id_item, $key->id_gudang, $key->keranjang);
-            
-                $temp            = array(
-                    "divisi"           => $key->divisi,
-                    "gudang"           => $key->gudang,
-                    "keranjang"        => $key->keranjang,
-                    "stok_awal_bulan"  => $stok_awal_bulan,
-                    "tot_in"           => $qtyin,
-                    "tot_out"          => $qtyout,
-                    "mutasi_in"          => $qtyinmutasi,
-                    "mutasi_out"          => $qtyoutmutasi,
-                    // "stok_akhir_bulan" => $key->qty,
-                    "stok_akhir_bulan" => ($stok_awal_bulan + $qtyin + $qtyinmutasi) - $qtyout - $qtyoutmutasi,
-                    "rata_pemakaian"   => '0',
-                    "min_stock"        => '0',
-                );
-            
+
+            $temp            = array(
+                "divisi"           => $key->divisi,
+                "gudang"           => $key->gudang,
+                "keranjang"        => $key->keranjang,
+                "stok_awal_bulan"  => $stok_awal_bulan,
+                "tot_in"           => $qtyin,
+                "tot_out"          => $qtyout,
+                "mutasi_in"          => $qtyinmutasi,
+                "mutasi_out"          => $qtyoutmutasi,
+                // "stok_akhir_bulan" => $key->qty,
+                "stok_akhir_bulan" => ($stok_awal_bulan + $qtyin + $qtyinmutasi) - $qtyout - $qtyoutmutasi,
+                "rata_pemakaian"   => '0',
+                "min_stock"        => '0',
+            );
+
 
             // $this->db->where('id_item', $key->id_item);
             // $this->db->where('id_gudang', $key->id_gudang);
@@ -212,6 +212,8 @@ class Aluminium extends CI_Controller
         $data['id']       = $id;
         $data['row']      = $this->m_aluminium->getDataStockRow($id)->row();
         $data['supplier'] = $this->db->get('master_supplier');
+        $data['gudang'] = $this->db->get_where('master_gudang', array('id_jenis_item' => 1));
+
         $this->load->view('wrh/aluminium/v_aluminium_edit', $data);
     }
 
@@ -220,10 +222,14 @@ class Aluminium extends CI_Controller
         $this->fungsi->check_previleges('aluminium');
         $id  = $this->input->post('id');
         $obj = array(
+            'id_gudang'    => $this->input->post('id_gudang'),
+            'keranjang'    => $this->input->post('keranjang'),
+            'qty_in'    => $this->input->post('qty'),
             'id_supplier'    => $this->input->post('supplier'),
             'no_surat_jalan' => $this->input->post('no_surat_jalan'),
             'no_pr'          => $this->input->post('no_pr'),
             'keterangan'     => $this->input->post('keterangan'),
+            'updated'     => date('Y-m-d H:i:s'),
         );
         $this->m_aluminium->updatestokin($obj, $id);
         $this->fungsi->catat($obj, "mengubah Stock In dengan id " . $id . " data sbb:", true);
@@ -440,7 +446,7 @@ class Aluminium extends CI_Controller
         $cekQtyCounter = $this->m_aluminium->getDataCounter($id_item, $id_gudang, $keranjang)->row()->qty;
         $qty_jadi      = (int)$cekQtyCounter - (int)$value;
         $this->m_aluminium->updateDataCounter($id_item, $id_gudang, $keranjang, $qty_jadi);
-        
+
 
         $id_jenis_item = 1;
         $qty_bom       = $this->m_aluminium->getTotQtyBomFppp($id_jenis_item);
@@ -648,7 +654,7 @@ class Aluminium extends CI_Controller
         $this->load->view('wrh/aluminium/v_aluminium_buat_surat_jalan_mf', $data);
     }
 
-    
+
 
     public function list_surat_jalan()
     {
@@ -663,7 +669,7 @@ class Aluminium extends CI_Controller
         $this->load->view('wrh/aluminium/v_aluminium_out_sj_list', $data);
     }
 
-    public function list_surat_jalan_set($tgl_awal,$tgl_akhir)
+    public function list_surat_jalan_set($tgl_awal, $tgl_akhir)
     {
         $this->fungsi->check_previleges('aluminium');
         $id_jenis_item = 1;
@@ -1354,8 +1360,8 @@ class Aluminium extends CI_Controller
             $data['tgl'] = $tgl;
         }
 
-        $year  = date('Y',strtotime($data['tgl']));
-        $month = date('m',strtotime($data['tgl']));
+        $year  = date('Y', strtotime($data['tgl']));
+        $month = date('m', strtotime($data['tgl']));
         $this->db->where('DATE_FORMAT(created,"%Y")', $year);
         $this->db->where('DATE_FORMAT(created,"%m")', $month);
         $this->db->where('awal_bulan', 1);
@@ -1363,8 +1369,8 @@ class Aluminium extends CI_Controller
         $id_awal_bulan = $this->db->get('data_stock')->row()->id;
 
         $data['qty_awal_bulan'] = $this->m_aluminium->getQtyAwalBulan($data['tgl']);
-        $data['qty_masuk'] = $this->m_aluminium->getQtyMasuk($data['tgl'],$id_awal_bulan);
-        $data['qty_keluar'] = $this->m_aluminium->getQtyKeluar($data['tgl'],$id_awal_bulan);
+        $data['qty_masuk'] = $this->m_aluminium->getQtyMasuk($data['tgl'], $id_awal_bulan);
+        $data['qty_keluar'] = $this->m_aluminium->getQtyKeluar($data['tgl'], $id_awal_bulan);
         $data['list_data'] = $this->m_aluminium->getListStockPoint(1);
 
         $this->load->view('wrh/aluminium/v_aluminium_stock_point', $data);
@@ -1381,8 +1387,8 @@ class Aluminium extends CI_Controller
             $data['tgl'] = $tgl;
         }
 
-        $year  = date('Y',strtotime($data['tgl']));
-        $month = date('m',strtotime($data['tgl']));
+        $year  = date('Y', strtotime($data['tgl']));
+        $month = date('m', strtotime($data['tgl']));
         $this->db->where('DATE_FORMAT(created,"%Y")', $year);
         $this->db->where('DATE_FORMAT(created,"%m")', $month);
         $this->db->where('awal_bulan', 1);
@@ -1390,8 +1396,8 @@ class Aluminium extends CI_Controller
         $id_awal_bulan = $this->db->get('data_stock')->row()->id;
 
         $data['qty_awal_bulan'] = $this->m_aluminium->getQtyAwalBulan($data['tgl']);
-        $data['qty_masuk'] = $this->m_aluminium->getQtyMasuk($data['tgl'],$id_awal_bulan);
-        $data['qty_keluar'] = $this->m_aluminium->getQtyKeluar($data['tgl'],$id_awal_bulan);
+        $data['qty_masuk'] = $this->m_aluminium->getQtyMasuk($data['tgl'], $id_awal_bulan);
+        $data['qty_keluar'] = $this->m_aluminium->getQtyKeluar($data['tgl'], $id_awal_bulan);
         $data['list_data'] = $this->m_aluminium->getListStockPoint(1);
 
         $this->load->view('wrh/aluminium/v_aluminium_stock_point_cetak', $data);
@@ -1436,7 +1442,7 @@ class Aluminium extends CI_Controller
         $this->stok_in_wo();
     }
 
-    
+
 
     public function stok_in_wo_edit($id)
     {
@@ -1476,14 +1482,14 @@ class Aluminium extends CI_Controller
             'is_wo'          => 1,
             'no_wo'          => $no_wo,
             'id_item'        => $this->input->post('id_item'),
-            'qty_in'         => $this->input->post('qty'),    
+            'qty_in'         => $this->input->post('qty'),
             'id_gudang'      => $this->input->post('id_gudang'),
             'keranjang'      => str_replace(' ', '', $this->input->post('keranjang')),
             'keterangan'     => $this->input->post('keterangan'),
             'id_penginput'   => from_session('id'),
             'created'        => date('Y-m-d H:i:s'),
         );
-        $this->db->insert('data_stock', $datapost);        
+        $this->db->insert('data_stock', $datapost);
         $data['id'] = $this->db->insert_id();
         $this->fungsi->catat($datapost, "Menyimpan stock in WO Aluminium sbb:", true);
 
@@ -1521,7 +1527,7 @@ class Aluminium extends CI_Controller
         $cekQtyCounter = $this->m_aluminium->getDataCounter($id_item,  $id_gudang, $keranjang)->row()->qty;
         $qty_jadi      = (int)$cekQtyCounter - (int)$qty_in;
         $this->m_aluminium->updateDataCounter($id_item,  $id_gudang, $keranjang, $qty_jadi);
-        
+
         $data = array(
             'id' => $id,
         );

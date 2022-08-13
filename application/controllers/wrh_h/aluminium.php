@@ -212,6 +212,7 @@ class Aluminium extends CI_Controller
         $data['id']       = $id;
         $data['row']      = $this->m_aluminium->getDataStockRow($id)->row();
         $data['supplier'] = $this->db->get('master_supplier');
+        $data['gudang'] = $this->db->get_where('master_gudang', array('id_jenis_item' => 1));
         $this->load->view('wrh_h/aluminium/v_aluminium_edit', $data);
     }
 
@@ -220,6 +221,9 @@ class Aluminium extends CI_Controller
         $this->fungsi->check_previleges('aluminium');
         $id  = $this->input->post('id');
         $obj = array(
+            'id_gudang'    => $this->input->post('id_gudang'),
+            'keranjang'    => $this->input->post('keranjang'),
+            'qty_in'    => $this->input->post('qty'),
             'id_supplier'    => $this->input->post('supplier'),
             'no_surat_jalan' => $this->input->post('no_surat_jalan'),
             'no_pr'          => $this->input->post('no_pr'),

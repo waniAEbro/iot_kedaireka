@@ -61,7 +61,7 @@
                 $beda = 0;
             }
 
-            if ($beda == 1 && $qty_out_proses < 1) {
+            if ($beda == 1) {
                 $this->m_aluminium->updateDataCounter($row->id_item,  $row->id_gudang, $row->keranjang, $total_akhir);
             }
         ?>
@@ -84,9 +84,9 @@
                 <td><?= $total_out ?></td>
                 <td align="center"><?= $qty_out_proses ?></td>
                 <td><?= $row->rata_pemakaian ?></td>
-                <td align="center"><?= $row->qty ?></td>
-                <?php if (from_session('id') == 2) { ?>
                 <td align="center"><?= $total_in_lalu ?>-<?= $total_out_lalu ?> = <?= $total_akhir ?></td>
+                <?php if (from_session('id') == 2) { ?>
+                    <td align="center"><?= $row->qty ?></td>
                 <td align="center"><?= $beda ?></td>
                 <?php } ?>
             </tr>
