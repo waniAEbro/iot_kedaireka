@@ -82,7 +82,11 @@
                                 <td><?= $row->keterangan ?></td>
                                 <td>
                                     <?= button('load_silent("wrh/aluminium/stok_in_edit/' . $row->id . '","#content")', 'Edit', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Edit"'); ?>
-                                    <?php if ($bln == $now) { ?>
+                                    <?php if ($bln == $now && from_session('level') > 1) { ?>
+                                        <?= button_confirm("Apakah anda yakin menghapus Stock ini?", "wrh/aluminium/deleteIn/" . $row->id, "#content", "Hapus", "btn btn-xs btn-danger", "") ?>
+                                    <?php } ?>
+
+                                    <?php if (from_session('level') == 1) { ?>
                                         <?= button_confirm("Apakah anda yakin menghapus Stock ini?", "wrh/aluminium/deleteIn/" . $row->id, "#content", "Hapus", "btn btn-xs btn-danger", "") ?>
                                     <?php } ?>
                                 </td>
