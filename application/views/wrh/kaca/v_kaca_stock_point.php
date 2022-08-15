@@ -50,7 +50,10 @@
                                 <td><?= $row->gudang ?></td>
                                 <td align="center"><?= $row->keranjang ?></td>
                                 <td align="center">
-                                    <?= $qty_total ?>
+                                    Qty: <?= $qty_total ?><br>
+                                    Awal Bulan: <?= $stok_awal_bulan ?><br>
+                                    Tot Masuk: <?= $stok_masuk ?><br>
+                                    Tot Keluar: <?= $stok_keluar ?><br>
                                 </td>
                             </tr>
 
