@@ -85,7 +85,7 @@
                 <td><?= $total_out ?></td>
                 <td align="center"><?= $qty_out_proses ?></td>
                 <td><?= $row->rata_pemakaian ?></td>
-                <td align="center"><?= $total_in_lalu ?>-<?= $total_out_lalu ?> = <?= $total_akhir ?></td>
+                <td align="center"><?= $total_akhir ?></td>
                 <?php if (from_session('id') == 2) { ?>
                     <td align="center"><?= $row->qty ?></td>
                     <td align="center"><?= $beda ?></td>
