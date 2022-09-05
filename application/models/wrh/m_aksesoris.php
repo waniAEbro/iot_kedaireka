@@ -1441,8 +1441,12 @@ class M_aksesoris extends CI_Model
 
     public function getQtyMasuk($tgl,$id)
     {
+        $year  = date('Y',strtotime($tgl));
+        $month = date('m',strtotime($tgl));
+        $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
         $this->db->where('id >', $id);        
-        $this->db->where('aktual <=', $tgl);
+        // $this->db->where('aktual <=', $tgl);
         $this->db->where('awal_bulan', 0);
         $this->db->where('inout', 1);
 
@@ -1462,9 +1466,13 @@ class M_aksesoris extends CI_Model
 
     public function getQtyKeluar($tgl,$id)
     {
-        
+        $year  = date('Y',strtotime($tgl));
+        $month = date('m',strtotime($tgl));
+        $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
+
         $this->db->where('id >', $id);
-        $this->db->where('aktual <=', $tgl);
+        // $this->db->where('aktual <=', $tgl);
         $this->db->where('awal_bulan', 0);
         $this->db->where('inout', 2);
         
