@@ -51,9 +51,8 @@
                                 <td align="center">
                                     <?php
                                     $sesi = from_session('level');
-                                    if ($sesi <= 3) {
-                                        echo button('load_silent("master/aluminium/form/sub/' . $row->id . '","#modal")', 'Edit', 'btn btn-xs btn-info', 'data-toggle="tooltip" title="Edit"');
-                                    }
+                                    
+                                    echo button('load_silent("master/aluminium/form/sub/' . $row->id . '","#modal")', 'Edit', 'btn btn-xs btn-info', 'data-toggle="tooltip" title="Edit"');
                                     if ($sesi <= 2) {
                                         //echo button_confirm("Anda yakin menghapus. " . $row->item_code . "?", "master/aluminium/delete/" . $row->id, "#content", 'delete', 'btn btn-xs btn-danger', 'data-toggle="tooltip" title="delete"');
                                     ?>
