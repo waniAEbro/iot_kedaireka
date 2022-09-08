@@ -218,7 +218,10 @@
                                     echo $row->multi_brand_string;
                                     ?>
                                 </td>
-                                <td><?= $row->no_fppp ?></td>
+                                <td>
+                                    <?= $row->no_fppp ?><br>
+                                    <!-- <a class="btn btn-xs btn-primary" onclick="setTimeline(<?=$row->id?>)">Timeline</a> -->
+                                </td>
                                 <td><?= $row->nama_proyek ?></td>
                                 <td><?= $row->sales ?></td>
                                 <td><?= $row->pic_project ?></td>
@@ -331,6 +334,12 @@
         var param = <?= $param ?>;
         load_silent("klg/fppp/filter/" + param + "/" + tgl_awal + "/" + tgl_akhir + "/", "#content");
 
+    }
+    function setTimeline(id) {
+
+        
+        var url = "<?= site_url('klg/fppp/timeline/"+id+"') ?>";
+        window.open(url, "_blank");
     }
 
     function setCetak() {

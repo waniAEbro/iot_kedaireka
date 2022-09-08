@@ -67,6 +67,12 @@ class Fppp extends CI_Controller
 		$this->load->view('klg/fppp/v_fppp_tab', $data);
 	}
 
+	public function timeline($id)
+	{
+		$data['row']             = $this->m_fppp->getRowFppp($id)->row();
+		$this->load->view('klg/fppp/v_fppp_timeline', $data);
+	}
+
 	public function cetakFppp($param, $tgl_awal, $tgl_akhir)
 	{
 		$this->fungsi->check_previleges('fppp');

@@ -77,10 +77,10 @@
                                 <td><?= $row->no_pr ?></td>
                                 <td><?= $row->keterangan ?></td>
                                 <td>
+                                    <?= button_confirm("Apakah anda yakin menghapus Stock ini?", "wrh/aksesoris/deleteIn/" . $row->id, "#content", "Hapus", "btn btn-xs btn-danger", "") ?>
                                     <?php if ($bln == $now) { ?>
-
                                         <?= button('load_silent("wrh/aksesoris/stok_in_edit/' . $row->id . '","#content")', 'Edit', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Edit"'); ?>
-                                        <?= button_confirm("Apakah anda yakin menghapus Stock ini?", "wrh/aksesoris/deleteIn/" . $row->id, "#content", "Hapus", "btn btn-xs btn-danger", "") ?>
+
                                     <?php } ?>
                                 </td>
 

@@ -26,11 +26,10 @@ class Dashboard extends CI_Controller
 			$object = array(
 				'item_code' => $key->section_ata . '-' . $key->section_allure . '-' . $key->temper . '-' . str_pad($key->kode_warna, 2, '0', STR_PAD_LEFT) . '-' . $key->ukuran,
 			);
-			$this->db->where('id', $key->id);			
+			$this->db->where('id', $key->id);
 			$this->db->update('master_item', $object);
-			
 		}
-		
+
 		echo "berhasil";
 	}
 
@@ -290,7 +289,8 @@ class Dashboard extends CI_Controller
 					'keranjang' => $key->keranjang,
 					'id_jenis_item' => $key->id_jenis_item,
 					'qty_in' => $key->qty,
-					'created' => date('Y-m-d H:i:s')
+					'created' => date('Y-m-d H:i:s'),
+					'aktual' => date('Y-m-d')
 				);
 				$this->db->insert('data_stock', $obj);
 			}
@@ -349,10 +349,10 @@ class Dashboard extends CI_Controller
 		// 	$this->db->update('master_item', $obx);
 		// }
 
-
-
 		$this->load->view('v_dashboard');
 	}
+
+	
 
 	public function cekadaA()
 	{
