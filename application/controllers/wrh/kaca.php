@@ -104,16 +104,15 @@ class kaca extends CI_Controller
         $s_awal_bulan   = $this->m_aksesoris->getStockAwalBulanCetak();
         $s_total_in  = $this->m_aksesoris->getTotalInPerBulanCetak();
         $s_total_out = $this->m_aksesoris->getTotalOutPerBulanCetak();
-        $s_total_in_lalu  = $this->m_aksesoris->getTotalInPerBulanCetakLalu();
-        $s_total_out_lalu = $this->m_aksesoris->getTotalOutPerBulanCetakLalu();
+        
         
         $data_kaca_in = $this->m_aksesoris->getDataDetailTabel($id);
         $arr               = array();
         foreach ($data_kaca_in as $key) {
             $stock_awal_bulan_now = @$s_awal_bulan[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
-            $total_in_lalu = @$s_total_in_lalu[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
-            $total_out_lalu = @$s_total_out_lalu[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
-            $stock_awal_bulan = $stock_awal_bulan_now + $total_in_lalu - $total_out_lalu;
+            // $total_in_lalu = @$s_total_in_lalu[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
+            // $total_out_lalu = @$s_total_out_lalu[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
+            $stock_awal_bulan = $stock_awal_bulan_now;
             
             
             $total_in = @$s_total_in[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];

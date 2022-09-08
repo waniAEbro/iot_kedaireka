@@ -42,10 +42,9 @@
         $i = 1;
         foreach ($lembaran->result() as $row) {
             $stock_awal_bulan_now = @$s_awal_bulan[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
-            $total_in_lalu = @$s_total_in_lalu[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
-            $total_out_lalu = @$s_total_out_lalu[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
-            $stock_awal_bulan = $stock_awal_bulan_now + $total_in_lalu - $total_out_lalu;
-            
+            // $total_in_lalu = @$s_total_in_lalu[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
+            // $total_out_lalu = @$s_total_out_lalu[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
+            $stock_awal_bulan = $stock_awal_bulan_now;
             
             $total_in = @$s_total_in[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
             $total_out = @$s_total_out[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];

@@ -124,17 +124,15 @@ class Aluminium extends CI_Controller
         $s_awal_bulan    = $this->m_aluminium->getStockAwalBulanCetak();
         $s_total_in  = $this->m_aluminium->getTotalInPerBulanCetak();
         $s_total_out = $this->m_aluminium->getTotalOutPerBulanCetak();
-        $s_total_in_lalu  = $this->m_aluminium->getTotalInPerBulanCetakLalu();
-        $s_total_out_lalu = $this->m_aluminium->getTotalOutPerBulanCetakLalu();
 
         $data_aluminium_in = $this->m_aluminium->getDataDetailTabel($id);
         $arr               = array();
         foreach ($data_aluminium_in as $key) {
 
             $stock_awal_bulan_now = @$s_awal_bulan[$key->id_item][$key->id_gudang][$key->keranjang];
-            $total_in_lalu = @$s_total_in_lalu[$key->id_item][$key->id_gudang][$key->keranjang];
-            $total_out_lalu = @$s_total_out_lalu[$key->id_item][$key->id_gudang][$key->keranjang];
-            $stock_awal_bulan = $stock_awal_bulan_now + $total_in_lalu - $total_out_lalu;
+            // $total_in_lalu = @$s_total_in_lalu[$key->id_item][$key->id_gudang][$key->keranjang];
+            // $total_out_lalu = @$s_total_out_lalu[$key->id_item][$key->id_gudang][$key->keranjang];
+            $stock_awal_bulan = $stock_awal_bulan_now;
 
 
             $total_in = @$s_total_in[$key->id_item][$key->id_gudang][$key->keranjang];
