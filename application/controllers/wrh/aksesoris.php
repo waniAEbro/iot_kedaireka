@@ -90,31 +90,46 @@ class aksesoris extends CI_Controller
     {
         $this->fungsi->check_previleges('aksesoris');
         $id = $this->input->post('id');
+        $s_awal_bulan   = $this->m_aksesoris->getStockAwalBulanCetak();
+        $s_total_in  = $this->m_aksesoris->getTotalInPerBulanCetak();
+        $s_total_out = $this->m_aksesoris->getTotalOutPerBulanCetak();
+        $s_total_in_lalu  = $this->m_aksesoris->getTotalInPerBulanCetakLalu();
+        $s_total_out_lalu = $this->m_aksesoris->getTotalOutPerBulanCetakLalu();
 
         $data_aksesoris_in = $this->m_aksesoris->getDataDetailTabel($id);
         $arr               = array();
         foreach ($data_aksesoris_in as $key) {
-            $stok_awal_bulan = $this->m_aksesoris->getAwalBulanDetailTabel($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
+            $stock_awal_bulan_now = @$s_awal_bulan[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
+            $total_in_lalu = @$s_total_in_lalu[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
+            $total_out_lalu = @$s_total_out_lalu[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
+            $stock_awal_bulan = $stock_awal_bulan_now + $total_in_lalu - $total_out_lalu;
+            
+            
+            $total_in = @$s_total_in[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
+            $total_out = @$s_total_out[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
+            $total_akhir = $stock_awal_bulan + $total_in - $total_out;
+
+            // $stok_awal_bulan = $this->m_aksesoris->getAwalBulanDetailTabel($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
             $qtyin           = $this->m_aksesoris->getQtyInDetailTabelMonitoring($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
             $qtyout          = $this->m_aksesoris->getQtyOutDetailTabelMonitoring($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
             $qtyinmutasi          = $this->m_aksesoris->getQtyInDetailTabelMonitoringMutasi($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
             $qtyoutmutasi          = $this->m_aksesoris->getQtyOutDetailTabelMonitoringMutasi($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
            
-                $temp            = array(
-                    "divisi"           => $key->divisi,
-                    "gudang"           => $key->gudang,
-                    "keranjang"        => $key->keranjang,
-                    "stok_awal_bulan"  => $stok_awal_bulan,
-                    "tot_in"           => $qtyin,
-                    "tot_out"          => $qtyout,
-                    "mutasi_in"          => $qtyinmutasi,
-                    "mutasi_out"          => $qtyoutmutasi,
-                    // "stok_akhir_bulan" => $key->qty,
-                    "stok_akhir_bulan" => ($stok_awal_bulan + $qtyin + $qtyinmutasi) - $qtyout - $qtyoutmutasi,
-                    "rata_pemakaian"   => $key->rata_pemakaian,
-                    "min_stock"        => '0',
-                );
-            
+            $temp            = array(
+                "divisi"           => $key->divisi,
+                "gudang"           => $key->gudang,
+                "keranjang"        => $key->keranjang,
+                "stok_awal_bulan"  => $stock_awal_bulan,
+                "tot_in"           => $qtyin,
+                "tot_out"          => $qtyout,
+                "mutasi_in"          => $qtyinmutasi,
+                "mutasi_out"          => $qtyoutmutasi,
+                // "stok_akhir_bulan" => $key->qty,
+                "stok_akhir_bulan" => $total_akhir,
+                "rata_pemakaian"   => $key->rata_pemakaian,
+                "min_stock"        => '0',
+            );
+
 
             // $this->db->where('id_item', $key->id_item);
             // $this->db->where('id_divisi', $key->id_divisi);
@@ -291,6 +306,18 @@ class aksesoris extends CI_Controller
         $cekQtyCounter = $this->m_aksesoris->getDataCounter($getRow->id_item, $getRow->id_divisi, $getRow->id_gudang, $getRow->keranjang)->row()->qty;
         $qty_jadi      = (int)$cekQtyCounter - (int)$getRow->qty_in;
         $this->m_aksesoris->updateDataCounter($getRow->id_item, $getRow->id_divisi, $getRow->id_gudang, $getRow->keranjang, $qty_jadi);
+
+        $dt = array('qty_in' => 0);
+        $this->db->where('id', $id);
+        $this->db->update('data_stock', $dt);
+
+
+        $row = $this->db->get_where('data_stock', array('id' => $id))->row();
+        $tgl_aktual = $row->aktual;
+        $month = date('m', strtotime($tgl_aktual));
+        if ($month != date('m')) {
+            $this->penyesuain_stok($id);
+        }
         sleep(1);
         $data = array(
             'id' => $id,
@@ -302,6 +329,83 @@ class aksesoris extends CI_Controller
         $this->fungsi->catat($data, "Menghapus Stock In aksesoris dengan data sbb:", true);
         $this->fungsi->run_js('load_silent("wrh/aksesoris/stok_in","#content")');
         $this->fungsi->message_box("Menghapus Stock In aksesoris", "success");
+    }
+
+    public function penyesuain_stok($id)
+    {
+        $row = $this->db->get_where('data_stock', array('id' => $id))->row();
+        $tgl_aktual = $row->aktual;
+        $awal_tgl_aktual_depan = date('Y-m-' . '01', strtotime('+1 month', strtotime($tgl_aktual)));
+        // $akhir_tgl_tgl_aktual_depan = date('Y-m-' . '28', strtotime($awal_tgl_aktual_depan));
+
+        $year  = date('Y', strtotime($tgl_aktual));
+        $month = date('m', strtotime($tgl_aktual));
+        $year_depan  = date('Y', strtotime($awal_tgl_aktual_depan));
+        $month_depan = date('m', strtotime($awal_tgl_aktual_depan));
+
+        $this->db->select('sum(qty_in)-sum(qty_out) as total');
+        $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
+        $this->db->where('id_item', $row->id_item);
+        $this->db->where('id_divisi', $row->id_divisi);
+        $this->db->where('id_gudang', $row->id_gudang);
+        $this->db->where('keranjang', $row->keranjang);
+        $this->db->where('awal_bulan', 0);
+        $qty_transaksi = $this->db->get('data_stock')->row()->total;
+
+
+        $this->db->select('qty_in as total');
+        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(created,"%m")', $month);
+        $this->db->where('id_item', $row->id_item);
+        $this->db->where('id_divisi', $row->id_divisi);
+        $this->db->where('id_gudang', $row->id_gudang);
+        $this->db->where('keranjang', $row->keranjang);
+        $this->db->where('awal_bulan', 1);
+        $qty_awal_bulan = $this->db->get('data_stock')->row()->total;
+
+        // echo $qty_transaksi . '-' . $qty_awal_bulan;
+        // die();
+
+        $qty_total = $qty_awal_bulan + $qty_transaksi;
+
+        $this->db->where('DATE_FORMAT(created,"%Y")', $year_depan);
+        $this->db->where('DATE_FORMAT(created,"%m")', $month_depan);
+        $this->db->where('awal_bulan', 1);
+        $this->db->where('id_item', $row->id_item);
+        $this->db->where('id_divisi', $row->id_divisi);
+        $this->db->where('id_gudang', $row->id_gudang);
+        $this->db->where('keranjang', $row->keranjang);
+        $cek_awal_bulan_depan = $this->db->get('data_stock')->num_rows();
+
+        if ($cek_awal_bulan_depan > 0) {
+            $obj = array(
+                'qty_in'    => $qty_total,
+                'updated'     => date('Y-m-d H:i:s'),
+            );
+            $this->db->where('awal_bulan', 1);
+            $this->db->where('id_item', $row->id_item);
+            $this->db->where('id_divisi', $row->id_divisi);
+            $this->db->where('id_gudang', $row->id_gudang);
+            $this->db->where('keranjang', $row->keranjang);
+            $this->db->where('DATE_FORMAT(created,"%Y")', $year_depan);
+            $this->db->where('DATE_FORMAT(created,"%m")', $month_depan);
+            $this->db->update('data_stock', $obj);
+        } else {
+            $obj2 = array(
+                'awal_bulan' => 1,
+                'inout' => 1,
+                'id_jenis_item' => 1,
+                'id_item'    => $row->id_item,
+                'id_divisi'    => $row->id_divisi,
+                'id_gudang'    => $row->id_gudang,
+                'keranjang'    => $row->keranjang,
+                'qty_in'    => $qty_total,
+                'created'     => date('Y-m-d H:i:s'),
+                'aktual'     => $tgl_aktual,
+            );
+            $this->db->insert('data_stock', $obj2);
+        }
     }
 
     public function deleteItemIn()
@@ -1315,8 +1419,8 @@ class aksesoris extends CI_Controller
             $data['tgl'] = $tgl;
         }
 
-        $year  = date('Y',strtotime($data['tgl']));
-        $month = date('m',strtotime($data['tgl']));
+        $year  = date('Y', strtotime($data['tgl']));
+        $month = date('m', strtotime($data['tgl']));
         $this->db->where('DATE_FORMAT(created,"%Y")', $year);
         $this->db->where('DATE_FORMAT(created,"%m")', $month);
         $this->db->where('awal_bulan', 1);
@@ -1324,8 +1428,8 @@ class aksesoris extends CI_Controller
         $id_awal_bulan = $this->db->get('data_stock')->row()->id;
 
         $data['qty_awal_bulan'] = $this->m_aksesoris->getQtyAwalBulan($data['tgl']);
-        $data['qty_masuk'] = $this->m_aksesoris->getQtyMasuk($data['tgl'],$id_awal_bulan);
-        $data['qty_keluar'] = $this->m_aksesoris->getQtyKeluar($data['tgl'],$id_awal_bulan);
+        $data['qty_masuk'] = $this->m_aksesoris->getQtyMasuk($data['tgl'], $id_awal_bulan);
+        $data['qty_keluar'] = $this->m_aksesoris->getQtyKeluar($data['tgl'], $id_awal_bulan);
         $data['list_data'] = $this->m_aksesoris->getListStockPoint(2);
 
         $this->load->view('wrh/aksesoris/v_aksesoris_stock_point', $data);
@@ -1342,8 +1446,8 @@ class aksesoris extends CI_Controller
             $data['tgl'] = $tgl;
         }
 
-        $year  = date('Y',strtotime($data['tgl']));
-        $month = date('m',strtotime($data['tgl']));
+        $year  = date('Y', strtotime($data['tgl']));
+        $month = date('m', strtotime($data['tgl']));
         $this->db->where('DATE_FORMAT(created,"%Y")', $year);
         $this->db->where('DATE_FORMAT(created,"%m")', $month);
         $this->db->where('awal_bulan', 1);
@@ -1351,8 +1455,8 @@ class aksesoris extends CI_Controller
         $id_awal_bulan = $this->db->get('data_stock')->row()->id;
 
         $data['qty_awal_bulan'] = $this->m_aksesoris->getQtyAwalBulan($data['tgl']);
-        $data['qty_masuk'] = $this->m_aksesoris->getQtyMasuk($data['tgl'],$id_awal_bulan);
-        $data['qty_keluar'] = $this->m_aksesoris->getQtyKeluar($data['tgl'],$id_awal_bulan);
+        $data['qty_masuk'] = $this->m_aksesoris->getQtyMasuk($data['tgl'], $id_awal_bulan);
+        $data['qty_keluar'] = $this->m_aksesoris->getQtyKeluar($data['tgl'], $id_awal_bulan);
         $data['list_data'] = $this->m_aksesoris->getListStockPoint(2);
 
         $this->load->view('wrh/aksesoris/v_aksesoris_stock_point_cetak', $data);

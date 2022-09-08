@@ -121,10 +121,28 @@ class Aluminium extends CI_Controller
     {
         $this->fungsi->check_previleges('aluminium');
         $id                = $this->input->post('id');
+        $s_awal_bulan    = $this->m_aluminium->getStockAwalBulanCetak();
+        $s_total_in  = $this->m_aluminium->getTotalInPerBulanCetak();
+        $s_total_out = $this->m_aluminium->getTotalOutPerBulanCetak();
+        $s_total_in_lalu  = $this->m_aluminium->getTotalInPerBulanCetakLalu();
+        $s_total_out_lalu = $this->m_aluminium->getTotalOutPerBulanCetakLalu();
+
         $data_aluminium_in = $this->m_aluminium->getDataDetailTabel($id);
         $arr               = array();
         foreach ($data_aluminium_in as $key) {
-            $stok_awal_bulan = $this->m_aluminium->getAwalBulanDetailTabel($key->id_item, $key->id_gudang, $key->keranjang);
+
+            $stock_awal_bulan_now = @$s_awal_bulan[$key->id_item][$key->id_gudang][$key->keranjang];
+            $total_in_lalu = @$s_total_in_lalu[$key->id_item][$key->id_gudang][$key->keranjang];
+            $total_out_lalu = @$s_total_out_lalu[$key->id_item][$key->id_gudang][$key->keranjang];
+            $stock_awal_bulan = $stock_awal_bulan_now + $total_in_lalu - $total_out_lalu;
+
+
+            $total_in = @$s_total_in[$key->id_item][$key->id_gudang][$key->keranjang];
+            $total_out = @$s_total_out[$key->id_item][$key->id_gudang][$key->keranjang];
+            
+            $total_akhir = $stock_awal_bulan + $total_in - $total_out;
+
+            // $stok_awal_bulan = $this->m_aluminium->getAwalBulanDetailTabel($key->id_item, $key->id_gudang, $key->keranjang);
             $qtyin           = $this->m_aluminium->getQtyInDetailTabelMonitoring($key->id_item, $key->id_gudang, $key->keranjang);
             $qtyout          = $this->m_aluminium->getQtyOutDetailTabelMonitoring($key->id_item, $key->id_gudang, $key->keranjang);
             $qtyinmutasi          = $this->m_aluminium->getQtyInDetailTabelMonitoringMutasi($key->id_item, $key->id_gudang, $key->keranjang);
@@ -134,13 +152,13 @@ class Aluminium extends CI_Controller
                 "divisi"           => $key->divisi,
                 "gudang"           => $key->gudang,
                 "keranjang"        => $key->keranjang,
-                "stok_awal_bulan"  => $stok_awal_bulan,
+                "stok_awal_bulan"  => $stock_awal_bulan,
                 "tot_in"           => $qtyin,
                 "tot_out"          => $qtyout,
                 "mutasi_in"          => $qtyinmutasi,
                 "mutasi_out"          => $qtyoutmutasi,
                 // "stok_akhir_bulan" => $key->qty,
-                "stok_akhir_bulan" => ($stok_awal_bulan + $qtyin + $qtyinmutasi) - $qtyout - $qtyoutmutasi,
+                "stok_akhir_bulan" => $total_akhir,
                 "rata_pemakaian"   => '0',
                 "min_stock"        => '0',
             );
@@ -234,7 +252,71 @@ class Aluminium extends CI_Controller
         $this->m_aluminium->updatestokin($obj, $id);
         $this->fungsi->catat($obj, "mengubah Stock In dengan id " . $id . " data sbb:", true);
         $respon = ['msg' => 'Data Berhasil Diubah'];
+
+        // $row = $this->db->get_where('data_stock', array('id' => $id))->row();
+        // $tgl_aktual = $row->aktual;
+        // $month = date('m', strtotime($tgl_aktual));
+        // if ($month != date('m')) {
+        //     $this->penyesuain_stok($id);
+        // }
         echo json_encode($respon);
+    }
+
+    public function penyesuain_stok($id)
+    {
+        $row = $this->db->get_where('data_stock', array('id' => $id))->row();
+        $tgl_aktual = $row->aktual;
+        $awal_tgl_aktual_depan = date('Y-m-' . '01', strtotime('+1 month', strtotime($tgl_aktual)));
+        $akhir_tgl_tgl_aktual_depan = date('Y-m-' . '28', strtotime($awal_tgl_aktual_depan));
+
+        $year  = date('Y', strtotime($tgl_aktual));
+        $month = date('m', strtotime($tgl_aktual));
+        $year_depan  = date('Y', strtotime($awal_tgl_aktual_depan));
+        $month_depan = date('m', strtotime($awal_tgl_aktual_depan));
+
+        $this->db->select('sum(qty_in)-sum(qty_out) as total');
+        $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
+        $this->db->where('id_item', $row->id_item);
+        $this->db->where('id_gudang', $row->id_gudang);
+        $this->db->where('keranjang', $row->keranjang);
+        $qty_total = $this->db->get('data_stock')->row()->total;
+
+        $this->db->where('DATE_FORMAT(created,"%Y")', $year_depan);
+        $this->db->where('DATE_FORMAT(created,"%m")', $month_depan);
+        $this->db->where('awal_bulan', 1);
+        $this->db->where('id_item', $row->id_item);
+        $this->db->where('id_gudang', $row->id_gudang);
+        $this->db->where('keranjang', $row->keranjang);
+        $cek_awal_bulan_depan = $this->db->get('data_stock')->num_rows();
+
+        if ($cek_awal_bulan_depan > 0) {
+            $obj = array(
+                'id_item'    => $row->id_item,
+                'id_gudang'    => $row->id_gudang,
+                'keranjang'    => $row->keranjang,
+                'qty_in'    => $qty_total,
+                'updated'     => date('Y-m-d H:i:s'),
+            );
+            $this->db->where('awal_bulan', 1);
+            $this->db->where('id_item', $row->id_item);
+            $this->db->where('id_gudang', $row->id_gudang);
+            $this->db->where('keranjang', $row->keranjang);
+            $this->db->update('data_stock', $obj);
+        } else {
+            $obj2 = array(
+                'awal_bulan' => 1,
+                'inout' => 1,
+                'id_jenis_item' => 1,
+                'id_item'    => $row->id_item,
+                'id_gudang'    => $row->id_gudang,
+                'keranjang'    => $row->keranjang,
+                'qty_in'    => $qty_total,
+                'created'     => date('Y-m-d H:i:s'),
+                'aktual'     => $tgl_aktual,
+            );
+            $this->db->insert('data_stock', $obj2);
+        }
     }
 
     public function savestokin()

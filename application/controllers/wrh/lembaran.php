@@ -91,27 +91,42 @@ class lembaran extends CI_Controller
     {
 
         $id = $this->input->post('id');
+        $s_awal_bulan   = $this->m_aksesoris->getStockAwalBulanCetak();
+        $s_total_in  = $this->m_aksesoris->getTotalInPerBulanCetak();
+        $s_total_out = $this->m_aksesoris->getTotalOutPerBulanCetak();
+        $s_total_in_lalu  = $this->m_aksesoris->getTotalInPerBulanCetakLalu();
+        $s_total_out_lalu = $this->m_aksesoris->getTotalOutPerBulanCetakLalu();
 
         $data_lembaran_in = $this->m_lembaran->getDataDetailTabel($id);
         $arr               = array();
         foreach ($data_lembaran_in as $key) {
-            $stok_awal_bulan = $this->m_lembaran->getAwalBulanDetailTabel($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
-            $qtyin           = $this->m_lembaran->getQtyInDetailTabelMonitoring($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
-            $qtyout          = $this->m_lembaran->getQtyOutDetailTabelMonitoring($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
-            $qtyinmutasi          = $this->m_lembaran->getQtyInDetailTabelMonitoringMutasi($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
-            $qtyoutmutasi          = $this->m_lembaran->getQtyOutDetailTabelMonitoringMutasi($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
+            $stock_awal_bulan_now = @$s_awal_bulan[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
+            $total_in_lalu = @$s_total_in_lalu[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
+            $total_out_lalu = @$s_total_out_lalu[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
+            $stock_awal_bulan = $stock_awal_bulan_now + $total_in_lalu - $total_out_lalu;
             
+            
+            $total_in = @$s_total_in[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
+            $total_out = @$s_total_out[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
+            $total_akhir = $stock_awal_bulan + $total_in - $total_out;
+
+            // $stok_awal_bulan = $this->m_aksesoris->getAwalBulanDetailTabel($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
+            $qtyin           = $this->m_aksesoris->getQtyInDetailTabelMonitoring($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
+            $qtyout          = $this->m_aksesoris->getQtyOutDetailTabelMonitoring($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
+            $qtyinmutasi          = $this->m_aksesoris->getQtyInDetailTabelMonitoringMutasi($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
+            $qtyoutmutasi          = $this->m_aksesoris->getQtyOutDetailTabelMonitoringMutasi($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
+           
                 $temp            = array(
                     "divisi"           => $key->divisi,
                     "gudang"           => $key->gudang,
                     "keranjang"        => $key->keranjang,
-                    "stok_awal_bulan"  => $stok_awal_bulan,
+                    "stok_awal_bulan"  => $stock_awal_bulan,
                     "tot_in"           => $qtyin,
                     "tot_out"          => $qtyout,
                     "mutasi_in"          => $qtyinmutasi,
                     "mutasi_out"          => $qtyoutmutasi,
                     // "stok_akhir_bulan" => $key->qty,
-                    "stok_akhir_bulan" => ($stok_awal_bulan + $qtyin + $qtyinmutasi) - $qtyout - $qtyoutmutasi,
+                    "stok_akhir_bulan" => $total_akhir,
                     "rata_pemakaian"   => $key->rata_pemakaian,
                     "min_stock"        => '0',
                 );
