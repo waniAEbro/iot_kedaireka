@@ -233,10 +233,82 @@ class kaca extends CI_Controller
             'no_pr'          => $this->input->post('no_pr'),
             'keterangan'     => $this->input->post('keterangan'),
         );
+
         $this->m_kaca->updatestokin($obj, $id);
         $this->fungsi->catat($obj, "mengubah Stock In dengan id " . $id . " data sbb:", true);
         $respon = ['msg' => 'Data Berhasil Diubah'];
         echo json_encode($respon);
+    }
+
+    public function penyesuain_stok($id)
+    {
+        $row        = $this->db->get_where('data_stock', array('id' => $id))->row();
+        $tgl_aktual = $row->aktual;
+        $month      = date('m', strtotime($tgl_aktual));
+        if ($month != date('m')) {
+            // $this->penyesuain_stok($id);
+            // }
+
+            // $row = $this->db->get_where('data_stock', array('id' => $id))->row();
+            // $tgl_aktual = $row->aktual;
+            $awal_tgl_aktual_depan = date('Y-m-d');
+
+            $year        = date('Y', strtotime($tgl_aktual));
+            $month       = date('m', strtotime($tgl_aktual));
+            $year_depan  = date('Y', strtotime($awal_tgl_aktual_depan));
+            $month_depan = date('m', strtotime($awal_tgl_aktual_depan));
+
+            $this->db->select('sum(qty_in)-sum(qty_out) as total');
+            $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
+            $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
+            $this->db->where('id_item', $row->id_item);
+            $this->db->where('id_divisi', $row->id_divisi);
+            $this->db->where('id_gudang', $row->id_gudang);
+            $this->db->where('keranjang', $row->keranjang);
+            $qty_total = $this->db->get('ata_stock')->row()->total;
+
+            $this->db->where('DATE_FORMAT(created,"%Y")', $year_depan);
+            $this->db->where('DATE_FORMAT(created,"%m")', $month_depan);
+            $this->db->where('awal_bulan', 1);
+            $this->db->where('id_item', $row->id_item);
+            $this->db->where('id_divisi', $row->id_divisi);
+            $this->db->where('id_gudang', $row->id_gudang);
+            $this->db->where('keranjang', $row->keranjang);
+            $cek_awal_bulan_depan = $this->db->get('data_stock')->num_rows();
+
+            if ($cek_awal_bulan_depan > 0) {
+                $obj = array(
+                    'id_item'   => $row->id_item,
+                    'id_divisi' => $row->id_divisi,
+                    'id_gudang' => $row->id_gudang,
+                    'keranjang' => $row->keranjang,
+                    'qty_in'    => $qty_total,
+                    'updated'   => date('Y-m-d H:i:s'),
+                );
+                $this->db->where('awal_bulan', 1);
+                $this->db->where('id_item', $row->id_item);
+                $this->db->where('id_divisi', $row->id_divisi);
+                $this->db->where('id_gudang', $row->id_gudang);
+                $this->db->where('keranjang', $row->keranjang);
+                $this->db->where('DATE_FORMAT(created,"%Y")', $year_depan);
+                $this->db->where('DATE_FORMAT(created,"%m")', $month_depan);
+                $this->db->update('data_stock', $obj);
+            } else {
+                $obj2 = array(
+                    'awal_bulan'    => 1,
+                    'inout'         => 1,
+                    'id_jenis_item' => 1,
+                    'id_item'       => $row->id_item,
+                    'id_divisi'       => $row->id_divisi,
+                    'id_gudang' => $row->id_gudang,
+                    'keranjang' => $row->keranjang,
+                    'qty_in'    => $qty_total,
+                    'created'   => date('Y-m-d H:i:s'),
+                    'aktual'    => $tgl_aktual,
+                );
+                $this->db->insert('data_stock', $obj2);
+            }
+        }
     }
 
     public function savestokin()
@@ -277,6 +349,7 @@ class kaca extends CI_Controller
         );
         $this->m_kaca->insertstokin($datapost);
         $data['id'] = $this->db->insert_id();
+        $this->penyesuain_stok($data['id']);
         $this->fungsi->catat($datapost, "Menyimpan detail kaca id " . $data['id'] . " sbb:", true);
         $cekDataCounter = $this->m_kaca->getDataCounter($datapost['id_item'], $datapost['id_divisi'], $datapost['id_gudang'], $datapost['keranjang'])->num_rows();
         if ($cekDataCounter == 0) {
@@ -396,9 +469,11 @@ class kaca extends CI_Controller
         $this->db->where('id', $id);
         $this->db->delete('data_stock');
 
-        $this->db->where('awal_bulan', 1);
-        $this->db->where('id_seselan', $id);
-        $this->db->delete('data_stock');
+        // $this->db->where('awal_bulan', 1);
+        // $this->db->where('id_seselan', $id);
+        // $this->db->delete('data_stock');
+
+        $this->penyesuain_stok($id);
 
 
 
@@ -423,9 +498,11 @@ class kaca extends CI_Controller
         $this->db->where('id', $id);
         $this->db->delete('data_stock');
 
-        $this->db->where('awal_bulan', 1);
-        $this->db->where('id_seselan', $id);
-        $this->db->delete('data_stock');
+        $this->penyesuain_stok($id);
+
+        // $this->db->where('awal_bulan', 1);
+        // $this->db->where('id_seselan', $id);
+        // $this->db->delete('data_stock');
 
         $this->fungsi->catat($data, "Menghapus Stock In kaca dengan data sbb:", true);
         $respon = ['msg' => 'Data Berhasil Dihapus'];
@@ -1151,6 +1228,7 @@ class kaca extends CI_Controller
             );
             $this->db->insert('data_stock', $datapost);
             $data['id']          = $this->db->insert_id();
+            $this->penyesuain_stok($data['id']);
             $cekQtyCounter = $this->m_kaca->getDataCounter($id_item, $id_divisi, $id_gudang, $keranjang)->row()->qty;
             $qty_jadi      = (int)$cekQtyCounter - (int)$qty_out;
             $this->m_kaca->updateDataCounter($id_item, $id_divisi, $id_gudang, $keranjang, $qty_jadi);
@@ -1188,6 +1266,7 @@ class kaca extends CI_Controller
         // $this->m_kaca->updateDataCounter($id_item, $id_divisi, $id_gudang, $keranjang, $data['qty_gudang']);
 
         $data = array('id' => $id,);
+        $this->penyesuain_stok($id);
         $this->fungsi->catat($data, "Menghapus BON manual Detail dengan data sbb:", true);
         $respon = ['msg' => 'Data Berhasil Dihapus'];
         echo json_encode($respon);
@@ -1347,6 +1426,8 @@ class kaca extends CI_Controller
             'aktual'       => $tgl_aktual,
         );
         $this->m_kaca->insertstokin($datapost_out);
+        $data['id']          = $this->db->insert_id();
+        $this->penyesuain_stok($data['id']);
         $this->fungsi->catat($datapost_out, "Mutasi OUT sbb:", true);
         $data['qty_gudang'] = $qty - $qty2;
         $this->m_kaca->updateDataCounter($id_item, $id_divisi, $id_gudang, $keranjang, $data['qty_gudang']);
@@ -1367,6 +1448,8 @@ class kaca extends CI_Controller
             'aktual'       => $tgl_aktual,
         );
         $this->m_kaca->insertstokin($datapost_in);
+        $data['id']          = $this->db->insert_id();
+        $this->penyesuain_stok($data['id']);
         $this->fungsi->catat($datapost_in, "Mutasi IN sbb:", true);
 
         $cekDataCounter = $this->m_kaca->getDataCounter($datapost_in['id_item'], $datapost_in['id_divisi'], $datapost_in['id_gudang'], $datapost_in['keranjang'])->num_rows();
