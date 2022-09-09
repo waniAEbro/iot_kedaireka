@@ -39,7 +39,7 @@ class Cron extends CI_Controller
         // $this->db->where("aktual BETWEEN '".$tgl_awal."' and '".$tgl_akhir."'");
         $this->db->group_by('id_item, id_divisi,id_gudang,keranjang');
         $gg = $this->db->get('data_stock')->result();
-        
+
 
         foreach ($gg as $key) {
             $this->db->where('id_item', $key->id_item);
@@ -53,29 +53,81 @@ class Cron extends CI_Controller
             $this->db->update('data_stock', $object);
         }
 
-        echo "berhasil <br> menghitung transaksi bulan ".$bulan_skrg." tahun ".$year."<br> mengupdate awal bulan ".$bulan_depan." tahun ".$year;
+        echo "berhasil <br> menghitung transaksi bulan " . $bulan_skrg . " tahun " . $year . "<br> mengupdate awal bulan " . $bulan_depan . " tahun " . $year;
     }
 
-    public function gas_alu($year, $bulan_skrg, $bulan_depan)
+    public function gas_alu($year_, $bulan_skrg, $bulan_depan,$tgl_aktual_bulan_depan)
     {
 
         $this->db->select('id_item,id_gudang,keranjang, sum(qty_in)-sum(qty_out) as total');
         $this->db->where('id_jenis_item', 1);
-        $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(aktual,"%Y")', $year_);
         $this->db->where('DATE_FORMAT(aktual,"%m")', $bulan_skrg);
         $this->db->group_by('id_item,id_gudang,keranjang');
         $gg = $this->db->get('data_stock')->result();
+
+        $awal_tgl_aktual_depan = $tgl_aktual_bulan_depan;
+        $year        = $year_;
+        $month       = $bulan_skrg;
+        $year_depan  = $year_;
+        $month_depan = $bulan_depan;
         foreach ($gg as $key) {
+            $this->db->select('sum(qty_in)-sum(qty_out) as total');
+            $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
+            $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
             $this->db->where('id_item', $key->id_item);
             $this->db->where('id_gudang', $key->id_gudang);
             $this->db->where('keranjang', $key->keranjang);
+            $qty_total = $this->db->get('data_stock')->row()->total;
+
+            $this->db->where('DATE_FORMAT(created,"%Y")', $year_depan);
+            $this->db->where('DATE_FORMAT(created,"%m")', $month_depan);
             $this->db->where('awal_bulan', 1);
-            $this->db->where('DATE_FORMAT(created,"%Y")', $year);
-            $this->db->where('DATE_FORMAT(created,"%m")', $bulan_depan);
-            $object = array('qty_in' => $key->total);
-            $this->db->update('data_stock', $object);
+            $this->db->where('id_item', $key->id_item);
+            $this->db->where('id_gudang', $key->id_gudang);
+            $this->db->where('keranjang', $key->keranjang);
+            $cek_awal_bulan_depan = $this->db->get('data_stock')->num_rows();
+
+            if ($cek_awal_bulan_depan > 0) {
+                $obj = array(
+                    'id_item'   => $key->id_item,
+                    'id_gudang' => $key->id_gudang,
+                    'keranjang' => $key->keranjang,
+                    'qty_in'    => $qty_total,
+                    'updated'   => date('Y-m-d H:i:s'),
+                );
+                $this->db->where('awal_bulan', 1);
+                $this->db->where('id_item', $key->id_item);
+                $this->db->where('id_gudang', $key->id_gudang);
+                $this->db->where('keranjang', $key->keranjang);
+                $this->db->where('DATE_FORMAT(created,"%Y")', $year_depan);
+                $this->db->where('DATE_FORMAT(created,"%m")', $month_depan);
+                $this->db->update('data_stock', $obj);
+            } else {
+                $obj2 = array(
+                    'awal_bulan'    => 1,
+                    'inout'         => 1,
+                    'id_jenis_item' => 1,
+                    'id_item'       => $key->id_item,
+                    'id_gudang' => $key->id_gudang,
+                    'keranjang' => $key->keranjang,
+                    'qty_in'    => $qty_total,
+                    'created'   => $awal_tgl_aktual_depan,
+                    'aktual'    => $awal_tgl_aktual_depan,
+                );
+                $this->db->insert('data_stock', $obj2);
+            }
+
+            // $this->db->where('id_item', $key->id_item);
+            // $this->db->where('id_gudang', $key->id_gudang);
+            // $this->db->where('keranjang', $key->keranjang);
+            // $this->db->where('awal_bulan', 1);
+            // $this->db->where('DATE_FORMAT(created,"%Y")', $year);
+            // $this->db->where('DATE_FORMAT(created,"%m")', $bulan_depan);
+            // $object = array('qty_in' => $key->total);
+            // $this->db->update('data_stock', $object);
         }
 
-        echo "berhasil <br> menghitung transaksi bulan ".$bulan_skrg." tahun ".$year."<br> mengupdate awal bulan ".$bulan_depan." tahun ".$year;
+        echo "berhasil <br> menghitung transaksi bulan " . $bulan_skrg . " tahun " . $year . "<br> mengupdate awal bulan " . $bulan_depan . " tahun " . $year;
     }
 }
