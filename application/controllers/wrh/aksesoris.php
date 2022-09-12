@@ -101,8 +101,8 @@ class aksesoris extends CI_Controller
             // $total_in_lalu = @$s_total_in_lalu[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
             // $total_out_lalu = @$s_total_out_lalu[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
             $stock_awal_bulan = $stock_awal_bulan_now;
-            
-            
+
+
             $total_in = @$s_total_in[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
             $total_out = @$s_total_out[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
             $total_akhir = $stock_awal_bulan + $total_in - $total_out;
@@ -112,7 +112,7 @@ class aksesoris extends CI_Controller
             $qtyout          = $this->m_aksesoris->getQtyOutDetailTabelMonitoring($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
             $qtyinmutasi          = $this->m_aksesoris->getQtyInDetailTabelMonitoringMutasi($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
             $qtyoutmutasi          = $this->m_aksesoris->getQtyOutDetailTabelMonitoringMutasi($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
-           
+
             $temp            = array(
                 "divisi"           => $key->divisi,
                 "gudang"           => $key->gudang,
@@ -217,10 +217,15 @@ class aksesoris extends CI_Controller
         echo json_encode($respon);
     }
 
-    public function penyesuain_stok($id)
+    public function penyesuain_stok($id, $is_delete = '')
     {
         $row        = $this->db->get_where('data_stock', array('id' => $id))->row();
         $tgl_aktual = $row->aktual;
+        if ($is_delete == 1) {
+            $this->db->where('id', $id);
+            $this->db->delete('data_stock');
+        }
+
         $month      = date('m', strtotime($tgl_aktual));
         if ($month != date('m')) {
             // $this->penyesuain_stok($id);
@@ -242,7 +247,7 @@ class aksesoris extends CI_Controller
             $this->db->where('id_divisi', $row->id_divisi);
             $this->db->where('id_gudang', $row->id_gudang);
             $this->db->where('keranjang', $row->keranjang);
-            $qty_total = $this->db->get('ata_stock')->row()->total;
+            $qty_total = $this->db->get('data_stock')->row()->total;
 
             $this->db->where('DATE_FORMAT(created,"%Y")', $year_depan);
             $this->db->where('DATE_FORMAT(created,"%m")', $month_depan);
@@ -394,17 +399,14 @@ class aksesoris extends CI_Controller
             'id' => $id,
             'qty_dihapus' => $getRow->qty_in,
         );
-        $this->db->where('id', $id);
-        $this->db->delete('data_stock');
-
-        $this->penyesuain_stok($id);
+        $this->penyesuain_stok($id,1);
 
         $this->fungsi->catat($data, "Menghapus Stock In aksesoris dengan data sbb:", true);
         $this->fungsi->run_js('load_silent("wrh/aksesoris/stok_in","#content")');
         $this->fungsi->message_box("Menghapus Stock In aksesoris", "success");
     }
 
-    
+
 
     public function deleteItemIn()
     {
@@ -419,10 +421,7 @@ class aksesoris extends CI_Controller
             'id' => $id,
             'qty_dihapus' => $getRow->qty_in,
         );
-        $this->db->where('id', $id);
-        $this->db->delete('data_stock');
-
-        $this->penyesuain_stok($id);
+        $this->penyesuain_stok($id,1);
 
         $this->fungsi->catat($data, "Menghapus Stock In aksesoris dengan data sbb:", true);
         $respon = ['msg' => 'Data Berhasil Dihapus'];

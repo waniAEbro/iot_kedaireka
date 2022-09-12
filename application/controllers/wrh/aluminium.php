@@ -256,10 +256,14 @@ class Aluminium extends CI_Controller
         echo json_encode($respon);
     }
 
-    public function penyesuain_stok($id)
+    public function penyesuain_stok($id, $is_delete = '')
     {
         $row        = $this->db->get_where('data_stock', array('id' => $id))->row();
         $tgl_aktual = $row->aktual;
+        if ($is_delete == 1) {
+            $this->db->where('id', $id);
+            $this->db->delete('data_stock');
+        }
         $month      = date('m', strtotime($tgl_aktual));
         if ($month != date('m')) {
             // $this->penyesuain_stok($id);
@@ -402,10 +406,7 @@ class Aluminium extends CI_Controller
             'id'          => $id,
             'qty_dihapus' => $getRow->qty_in,
         );
-        $this->db->where('id', $id);
-        $this->db->delete('data_stock');
-
-        $this->penyesuain_stok($id);
+        $this->penyesuain_stok($id,1);
 
         $this->fungsi->catat($data, "Menghapus Stock In Aluminium dengan data sbb:", true);
         $this->fungsi->run_js('load_silent("wrh/aluminium/stok_in","#content")');
@@ -426,10 +427,7 @@ class Aluminium extends CI_Controller
             'id'          => $id,
             'qty_dihapus' => $getRow->qty_in,
         );
-        $this->db->where('id', $id);
-        $this->db->delete('data_stock');
-
-        $this->penyesuain_stok($id);
+        $this->penyesuain_stok($id,1);
 
         $this->fungsi->catat($data, "Menghapus Stock In Aluminium dengan data sbb:", true);
         $respon = ['msg' => 'Data Berhasil Dihapus'];
@@ -1242,9 +1240,9 @@ class Aluminium extends CI_Controller
         $qty_jadi      = (int)$cekQtyCounter + (int)$qty_out;
         $this->m_aluminium->updateDataCounter($id_item,  $id_gudang, $keranjang, $qty_jadi);
         sleep(1);
-        $this->m_aluminium->deleteItemBonManual($id);
+        // $this->m_aluminium->deleteItemBonManual($id);
         $data = array('id' => $id,);
-        $this->penyesuain_stok($id);
+        $this->penyesuain_stok($id,1);
         $this->fungsi->catat($data, "Menghapus BON manual Detail dengan data sbb:", true);
         $respon = ['msg' => 'Data Berhasil Dihapus'];
         echo json_encode($respon);

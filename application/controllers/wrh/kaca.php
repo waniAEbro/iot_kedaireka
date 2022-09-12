@@ -240,10 +240,14 @@ class kaca extends CI_Controller
         echo json_encode($respon);
     }
 
-    public function penyesuain_stok($id)
+    public function penyesuain_stok($id, $is_delete = '')
     {
         $row        = $this->db->get_where('data_stock', array('id' => $id))->row();
         $tgl_aktual = $row->aktual;
+        if ($is_delete == 1) {
+            $this->db->where('id', $id);
+            $this->db->delete('data_stock');
+        }
         $month      = date('m', strtotime($tgl_aktual));
         if ($month != date('m')) {
             // $this->penyesuain_stok($id);
@@ -265,7 +269,7 @@ class kaca extends CI_Controller
             $this->db->where('id_divisi', $row->id_divisi);
             $this->db->where('id_gudang', $row->id_gudang);
             $this->db->where('keranjang', $row->keranjang);
-            $qty_total = $this->db->get('ata_stock')->row()->total;
+            $qty_total = $this->db->get('data_stock')->row()->total;
 
             $this->db->where('DATE_FORMAT(created,"%Y")', $year_depan);
             $this->db->where('DATE_FORMAT(created,"%m")', $month_depan);
@@ -466,14 +470,7 @@ class kaca extends CI_Controller
             'id' => $id,
             'qty_dihapus' => $getRow->qty_in,
         );
-        $this->db->where('id', $id);
-        $this->db->delete('data_stock');
-
-        // $this->db->where('awal_bulan', 1);
-        // $this->db->where('id_seselan', $id);
-        // $this->db->delete('data_stock');
-
-        $this->penyesuain_stok($id);
+        $this->penyesuain_stok($id,1);
 
 
 
@@ -495,14 +492,7 @@ class kaca extends CI_Controller
             'id' => $id,
             'qty_dihapus' => $getRow->qty_in,
         );
-        $this->db->where('id', $id);
-        $this->db->delete('data_stock');
-
-        $this->penyesuain_stok($id);
-
-        // $this->db->where('awal_bulan', 1);
-        // $this->db->where('id_seselan', $id);
-        // $this->db->delete('data_stock');
+        $this->penyesuain_stok($id,1);
 
         $this->fungsi->catat($data, "Menghapus Stock In kaca dengan data sbb:", true);
         $respon = ['msg' => 'Data Berhasil Dihapus'];
