@@ -212,6 +212,7 @@ class lembaran extends CI_Controller
             'no_pr'          => $this->input->post('no_pr'),
             'keterangan'     => $this->input->post('keterangan'),
         );
+        $this->m_lembaran->updatestokin($obj, $id);
         $this->penyesuain_stok($id);
         $this->fungsi->catat($obj, "mengubah Stock In dengan id " . $id . " data sbb:", true);
         $respon = ['msg' => 'Data Berhasil Diubah'];

@@ -212,6 +212,7 @@ class aksesoris extends CI_Controller
             'keterangan'     => $this->input->post('keterangan'),
         );
         $this->m_aksesoris->updatestokin($obj, $id);
+        $this->penyesuain_stok($id);
         $this->fungsi->catat($obj, "mengubah Stock In dengan id " . $id . " data sbb:", true);
         $respon = ['msg' => 'Data Berhasil Diubah'];
         echo json_encode($respon);
@@ -247,7 +248,7 @@ class aksesoris extends CI_Controller
             $this->db->where('id_divisi', $row->id_divisi);
             $this->db->where('id_gudang', $row->id_gudang);
             $this->db->where('keranjang', $row->keranjang);
-            $qty_total = $this->db->get('data_stock')->row()->total;
+            $qty_total = $this->db->get('ata_stock')->row()->total;
 
             $this->db->where('DATE_FORMAT(created,"%Y")', $year_depan);
             $this->db->where('DATE_FORMAT(created,"%m")', $month_depan);
