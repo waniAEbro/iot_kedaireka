@@ -39,6 +39,7 @@
                         <select id="tipe_upload" class="form-control">
                             <option value="1">INSERT MASTER AND UPDATE MASTER</option>
                             <option value="2">INSERT STOCK</option>
+                            <option value="3">INSERT MIN STOCK dan RATA-RATA</option>
                         </select>
                     </div>
                 </div>
