@@ -76,6 +76,8 @@
                             <th>Tebal</th>
                             <th>Satuan</th>
                             <th>Stock Awal Bulan</th>
+                            <th>Rata Pemakaian</th>
+                            <th>Min Stok</th>
                             <th>Total In Per Bulan</th>
                             <th>Total Out Per Bulan</th>
                             <th>Stock Akhir Bulan</th>
@@ -117,6 +119,8 @@
                                     <td align="center"><?= $row->tebal ?></td>
                                     <td align="center"><?= $row->satuan ?></td>
                                     <td align="center"><?= $tampil_stock_awal_bulan ?></td>
+                                    <td align="center"><?= $row->rata_pemakaian ?></td>
+                                    <td align="center"><?= $row->min_stock ?></td>
                                     <td align="center"><?= $tampil_total_in_per_bulan ?></td>
                                     <td align="center"><?= $tampil_total_out_per_bulan ?></td>
                                     <td align="center"><?= $stock_akhir_bulan ?></td>
