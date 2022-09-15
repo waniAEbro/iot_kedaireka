@@ -28,6 +28,7 @@
             <th>Gudang</th>
             <th>Keranjang</th>
             <th>Stock Awal Bulan</th>
+            <th>QtyX</th>
             <th>Total In</th>
             <th>Total Out</th>
             <th>Qty out proses</th>
@@ -43,20 +44,43 @@
         <?php
         $i = 1;
         foreach ($aksesoris->result() as $row) {
+
+
             $stock_awal_bulan_now = @$s_awal_bulan[$row->id_item][$row->id_gudang][$row->keranjang];
             // $total_in_lalu = @$s_total_in_lalu[$row->id_item][$row->id_gudang][$row->keranjang];
             // $total_out_lalu = @$s_total_out_lalu[$row->id_item][$row->id_gudang][$row->keranjang];
             $stock_awal_bulan = $stock_awal_bulan_now;
-
-
-
-
             $total_in = @$s_total_in[$row->id_item][$row->id_gudang][$row->keranjang];
             $total_out = @$s_total_out[$row->id_item][$row->id_gudang][$row->keranjang];
 
             $qty_out_proses = @$s_total_out_proses[$row->id_item][$row->id_gudang][$row->keranjang];
 
             $total_akhir = $stock_awal_bulan + $total_in - $total_out;
+
+            // if ($total_akhir < 0) {
+            //     $this->db->where('id_item', $row->id_item);
+            //     $this->db->where('id_gudang', $row->id_gudang);
+            //     $this->db->where('keranjang', $row->keranjang);
+            //     $this->db->where('awal_bulan', 1);
+            //     $this->db->where('DATE_FORMAT(created,"%Y")', '2022');
+            //     $this->db->where('DATE_FORMAT(created,"%m")', '09');
+            //     $qtyx = $this->db->get('data_stock_10092022')->row()->qty_in;
+
+            //     $object = array('qty_in' => $qtyx,);
+            //     $this->db->where('id_item', $row->id_item);
+            //     $this->db->where('id_gudang', $row->id_gudang);
+            //     $this->db->where('keranjang', $row->keranjang);
+            //     $this->db->where('awal_bulan', 1);
+            //     $this->db->where('DATE_FORMAT(created,"%Y")', '2022');
+            //     $this->db->where('DATE_FORMAT(created,"%m")', '09');
+            //     $this->db->update('data_stock', $object);
+                
+            // }else{
+            //     $qtyx = 'ok';
+            // }
+
+
+
             if ($total_akhir != $row->qty) {
                 $beda = 1;
             } else {
@@ -81,6 +105,7 @@
                 <td><?= $row->gudang ?></td>
                 <td><?= $row->keranjang ?></td>
                 <td><?= $stock_awal_bulan ?></td>
+                <td align="center"><?= $qtyx ?></td>
                 <td><?= $total_in ?></td>
                 <td><?= $total_out ?></td>
                 <td align="center"><?= $qty_out_proses ?></td>

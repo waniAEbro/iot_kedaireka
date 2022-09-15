@@ -226,6 +226,7 @@ class M_kaca extends CI_Model
         $this->db->where('inout', 2);
         $this->db->where('id_surat_jalan', 0);
         $this->db->where('awal_bulan', 0);
+        $this->db->where('mutasi', 0);
 
         $res  = $this->db->get('data_stock');
         $data = array();

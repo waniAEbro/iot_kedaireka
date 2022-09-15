@@ -56,7 +56,7 @@ class Cron extends CI_Controller
         echo "berhasil <br> menghitung transaksi bulan " . $bulan_skrg . " tahun " . $year . "<br> mengupdate awal bulan " . $bulan_depan . " tahun " . $year;
     }
 
-    public function gas_alu($year_, $bulan_skrg, $bulan_depan,$tgl_aktual_bulan_depan)
+    public function gas_alu($year_, $bulan_skrg, $bulan_depan, $tgl_aktual_bulan_depan)
     {
 
         $this->db->select('id_item,id_gudang,keranjang, sum(qty_in)-sum(qty_out) as total');
@@ -116,6 +116,25 @@ class Cron extends CI_Controller
                     'aktual'    => $awal_tgl_aktual_depan,
                 );
                 $this->db->insert('data_stock', $obj2);
+            }
+
+            $this->db->where('id_item', $key->id_item);
+            $this->db->where('id_gudang', $key->id_gudang);
+            $this->db->where('keranjang', $key->keranjang);
+            $this->db->where('id_jenis_item', 1);
+            $cek_counter = $this->db->get('data_counter')->num_rows();
+
+            if ($cek_awal_bulan_depan < 1) {
+                $simpan = array(
+                    'id_jenis_item' => 1,
+                    'id_item'       => $key->id_item,
+                    'id_gudang'     => $key->id_gudang,
+                    'keranjang'     => $key->keranjang,
+                    'qty'           => $qty_total,
+                    'created'       => date('Y-m-d H:i:s'),
+                    'itm_code'      => 'xx',
+                );
+                $this->db->insert('data_counter', $simpan);
             }
 
             // $this->db->where('id_item', $key->id_item);
