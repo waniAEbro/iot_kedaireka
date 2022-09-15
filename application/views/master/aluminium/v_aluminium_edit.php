@@ -65,9 +65,15 @@ $row = fetch_single_row($edit);
     </div>
 
     <div class="form-group">
-        <label class="col-sm-4 control-label">Divisi</label>
+        <label class="col-sm-4 control-label">Rata Pemakaian</label>
         <div class="col-sm-8">
-            <?php echo form_input(array('name' => 'divisi', 'value' => $row->divisi, 'class' => 'form-control')); ?>
+            <?php echo form_input(array('name' => 'rata_pemakaian', 'value' => $row->rata_pemakaian, 'class' => 'form-control')); ?>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-4 control-label">Min Stock</label>
+        <div class="col-sm-8">
+            <?php echo form_input(array('name' => 'min_stock', 'value' => $row->min_stock, 'class' => 'form-control')); ?>
         </div>
     </div>
 

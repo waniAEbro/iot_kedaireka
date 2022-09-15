@@ -28,7 +28,6 @@
             <th>Gudang</th>
             <th>Keranjang</th>
             <th>Stock Awal Bulan</th>
-            <th>QtyX</th>
             <th>Total In</th>
             <th>Total Out</th>
             <th>Qty out proses</th>
@@ -105,7 +104,6 @@
                 <td><?= $row->gudang ?></td>
                 <td><?= $row->keranjang ?></td>
                 <td><?= $stock_awal_bulan ?></td>
-                <td align="center"><?= $qtyx ?></td>
                 <td><?= $total_in ?></td>
                 <td><?= $total_out ?></td>
                 <td align="center"><?= $qty_out_proses ?></td>

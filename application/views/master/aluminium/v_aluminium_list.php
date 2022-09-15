@@ -28,6 +28,8 @@
                         <th>Satuan</th>
                         <th>Supplier</th>
                         <th>Lead Time</th>
+                        <th>Rata Pemakaian</th>
+                        <th>Min Stock</th>
                         <th>Act</th>
                     </thead>
                     <tbody>
@@ -48,6 +50,8 @@
                                 <td><?= $row->satuan ?></td>
                                 <td><?= $row->supplier ?></td>
                                 <td><?= $row->lead_time ?></td>
+                                <td><?= $row->rata_pemakaian ?></td>
+                                <td><?= $row->min_stock ?></td>
                                 <td align="center">
                                     <?php
                                     $sesi = from_session('level');

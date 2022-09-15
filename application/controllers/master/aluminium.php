@@ -65,7 +65,8 @@ class aluminium extends CI_Controller
                 'satuan' => $this->input->post('satuan'),
                 'supplier' => $this->input->post('supplier'),
                 'lead_time' => $this->input->post('lead_time'),
-                'divisi' => $this->input->post('divisi'),
+                'rata_pemakaian' => $this->input->post('rata_pemakaian'),
+                'min_stock' => $this->input->post('min_stock'),
                 'item_code' => $this->input->post('section_ata') . '-' . $this->input->post('section_allure') . '-' . $this->input->post('temper') . '-' . $this->input->post('kode_warna') . '-' . $this->input->post('ukuran'),
                 'created'        => date('Y-m-d H:i:s'),
             );
@@ -119,7 +120,8 @@ class aluminium extends CI_Controller
                 'satuan' => $this->input->post('satuan'),
                 'supplier' => $this->input->post('supplier'),
                 'lead_time' => $this->input->post('lead_time'),
-                'divisi' => $this->input->post('divisi'),
+                'rata_pemakaian' => $this->input->post('rata_pemakaian'),
+                'min_stock' => $this->input->post('min_stock'),
                 'item_code' => $this->input->post('section_ata') . '-' . $this->input->post('section_allure') . '-' . $this->input->post('temper') . '-' . $this->input->post('kode_warna') . '-' . $this->input->post('ukuran'),
             );
             $this->m_aluminium->updateData($datapost);
