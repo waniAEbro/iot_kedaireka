@@ -767,6 +767,7 @@ class Fppp extends CI_Controller
 
 					$obj_master = array(
 						'id_jenis_item'     => $jenis_item,
+						'item_code'         => $itmcode,
 						'deskripsi'         => $rowData[0][2],
 						'satuan'            => $rowData[0][3],
 						'section_ata'       => $rowData[0][8],
