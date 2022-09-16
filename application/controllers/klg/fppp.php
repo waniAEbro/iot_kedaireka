@@ -740,113 +740,115 @@ class Fppp extends CI_Controller
 					$itmcode = str_replace(' ', '', $rowData[0][1]);
 				}
 
-				$obj = array(
-					'id_jenis_item'     => $jenis_item,
-					'deskripsi'         => $rowData[0][2],
-					'satuan'            => $rowData[0][3],
-					'id_divisi'         => $rowData[0][4],
-					'id_gudang'         => $rowData[0][5],
-					'keranjang'         => $rowData[0][6],
-					'qty'         => $rowData[0][7],
-					'section_ata'       => $rowData[0][8],
-					'section_allure'    => $rowData[0][9],
-					'temper'            => $rowData[0][10],
-					'kode_warna'        => str_pad($rowData[0][11], 2, '0', STR_PAD_LEFT),
-					'ukuran'            => $rowData[0][12],
-					'perimeter_berat'   => $rowData[0][13],
-					'perimeter_mf'      => $rowData[0][14],
-					'perimeter_coating' => $rowData[0][15],
-					'lebar'             => $rowData[0][16],
-					'tinggi'            => $rowData[0][17],
-					'tebal'            => $rowData[0][18],
-					'area'            => $rowData[0][19],
-					'ket'               => 'upload',
-					'created'           => date('Y-m-d H:i:s'),
-				);
-
-				$obj_master = array(
-					'id_jenis_item'     => $jenis_item,
-					'deskripsi'         => $rowData[0][2],
-					'satuan'            => $rowData[0][3],
-					'section_ata'       => $rowData[0][8],
-					'section_allure'    => $rowData[0][9],
-					'temper'            => $rowData[0][10],
-					'kode_warna'        => str_pad($rowData[0][11], 2, '0', STR_PAD_LEFT),
-					'ukuran'            => $rowData[0][12],
-					'perimeter_berat'   => $rowData[0][13],
-					'perimeter_mf'      => $rowData[0][14],
-					'perimeter_coating' => $rowData[0][15],
-					'lebar'             => $rowData[0][16],
-					'tinggi'            => $rowData[0][17],
-					'tebal'            => $rowData[0][18],
-					'area'            => $rowData[0][19],
-					'ket'               => 'upload',
-					'created'           => date('Y-m-d H:i:s'),
-				);
-
-				$obj_rata = array(
-					'ket'               => 'upload',
-					'rata_pemakaian'            => $rowData[0][20],
-					'min_stock'            => $rowData[0][21],
-				);
-
-				$cek_item = $this->m_fppp->cekItemCode($obj['id_jenis_item'], $itmcode);
-				if ($tipe_upload == 1) {
-					if ($cek_item->num_rows() < 1) {
-						$this->db->insert('master_item', $obj_master);
-					}
-					// else {
-					// 	$this->db->where('item_code', $obj['item_code']);
-					// 	$this->db->where('id_jenis_item', $obj['id_jenis_item']);
-					// 	$this->db->update('master_item', $obj_master);
-					// }
-				} elseif ($tipe_upload == 2) {
-					$iditem  = $cek_item->row()->id;
-					$krjng = ($obj['keranjang'] != '') ? $obj['keranjang'] : '-';
-					$counter = array(
-						'id_jenis_item' => $obj['id_jenis_item'],
-						'id_item'       => $iditem,
-						'id_divisi'     => $obj['id_divisi'],
-						'id_gudang'     => $obj['id_gudang'],
-						'keranjang'     => str_replace(' ', '-', $krjng),
-						'qty'           => $obj['qty'],
-						'created'       => date('Y-m-d H:i:s'),
-						'updated'       => date('Y-m-d H:i:s'),
-						'itm_code'      => str_replace(' ', '', $itmcode),
-						'keterangan'      => 'upload_stock',
+				if ($itmcode != '') {
+					$obj = array(
+						'id_jenis_item'     => $jenis_item,
+						'deskripsi'         => $rowData[0][2],
+						'satuan'            => $rowData[0][3],
+						'id_divisi'         => $rowData[0][4],
+						'id_gudang'         => $rowData[0][5],
+						'keranjang'         => $rowData[0][6],
+						'qty'         => $rowData[0][7],
+						'section_ata'       => $rowData[0][8],
+						'section_allure'    => $rowData[0][9],
+						'temper'            => $rowData[0][10],
+						'kode_warna'        => str_pad($rowData[0][11], 2, '0', STR_PAD_LEFT),
+						'ukuran'            => $rowData[0][12],
+						'perimeter_berat'   => $rowData[0][13],
+						'perimeter_mf'      => $rowData[0][14],
+						'perimeter_coating' => $rowData[0][15],
+						'lebar'             => $rowData[0][16],
+						'tinggi'            => $rowData[0][17],
+						'tebal'            => $rowData[0][18],
+						'area'            => $rowData[0][19],
+						'ket'               => 'upload',
+						'created'           => date('Y-m-d H:i:s'),
 					);
-					$cekQtyCounter = $this->m_fppp->cekCounter($obj['id_jenis_item'], $itmcode, $obj['id_divisi'], $obj['id_gudang'], $obj['keranjang']);
-					if ($cekQtyCounter->num_rows() == 0) {
-						$this->db->insert('data_counter', $counter);
+
+					$obj_master = array(
+						'id_jenis_item'     => $jenis_item,
+						'deskripsi'         => $rowData[0][2],
+						'satuan'            => $rowData[0][3],
+						'section_ata'       => $rowData[0][8],
+						'section_allure'    => $rowData[0][9],
+						'temper'            => $rowData[0][10],
+						'kode_warna'        => str_pad($rowData[0][11], 2, '0', STR_PAD_LEFT),
+						'ukuran'            => $rowData[0][12],
+						'perimeter_berat'   => $rowData[0][13],
+						'perimeter_mf'      => $rowData[0][14],
+						'perimeter_coating' => $rowData[0][15],
+						'lebar'             => $rowData[0][16],
+						'tinggi'            => $rowData[0][17],
+						'tebal'            => $rowData[0][18],
+						'area'            => $rowData[0][19],
+						'ket'               => 'upload',
+						'created'           => date('Y-m-d H:i:s'),
+					);
+
+					$obj_rata = array(
+						'ket'               => 'upload',
+						'rata_pemakaian'            => $rowData[0][20],
+						'min_stock'            => $rowData[0][21],
+					);
+
+					$cek_item = $this->m_fppp->cekItemCode($obj['id_jenis_item'], $itmcode);
+					if ($tipe_upload == 1) {
+						if ($cek_item->num_rows() < 1) {
+							$this->db->insert('master_item', $obj_master);
+						}
+						// else {
+						// 	$this->db->where('item_code', $obj['item_code']);
+						// 	$this->db->where('id_jenis_item', $obj['id_jenis_item']);
+						// 	$this->db->update('master_item', $obj_master);
+						// }
+					} elseif ($tipe_upload == 2) {
+						$iditem  = $cek_item->row()->id;
+						$krjng = ($obj['keranjang'] != '') ? $obj['keranjang'] : '-';
+						$counter = array(
+							'id_jenis_item' => $obj['id_jenis_item'],
+							'id_item'       => $iditem,
+							'id_divisi'     => $obj['id_divisi'],
+							'id_gudang'     => $obj['id_gudang'],
+							'keranjang'     => str_replace(' ', '-', $krjng),
+							'qty'           => $obj['qty'],
+							'created'       => date('Y-m-d H:i:s'),
+							'updated'       => date('Y-m-d H:i:s'),
+							'itm_code'      => str_replace(' ', '', $itmcode),
+							'keterangan'      => 'upload_stock',
+						);
+						$cekQtyCounter = $this->m_fppp->cekCounter($obj['id_jenis_item'], $itmcode, $obj['id_divisi'], $obj['id_gudang'], $obj['keranjang']);
+						if ($cekQtyCounter->num_rows() == 0) {
+							$this->db->insert('data_counter', $counter);
+						} else {
+							$qty_sebelum = $cekQtyCounter->row()->qty;
+							$qty_jadi      = (int)$qty_sebelum + (int)$obj['qty'];
+							$this->m_fppp->updateCounter($obj['id_jenis_item'], $itmcode, $obj['id_divisi'], $obj['id_gudang'], $obj['keranjang'], $qty_jadi);
+						}
+
+						$transaksi = array(
+							'inout'         => 1,
+							'awal_bulan'    => $awal_bulan,
+							'id_jenis_item' => $obj['id_jenis_item'],
+							'id_item'       => $iditem,
+							'id_divisi'     => $obj['id_divisi'],
+							'id_gudang'     => $obj['id_gudang'],
+							'keranjang'     => str_replace(' ', '-', $krjng),
+							'qty_in'        => $obj['qty'],
+							'created'       => date('Y-m-d H:i:s'),
+							'updated'       => date('Y-m-d H:i:s'),
+							'aktual'        => date('Y-m-d'),
+							'id_penginput'  => from_session('id'),
+							'itm_code'      => str_replace(' ', '', $itmcode),
+							'keterangan'    => 'upload stok',
+						);
+						$this->db->insert('data_stock', $transaksi);
 					} else {
-						$qty_sebelum = $cekQtyCounter->row()->qty;
-						$qty_jadi      = (int)$qty_sebelum + (int)$obj['qty'];
-						$this->m_fppp->updateCounter($obj['id_jenis_item'], $itmcode, $obj['id_divisi'], $obj['id_gudang'], $obj['keranjang'], $qty_jadi);
+						$this->db->where('item_code', $itmcode);
+						$this->db->update('master_item', $obj_rata);
 					}
-
-					$transaksi = array(
-						'inout'         => 1,
-						'awal_bulan'    => $awal_bulan,
-						'id_jenis_item' => $obj['id_jenis_item'],
-						'id_item'       => $iditem,
-						'id_divisi'     => $obj['id_divisi'],
-						'id_gudang'     => $obj['id_gudang'],
-						'keranjang'     => str_replace(' ', '-', $krjng),
-						'qty_in'        => $obj['qty'],
-						'created'       => date('Y-m-d H:i:s'),
-						'updated'       => date('Y-m-d H:i:s'),
-						'aktual'        => date('Y-m-d'),
-						'id_penginput'  => from_session('id'),
-						'itm_code'      => str_replace(' ', '', $itmcode),
-						'keterangan'    => 'upload stok',
-					);
-					$this->db->insert('data_stock', $transaksi);
-				} else {
-					$this->db->where('item_code', $itmcode);
-					$this->db->update('master_item', $obj_rata);
 				}
+				$data['msg'] = "Data Disimpan....";
 			}
-			$data['msg'] = "Data Disimpan....";
 		} else {
 			$data['msg'] = "Data melebihi 3000 row";
 		}
