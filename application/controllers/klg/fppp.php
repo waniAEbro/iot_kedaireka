@@ -808,6 +808,7 @@ class Fppp extends CI_Controller
 						$counter = array(
 							'id_jenis_item' => $obj['id_jenis_item'],
 							'id_item'       => $iditem,
+							'item_code'         => $itmcode,
 							'id_divisi'     => $obj['id_divisi'],
 							'id_gudang'     => $obj['id_gudang'],
 							'keranjang'     => str_replace(' ', '-', $krjng),
