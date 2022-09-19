@@ -25,6 +25,8 @@
             <th>Perimeter MF</th>
             <th>Perimeter Coating</th>
             <th>Satuan</th>
+            <th>Rata Pemakaian</th>
+            <th>Min Stock</th>
         </tr>
     </thead>
     <tbody>
@@ -45,6 +47,8 @@
                 <td><?= $row->perimeter_mf ?></td>
                 <td><?= $row->perimeter_coating ?></td>
                 <td><?= $row->satuan ?></td>
+                <td><?= $row->rata_pemakaian ?></td>
+                <td><?= $row->min_stock ?></td>
             </tr>
         <?php } ?>
     </tbody>
