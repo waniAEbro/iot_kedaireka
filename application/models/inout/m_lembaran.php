@@ -21,7 +21,7 @@ class M_lembaran extends CI_Model
         $this->db->where('ds.awal_bulan', 0);
         $this->db->select('ds.id as id_ds,ds.*,mi.*,mwa.warna,cu.nama,ds.created as tgl_stok,mds.divisi as divisi_lembaran,mg.gudang,ms.supplier');
         $this->db->order_by('ds.id', 'desc');
-
+        $this->db->group_by('ds.id');
         return $this->db->get('data_stock ds');
     }
 
@@ -54,9 +54,10 @@ class M_lembaran extends CI_Model
         // $this->db->where_in('ds.mutasi', ['0','1']);
         // $this->db->where('ds.id_surat_jalan !=', 0);
 
-        $this->db->select('ds.*,mi.*,cu.nama,mwa.warna,mw.warna as warna_awal,mwab.warna as warna_akhir,mb.brand,ds.created as tgl_stok,mds.divisi as divisi_lembaran,mg.gudang,dsj.no_surat_jalan,df.no_fppp,dsj.tgl_aktual,df.nama_proyek,dsj.penerima,dsj.alamat_pengiriman,dsj.sopir,dsj.no_kendaraan');
+        $this->db->select('ds.*,mi.item_code,mi.deskripsi,mi.lebar,mi.tinggi,mi.satuan,cu.nama,mwa.warna,mw.warna as warna_awal,mwab.warna as warna_akhir,mb.brand,ds.created as tgl_stok,mds.divisi as divisi_lembaran,mg.gudang,dsj.no_surat_jalan,df.no_fppp,dsj.tgl_aktual,df.nama_proyek,dsj.penerima,dsj.alamat_pengiriman,dsj.sopir,dsj.no_kendaraan');
         $this->db->order_by('ds.id', 'desc');
-
+        $this->db->group_by('ds.id');
+        
         return $this->db->get('data_stock ds');
     }
 }

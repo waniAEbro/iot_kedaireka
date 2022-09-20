@@ -21,7 +21,7 @@ class M_aluminium extends CI_Model
         $this->db->where('ds.awal_bulan', 0);
         $this->db->select('ds.*,mi.*,mw.*,cu.nama,ds.created as tgl_stok,mg.gudang,ms.supplier');
         $this->db->order_by('ds.id', 'desc');
-
+        $this->db->group_by('ds.id');
         return $this->db->get('data_stock ds');
     }
 
@@ -48,7 +48,7 @@ class M_aluminium extends CI_Model
         // $this->db->where('ds.id_surat_jalan !=', 0);
         $this->db->select('ds.*,mi.*,mw.*,cu.nama,mwab.warna as warna_akhir,mb.brand,ds.created as tgl_stok,mg.gudang,dsj.no_surat_jalan,df.no_fppp,dsj.tgl_aktual,df.nama_proyek,dsj.penerima,dsj.alamat_pengiriman,dsj.sopir,dsj.no_kendaraan');
         $this->db->order_by('ds.id', 'desc');
-
+        $this->db->group_by('ds.id');
         return $this->db->get('data_stock ds');
     }
 }

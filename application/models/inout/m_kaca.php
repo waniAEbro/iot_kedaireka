@@ -21,7 +21,7 @@ class M_kaca extends CI_Model
         $this->db->where('ds.awal_bulan', 0);
         $this->db->select('ds.id as id_ds,ds.*,mi.*,cu.nama,ds.created as tgl_stok,mds.divisi as divisi_kaca,mg.gudang,ms.supplier');
         $this->db->order_by('ds.id', 'desc');
-
+        $this->db->group_by('ds.id');
         return $this->db->get('data_stock ds');
     }
 
@@ -54,7 +54,7 @@ class M_kaca extends CI_Model
 
         $this->db->select('ds.*,mi.*,cu.nama,mb.brand,ds.created as tgl_stok,mds.divisi as divisi_kaca,mg.gudang,dsj.no_surat_jalan,df.no_fppp,dsj.tgl_aktual,df.nama_proyek,dsj.penerima,dsj.alamat_pengiriman,dsj.sopir,dsj.no_kendaraan');
         $this->db->order_by('ds.id', 'desc');
-
+        $this->db->group_by('ds.id');
         return $this->db->get('data_stock ds');
     }
 }
