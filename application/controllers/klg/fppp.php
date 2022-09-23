@@ -844,9 +844,17 @@ class Fppp extends CI_Controller
 							'keterangan'    => 'upload stok',
 						);
 						$this->db->insert('data_stock', $transaksi);
-					} else {
+					} elseif ($tipe_upload == 3) {
 						$this->db->where('item_code', $itmcode);
 						$this->db->update('master_item', $obj_rata);
+					} elseif ($tipe_upload == 4) {
+						$obj_allure = array(
+							'item_code'         => $rowData[0][8] . '-' . $rowData[0][22] . '-' . $rowData[0][10] . '-' . str_pad($rowData[0][11], 2, '0', STR_PAD_LEFT) . '-' . $rowData[0][12],
+							'section_allure'    => $rowData[0][22],
+						);
+
+						$this->db->where('item_code', $itmcode);
+						$this->db->update('master_item', $obj_allure);
 					}
 				}
 				$data['msg'] = "Data Disimpan....";

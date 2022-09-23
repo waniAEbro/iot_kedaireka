@@ -40,6 +40,7 @@
                             <option value="1">INSERT MASTER AND UPDATE MASTER</option>
                             <option value="2">INSERT STOCK</option>
                             <option value="3">INSERT MIN STOCK dan RATA-RATA</option>
+                            <option value="4">UPDATE Section Allure</option>
                         </select>
                     </div>
                 </div>
