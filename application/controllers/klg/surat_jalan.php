@@ -127,6 +127,7 @@ class Surat_jalan extends CI_Controller
             'is_proses' => 0,
         );
         $this->db->where('id_penginput', from_session('id'));
+        $this->db->where('id_fppp', 0);
         $this->db->update('data_sj_fppp_detail', $object);
 
         $total_kirim_fppp = $this->db->get_where('data_fppp', array('id' => $datapost['id_fppp']))->row()->total_kirim;
