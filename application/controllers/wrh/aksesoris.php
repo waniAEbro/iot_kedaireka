@@ -248,7 +248,7 @@ class aksesoris extends CI_Controller
             $this->db->where('id_divisi', $row->id_divisi);
             $this->db->where('id_gudang', $row->id_gudang);
             $this->db->where('keranjang', $row->keranjang);
-            $qty_total = $this->db->get('ata_stock')->row()->total;
+            $qty_total = $this->db->get('data_stock')->row()->total;
 
             $this->db->where('DATE_FORMAT(created,"%Y")', $year_depan);
             $this->db->where('DATE_FORMAT(created,"%m")', $month_depan);
