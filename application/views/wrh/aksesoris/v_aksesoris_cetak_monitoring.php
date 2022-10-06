@@ -43,7 +43,7 @@
             // $total_in_lalu = @$s_total_in_lalu[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
             // $total_out_lalu = @$s_total_out_lalu[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
             $stock_awal_bulan = $stock_awal_bulan_now;
-            
+
             $total_in = @$s_total_in[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
             $total_out = @$s_total_out[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
             $total_akhir = $stock_awal_bulan + $total_in - $total_out;
@@ -58,31 +58,34 @@
             }
 
             if ($beda == 1 && $qty_out_proses < 1) {
-                $this->m_aksesoris->updateDataCounter($row->id_item,$row->id_divisi,  $row->id_gudang, $row->keranjang, $total_akhir);
+                $this->m_aksesoris->updateDataCounter($row->id_item, $row->id_divisi,  $row->id_gudang, $row->keranjang, $total_akhir);
             }
+
+            if ($total_akhir > 0) {
         ?>
-            <tr>
-                <td align="center"><?= $i++ ?></td>
-                <td><?= $row->item_code ?></td>
-                <td><?= $row->deskripsi ?></td>
-                <td><?= $row->supplier ?></td>
-                <td><?= $row->satuan ?></td>
-                <td><?= $row->lead_time ?></td>
-                <td><?= $row->divisi ?></td>
-                <td><?= $row->gudang ?></td>
-                <td><?= $row->keranjang ?></td>
-                <td><?= $stock_awal_bulan ?></td>
-                <td><?= $total_in ?></td>
-                <td><?= $total_out ?></td>
-                <td align="center"><?= $qty_out_proses ?></td>
-                <td><?= $row->rata_pemakaian ?></td>
-                <td align="center"><?= $row->qty ?></td>
-                <?php if (from_session('id') == 2) { ?>
-                    <td align="center"><?= $total_akhir ?></td>
-                    <td align="center"><?= $beda ?></td>
-                <?php } ?>
-            </tr>
-        <?php } ?>
+                <tr>
+                    <td align="center"><?= $i++ ?></td>
+                    <td><?= $row->item_code ?></td>
+                    <td><?= $row->deskripsi ?></td>
+                    <td><?= $row->supplier ?></td>
+                    <td><?= $row->satuan ?></td>
+                    <td><?= $row->lead_time ?></td>
+                    <td><?= $row->divisi ?></td>
+                    <td><?= $row->gudang ?></td>
+                    <td><?= $row->keranjang ?></td>
+                    <td><?= $stock_awal_bulan ?></td>
+                    <td><?= $total_in ?></td>
+                    <td><?= $total_out ?></td>
+                    <td align="center"><?= $qty_out_proses ?></td>
+                    <td><?= $row->rata_pemakaian ?></td>
+                    <td align="center"><?= $row->qty ?></td>
+                    <?php if (from_session('id') == 2) { ?>
+                        <td align="center"><?= $total_akhir ?></td>
+                        <td align="center"><?= $beda ?></td>
+                    <?php } ?>
+                </tr>
+        <?php }
+        } ?>
     </tbody>
 </table>
 
