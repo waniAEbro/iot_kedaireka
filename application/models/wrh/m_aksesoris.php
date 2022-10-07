@@ -1354,6 +1354,7 @@ class M_aksesoris extends CI_Model
         $this->db->where('id_item', $id_item);
         $this->db->where('id_divisi', $id_divisi);
         $this->db->where('id_gudang', $id_gudang);
+        $this->db->order_by('qty', 'desc');
         return $this->db->get('data_counter')->row()->keranjang;
     }
 
@@ -1420,9 +1421,9 @@ class M_aksesoris extends CI_Model
 
     public function getQtyAwalBulan($tgl)
     {
-        
-        $year  = date('Y',strtotime($tgl));
-        $month = date('m',strtotime($tgl));
+
+        $year  = date('Y', strtotime($tgl));
+        $month = date('m', strtotime($tgl));
         $this->db->where('DATE_FORMAT(created,"%Y")', $year);
         $this->db->where('DATE_FORMAT(created,"%m")', $month);
         $this->db->where('awal_bulan', 1);
@@ -1440,13 +1441,13 @@ class M_aksesoris extends CI_Model
         return $data;
     }
 
-    public function getQtyMasuk($tgl,$id)
+    public function getQtyMasuk($tgl, $id)
     {
-        $year  = date('Y',strtotime($tgl));
-        $month = date('m',strtotime($tgl));
+        $year  = date('Y', strtotime($tgl));
+        $month = date('m', strtotime($tgl));
         $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
         $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
-        $this->db->where('id >', $id);        
+        $this->db->where('id >', $id);
         // $this->db->where('aktual <=', $tgl);
         $this->db->where('awal_bulan', 0);
         $this->db->where('inout', 1);
@@ -1465,10 +1466,10 @@ class M_aksesoris extends CI_Model
         return $data;
     }
 
-    public function getQtyKeluar($tgl,$id)
+    public function getQtyKeluar($tgl, $id)
     {
-        $year  = date('Y',strtotime($tgl));
-        $month = date('m',strtotime($tgl));
+        $year  = date('Y', strtotime($tgl));
+        $month = date('m', strtotime($tgl));
         $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
         $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
 
@@ -1476,7 +1477,7 @@ class M_aksesoris extends CI_Model
         // $this->db->where('aktual <=', $tgl);
         $this->db->where('awal_bulan', 0);
         $this->db->where('inout', 2);
-        
+
         $res   = $this->db->get('data_stock');
         $data  = array();
         $nilai = 0;

@@ -1354,6 +1354,7 @@ class M_kaca extends CI_Model
         $this->db->where('id_item', $id_item);
         $this->db->where('id_divisi', $id_divisi);
         $this->db->where('id_gudang', $id_gudang);
+        $this->db->order_by('qty', 'desc');
         return $this->db->get('data_counter')->row()->keranjang;
     }
 
