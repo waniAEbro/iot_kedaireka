@@ -309,7 +309,7 @@ class kaca extends CI_Controller
                     'keranjang' => $row->keranjang,
                     'qty_in'    => $qty_total,
                     'created'   => date('Y-m-d H:i:s'),
-                    'aktual'    => $tgl_aktual,
+                    'aktual'    => date('Y-m-d'),
                 );
                 $this->db->insert('data_stock', $obj2);
             }
@@ -1439,8 +1439,8 @@ class kaca extends CI_Controller
             'aktual'       => $tgl_aktual,
         );
         $this->m_kaca->insertstokin($datapost_in);
-        $data['id']          = $this->db->insert_id();
-        $this->penyesuain_stok($data['id']);
+        $data['id2']          = $this->db->insert_id();
+        $this->penyesuain_stok($data['id2']);
         $this->fungsi->catat($datapost_in, "Mutasi IN sbb:", true);
 
         $cekDataCounter = $this->m_kaca->getDataCounter($datapost_in['id_item'], $datapost_in['id_divisi'], $datapost_in['id_gudang'], $datapost_in['keranjang'])->num_rows();

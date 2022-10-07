@@ -287,7 +287,7 @@ class aksesoris extends CI_Controller
                     'keranjang' => $row->keranjang,
                     'qty_in'    => $qty_total,
                     'created'   => date('Y-m-d H:i:s'),
-                    'aktual'    => $tgl_aktual,
+                    'aktual'    => date('Y-m-d'),
                 );
                 $this->db->insert('data_stock', $obj2);
             }

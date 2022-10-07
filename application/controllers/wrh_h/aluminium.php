@@ -230,6 +230,7 @@ class Aluminium extends CI_Controller
             'keterangan'     => $this->input->post('keterangan'),
         );
         $this->m_aluminium->updatestokin($obj, $id);
+        $this->penyesuain_stok($id);
         $this->fungsi->catat($obj, "mengubah Stock In dengan id " . $id . " data sbb:", true);
         $respon = ['msg' => 'Data Berhasil Diubah'];
         echo json_encode($respon);
@@ -272,6 +273,7 @@ class Aluminium extends CI_Controller
         );
         $this->m_aluminium->insertstokin($datapost);
         $data['id'] = $this->db->insert_id();
+        $this->penyesuain_stok($data['id']);
         $this->fungsi->catat($datapost, "Menyimpan detail stock-in Aluminium sbb:", true);
         $cekDataCounter = $this->m_aluminium->getDataCounter($datapost['id_item'], $datapost['id_gudang'], $datapost['keranjang'])->num_rows();
         if ($cekDataCounter == 0) {
@@ -302,6 +304,76 @@ class Aluminium extends CI_Controller
         echo json_encode($data);
     }
 
+    public function penyesuain_stok($id, $is_delete = '')
+    {
+        $row        = $this->db->get_where('data_stock', array('id' => $id))->row();
+        $tgl_aktual = $row->aktual;
+        if ($is_delete == 1) {
+            $this->db->where('id', $id);
+            $this->db->delete('data_stock');
+        }
+        $month      = date('m', strtotime($tgl_aktual));
+        if ($month != date('m')) {
+            // $this->penyesuain_stok($id);
+            // }
+
+            // $row = $this->db->get_where('data_stock', array('id' => $id))->row();
+            // $tgl_aktual = $row->aktual;
+            $awal_tgl_aktual_depan = date('Y-m-d');
+
+            $year        = date('Y', strtotime($tgl_aktual));
+            $month       = date('m', strtotime($tgl_aktual));
+            $year_depan  = date('Y', strtotime($awal_tgl_aktual_depan));
+            $month_depan = date('m', strtotime($awal_tgl_aktual_depan));
+
+            $this->db->select('sum(qty_in)-sum(qty_out) as total');
+            $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
+            $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
+            $this->db->where('id_item', $row->id_item);
+            $this->db->where('id_gudang', $row->id_gudang);
+            $this->db->where('keranjang', $row->keranjang);
+            $qty_total = $this->db->get('data_stock')->row()->total;
+
+            $this->db->where('DATE_FORMAT(created,"%Y")', $year_depan);
+            $this->db->where('DATE_FORMAT(created,"%m")', $month_depan);
+            $this->db->where('awal_bulan', 1);
+            $this->db->where('id_item', $row->id_item);
+            $this->db->where('id_gudang', $row->id_gudang);
+            $this->db->where('keranjang', $row->keranjang);
+            $cek_awal_bulan_depan = $this->db->get('data_stock')->num_rows();
+
+            if ($cek_awal_bulan_depan > 0) {
+                $obj = array(
+                    'id_item'   => $row->id_item,
+                    'id_gudang' => $row->id_gudang,
+                    'keranjang' => $row->keranjang,
+                    'qty_in'    => $qty_total,
+                    'updated'   => date('Y-m-d H:i:s'),
+                );
+                $this->db->where('awal_bulan', 1);
+                $this->db->where('id_item', $row->id_item);
+                $this->db->where('id_gudang', $row->id_gudang);
+                $this->db->where('keranjang', $row->keranjang);
+                $this->db->where('DATE_FORMAT(created,"%Y")', $year_depan);
+                $this->db->where('DATE_FORMAT(created,"%m")', $month_depan);
+                $this->db->update('data_stock', $obj);
+            } else {
+                $obj2 = array(
+                    'awal_bulan'    => 1,
+                    'inout'         => 1,
+                    'id_jenis_item' => 1,
+                    'id_item'       => $row->id_item,
+                    'id_gudang' => $row->id_gudang,
+                    'keranjang' => $row->keranjang,
+                    'qty_in'    => $qty_total,
+                    'created'   => date('Y-m-d H:i:s'),
+                    'aktual'    => date('Y-m-d'),
+                );
+                $this->db->insert('data_stock', $obj2);
+            }
+        }
+    }
+
     public function deleteIn($id)
     {
         $this->fungsi->check_previleges('aluminium');
@@ -314,8 +386,7 @@ class Aluminium extends CI_Controller
             'id' => $id,
             'qty_dihapus' => $getRow->qty_in,
         );
-        $this->db->where('id', $id);
-        $this->db->delete('data_stock');
+        $this->penyesuain_stok($id,1);
 
         $this->fungsi->catat($data, "Menghapus Stock In Aluminium dengan data sbb:", true);
         $this->fungsi->run_js('load_silent("wrh_h/aluminium/stok_in","#content")');
@@ -336,8 +407,7 @@ class Aluminium extends CI_Controller
             'id' => $id,
             'qty_dihapus' => $getRow->qty_in,
         );
-        $this->db->where('id', $id);
-        $this->db->delete('data_stock');
+        $this->penyesuain_stok($id,1);
 
         $this->fungsi->catat($data, "Menghapus Stock In Aluminium dengan data sbb:", true);
         $respon = ['msg' => 'Data Berhasil Dihapus'];
@@ -1117,6 +1187,7 @@ class Aluminium extends CI_Controller
             );
             $this->db->insert('data_stock', $datapost);
             $data['id']          = $this->db->insert_id();
+            $this->penyesuain_stok($data['id']);
             $cekQtyCounter = $this->m_aluminium->getDataCounter($id_item,  $id_gudang, $keranjang)->row()->qty;
             $qty_jadi      = (int)$cekQtyCounter - (int)$qty_out;
             $this->m_aluminium->updateDataCounter($id_item,  $id_gudang, $keranjang, $qty_jadi);
@@ -1142,8 +1213,9 @@ class Aluminium extends CI_Controller
         $qty_jadi      = (int)$cekQtyCounter + (int)$qty_out;
         $this->m_aluminium->updateDataCounter($id_item,  $id_gudang, $keranjang, $qty_jadi);
         sleep(1);
-        $this->m_aluminium->deleteItemBonManual($id);
+        // $this->m_aluminium->deleteItemBonManual($id);
         $data = array('id' => $id,);
+        $this->penyesuain_stok($id,1);
         $this->fungsi->catat($data, "Menghapus BON manual Detail dengan data sbb:", true);
         $respon = ['msg' => 'Data Berhasil Dihapus'];
         echo json_encode($respon);
@@ -1271,6 +1343,9 @@ class Aluminium extends CI_Controller
             'aktual'       => $tgl_aktual,
         );
         $this->m_aluminium->insertstokin($datapost_out);
+        $data['id']          = $this->db->insert_id();
+
+        $this->penyesuain_stok($data['id']);
         $this->fungsi->catat($datapost_out, "Mutasi OUT sbb:", true);
         $data['qty_gudang'] = $qty - $qty2;
         $this->m_aluminium->updateDataCounter($id_item, $id_gudang, $keranjang, $data['qty_gudang']);
@@ -1290,6 +1365,9 @@ class Aluminium extends CI_Controller
             'aktual'       => $tgl_aktual,
         );
         $this->m_aluminium->insertstokin($datapost_in);
+        $data['id']          = $this->db->insert_id();
+
+        $this->penyesuain_stok($data['id']);
         $this->fungsi->catat($datapost_in, "Mutasi IN sbb:", true);
 
         $cekDataCounter = $this->m_aluminium->getDataCounter($datapost_in['id_item'], $datapost_in['id_gudang'], $datapost_in['keranjang'])->num_rows();
