@@ -22,6 +22,7 @@
 
                 <div class="box-tools pull-right">
                     <a class="btn btn-primary" onclick="cetakExcel()">Cetak</a>
+                    <a class="btn btn-primary" onclick="cetakExcelAll()">Cetak All</a>
                 </div>
             </div>
             <div class="box-body" id="printableArea">
@@ -148,6 +149,11 @@
 
     function cetakExcel() {
         var url = "<?= site_url('wrh/aksesoris/cetakExcelMonitoring') ?>";
+        window.open(url, "_blank");
+    }
+
+    function cetakExcelAll() {
+        var url = "<?= site_url('wrh/aksesoris/cetakExcelMonitoringAll') ?>";
         window.open(url, "_blank");
     }
 
