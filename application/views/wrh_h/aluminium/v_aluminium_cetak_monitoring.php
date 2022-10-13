@@ -73,7 +73,7 @@
             //     $this->db->where('DATE_FORMAT(created,"%Y")', '2022');
             //     $this->db->where('DATE_FORMAT(created,"%m")', '09');
             //     $this->db->update('data_stock', $object);
-                
+
             // }else{
             //     $qtyx = 'ok';
             // }
@@ -88,33 +88,36 @@
             if ($beda == 1) {
                 $this->m_aluminium->updateDataCounter($row->id_item,  $row->id_gudang, $row->keranjang, $total_akhir);
             }
-        ?>
-            <tr>
-                <td align="center"><?= $i++ ?></td>
-                <td><?= $row->item_code ?></td>
-                <td><?= $row->section_ata ?></td>
-                <td><?= $row->section_allure ?></td>
-                <td><?= $row->temper ?></td>
-                <td><?= $row->kode_warna ?></td>
-                <td><?= $row->ukuran ?></td>
 
-                <td><?= $row->warna ?></td>
-                <td><?= $row->satuan ?></td>
-                <td><?= $row->lead_time ?></td>
-                <td><?= $row->gudang ?></td>
-                <td><?= $row->keranjang ?></td>
-                <td><?= $stock_awal_bulan ?></td>
-                <td><?= $total_in ?></td>
-                <td><?= $total_out ?></td>
-                <td align="center"><?= $qty_out_proses ?></td>
-                <td><?= $row->rata_pemakaian ?></td>
-                <td align="center"><?= $total_akhir ?></td>
-                <?php if (from_session('id') == 2) { ?>
-                    <td align="center"><?= $row->qty ?></td>
-                    <td align="center"><?= $beda ?></td>
-                <?php } ?>
-            </tr>
-        <?php } ?>
+            if ($total_akhir > 0 || $stock_awal_bulan > 0) {
+        ?>
+                <tr>
+                    <td align="center"><?= $i++ ?></td>
+                    <td><?= $row->item_code ?></td>
+                    <td><?= $row->section_ata ?></td>
+                    <td><?= $row->section_allure ?></td>
+                    <td><?= $row->temper ?></td>
+                    <td><?= $row->kode_warna ?></td>
+                    <td><?= $row->ukuran ?></td>
+
+                    <td><?= $row->warna ?></td>
+                    <td><?= $row->satuan ?></td>
+                    <td><?= $row->lead_time ?></td>
+                    <td><?= $row->gudang ?></td>
+                    <td><?= $row->keranjang ?></td>
+                    <td><?= $stock_awal_bulan ?></td>
+                    <td><?= $total_in ?></td>
+                    <td><?= $total_out ?></td>
+                    <td align="center"><?= $qty_out_proses ?></td>
+                    <td><?= $row->rata_pemakaian ?></td>
+                    <td align="center"><?= $total_akhir ?></td>
+                    <?php if (from_session('id') == 2) { ?>
+                        <td align="center"><?= $row->qty ?></td>
+                        <td align="center"><?= $beda ?></td>
+                    <?php } ?>
+                </tr>
+        <?php }
+        } ?>
     </tbody>
 </table>
 

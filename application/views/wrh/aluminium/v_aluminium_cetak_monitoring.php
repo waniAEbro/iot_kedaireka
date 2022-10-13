@@ -34,8 +34,8 @@
             <th>Rata-rata</th>
             <th>Qty</th>
             <?php if (from_session('id') == 2) { ?>
-            <th>Qty Counter</th>
-            <th>beda</th>
+                <th>Qty Counter</th>
+                <th>beda</th>
             <?php } ?>
         </tr>
     </thead>
@@ -46,15 +46,15 @@
             $stock_awal_bulan_now = @$s_awal_bulan[$row->id_item][$row->id_gudang][$row->keranjang];
             // $total_in_lalu = @$s_total_in_lalu[$row->id_item][$row->id_gudang][$row->keranjang];
             // $total_out_lalu = @$s_total_out_lalu[$row->id_item][$row->id_gudang][$row->keranjang];
-            $stock_awal_bulan = $stock_awal_bulan_now ;
+            $stock_awal_bulan = $stock_awal_bulan_now;
 
 
             $total_in = @$s_total_in[$row->id_item][$row->id_gudang][$row->keranjang];
             $total_out = @$s_total_out[$row->id_item][$row->id_gudang][$row->keranjang];
-            
+
             $total_akhir = $stock_awal_bulan + $total_in - $total_out;
             $qty_out_proses = @$s_total_out_proses[$row->id_item][$row->id_gudang][$row->keranjang];
-            
+
             if ($total_akhir != $row->qty) {
                 $beda = 1;
             } else {
@@ -64,33 +64,36 @@
             if ($beda == 1) {
                 $this->m_aluminium->updateDataCounter($row->id_item,  $row->id_gudang, $row->keranjang, $total_akhir);
             }
-        ?>
-            <tr>
-                <td align="center"><?= $i++ ?></td>
-                <td><?= $row->item_code ?></td>
-                <td><?= $row->section_ata ?></td>
-                <td><?= $row->section_allure ?></td>
-                <td><?= $row->temper ?></td>
-                <td><?= $row->kode_warna ?></td>
-                <td><?= $row->ukuran ?></td>
 
-                <td><?= $row->warna ?></td>
-                <td><?= $row->satuan ?></td>
-                <td><?= $row->lead_time ?></td>
-                <td><?= $row->gudang ?></td>
-                <td><?= $row->keranjang ?></td>
-                <td><?= $stock_awal_bulan ?></td>
-                <td><?= $total_in ?></td>
-                <td><?= $total_out ?></td>
-                <td align="center"><?= $qty_out_proses ?></td>
-                <td><?= $row->rata_pemakaian ?></td>
-                <td align="center"><?= $total_akhir ?></td>
-                <?php if (from_session('id') == 2) { ?>
-                    <td align="center"><?= $row->qty ?></td>
-                <td align="center"><?= $beda ?></td>
-                <?php } ?>
-            </tr>
-        <?php } ?>
+            if ($total_akhir > 0 || $stock_awal_bulan > 0) {
+        ?>
+                <tr>
+                    <td align="center"><?= $i++ ?></td>
+                    <td><?= $row->item_code ?></td>
+                    <td><?= $row->section_ata ?></td>
+                    <td><?= $row->section_allure ?></td>
+                    <td><?= $row->temper ?></td>
+                    <td><?= $row->kode_warna ?></td>
+                    <td><?= $row->ukuran ?></td>
+
+                    <td><?= $row->warna ?></td>
+                    <td><?= $row->satuan ?></td>
+                    <td><?= $row->lead_time ?></td>
+                    <td><?= $row->gudang ?></td>
+                    <td><?= $row->keranjang ?></td>
+                    <td><?= $stock_awal_bulan ?></td>
+                    <td><?= $total_in ?></td>
+                    <td><?= $total_out ?></td>
+                    <td align="center"><?= $qty_out_proses ?></td>
+                    <td><?= $row->rata_pemakaian ?></td>
+                    <td align="center"><?= $total_akhir ?></td>
+                    <?php if (from_session('id') == 2) { ?>
+                        <td align="center"><?= $row->qty ?></td>
+                        <td align="center"><?= $beda ?></td>
+                    <?php } ?>
+                </tr>
+        <?php }
+        } ?>
     </tbody>
 </table>
 
