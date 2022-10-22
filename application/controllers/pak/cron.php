@@ -176,17 +176,17 @@ class Cron extends CI_Controller
             $year_depan        = date('Y', strtotime($tgl_depan));
             $month_depan       = date('m', strtotime($tgl_depan));
 
-            $this->db->where('DATE_FORMAT(ds.aktual,"%Y")', $year_depan);
-            $this->db->where('DATE_FORMAT(ds.aktual,"%m")', $month_depan);
-            $this->db->where('ds.awal_bulan', 1);
+            $this->db->where('DATE_FORMAT(aktual,"%Y")', $year_depan);
+            $this->db->where('DATE_FORMAT(aktual,"%m")', $month_depan);
+            $this->db->where('awal_bulan', 1);
 
             if ($divisi != '0') {
-                $this->db->where('ds.id_divisi', $divisi);
+                $this->db->where('id_divisi', $divisi);
             }
             if ($gudang != '0') {
-                $this->db->where('ds.id_gudang', $gudang);
+                $this->db->where('id_gudang', $gudang);
             }
-            $this->db->where('ds.keranjang', $keranjang);
+            $this->db->where('keranjang', $keranjang);
             $object = array('qty_in' => $qty_total);
             $this->db->update('data_stock', $object);
         }
