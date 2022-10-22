@@ -149,4 +149,46 @@ class Cron extends CI_Controller
 
         echo "berhasil <br> menghitung transaksi bulan " . $bulan_skrg . " tahun " . $year . "<br> mengupdate awal bulan " . $bulan_depan . " tahun " . $year;
     }
+
+    public function cekstok($item_code = '', $divisi = '', $gudang = '', $keranjang = '', $tgl = '', $update = '')
+    {
+        $year        = date('Y', strtotime($tgl));
+        $month       = date('m', strtotime($tgl));
+        $this->db->select('sum(qty_in)-sum(qty_out) as total');
+        $this->db->join('master_item mi', 'mi.id = ds.id_item', 'left');
+        $this->db->where('mi.item_code', $item_code);
+
+        $this->db->where('DATE_FORMAT(ds.aktual,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(ds.aktual,"%m")', $month);
+        if ($divisi != '0') {
+            $this->db->where('ds.id_divisi', $divisi);
+        }
+        if ($gudang != '0') {
+            $this->db->where('ds.id_gudang', $gudang);
+        }
+        $this->db->where('ds.keranjang', $keranjang);
+        $qty_total = $this->db->get('data_stock ds')->row()->total;
+        echo 'total transaksi: ' . $qty_total . '<br>';
+
+        if ($update == 1) {
+            $tgl_depan = date('Y-m-d', strtotime('+1 month', strtotime($tgl)));
+            echo $tgl_depan;
+            $year_depan        = date('Y', strtotime($tgl_depan));
+            $month_depan       = date('m', strtotime($tgl_depan));
+
+            $this->db->where('DATE_FORMAT(ds.aktual,"%Y")', $year_depan);
+            $this->db->where('DATE_FORMAT(ds.aktual,"%m")', $month_depan);
+            $this->db->where('ds.awal_bulan', 1);
+
+            if ($divisi != '0') {
+                $this->db->where('ds.id_divisi', $divisi);
+            }
+            if ($gudang != '0') {
+                $this->db->where('ds.id_gudang', $gudang);
+            }
+            $this->db->where('ds.keranjang', $keranjang);
+            $object = array('qty_in' => $qty_total);
+            $this->db->update('data_stock', $object);
+        }
+    }
 }
