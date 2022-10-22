@@ -172,10 +172,9 @@ class Cron extends CI_Controller
 
         if ($update == 1) {
             $tgl_depan = date('Y-m-d', strtotime('+1 month', strtotime($tgl)));
-            echo $tgl_depan;
             $year_depan        = date('Y', strtotime($tgl_depan));
             $month_depan       = date('m', strtotime($tgl_depan));
-
+            
             $this->db->where('DATE_FORMAT(aktual,"%Y")', $year_depan);
             $this->db->where('DATE_FORMAT(aktual,"%m")', $month_depan);
             $this->db->where('awal_bulan', 1);
@@ -189,6 +188,7 @@ class Cron extends CI_Controller
             $this->db->where('keranjang', $keranjang);
             $object = array('qty_in' => $qty_total);
             $this->db->update('data_stock', $object);
+            echo 'berhasil update awal bulan : '.$tgl_depan;
         }
     }
 }
