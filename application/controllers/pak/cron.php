@@ -154,7 +154,7 @@ class Cron extends CI_Controller
     {
         $year        = date('Y', strtotime($tgl));
         $month       = date('m', strtotime($tgl));
-        $this->db->select('sum(qty_in)-sum(qty_out) as total');
+        $this->db->select('sum(qty_in)-sum(qty_out) as total,ds.id_item');
         $this->db->join('master_item mi', 'mi.id = ds.id_item', 'left');
         $this->db->where('mi.item_code', $item_code);
 
@@ -167,8 +167,10 @@ class Cron extends CI_Controller
             $this->db->where('ds.id_gudang', $gudang);
         }
         $this->db->where('ds.keranjang', $keranjang);
-        $qty_total = $this->db->get('data_stock ds')->row()->total;
-        echo 'total transaksi: ' . $qty_total . '<br>';
+        $dd = $this->db->get('data_stock ds')->row();
+        $qty_total = $dd->total;
+        $id_item = $dd->id_item;
+        echo 'id_item: '.$id_item.'<br> total transaksi: ' . $qty_total . '<br>';
 
         if ($update == 1) {
             $tgl_depan = date('Y-m-d', strtotime('+1 month', strtotime($tgl)));
@@ -186,6 +188,7 @@ class Cron extends CI_Controller
                 $this->db->where('id_gudang', $gudang);
             }
             $this->db->where('keranjang', $keranjang);
+            $this->db->where('id_item', $id_item);
             $object = array('qty_in' => $qty_total);
             $this->db->update('data_stock', $object);
             echo 'berhasil update awal bulan : '.$tgl_depan;
