@@ -65,6 +65,11 @@
                 $this->m_aluminium->updateDataCounter($row->id_item,  $row->id_gudang, $row->keranjang, $total_akhir);
             }
 
+            if($is_update!=''){
+                $this->m_aksesoris->ceksemuadanupdate($row->id_item, $row->id_gudang, $row->keranjang, $total_akhir);
+                
+            }
+
             if ($total_akhir > 0 || $stock_awal_bulan > 0) {
         ?>
                 <tr>

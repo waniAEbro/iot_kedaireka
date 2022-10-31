@@ -74,7 +74,7 @@ class pvc extends CI_Controller
         $this->load->view('wrh/pvc/v_pvc_list', $data);
     }
 
-    public function cetakExcelMonitoring()
+    public function cetakExcelMonitoring($is_update='')
     {
         $data['pvc']    = $this->m_pvc->getCetakMonitoring(5);
         $data['s_awal_bulan']    = $this->m_pvc->getStockAwalBulanCetak();
@@ -84,6 +84,7 @@ class pvc extends CI_Controller
         $data['s_total_out_lalu'] = $this->m_pvc->getTotalOutPerBulanCetakLalu();
         $data['s_total_out_proses'] = $this->m_pvc->getTotalOutPerBulanCetakProses();
         $data['jenis_barang'] = "pvc";
+        $data['is_update'] = $is_update;
         $this->load->view('wrh/pvc/v_pvc_cetak_monitoring', $data);
     }
 

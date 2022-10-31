@@ -91,7 +91,7 @@ class Aluminium extends CI_Controller
         $this->load->view('wrh_h/aluminium/v_aluminium_list', $data);
     }
 
-    public function cetakExcelMonitoring()
+    public function cetakExcelMonitoring($is_update='')
     {
         $data['aksesoris']    = $this->m_aluminium->getCetakMonitoring(1);
         $data['jenis_barang'] = "Aluminium";
@@ -101,10 +101,11 @@ class Aluminium extends CI_Controller
         $data['s_total_in_lalu']  = $this->m_aluminium->getTotalInPerBulanCetakLalu();
         $data['s_total_out_lalu'] = $this->m_aluminium->getTotalOutPerBulanCetakLalu();
         $data['s_total_out_proses'] = $this->m_aluminium->getTotalOutPerBulanCetakProses();
+        $data['is_update'] = $is_update;
         $this->load->view('wrh_h/aluminium/v_aluminium_cetak_monitoring', $data);
     }
 
-    public function cetakExcelMonitoringMf()
+    public function cetakExcelMonitoringMf($is_update='')
     {
         $data['aksesoris']    = $this->m_aluminium->getCetakMonitoringMf(1);
         $data['s_awal_bulan']    = $this->m_aluminium->getStockAwalBulanCetak();
@@ -114,6 +115,7 @@ class Aluminium extends CI_Controller
         $data['s_total_out_lalu'] = $this->m_aluminium->getTotalOutPerBulanCetakLalu();
         $data['s_total_out_proses'] = $this->m_aluminium->getTotalOutPerBulanCetakProses();
         $data['jenis_barang'] = "Aluminium MF";
+        $data['is_update'] = $is_update;
         $this->load->view('wrh_h/aluminium/v_aluminium_cetak_monitoring', $data);
     }
 

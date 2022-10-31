@@ -12,6 +12,37 @@ class M_aksesoris extends CI_Model
         $this->db->select('mi.*,mwa.warna');
         return $this->db->get('master_item mi');
     }
+
+    public function ceksemuadanupdate($id_item, $gudang, $keranjang, $tgl)
+    {
+        $year        = date('Y', strtotime($tgl));
+        $month       = date('m', strtotime($tgl));
+        $this->db->select('sum(qty_in)-sum(qty_out) as total,ds.id_item');
+        $this->db->where('ds.id_item', $id_item);
+
+        $this->db->where('DATE_FORMAT(ds.aktual,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(ds.aktual,"%m")', $month);
+        $this->db->where('ds.id_gudang', $gudang);
+        $this->db->where('ds.keranjang', $keranjang);
+        $dd = $this->db->get('data_stock ds')->row();
+        $qty_total = $dd->total;
+
+
+        $tgl_depan = date('Y-m-d', strtotime('+1 month', strtotime($tgl)));
+        $year_depan        = date('Y', strtotime($tgl_depan));
+        $month_depan       = date('m', strtotime($tgl_depan));
+
+        $this->db->where('DATE_FORMAT(aktual,"%Y")', $year_depan);
+        $this->db->where('DATE_FORMAT(aktual,"%m")', $month_depan);
+        $this->db->where('awal_bulan', 1);
+        $this->db->where('id_gudang', $gudang);
+        $this->db->where('keranjang', $keranjang);
+        $this->db->where('id_item', $id_item);
+        $object = array('qty_in' => $qty_total);
+        $this->db->update('data_stock', $object);
+    }
+
+
     public function getdataItem()
     {
         $id_jenis_item = 2;

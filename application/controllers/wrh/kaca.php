@@ -74,7 +74,7 @@ class kaca extends CI_Controller
         $this->load->view('wrh/kaca/v_kaca_list', $data);
     }
 
-    public function cetakExcelMonitoring()
+    public function cetakExcelMonitoring($is_update='')
     {
         $data['kaca']    = $this->m_kaca->getCetakMonitoring(3);
         // $bulan       = date('m');
@@ -93,6 +93,7 @@ class kaca extends CI_Controller
         $data['s_total_out_lalu'] = $this->m_kaca->getTotalOutPerBulanCetakLalu();
         $data['s_total_out_proses'] = $this->m_kaca->getTotalOutPerBulanCetakProses();
         $data['jenis_barang'] = "kaca";
+        $data['is_update'] = $is_update;
         $this->load->view('wrh/kaca/v_kaca_cetak_monitoring', $data);
     }
 

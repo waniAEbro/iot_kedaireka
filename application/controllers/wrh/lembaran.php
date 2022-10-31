@@ -74,7 +74,7 @@ class lembaran extends CI_Controller
         $this->load->view('wrh/lembaran/v_lembaran_list', $data);
     }
 
-    public function cetakExcelMonitoring()
+    public function cetakExcelMonitoring($is_update='')
     {
         $data['lembaran']    = $this->m_lembaran->getCetakMonitoring(4);
         $data['s_awal_bulan']    = $this->m_lembaran->getStockAwalBulanCetak();
@@ -84,6 +84,7 @@ class lembaran extends CI_Controller
         $data['s_total_out_lalu'] = $this->m_lembaran->getTotalOutPerBulanCetakLalu();
         $data['s_total_out_proses'] = $this->m_lembaran->getTotalOutPerBulanCetakProses();
         $data['jenis_barang'] = "lembaran";
+        $data['is_update'] = $is_update;
         $this->load->view('wrh/lembaran/v_lembaran_cetak_monitoring', $data);
     }
 
