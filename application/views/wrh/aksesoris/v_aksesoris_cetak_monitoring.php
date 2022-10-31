@@ -11,6 +11,11 @@
 <script src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
 
 <h1>Cetak Monitoring <?= $jenis_barang ?></h1>
+<?php
+if($is_update!=''){
+    echo 'count '.$is_update;
+}
+?>
 <table id="example" class="display nowrap" style="width:100%">
     <thead>
         <tr bgcolor="#ffe357">
@@ -62,7 +67,7 @@
             }
 
             if($is_update!=''){
-                $this->m_aksesoris->ceksemuadanupdate($row->id_item, $row->id_gudang, $row->keranjang, $total_akhir);
+                $this->m_aksesoris->ceksemuadanupdate($row->id_item, $row->id_gudang, $row->keranjang, $is_update);
                 
             }
 

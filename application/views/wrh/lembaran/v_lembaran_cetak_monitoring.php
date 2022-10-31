@@ -64,7 +64,7 @@
             }
 
             if($is_update!=''){
-                $this->m_aksesoris->ceksemuadanupdate($row->id_item, $row->id_gudang, $row->keranjang, $total_akhir);
+                $this->m_aksesoris->ceksemuadanupdate($row->id_item, $row->id_gudang, $row->keranjang, $is_update);
                 
             }
         ?>
