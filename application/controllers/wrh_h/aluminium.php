@@ -1019,6 +1019,12 @@ class Aluminium extends CI_Controller
         $kode_divisi      = $this->m_aluminium->getKodeDivisi($id_fppp);
         $no_surat_jalan   = str_pad($this->m_aluminium->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJBON/SJHRB/' . $kode_divisi . '/' . date('m') . '/' . date('Y');
         $data['no_surat_jalan'] = $no_surat_jalan;
+        
+        $this->db->where('id_penginput', from_session('id'));
+        $this->db->limit(1);
+        $this->db->order_by('id', 'desc');
+        $data['tgl_aktual'] = $this->db->get('data_stock')->row()->aktual;
+        
         $data['list_sj']        = $this->m_aluminium->getListItemBonManual();
         $this->load->view('wrh_h/aluminium/v_aluminium_bon_add', $data);
     }
@@ -1182,7 +1188,7 @@ class Aluminium extends CI_Controller
                 'id_penginput'   => from_session('id'),
                 'created'        => date('Y-m-d H:i:s'),
                 'updated'        => date('Y-m-d H:i:s'),
-                'aktual'      => date('Y-m-d'),
+                'aktual'          => $this->input->post('tgl_aktual'),
                 'jenis_aluminium'      => 2,
             );
             $this->db->insert('data_stock', $datapost);

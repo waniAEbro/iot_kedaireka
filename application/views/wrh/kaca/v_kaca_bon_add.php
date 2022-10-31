@@ -32,7 +32,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Tgl Aktual</label>
-                                <input type="text" data-date-format="yyyy-mm-dd" class="form-control datepicker" value="<?= date('Y-m-d') ?>" id="tgl_aktual">
+                                <input type="text" data-date-format="yyyy-mm-dd" class="form-control datepicker" value="<?= $tgl_aktual ?>" id="tgl_aktual" readonly>
                             </div>
                         </div>
                     </div>

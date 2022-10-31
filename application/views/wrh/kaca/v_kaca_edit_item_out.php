@@ -31,7 +31,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Tgl Aktual</label>
-                                <input type="text" data-date-format="yyyy-mm-dd" value="<?= $tgl_aktual ?>" class="form-control datepicker" id="tgl_aktual">
+                                <input type="text" data-date-format="yyyy-mm-dd" value="<?= $tgl_aktual ?>" class="form-control datepicker" id="tgl_aktual" readonly>
                             </div>
                         </div>
                     </div>
@@ -476,6 +476,7 @@
                         'lapangan': $("#lapangan").val(),
                         'warna_awal': $("#warna_awal").val(),
                         'warna_akhir': $("#warna_akhir").val(),
+                        'tgl_aktual': $("#tgl_aktual").val(),
                     },
                 })
                 .success(function(datasaved) {

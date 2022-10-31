@@ -1018,6 +1018,12 @@ class kaca extends CI_Controller
         $kode_divisi      = $this->m_kaca->getKodeDivisi($id_fppp);
         $no_surat_jalan   = str_pad($this->m_kaca->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJBON/' . $kode_divisi . '/' . date('m') . '/' . date('Y');
         $data['no_surat_jalan'] = $no_surat_jalan;
+        
+        $this->db->where('id_penginput', from_session('id'));
+        $this->db->limit(1);
+        $this->db->order_by('id', 'desc');
+        $data['tgl_aktual'] = $this->db->get('data_stock')->row()->aktual;
+        
         $data['list_sj']        = $this->m_kaca->getListItemBonManual();
         $this->load->view('wrh/kaca/v_kaca_bon_add', $data);
     }
@@ -1215,7 +1221,7 @@ class kaca extends CI_Controller
                 'id_warna_akhir' => $this->input->post('warna_akhir'),
                 'created'        => date('Y-m-d H:i:s'),
                 'updated'        => date('Y-m-d H:i:s'),
-                'aktual'      => date('Y-m-d'),
+                'aktual'          => $this->input->post('tgl_aktual'),
             );
             $this->db->insert('data_stock', $datapost);
             $data['id']          = $this->db->insert_id();

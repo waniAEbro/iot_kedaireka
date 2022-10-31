@@ -1307,11 +1307,9 @@ class M_kaca extends CI_Model
 
     public function updateJadiSuratJalanBon($id_sj)
     {
-        $aktual = $this->db->get_where('data_surat_jalan', array('id' => $id_sj))->row()->tgl_aktual;
         $keterangan = $this->db->get_where('data_surat_jalan', array('id' => $id_sj))->row()->keterangan_sj;
 
         $object = array(
-            'aktual' => $aktual,
             'keterangan' => $keterangan,
             'id_surat_jalan' => $id_sj
         );

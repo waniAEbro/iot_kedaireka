@@ -934,6 +934,12 @@ class lembaran extends CI_Controller
         $kode_divisi      = $this->m_lembaran->getKodeDivisi($id_fppp);
         $no_surat_jalan   = str_pad($this->m_lembaran->getNoSuratJalan(), 4, '0', STR_PAD_LEFT) . '/SJBON/' . $kode_divisi . '/' . date('m') . '/' . date('Y');
         $data['no_surat_jalan'] = $no_surat_jalan;
+        
+        $this->db->where('id_penginput', from_session('id'));
+        $this->db->limit(1);
+        $this->db->order_by('id', 'desc');
+        $data['tgl_aktual'] = $this->db->get('data_stock')->row()->aktual;
+        
         $data['list_sj']        = $this->m_lembaran->getListItemBonManual();
         $this->load->view('wrh/lembaran/v_lembaran_bon_add', $data);
     }
@@ -1131,7 +1137,7 @@ class lembaran extends CI_Controller
                 'id_warna_akhir' => $this->input->post('warna_akhir'),
                 'created'        => date('Y-m-d H:i:s'),
                 'updated'        => date('Y-m-d H:i:s'),
-                'aktual'      => date('Y-m-d'),
+                'aktual'          => $this->input->post('tgl_aktual'),
             );
             $this->db->insert('data_stock', $datapost);
             $data['id']          = $this->db->insert_id();

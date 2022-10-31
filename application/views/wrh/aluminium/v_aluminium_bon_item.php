@@ -11,6 +11,14 @@
                 </div>
             </div>
             <div class="box-body" style="overflow-x:auto;">
+                <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Tgl Aktual</label>
+                                <input type="text" data-date-format="yyyy-mm-dd" class="form-control datepicker" value="<?= date('Y-m-d') ?>" id="tgl_aktual">
+                            </div>
+                        </div>
+                    </div>
                 <table width="100%" id="ableku" class="table table-bordered table-striped table-responsive" style="font-size: smaller;">
                     <thead>
                         <tr>
@@ -111,6 +119,10 @@
         });
         $("select").select2();
         $("#stock").val(0);
+
+        $('.datepicker').datepicker({
+            autoclose: true
+        });
     });
 
     $(".checkbox").change(function() {
@@ -180,6 +192,8 @@
 
 
     $("select[name=item]").change(function() {
+        $('#id_gudang').val('').trigger('change');
+        $('#keranjang').val('').trigger('change');
         var x = $("select[name=id_gudang]");
         if ($(this).val() == "") {
             x.html("<option>-- Select --</option>");
@@ -273,7 +287,7 @@
 
     function quotation2() {
 
-        if ($('#id_fppp').val() != '' && $('#item').val() != '' && $('#id_gudang').val() != '' && $('#qty').val() != '') {
+        if ($('#tgl_aktual').val() != '' && $('#id_fppp').val() != '' && $('#item').val() != '' && $('#id_gudang').val() != '' && $('#qty').val() != '') {
 
             $.ajax({
                     type: "POST",
@@ -290,6 +304,7 @@
                         'produksi': $("#produksi").val(),
                         'lapangan': $("#lapangan").val(),
                         'warna_akhir': $("#warna_akhir").val(),
+                        'tgl_aktual': $("#tgl_aktual").val(),
                     },
                 })
                 .success(function(datasaved) {
