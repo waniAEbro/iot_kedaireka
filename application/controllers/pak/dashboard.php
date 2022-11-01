@@ -434,7 +434,7 @@ class Dashboard extends CI_Controller
         $this->db->where('DATE_FORMAT(ds.aktual,"%m")', $month);
         
         $this->db->where('ds.keranjang', $keranjang);
-        $data['list'] = $this->db->get('ata_stock ds');
+        $data['list'] = $this->db->get('data_stock ds');
         $this->load->view('pak/v_log_transaksi',$data);
 	}
 }
