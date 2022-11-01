@@ -421,6 +421,22 @@ class Dashboard extends CI_Controller
 		);
 		$this->m_aluminium->updateData($data);
 	}
+
+	public function log_transaksi($item_code,$keranjang,$tgl)
+	{
+		$year        = date('Y', strtotime($tgl));
+        $month       = date('m', strtotime($tgl));
+        $this->db->select('mi.item_code,ds.id_gudang,ds.keranjang,ds.awal_bulan,ds.qty_in,ds.qty_out,ds.created,ds.aktual,ds.keterangan');
+        $this->db->join('master_item mi', 'mi.id = ds.id_item', 'left');
+        $this->db->where('mi.item_code', $item_code);
+
+        $this->db->where('DATE_FORMAT(ds.aktual,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(ds.aktual,"%m")', $month);
+        
+        $this->db->where('ds.keranjang', $keranjang);
+        $data['list'] = $this->db->get('ata_stock ds');
+        $this->load->view('pak/v_log_transaksi',$data);
+	}
 }
 
 /* End of file dashboard.php */
