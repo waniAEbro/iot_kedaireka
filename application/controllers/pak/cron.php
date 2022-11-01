@@ -226,5 +226,7 @@ class Cron extends CI_Controller
 				$this->db->insert('data_stock', $obj);
 			}
 		}
+
+        echo "berhasil insert awal bulan: ".$id_jenis_item;
     }
 }
