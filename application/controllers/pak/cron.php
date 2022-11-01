@@ -194,4 +194,37 @@ class Cron extends CI_Controller
             echo 'berhasil update awal bulan : '.$tgl_depan;
         }
     }
+
+
+    public function awal_bulan($id_jenis_item)
+    {
+        $year  = date('Y');
+        $month = date('m');
+        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(created,"%m")', $month);
+        $this->db->where('awal_bulan', 1);
+        $this->db->where('id_jenis_item', $id_jenis_item);
+        $cek_stock_awal_bulan = $this->db->get('data_stock')->num_rows();
+
+        $this->db->where('id_jenis_item', $id_jenis_item);        
+		$item = $this->db->get('data_counter');
+
+		if ($cek_stock_awal_bulan < 1) {
+			foreach ($item->result() as $key) {
+				$obj = array(
+					'awal_bulan' => 1,
+					'inout' => 1,
+					'id_item' => $key->id_item,
+					'id_divisi' => $key->id_divisi,
+					'id_gudang' => $key->id_gudang,
+					'keranjang' => $key->keranjang,
+					'id_jenis_item' => $key->id_jenis_item,
+					'qty_in' => $key->qty,
+					'created' => date('Y-m-d H:i:s'),
+					'aktual' => date('Y-m-d')
+				);
+				$this->db->insert('data_stock', $obj);
+			}
+		}
+    }
 }
