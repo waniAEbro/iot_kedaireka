@@ -170,17 +170,16 @@ class Cron extends CI_Controller
         $dd = $this->db->get('data_stock ds')->row();
         $qty_total = $dd->total;
         $id_item = $dd->id_item;
-        echo 'id_item: '.$id_item.'<br> total transaksi: ' . $qty_total . '<br>';
+        echo 'id_item: ' . $id_item . '<br> total transaksi: ' . $qty_total . '<br>';
 
         if ($update == 1) {
             $tgl_depan = date('Y-m-d', strtotime('+1 month', strtotime($tgl)));
             $year_depan        = date('Y', strtotime($tgl_depan));
             $month_depan       = date('m', strtotime($tgl_depan));
-            
+
             $this->db->where('DATE_FORMAT(aktual,"%Y")', $year_depan);
             $this->db->where('DATE_FORMAT(aktual,"%m")', $month_depan);
             $this->db->where('awal_bulan', 1);
-
             if ($divisi != '0') {
                 $this->db->where('id_divisi', $divisi);
             }
@@ -189,9 +188,51 @@ class Cron extends CI_Controller
             }
             $this->db->where('keranjang', $keranjang);
             $this->db->where('id_item', $id_item);
-            $object = array('qty_in' => $qty_total);
-            $this->db->update('data_stock', $object);
-            echo 'berhasil update awal bulan : '.$tgl_depan;
+            $cek_ada = $this->db->get('data_stock')->num_rows();
+
+            if ($cek_ada > 0) {
+                $this->db->where('DATE_FORMAT(aktual,"%Y")', $year_depan);
+                $this->db->where('DATE_FORMAT(aktual,"%m")', $month_depan);
+                $this->db->where('awal_bulan', 1);
+                if ($divisi != '0') {
+                    $this->db->where('id_divisi', $divisi);
+                }
+                if ($gudang != '0') {
+                    $this->db->where('id_gudang', $gudang);
+                }
+                $this->db->where('keranjang', $keranjang);
+                $this->db->where('id_item', $id_item);
+                $object = array('qty_in' => $qty_total);
+                $this->db->update('data_stock', $object);
+                echo 'berhasil update awal bulan : ' . $tgl_depan;
+            } else {
+                $this->db->where('DATE_FORMAT(aktual,"%Y")', $year_depan);
+                $this->db->where('DATE_FORMAT(aktual,"%m")', $month_depan);
+                if ($divisi != '0') {
+                    $this->db->where('id_divisi', $divisi);
+                }
+                if ($gudang != '0') {
+                    $this->db->where('id_gudang', $gudang);
+                }
+                $this->db->where('keranjang', $keranjang);
+                $this->db->where('id_item', $id_item);
+                $this->db->limit(1);                
+                $cek_row = $this->db->get('data_stock')->row();
+                $obj = array(
+                    'inout' => 1,
+                    'awal_bulan' => 1,
+                    'id_jenis_item' => $cek_row->id_jenis_item,
+                    'created' => $tgl_depan,
+                    'aktual' => $tgl_depan,
+                    'id_item' => $cek_row->id_item,
+                    'id_divisi' => $cek_row->id_divisi,
+                    'id_gudang' => $cek_row->id_gudang,
+                    'keranjang' => $cek_row->keranjang,
+                    'qty_in' => $qty_total,
+                );
+                $this->db->insert('data_stock', $obj);
+                echo 'berhasil insert awal bulan : ' . $tgl_depan;
+            }
         }
     }
 
@@ -206,29 +247,28 @@ class Cron extends CI_Controller
         $this->db->where('id_jenis_item', $id_jenis_item);
         $cek_stock_awal_bulan = $this->db->get('data_stock')->num_rows();
 
-        $this->db->where('id_jenis_item', $id_jenis_item);        
-		$item = $this->db->get('data_counter');
+        $this->db->where('id_jenis_item', $id_jenis_item);
+        $item = $this->db->get('data_counter');
 
-		if ($cek_stock_awal_bulan < 1) {
-			foreach ($item->result() as $key) {
-				$obj = array(
-					'awal_bulan' => 1,
-					'inout' => 1,
-					'id_item' => $key->id_item,
-					'id_divisi' => $key->id_divisi,
-					'id_gudang' => $key->id_gudang,
-					'keranjang' => $key->keranjang,
-					'id_jenis_item' => $key->id_jenis_item,
-					'qty_in' => $key->qty,
-					'created' => date('Y-m-d H:i:s'),
-					'aktual' => date('Y-m-d')
-				);
-				$this->db->insert('data_stock', $obj);
-			}
-            echo "berhasil insert awal bulan: ".$id_jenis_item;
-		}else{
-            echo "sudah insert awal bulan: ".$id_jenis_item;
+        if ($cek_stock_awal_bulan < 1) {
+            foreach ($item->result() as $key) {
+                $obj = array(
+                    'awal_bulan' => 1,
+                    'inout' => 1,
+                    'id_item' => $key->id_item,
+                    'id_divisi' => $key->id_divisi,
+                    'id_gudang' => $key->id_gudang,
+                    'keranjang' => $key->keranjang,
+                    'id_jenis_item' => $key->id_jenis_item,
+                    'qty_in' => $key->qty,
+                    'created' => date('Y-m-d H:i:s'),
+                    'aktual' => date('Y-m-d')
+                );
+                $this->db->insert('data_stock', $obj);
+            }
+            echo "berhasil insert awal bulan: " . $id_jenis_item;
+        } else {
+            echo "sudah insert awal bulan: " . $id_jenis_item;
         }
-
     }
 }
