@@ -234,7 +234,7 @@ class Cron extends CI_Controller
                     $this->db->insert('data_stock', $obj);
                     echo 'berhasil insert awal bulan : ' . $tgl_depan;
                 } else {
-                    echo 'gagal karena bulan sama insert awal bulan : ' . $tgl_depan;
+                    echo 'gagal karena bulan sama : ' . $tgl_depan;
                 }
             }
         }
