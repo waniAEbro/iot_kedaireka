@@ -1047,7 +1047,7 @@ class lembaran extends CI_Controller
         $keterangan      = $this->input->post('keterangan');
         $obj               = array(
             'penerima'          => $penerima,
-            'tgl_aktual'        => $tgl_aktual,
+            // 'tgl_aktual'        => $tgl_aktual,
             'alamat_pengiriman' => $alamat_pengiriman,
             'sopir'             => $sopir,
             'no_kendaraan'      => $no_kendaraan,
