@@ -256,8 +256,10 @@ class Cron extends CI_Controller
             $this->db->where('id_item', $dd->id);
             $this->db->where('keranjang', $keranjang);
             $this->db->update('data_stock', $object);
-
             echo 'SUKSES update item : ' . $item_code . ' keranjang : ' . $keranjang_besar;
+            $this->db->where('id_item', $dd->id);
+            $this->db->where('keranjang', $keranjang);
+            $this->db->update('data_counter', $object);
         } else {
             echo 'GAGAL update item : ' . $item_code . ' keranjang : ' . $keranjang_besar;
         }
