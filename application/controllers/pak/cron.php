@@ -240,6 +240,21 @@ class Cron extends CI_Controller
         }
     }
 
+    public function updateKeranjang($item_code, $keranjang)
+    {
+        $keranjang_besar = str_replace(' ', '', strtoupper($keranjang));
+        $this->db->where('mi.item_code', $item_code);
+        $dd = $this->db->get('master_item mi')->row();
+
+        $object = array('keranjang' => $keranjang_besar);
+
+        $this->db->where('id_item', $dd->id);
+        $this->db->where('keranjang', $keranjang);
+        $this->db->update('data_stock', $object);
+
+        echo 'berhasil update item : ' . $item_code . ' keranjang : ' . $keranjang_besar;
+    }
+
 
     public function awal_bulan($id_jenis_item)
     {
