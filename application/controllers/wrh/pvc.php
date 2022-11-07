@@ -1065,6 +1065,12 @@ class pvc extends CI_Controller
         $this->db->where('id_surat_jalan', $id_sj);
         $this->db->update('data_stock', $object);
 
+        $this->db->where('id_surat_jalan', $id_sj);
+        $dapat = $this->db->get('data_stock');
+        foreach ($dapat->result() as $key) {
+            $this->penyesuain_stok($key->id);
+        }
+
 
         $data['id'] = $id_sj;
         echo json_encode($data);
