@@ -345,7 +345,7 @@ class kaca extends CI_Controller
             'no_pr'          => $this->input->post('no_pr'),
             'id_divisi'      => $this->input->post('id_divisi'),
             'id_gudang'      => $this->input->post('id_gudang'),
-            'keranjang'      => str_replace(' ', '', $this->input->post('keranjang')),
+            'keranjang'      => str_replace(' ', '', strtoupper($this->input->post('keranjang'))),
             'keterangan'     => $this->input->post('keterangan'),
             'id_penginput'   => from_session('id'),
             'created'        => date('Y-m-d H:i:s'),
@@ -364,7 +364,7 @@ class kaca extends CI_Controller
                 'id_item'       => $this->input->post('item'),
                 'id_divisi'     => $this->input->post('id_divisi'),
                 'id_gudang'     => $this->input->post('id_gudang'),
-                'keranjang'     => str_replace(' ', '', $this->input->post('keranjang')),
+                'keranjang'     => str_replace(' ', '', strtoupper($this->input->post('keranjang'))),
                 'qty'           => $this->input->post('qty'),
                 'created'       => date('Y-m-d H:i:s'),
                 'itm_code'      => $this->m_kaca->getRowItem($this->input->post('item'))->item_code,
@@ -388,7 +388,7 @@ class kaca extends CI_Controller
         //     $this->db->where('id_item', $this->input->post('item'));
         //     $this->db->where('id_divisi', $this->input->post('id_divisi'));
         //     $this->db->where('id_gudang', $this->input->post('id_gudang'));
-        //     $this->db->where('keranjang', $this->input->post('keranjang'));
+        //     $this->db->where('keranjang', strtoupper($this->input->post('keranjang')));
 
         //     $get_awal_bulan_sblm = $this->db->get('data_stock');
         //     // $object_sblm = array(
@@ -399,7 +399,7 @@ class kaca extends CI_Controller
         //     //     'qty_in'         => $this->input->post('qty'),
         //     //     'id_divisi'      => $this->input->post('id_divisi'),
         //     //     'id_gudang'      => $this->input->post('id_gudang'),
-        //     //     'keranjang'      => str_replace(' ', '', $this->input->post('keranjang')),
+        //     //     'keranjang'      => str_replace(' ', '', strtoupper($this->input->post('keranjang'))),
         //     //     'keterangan'     => $this->input->post('keterangan'),
         //     //     'id_penginput'   => from_session('id'),
         //     //     'created'        =>  $tgl_awalbulan_aktual,
@@ -417,7 +417,7 @@ class kaca extends CI_Controller
         //                 'qty_in'         => $this->input->post('qty'),
         //                 'id_divisi'      => $this->input->post('id_divisi'),
         //                 'id_gudang'      => $this->input->post('id_gudang'),
-        //                 'keranjang'      => str_replace(' ', '', $this->input->post('keranjang')),
+        //                 'keranjang'      => str_replace(' ', '', strtoupper($this->input->post('keranjang'))),
         //                 'keterangan'     => $this->input->post('keterangan'),
         //                 'id_seselan'     => $data['id'],
         //                 'id_penginput'   => from_session('id'),
@@ -565,7 +565,7 @@ class kaca extends CI_Controller
             $obj = array(
                 'id_divisi'    => $this->input->post('divisi'),
                 'id_gudang'    => $this->input->post('gudang'),
-                'keranjang'    => str_replace(' ', '', $this->input->post('keranjang')),
+                'keranjang'    => str_replace(' ', '', strtoupper($this->input->post('keranjang'))),
                 'qty_out'      => $value,
                 'id_penginput' => from_session('id'),
                 'updated'      => date('Y-m-d H:i:s'),
@@ -583,7 +583,7 @@ class kaca extends CI_Controller
         $id_item      = $this->db->get_where('data_stock', array('id' => $editid))->row()->id_item;
         $id_divisi    = $this->input->post('divisi');
         $id_gudang    = $this->input->post('gudang');
-        $keranjang    = str_replace(' ', '', $this->input->post('keranjang'));
+        $keranjang    = str_replace(' ', '', strtoupper($this->input->post('keranjang')));
         $qtyin        = $this->m_kaca->getQtyInDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
         $qtyout       = $this->m_kaca->getQtyOutDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
         $data['qty_gudang'] = $qtyin - $qtyout;
@@ -623,7 +623,7 @@ class kaca extends CI_Controller
             'sj_mf'        => 0,
             'id_divisi'    => $this->input->post('divisi'),
             'id_gudang'    => $this->input->post('gudang'),
-            'keranjang'    => str_replace(' ', '', $this->input->post('keranjang')),
+            'keranjang'    => str_replace(' ', '', strtoupper($this->input->post('keranjang'))),
             'qty_out'      => $qty_out,
             'id_penginput' => from_session('id'),
             'updated'      => date('Y-m-d H:i:s'),
@@ -634,7 +634,7 @@ class kaca extends CI_Controller
         $id_item      = $this->db->get_where('data_stock', array('id' => $editid))->row()->id_item;
         $id_divisi    = $this->input->post('divisi');
         $id_gudang    = $this->input->post('gudang');
-        $keranjang    = str_replace(' ', '', $this->input->post('keranjang'));
+        $keranjang    = str_replace(' ', '', strtoupper($this->input->post('keranjang')));
         $qtyin        = $this->m_kaca->getQtyInDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
         $qtyout       = $this->m_kaca->getQtyOutDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
         $data['qty_gudang'] = $qtyin - $qtyout;
@@ -665,7 +665,7 @@ class kaca extends CI_Controller
             'sj_mf'        => 1,
             'id_divisi'    => $this->input->post('divisi'),
             'id_gudang'    => $this->input->post('gudang'),
-            'keranjang'    => str_replace(' ', '', $this->input->post('keranjang')),
+            'keranjang'    => str_replace(' ', '', strtoupper($this->input->post('keranjang'))),
             'qty_out'      => $qty_out,
             'id_penginput' => from_session('id'),
             'updated'      => date('Y-m-d H:i:s'),
@@ -676,7 +676,7 @@ class kaca extends CI_Controller
         $id_item      = $this->db->get_where('data_stock', array('id' => $editid))->row()->id_item;
         $id_divisi    = $this->input->post('divisi');
         $id_gudang    = $this->input->post('gudang');
-        $keranjang    = str_replace(' ', '', $this->input->post('keranjang'));
+        $keranjang    = str_replace(' ', '', strtoupper($this->input->post('keranjang')));
         $qtyin        = $this->m_kaca->getQtyInDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
         $qtyout       = $this->m_kaca->getQtyOutDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
         $data['qty_gudang'] = $qtyin - $qtyout;
@@ -927,7 +927,7 @@ class kaca extends CI_Controller
         $id_item   = $this->db->get_where('data_stock', array('id' => $editid))->row()->id_item;
         $id_divisi = $this->input->post('divisi');
         $id_gudang = $this->input->post('gudang');
-        $keranjang = str_replace(' ', '', $this->input->post('keranjang'));
+        $keranjang = str_replace(' ', '', strtoupper($this->input->post('keranjang')));
         $qtyin     = $this->m_kaca->getQtyInDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
         $qtyout    = $this->m_kaca->getQtyOutDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
         // $data['qty_gudang'] = $qtyin;
@@ -1131,7 +1131,7 @@ class kaca extends CI_Controller
         $keterangan      = $this->input->post('keterangan');
         $obj               = array(
             'penerima'          => $penerima,
-            // 'tgl_aktual'        => $tgl_aktual,
+            'tgl_aktual'        => $tgl_aktual,
             'alamat_pengiriman' => $alamat_pengiriman,
             'sopir'             => $sopir,
             'no_kendaraan'      => $no_kendaraan,
@@ -1179,7 +1179,7 @@ class kaca extends CI_Controller
         $id_item      = $this->input->post('item');
         $id_divisi    = $this->input->post('divisi');
         $id_gudang    = $this->input->post('gudang');
-        $keranjang    = str_replace(' ', '', $this->input->post('keranjang'));
+        $keranjang    = str_replace(' ', '', strtoupper($this->input->post('keranjang')));
         $qtyin        = $this->m_kaca->getQtyInDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
         $qtyout       = $this->m_kaca->getQtyOutDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
         $data['qty_gudang'] = $qtyin - $qtyout;
@@ -1195,7 +1195,7 @@ class kaca extends CI_Controller
         $id_item       = $this->input->post('item');
         $id_divisi     = $this->input->post('id_divisi');
         $id_gudang     = $this->input->post('id_gudang');
-        $keranjang     = str_replace(' ', '', $this->input->post('keranjang'));
+        $keranjang     = str_replace(' ', '', strtoupper($this->input->post('keranjang')));
         $cekQtyCounter = $this->m_kaca->getDataCounter($id_item, $id_divisi, $id_gudang, $keranjang)->row()->qty;
         $qty_out       = $this->input->post('qty');
         if ($qty_out > $cekQtyCounter) {
@@ -1213,7 +1213,7 @@ class kaca extends CI_Controller
                 'id_item'        => $this->input->post('item'),
                 'id_divisi'      => $this->input->post('id_divisi'),
                 'id_gudang'      => $this->input->post('id_gudang'),
-                'keranjang'      => str_replace(' ', '', $this->input->post('keranjang')),
+                'keranjang'      => str_replace(' ', '', strtoupper($this->input->post('keranjang'))),
                 'qty_out'        => $this->input->post('qty'),
                 'produksi'       => $this->input->post('produksi'),
                 'lapangan'       => $this->input->post('lapangan'),
@@ -1382,7 +1382,7 @@ class kaca extends CI_Controller
         $id_item   = $this->input->post('item');
         $id_divisi = $this->input->post('divisi');
         $id_gudang = $this->input->post('gudang');
-        $keranjang = str_replace(' ', '', $this->input->post('keranjang'));
+        $keranjang = str_replace(' ', '', strtoupper($this->input->post('keranjang')));
         // $qtyin     = $this->m_kaca->getQtyInDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
         // $qtyout    = $this->m_kaca->getQtyOutDetailTabel($id_item, $id_divisi, $id_gudang, $keranjang);
 
@@ -1399,7 +1399,7 @@ class kaca extends CI_Controller
         $id_item       = $this->input->post('id_item');
         $id_divisi     = $this->input->post('id_divisi');
         $id_gudang     = $this->input->post('id_gudang');
-        $keranjang     = str_replace(' ', '', $this->input->post('keranjang'));
+        $keranjang     = str_replace(' ', '', strtoupper($this->input->post('keranjang')));
         $qty           = $this->input->post('qty');
         $keterangan_out           = $this->input->post('keterangan_out');
 
