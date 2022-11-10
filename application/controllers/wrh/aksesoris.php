@@ -1354,7 +1354,7 @@ class aksesoris extends CI_Controller
 
         $id_divisi2 = $this->input->post('id_divisi2');
         $id_gudang2 = $this->input->post('id_gudang2');
-        $keranjang2 = str_replace(' ', '', $this->input->post('keranjang2'));
+        $keranjang2 = str_replace(' ', '', strtoupper($this->input->post('keranjang2')));
         $qty2       = $this->input->post('qty2');
         $keterangan_in           = $this->input->post('keterangan_in');
 
