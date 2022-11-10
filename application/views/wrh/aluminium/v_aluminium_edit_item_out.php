@@ -214,7 +214,7 @@
 
     function update() {
         $.ajax({
-            url: "<?= site_url('wrh/aluminium/ /') ?>",
+            url: "<?= site_url('wrh/aluminium/updateSuratJalanBon/') ?>",
             dataType: "json",
             type: "POST",
             data: {
