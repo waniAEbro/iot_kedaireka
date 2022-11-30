@@ -791,6 +791,10 @@ class Fppp extends CI_Controller
 						'rata_pemakaian'            => $rowData[0][20],
 						'min_stock'            => $rowData[0][21],
 					);
+					$obj_rata2 = array(
+						'rata_pemakaian'            => $rowData[0][20],
+						'minimum_stock'            => $rowData[0][21],
+					);
 
 					$cek_item = $this->m_fppp->cekItemCode($obj['id_jenis_item'], $itmcode);
 					if ($tipe_upload == 1) {
@@ -845,8 +849,15 @@ class Fppp extends CI_Controller
 						);
 						$this->db->insert('data_stock', $transaksi);
 					} elseif ($tipe_upload == 3) {
-						$this->db->where('item_code', $itmcode);
-						$this->db->update('master_item', $obj_rata);
+						if ($jenis_item > 1) {
+							$this->db->where('itm_code', $itmcode);
+							$this->db->where('id_gudang', $obj['id_gudang']);
+							$this->db->where('keranjang', str_replace(' ', '-', $obj['keranjang']));
+							$this->db->update('data_counter', $obj_rata2);
+						} else {
+							$this->db->where('item_code', $itmcode);
+							$this->db->update('master_item', $obj_rata);
+						}
 					} elseif ($tipe_upload == 4) {
 						$obj_allure = array(
 							'item_code'         => $rowData[0][8] . '-' . $rowData[0][22] . '-' . $rowData[0][10] . '-' . str_pad($rowData[0][11], 2, '0', STR_PAD_LEFT) . '-' . $rowData[0][12],
