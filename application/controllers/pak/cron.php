@@ -333,14 +333,14 @@ class Cron extends CI_Controller
             // $object = array('qty'=>$qty_total);
             // $this->db->update('data_counter dc', $object);
             if ($qty_total > 0) {
-                $this->db->where('DATE_FORMAT(created,"%Y")', $year_depan);
-                $this->db->where('DATE_FORMAT(created,"%m")', $month_depan);
+                $this->db->where('DATE_FORMAT(dss.created,"%Y")', $year_depan);
+                $this->db->where('DATE_FORMAT(dss.created,"%m")', $month_depan);
                 $this->db->where('awal_bulan', 1);
-                $this->db->where('id_jenis_item', $id_jenis_item);
-                $this->db->where('ds.id_item', $key->id_item);
-                $this->db->where('ds.id_gudang', $key->id_gudang);
-                $this->db->where('ds.keranjang', $key->keranjang);
-                $cek_stock_awal_bulan = $this->db->get('data_stock')->num_rows();
+                $this->db->where('dss.id_jenis_item', $id_jenis_item);
+                $this->db->where('dss.id_item', $key->id_item);
+                $this->db->where('dss.id_gudang', $key->id_gudang);
+                $this->db->where('dss.keranjang', $key->keranjang);
+                $cek_stock_awal_bulan = $this->db->get('data_stock dss')->num_rows();
 
                 if ($cek_stock_awal_bulan > 0) {
                     $obj_update = array(
@@ -352,9 +352,9 @@ class Cron extends CI_Controller
                     $this->db->where('DATE_FORMAT(created,"%m")', $month_depan);
                     $this->db->where('awal_bulan', 1);
                     $this->db->where('id_jenis_item', $id_jenis_item);
-                    $this->db->where('ds.id_item', $key->id_item);
-                    $this->db->where('ds.id_gudang', $key->id_gudang);
-                    $this->db->where('ds.keranjang', $key->keranjang);
+                    $this->db->where('id_item', $key->id_item);
+                    $this->db->where('id_gudang', $key->id_gudang);
+                    $this->db->where('keranjang', $key->keranjang);
                     $this->db->update('data_stock', $obj_update);
                 } else {
                     $obj = array(
