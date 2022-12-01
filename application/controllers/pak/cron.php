@@ -300,4 +300,45 @@ class Cron extends CI_Controller
             echo "sudah insert awal bulan: " . $id_jenis_item;
         }
     }
+
+    public function hitcounter($id_jenis_item, $tgl)
+    {
+
+        $year        = date('Y', strtotime($tgl));
+        $month       = date('m', strtotime($tgl));
+
+
+        $this->db->where('id_jenis_item', $id_jenis_item);
+        $ff = $this->db->get('data_counter');
+        foreach ($ff->result() as $key) {
+
+            $this->db->select('sum(qty_in)-sum(qty_out) as total');
+
+            $this->db->where('DATE_FORMAT(ds.aktual,"%Y")', $year);
+            $this->db->where('DATE_FORMAT(ds.aktual,"%m")', $month);
+            $this->db->where('ds.id_item', $key->id_item);
+            if ($key->id_divisi != '0') {
+                $this->db->where('ds.id_divisi', $key->id_divisi);
+            }
+            if ($key->id_divisi != '0') {
+                $this->db->where('ds.id_gudang', $key->id_divisi);
+            }
+            $this->db->where('ds.keranjang', $key->keranjang);
+            $dd = $this->db->get('data_stock ds')->row();
+            $qty_total = $dd->total;
+
+            $this->db->where('dc.id_item', $key->id_item);
+            if ($key->id_divisi != '0') {
+                $this->db->where('dc.id_divisi', $key->id_divisi);
+            }
+            if ($key->id_divisi != '0') {
+                $this->db->where('dc.id_gudang', $key->id_divisi);
+            }
+            $this->db->where('dc.keranjang', $key->keranjang);
+            $object = array('qty'=>$qty_total);
+            $this->db->update('data_counter dc', $object);
+        }
+
+        echo "berhasil upadate counter ". $id_jenis_item;
+    }
 }
