@@ -60,6 +60,11 @@
             if ($beda == 1 && $qty_out_proses < 1) {
                 $this->m_aksesoris->updateDataCounter($row->id_item, $row->id_divisi,  $row->id_gudang, $row->keranjang, $total_akhir);
             }
+
+            if($is_update!=''){
+                $this->m_aksesoris->ceksemuadanupdate($row->id_item, $row->id_gudang, $row->keranjang, $is_update);
+                
+            }
         ?>
                 <tr>
                     <td align="center"><?= $i++ ?></td>
