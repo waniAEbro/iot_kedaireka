@@ -320,9 +320,7 @@ class Cron extends CI_Controller
             if ($key->id_divisi != '0') {
                 $this->db->where('ds.id_divisi', $key->id_divisi);
             }
-            if ($key->id_divisi != '0') {
-                $this->db->where('ds.id_gudang', $key->id_divisi);
-            }
+            $this->db->where('ds.id_gudang', $key->id_gudang);
             $this->db->where('ds.keranjang', $key->keranjang);
             $dd = $this->db->get('data_stock ds')->row();
             $qty_total = $dd->total;
@@ -331,9 +329,7 @@ class Cron extends CI_Controller
             if ($key->id_divisi != '0') {
                 $this->db->where('dc.id_divisi', $key->id_divisi);
             }
-            if ($key->id_divisi != '0') {
-                $this->db->where('dc.id_gudang', $key->id_divisi);
-            }
+            $this->db->where('dc.id_gudang', $key->id_gudang);
             $this->db->where('dc.keranjang', $key->keranjang);
             $object = array('qty'=>$qty_total);
             $this->db->update('data_counter dc', $object);
