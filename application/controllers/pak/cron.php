@@ -337,6 +337,20 @@ class Cron extends CI_Controller
             $this->db->where('dc.keranjang', $key->keranjang);
             $object = array('qty'=>$qty_total);
             $this->db->update('data_counter dc', $object);
+
+            $obj = array(
+                'awal_bulan' => 1,
+                'inout' => 1,
+                'id_item' => $key->id_item,
+                'id_divisi' => $key->id_divisi,
+                'id_gudang' => $key->id_gudang,
+                'keranjang' => $key->keranjang,
+                'id_jenis_item' => 1,
+                'qty_in' => $qty_total,
+                'created' => date('Y-m-d H:i:s'),
+                'aktual' => date('Y-m-d')
+            );
+            $this->db->insert('data_stock', $obj);
         }
 
         echo "berhasil upadate counter ". $id_jenis_item;
