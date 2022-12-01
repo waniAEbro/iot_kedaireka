@@ -316,13 +316,9 @@ class Cron extends CI_Controller
         foreach ($ff->result() as $key) {
 
             $this->db->select('sum(qty_in)-sum(qty_out) as total');
-
             $this->db->where('DATE_FORMAT(ds.aktual,"%Y")', $year);
             $this->db->where('DATE_FORMAT(ds.aktual,"%m")', $month);
             $this->db->where('ds.id_item', $key->id_item);
-            // if ($key->id_divisi != '0') {
-            //     $this->db->where('ds.id_divisi', $key->id_divisi);
-            // }
             $this->db->where('ds.id_gudang', $key->id_gudang);
             $this->db->where('ds.keranjang', $key->keranjang);
             $dd = $this->db->get('data_stock ds')->row();
@@ -378,6 +374,6 @@ class Cron extends CI_Controller
             }
         }
 
-        echo "berhasil upadate counter " . $id_jenis_item;
+        echo "berhasil upadate awal_bulan " . $id_jenis_item;
     }
 }
