@@ -414,5 +414,7 @@ class Cron extends CI_Controller
             $this->db->where('keranjang', $key->keranjang);
             $this->db->update('data_stock', $obj_update);
         }
+
+        echo "berhasil update yg mutasi awal_bulan " . $id_jenis_item;
     }
 }
