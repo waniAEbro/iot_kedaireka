@@ -386,7 +386,7 @@ class Cron extends CI_Controller
         $year_depan        = date('Y', strtotime($tgl_depan));
         $month_depan       = date('m', strtotime($tgl_depan));
 
-        $this->db->where_in('dc.id_gudang', ['2', '4', '58', '59', '79', '81']);
+        $this->db->where_in('id_gudang', ['2', '4', '58', '59', '79', '81']);
         $this->db->where('id_jenis_item', $id_jenis_item);
         $ff = $this->db->get('data_counter');
         foreach ($ff->result() as $key) {
