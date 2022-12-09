@@ -377,6 +377,46 @@ class Cron extends CI_Controller
         echo "berhasil upadate awal_bulan " . $id_jenis_item;
     }
 
+    public function hitawalbulan($id_jenis_item, $tgl, $tgl_depan)
+    {
+
+        $year        = date('Y', strtotime($tgl));
+        $month       = date('m', strtotime($tgl));
+
+        $year_depan        = date('Y', strtotime($tgl_depan));
+        $month_depan       = date('m', strtotime($tgl_depan));
+
+        $this->db->where_in('dc.id_gudang', ['2', '4', '58', '59', '79', '81']);
+        $this->db->where('id_jenis_item', $id_jenis_item);
+        $ff = $this->db->get('data_counter');
+        foreach ($ff->result() as $key) {
+
+            $this->db->select('sum(qty_in)-sum(qty_out) as total');
+            $this->db->where('DATE_FORMAT(ds.aktual,"%Y")', $year);
+            $this->db->where('DATE_FORMAT(ds.aktual,"%m")', $month);
+            $this->db->where('ds.id_item', $key->id_item);
+            $this->db->where('ds.id_gudang', $key->id_gudang);
+            $this->db->where('ds.keranjang', $key->keranjang);
+            $dd = $this->db->get('data_stock ds')->row();
+            $qty_total = $dd->total;
+
+
+            $obj_update = array(
+                'qty_in' => $qty_total,
+            );
+            $this->db->where('DATE_FORMAT(created,"%Y")', $year_depan);
+            $this->db->where('DATE_FORMAT(created,"%m")', $month_depan);
+            $this->db->where('awal_bulan', 1);
+            $this->db->where('id_jenis_item', $id_jenis_item);
+            $this->db->where('id_item', $key->id_item);
+            $this->db->where('id_gudang', $key->id_gudang);
+            $this->db->where('keranjang', $key->keranjang);
+            $this->db->update('data_stock', $obj_update);
+        }
+
+        echo "berhasil upadate awal_bulan " . $id_jenis_item;
+    }
+
     public function hitulangmutasi($id_jenis_item, $tgl, $tgl_depan)
     {
         $year        = date('Y', strtotime($tgl));
