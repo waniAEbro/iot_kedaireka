@@ -899,8 +899,8 @@ class M_pvc extends CI_Model
         $year          = date('Y');
         $month         = date('m');
         $id_jenis_item = 5;
-        $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
-        $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
+        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(created,"%m")', $month);
         $this->db->order_by('id', 'desc');
         $this->db->limit(1);
         $this->db->where('id_jenis_item', $id_jenis_item);

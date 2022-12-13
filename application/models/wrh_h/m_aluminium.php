@@ -1158,8 +1158,8 @@ class M_aluminium extends CI_Model
         $year  = date('Y');
         $month = date('m');
         $id_jenis_item = 1;
-        $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
-        $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
+        $this->db->where('DATE_FORMAT(created,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(created,"%m")', $month);
         $this->db->where('jenis_aluminium', '2');
 
         $this->db->order_by('id', 'desc');
