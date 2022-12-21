@@ -439,6 +439,9 @@ class aksesoris extends CI_Controller
         sleep(1);
         $data = array(
             'id' => $id,
+            'id_item'     => $getRow->id_item,
+            'id_gudang'   => $getRow->id_gudang,
+            'keranjang'   => $getRow->keranjang,
             'qty_dihapus' => $getRow->qty_in,
         );
         $this->penyesuain_stok($id,1);
