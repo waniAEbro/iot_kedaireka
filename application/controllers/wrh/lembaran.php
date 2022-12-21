@@ -394,7 +394,7 @@ class lembaran extends CI_Controller
         );
         $this->penyesuain_stok($id,1);
 
-        $this->fungsi->catat($data, "Menghapus Stock In lembaran dengan data sbb:", true);
+        $this->fungsi->catat($data, "Menghapus Stock In List lembaran dengan data sbb:", true);
         $this->fungsi->run_js('load_silent("wrh/lembaran/stok_in","#content")');
         $this->fungsi->message_box("Menghapus Stock In lembaran", "success");
     }

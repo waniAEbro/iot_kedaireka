@@ -479,7 +479,7 @@ class kaca extends CI_Controller
 
 
 
-        $this->fungsi->catat($data, "Menghapus Stock In kaca dengan data sbb:", true);
+        $this->fungsi->catat($data, "Menghapus Stock In List kaca dengan data sbb:", true);
         $this->fungsi->run_js('load_silent("wrh/kaca/stok_in","#content")');
         $this->fungsi->message_box("Menghapus Stock In kaca", "success");
     }

@@ -393,7 +393,7 @@ class pvc extends CI_Controller
         );
         $this->penyesuain_stok($id,1);
 
-        $this->fungsi->catat($data, "Menghapus Stock In pvc dengan data sbb:", true);
+        $this->fungsi->catat($data, "Menghapus Stock In List pvc dengan data sbb:", true);
         $this->fungsi->run_js('load_silent("wrh/pvc/stok_in","#content")');
         $this->fungsi->message_box("Menghapus Stock In pvc", "success");
     }
