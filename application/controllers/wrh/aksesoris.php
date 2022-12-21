@@ -400,20 +400,23 @@ class aksesoris extends CI_Controller
         $qty_jadi      = (int)$cekQtyCounter - (int)$getRow->qty_in;
         $this->m_aksesoris->updateDataCounter($getRow->id_item, $getRow->id_divisi, $getRow->id_gudang, $getRow->keranjang, $qty_jadi);
 
-        $dt = array('qty_in' => 0);
-        $this->db->where('id', $id);
-        $this->db->update('data_stock', $dt);
+        // $dt = array('qty_in' => 0);
+        // $this->db->where('id', $id);
+        // $this->db->update('data_stock', $dt);
 
 
-        $row = $this->db->get_where('data_stock', array('id' => $id))->row();
-        $tgl_aktual = $row->aktual;
-        $month = date('m', strtotime($tgl_aktual));
-        if ($month != date('m')) {
-            $this->penyesuain_stok($id);
-        }
+        // $row = $this->db->get_where('data_stock', array('id' => $id))->row();
+        // $tgl_aktual = $row->aktual;
+        // $month = date('m', strtotime($tgl_aktual));
+        // if ($month != date('m')) {
+        //     $this->penyesuain_stok($id);
+        // }
         sleep(1);
         $data = array(
             'id' => $id,
+            'id_item'     => $getRow->id_item,
+            'id_gudang'   => $getRow->id_gudang,
+            'keranjang'   => $getRow->keranjang,
             'qty_dihapus' => $getRow->qty_in,
         );
         $this->penyesuain_stok($id,1);
