@@ -4,6 +4,72 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class M_lembaran extends CI_Model
 {
 
+    function __construct()
+	{
+		$this->column_order = array(null, 'mi.item_code');
+		$this->column_search = array('mi.item_code', 'mi.deskripsi');
+		// Set default order
+		// $this->order = array('nama' => 'asc');
+	}
+	public function getRows($postData)
+	{
+		$this->_get_datatables_query($postData);
+		if ($postData['length'] != -1) {
+			$this->db->limit($postData['length'], $postData['start']);
+		}
+		$query = $this->db->get();
+
+		return $query->result();
+	}
+	public function countAll()
+	{
+        $id_jenis_item = 4;
+        $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
+        $this->db->where('mi.id_jenis_item', $id_jenis_item);
+        $this->db->select('mi.*,mwa.warna');
+		$this->db->from('master_item mi');
+
+		return $this->db->count_all_results();
+	}
+	public function countFiltered($postData)
+	{
+		$this->_get_datatables_query($postData);
+		$query = $this->db->get();
+		return $query->num_rows();
+	}
+	private function _get_datatables_query($postData)
+	{
+		$id_jenis_item = 4;
+        $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
+        $this->db->where('mi.id_jenis_item', $id_jenis_item);
+        $this->db->select('mi.*,mwa.warna');
+		$this->db->from('master_item mi');
+
+		$i = 0;
+		// loop searchable columns 
+		foreach ($this->column_search as $item) {
+			// if datatable send POST for search
+			if ($postData['search']['value']) {
+				// first loop
+				if ($i === 0) {
+					$this->db->like($item, $postData['search']['value']);
+				} else {
+					$this->db->or_like($item, $postData['search']['value']);
+				}
+			}
+			$i++;
+		}
+
+		if (isset($postData['order'])) {
+			$this->db->order_by($this->column_order[$postData['order']['0']['column']], $postData['order']['0']['dir']);
+		} else if (isset($this->order)) {
+			$order = $this->order;
+			$this->db->order_by(key($order), $order[key($order)]);
+		}
+	}
+
+	//------------------------------cek-----------------------------//
+
     public function getdata()
     {
         $id_jenis_item = 4;

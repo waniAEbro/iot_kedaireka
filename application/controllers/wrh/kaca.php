@@ -13,17 +13,78 @@ class kaca extends CI_Controller
         $this->load->model('klg/m_fppp');
     }
 
+    // public function index()
+    // {
+        
+    //     $data['kaca']           = $this->m_kaca->getData();
+    //     $data['s_awal_bulan']        = $this->m_kaca->getStockAwalBulan();
+    //     $data['s_akhir_bulan'] = $this->m_kaca->getStockAkhirBulan();
+    //     $data['total_bom']           = $this->m_kaca->getTotalBOM();
+    //     $data['total_in_per_bulan']  = $this->m_kaca->getTotalInPerBulan();
+    //     $data['total_out_per_bulan'] = $this->m_kaca->getTotalOutPerBulan();
+    //     $data['warna']               = 'Warna';
+    //     $this->load->view('wrh/kaca/v_kaca_list', $data);
+    // }
+
     public function index()
     {
-        
-        $data['kaca']           = $this->m_kaca->getData();
-        $data['s_awal_bulan']        = $this->m_kaca->getStockAwalBulan();
-        $data['s_akhir_bulan'] = $this->m_kaca->getStockAkhirBulan();
-        $data['total_bom']           = $this->m_kaca->getTotalBOM();
-        $data['total_in_per_bulan']  = $this->m_kaca->getTotalInPerBulan();
-        $data['total_out_per_bulan'] = $this->m_kaca->getTotalOutPerBulan();
-        $data['warna']               = 'Warna';
+        $data['judul']               = 'Monitoring Kaca';
         $this->load->view('wrh/kaca/v_kaca_list', $data);
+    }
+
+    function getLists()
+    {
+        $s_awal_bulan        = $this->m_kaca->getStockAwalBulan();
+        $s_akhir_bulan = $this->m_kaca->getStockAkhirBulan();
+        $total_bom          = $this->m_kaca->getTotalBOM();
+        $total_in_per_bulan  = $this->m_kaca->getTotalInPerBulan();
+        $total_out_per_bulan = $this->m_kaca->getTotalOutPerBulan();
+
+        $data = $row = array();
+        $memData = $this->m_kaca->getRows($_POST);
+        $i = $_POST['start'];
+        foreach ($memData as $row) {
+            $i++;
+            $stock_awal_bulan        = @$s_awal_bulan[$row->id];
+            $tampil_stock_awal_bulan = ($stock_awal_bulan != '') ? $stock_awal_bulan : 0;
+
+            $tot_in_per_bulan          = @$total_in_per_bulan[$row->id];
+            $tampil_total_in_per_bulan = ($tot_in_per_bulan != '') ? $tot_in_per_bulan : 0;
+
+            $tot_out_per_bulan          = @$total_out_per_bulan[$row->id];
+            $tampil_total_out_per_bulan = ($tot_out_per_bulan != '') ? $tot_out_per_bulan : 0;
+
+            $tot_bom          = @$total_bom[$row->id];
+            $tampil_total_bom = ($tot_bom != '') ? $tot_bom : 0;
+
+            // $stock_akhir_bulan = ($tampil_stock_awal_bulan + $tampil_total_in_per_bulan) - $tampil_total_out_per_bulan;
+            $stock_akhir_bulan = @$s_akhir_bulan[$row->id];
+
+            $data[] = array(
+                $row->id,
+                $i,
+                $row->item_code,
+                $row->deskripsi,
+                $row->satuan,
+                $row->supplier,
+                $row->lead_time,
+                $tampil_stock_awal_bulan,
+                $row->rata_pemakaian,
+                $row->min_stock,
+                $tampil_total_in_per_bulan,
+                $tampil_total_out_per_bulan,
+                $stock_akhir_bulan,
+            );
+        }
+
+        $output = array(
+            "draw"            => $_POST['draw'],
+            "recordsTotal"    => $this->m_kaca->countAll(),
+            "recordsFiltered" => $this->m_kaca->countFiltered($_POST),
+            "data"            => $data,
+        );
+
+        echo json_encode($output);
     }
 
     public function list()

@@ -13,17 +13,78 @@ class lembaran extends CI_Controller
         $this->load->model('klg/m_fppp');
     }
 
+    // public function index()
+    // {
+
+    //     $data['lembaran']           = $this->m_lembaran->getData();
+    //     $data['s_awal_bulan']        = $this->m_lembaran->getStockAwalBulan();
+    //     $data['s_akhir_bulan'] = $this->m_lembaran->getStockAkhirBulan();
+    //     $data['total_bom']           = $this->m_lembaran->getTotalBOM();
+    //     $data['total_in_per_bulan']  = $this->m_lembaran->getTotalInPerBulan();
+    //     $data['total_out_per_bulan'] = $this->m_lembaran->getTotalOutPerBulan();
+    //     $data['warna']               = 'Warna';
+    //     $this->load->view('wrh/lembaran/v_lembaran_list', $data);
+    // }
+
     public function index()
     {
-
-        $data['lembaran']           = $this->m_lembaran->getData();
-        $data['s_awal_bulan']        = $this->m_lembaran->getStockAwalBulan();
-        $data['s_akhir_bulan'] = $this->m_lembaran->getStockAkhirBulan();
-        $data['total_bom']           = $this->m_lembaran->getTotalBOM();
-        $data['total_in_per_bulan']  = $this->m_lembaran->getTotalInPerBulan();
-        $data['total_out_per_bulan'] = $this->m_lembaran->getTotalOutPerBulan();
-        $data['warna']               = 'Warna';
+        $data['judul']               = 'Monitoring Lembaran';
         $this->load->view('wrh/lembaran/v_lembaran_list', $data);
+    }
+
+    function getLists()
+    {
+        $s_awal_bulan        = $this->m_lembaran->getStockAwalBulan();
+        $s_akhir_bulan = $this->m_lembaran->getStockAkhirBulan();
+        $total_bom          = $this->m_lembaran->getTotalBOM();
+        $total_in_per_bulan  = $this->m_lembaran->getTotalInPerBulan();
+        $total_out_per_bulan = $this->m_lembaran->getTotalOutPerBulan();
+
+        $data = $row = array();
+        $memData = $this->m_lembaran->getRows($_POST);
+        $i = $_POST['start'];
+        foreach ($memData as $row) {
+            $i++;
+            $stock_awal_bulan        = @$s_awal_bulan[$row->id];
+            $tampil_stock_awal_bulan = ($stock_awal_bulan != '') ? $stock_awal_bulan : 0;
+
+            $tot_in_per_bulan          = @$total_in_per_bulan[$row->id];
+            $tampil_total_in_per_bulan = ($tot_in_per_bulan != '') ? $tot_in_per_bulan : 0;
+
+            $tot_out_per_bulan          = @$total_out_per_bulan[$row->id];
+            $tampil_total_out_per_bulan = ($tot_out_per_bulan != '') ? $tot_out_per_bulan : 0;
+
+            $tot_bom          = @$total_bom[$row->id];
+            $tampil_total_bom = ($tot_bom != '') ? $tot_bom : 0;
+
+            // $stock_akhir_bulan = ($tampil_stock_awal_bulan + $tampil_total_in_per_bulan) - $tampil_total_out_per_bulan;
+            $stock_akhir_bulan = @$s_akhir_bulan[$row->id];
+
+            $data[] = array(
+                $row->id,
+                $i,
+                $row->item_code,
+                $row->deskripsi,
+                $row->satuan,
+                $row->supplier,
+                $row->lead_time,
+                $tampil_stock_awal_bulan,
+                $row->rata_pemakaian,
+                $row->min_stock,
+                $tampil_total_in_per_bulan,
+                $tampil_total_out_per_bulan,
+                $stock_akhir_bulan,
+            );
+        }
+
+        $output = array(
+            "draw"            => $_POST['draw'],
+            "recordsTotal"    => $this->m_lembaran->countAll(),
+            "recordsFiltered" => $this->m_lembaran->countFiltered($_POST),
+            "data"            => $data,
+        );
+
+        echo json_encode($output);
     }
 
     public function list()

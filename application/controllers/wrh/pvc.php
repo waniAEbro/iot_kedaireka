@@ -16,14 +16,69 @@ class pvc extends CI_Controller
     public function index()
     {
 
-        $data['pvc']           = $this->m_pvc->getData();
-        $data['s_awal_bulan']        = $this->m_pvc->getStockAwalBulan();
-        $data['s_akhir_bulan'] = $this->m_pvc->getStockAkhirBulan();
-        $data['total_bom']           = $this->m_pvc->getTotalBOM();
-        $data['total_in_per_bulan']  = $this->m_pvc->getTotalInPerBulan();
-        $data['total_out_per_bulan'] = $this->m_pvc->getTotalOutPerBulan();
-        $data['warna']               = 'Warna';
+        // $data['pvc']           = $this->m_pvc->getData();
+        // $data['s_awal_bulan']        = $this->m_pvc->getStockAwalBulan();
+        // $data['s_akhir_bulan'] = $this->m_pvc->getStockAkhirBulan();
+        // $data['total_bom']           = $this->m_pvc->getTotalBOM();
+        // $data['total_in_per_bulan']  = $this->m_pvc->getTotalInPerBulan();
+        // $data['total_out_per_bulan'] = $this->m_pvc->getTotalOutPerBulan();
+        $data['judul']               = 'Monitoring PVC';
         $this->load->view('wrh/pvc/v_pvc_list', $data);
+    }
+
+    function getLists()
+    {
+        $s_awal_bulan        = $this->m_pvc->getStockAwalBulan();
+        $s_akhir_bulan = $this->m_pvc->getStockAkhirBulan();
+        $total_bom          = $this->m_pvc->getTotalBOM();
+        $total_in_per_bulan  = $this->m_pvc->getTotalInPerBulan();
+        $total_out_per_bulan = $this->m_pvc->getTotalOutPerBulan();
+
+        $data = $row = array();
+        $memData = $this->m_pvc->getRows($_POST);
+        $i = $_POST['start'];
+        foreach ($memData as $row) {
+            $i++;
+            $stock_awal_bulan        = @$s_awal_bulan[$row->id];
+            $tampil_stock_awal_bulan = ($stock_awal_bulan != '') ? $stock_awal_bulan : 0;
+
+            $tot_in_per_bulan          = @$total_in_per_bulan[$row->id];
+            $tampil_total_in_per_bulan = ($tot_in_per_bulan != '') ? $tot_in_per_bulan : 0;
+
+            $tot_out_per_bulan          = @$total_out_per_bulan[$row->id];
+            $tampil_total_out_per_bulan = ($tot_out_per_bulan != '') ? $tot_out_per_bulan : 0;
+
+            $tot_bom          = @$total_bom[$row->id];
+            $tampil_total_bom = ($tot_bom != '') ? $tot_bom : 0;
+
+            // $stock_akhir_bulan = ($tampil_stock_awal_bulan + $tampil_total_in_per_bulan) - $tampil_total_out_per_bulan;
+            $stock_akhir_bulan = @$s_akhir_bulan[$row->id];
+
+            $data[] = array(
+                $row->id,
+                $i,
+                $row->item_code,
+                $row->deskripsi,
+                $row->satuan,
+                $row->supplier,
+                $row->lead_time,
+                $tampil_stock_awal_bulan,
+                $row->rata_pemakaian,
+                $row->min_stock,
+                $tampil_total_in_per_bulan,
+                $tampil_total_out_per_bulan,
+                $stock_akhir_bulan,
+            );
+        }
+
+        $output = array(
+            "draw"            => $_POST['draw'],
+            "recordsTotal"    => $this->m_pvc->countAll(),
+            "recordsFiltered" => $this->m_pvc->countFiltered($_POST),
+            "data"            => $data,
+        );
+
+        echo json_encode($output);
     }
 
     public function list()
@@ -74,7 +129,7 @@ class pvc extends CI_Controller
         $this->load->view('wrh/pvc/v_pvc_list', $data);
     }
 
-    public function cetakExcelMonitoring($is_update='')
+    public function cetakExcelMonitoring($is_update = '')
     {
         $data['pvc']    = $this->m_pvc->getCetakMonitoring(5);
         $data['s_awal_bulan']    = $this->m_pvc->getStockAwalBulanCetak();
@@ -103,8 +158,8 @@ class pvc extends CI_Controller
             // $total_in_lalu = @$s_total_in_lalu[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
             // $total_out_lalu = @$s_total_out_lalu[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
             $stock_awal_bulan = $stock_awal_bulan_now;
-            
-            
+
+
             $total_in = @$s_total_in[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
             $total_out = @$s_total_out[$key->id_item][$key->id_divisi][$key->id_gudang][$key->keranjang];
             $total_akhir = $stock_awal_bulan + $total_in - $total_out;
@@ -114,22 +169,22 @@ class pvc extends CI_Controller
             $qtyout          = $this->m_aksesoris->getQtyOutDetailTabelMonitoring($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
             $qtyinmutasi          = $this->m_aksesoris->getQtyInDetailTabelMonitoringMutasi($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
             $qtyoutmutasi          = $this->m_aksesoris->getQtyOutDetailTabelMonitoringMutasi($key->id_item, $key->id_divisi, $key->id_gudang, $key->keranjang);
-           
-                $temp            = array(
-                    "divisi"           => $key->divisi,
-                    "gudang"           => $key->gudang,
-                    "keranjang"        => $key->keranjang,
-                    "stok_awal_bulan"  => $stock_awal_bulan,
-                    "tot_in"           => $qtyin,
-                    "tot_out"          => $qtyout,
-                    "mutasi_in"          => $qtyinmutasi,
-                    "mutasi_out"          => $qtyoutmutasi,
-                    // "stok_akhir_bulan" => $key->qty,
-                    "stok_akhir_bulan" => $total_akhir,
-                    "rata_pemakaian"   => $key->rata_pemakaian,
-                    "min_stock"        => '0',
-                );
-            
+
+            $temp            = array(
+                "divisi"           => $key->divisi,
+                "gudang"           => $key->gudang,
+                "keranjang"        => $key->keranjang,
+                "stok_awal_bulan"  => $stock_awal_bulan,
+                "tot_in"           => $qtyin,
+                "tot_out"          => $qtyout,
+                "mutasi_in"          => $qtyinmutasi,
+                "mutasi_out"          => $qtyoutmutasi,
+                // "stok_akhir_bulan" => $key->qty,
+                "stok_akhir_bulan" => $total_akhir,
+                "rata_pemakaian"   => $key->rata_pemakaian,
+                "min_stock"        => '0',
+            );
+
 
             // $this->db->where('id_item', $key->id_item);
             // $this->db->where('id_divisi', $key->id_divisi);
@@ -391,7 +446,7 @@ class pvc extends CI_Controller
             'keranjang'   => $getRow->keranjang,
             'qty_dihapus' => $getRow->qty_in,
         );
-        $this->penyesuain_stok($id,1);
+        $this->penyesuain_stok($id, 1);
 
         $this->fungsi->catat($data, "Menghapus Stock In List pvc dengan data sbb:", true);
         $this->fungsi->run_js('load_silent("wrh/pvc/stok_in","#content")');
@@ -414,7 +469,7 @@ class pvc extends CI_Controller
             'keranjang'   => $getRow->keranjang,
             'qty_dihapus' => $getRow->qty_in,
         );
-        $this->penyesuain_stok($id,1);
+        $this->penyesuain_stok($id, 1);
 
         $this->fungsi->catat($data, "Menghapus Stock In pvc dengan data sbb:", true);
         $respon = ['msg' => 'Data Berhasil Dihapus'];
@@ -898,7 +953,7 @@ class pvc extends CI_Controller
 
     public function bon_manual_diSet($tgl_awal = '', $tgl_akhir = '')
     {
-        
+
         $id_jenis_item = 5;
         $data['tgl_awal']  = $tgl_awal;
         $data['tgl_akhir'] = $tgl_akhir;
@@ -909,7 +964,7 @@ class pvc extends CI_Controller
 
     public function bon_manual_diSet_cetak($tgl_awal = '', $tgl_akhir = '')
     {
-        
+
         $id_jenis_item = 5;
         $data['tgl_awal']  = $tgl_awal;
         $data['tgl_akhir'] = $tgl_akhir;
@@ -939,12 +994,12 @@ class pvc extends CI_Controller
         $kode_divisi      = $this->m_pvc->getKodeDivisi($id_fppp);
         $no_surat_jalan   = str_pad($this->m_pvc->getNoSuratJalan(), 5, '0', STR_PAD_LEFT) . '/SJBON/' . $kode_divisi . '/' . date('m') . '/' . date('Y');
         $data['no_surat_jalan'] = $no_surat_jalan;
-        
+
         $this->db->where('id_penginput', from_session('id'));
         $this->db->limit(1);
         $this->db->order_by('id', 'desc');
         $data['tgl_aktual'] = $this->db->get('data_stock')->row()->aktual;
-        
+
         $data['list_sj']        = $this->m_pvc->getListItemBonManual();
         $this->load->view('wrh/pvc/v_pvc_bon_add', $data);
     }
@@ -1429,8 +1484,8 @@ class pvc extends CI_Controller
             $data['tgl'] = $tgl;
         }
 
-        $year  = date('Y',strtotime($data['tgl']));
-        $month = date('m',strtotime($data['tgl']));
+        $year  = date('Y', strtotime($data['tgl']));
+        $month = date('m', strtotime($data['tgl']));
         $this->db->where('DATE_FORMAT(created,"%Y")', $year);
         $this->db->where('DATE_FORMAT(created,"%m")', $month);
         $this->db->where('awal_bulan', 1);
@@ -1438,8 +1493,8 @@ class pvc extends CI_Controller
         $id_awal_bulan = $this->db->get('data_stock')->row()->id;
 
         $data['qty_awal_bulan'] = $this->m_aksesoris->getQtyAwalBulan($data['tgl']);
-        $data['qty_masuk'] = $this->m_aksesoris->getQtyMasuk($data['tgl'],$id_awal_bulan);
-        $data['qty_keluar'] = $this->m_aksesoris->getQtyKeluar($data['tgl'],$id_awal_bulan);
+        $data['qty_masuk'] = $this->m_aksesoris->getQtyMasuk($data['tgl'], $id_awal_bulan);
+        $data['qty_keluar'] = $this->m_aksesoris->getQtyKeluar($data['tgl'], $id_awal_bulan);
         $data['list_data'] = $this->m_aksesoris->getListStockPoint(5);
 
         $this->load->view('wrh/pvc/v_pvc_stock_point', $data);

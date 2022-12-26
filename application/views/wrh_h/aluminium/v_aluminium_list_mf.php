@@ -73,7 +73,7 @@
 
 <script type="text/javascript">
     function cetakExcel() {
-        var url = "<?= site_url('wrh/kaca/cetakExcelMonitoring') ?>";
+        var url = "<?= site_url('wrh_h/aluminium/cetakExcelMonitoringMf') ?>";
         window.open(url, "_blank");
     }
 
@@ -105,7 +105,7 @@
             "order": [],
             // Load data from an Ajax source
             "ajax": {
-                "url": "<?php echo base_url('wrh/kaca/getLists/'); ?>",
+                "url": "<?php echo base_url('wrh_h/aluminium/getLists_mf/'); ?>",
                 "type": "POST"
             },
             //Set column definition initialisation properties
@@ -147,11 +147,11 @@
 
         $('#memListTable tbody').on('click', 'button.mutasi', function() {
             var data = table.row($(this).parents('tr')).data();
-            load_silent("wrh/kaca/mutasi_stock_add/" + data[0] + "", "#content");
+            load_silent("wrh_h/aluminium/mutasi_stock_add/" + data[0] + "", "#content");
         });
         $('#memListTable tbody').on('click', 'button.history_mutasi', function() {
             var data = table.row($(this).parents('tr')).data();
-            load_silent("wrh/kaca/mutasi_stock_history/" + data[0] + "", "#modal");
+            load_silent("wrh_h/aluminium/mutasi_stock_history/" + data[0] + "", "#modal");
         });
         $('#memListTable tbody').on('click', 'button.detail', function() {
             var data = table.row($(this).parents('tr')).data();
@@ -186,7 +186,7 @@
             '<th bgcolor="#bfbfbf">Min Stock</th>' +
             '</tr>';
         $.ajax({
-                url: "<?= site_url('wrh/kaca/getDetailTabel') ?>",
+                url: "<?= site_url('wrh_h/aluminium/getDetailTabel') ?>",
                 type: 'POST',
                 dataType: 'JSON',
                 data: {

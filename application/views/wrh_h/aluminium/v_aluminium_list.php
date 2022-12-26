@@ -1,36 +1,19 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
-<?php ini_set('memory_limit', '512M'); ?>
-<style>
-    td.details-controla {
-        background: url("<?= base_url('assets/img/details_open.png') ?>") no-repeat center center;
-        cursor: pointer;
-    }
-
-    tr.shown {
-        background: #edffb3;
-    }
-
-    tr.shown td.details-controla {
-        background: url("<?= base_url('assets/img/details_close.png') ?>") no-repeat center center;
-    }
-</style>
 <div class="row">
     <div class="col-lg-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Monitoring Aluminium <?= $warna ?> HRB</h3>
-
+                <h3>
+                    <?= $judul ?>
+                </h3>
                 <div class="box-tools pull-right">
-                    <?php
-                    if ($warna == 'MF') { ?>
-                        <a class="btn btn-primary" onclick="cetakExcelmf()">Cetak</a>
-                    <?php } else { ?>
-                        <a class="btn btn-primary" onclick="cetakExcelwarna()">Cetak</a>
-                    <?php }
+                    <?php $sesi = from_session('level'); ?>
 
-                    ?>
+                    <a class="btn btn-primary" onclick="cetakExcel()">Cetak</a>
+
                 </div>
             </div>
+
             <div class="box-body" id="printableArea">
                 <style type="text/css" media="screen">
                     .large-table-container-3 {
@@ -38,8 +21,6 @@
                         overflow-x: scroll;
                         overflow-y: auto;
                     }
-
-                    .large-table-container-3 table {}
 
                     .large-table-fake-top-scroll-container-3 {
                         /*max-width: 800px;*/
@@ -62,78 +43,40 @@
                     <div>&nbsp;</div>
                 </div>
                 <div class="large-table-container-3">
-                    <table width="100%" id="tableku" class="table">
+                    <table width="100%" id="memListTable" class="table table-striped" style="width:100%">
                         <thead>
                             <th width="5%"></th>
                             <th width="5%">No</th>
                             <th>Item Code</th>
-                            <th>Warna</th>
+                            <th>Deskripsi</th>
                             <th>Satuan</th>
+                            <th>Supplier</th>
+                            <th>Lead Time</th>
                             <th>Stock Awal Bulan</th>
                             <th>Rata Pemakaian</th>
                             <th>Min Stok</th>
                             <th>Total In Per Bulan</th>
                             <th>Total Out Per Bulan</th>
                             <th>Stock Akhir Bulan</th>
-                            <th>Free Stock</th>
-                            <th>OTS Persiapan</th>
-                            <th>Fitur</th>
+                            <th></th>
                         </thead>
-                        <tbody>
-                            <?php
-                            $i = 1;
-                            foreach ($aluminium_list->result() as $row) {
-                                $ada                     = 1;
-                                // $stock_awal_bulan        = 0;
-                                $stock_awal_bulan        = @$s_awal_bulan[$row->id];
-                                $tampil_stock_awal_bulan = ($stock_awal_bulan != '') ? $stock_awal_bulan : 0;
-
-                                $tot_in_per_bulan          = @$total_in_per_bulan[$row->id];
-                                // $tot_in_per_bulan          = 0;
-                                $tampil_total_in_per_bulan = ($tot_in_per_bulan != '') ? $tot_in_per_bulan : 0;
-
-                                // $tot_out_per_bulan          = 0;
-                                $tot_out_per_bulan          = @$total_out_per_bulan[$row->id];
-                                $tampil_total_out_per_bulan = ($tot_out_per_bulan != '') ? $tot_out_per_bulan : 0;
-
-                                $tot_bom          = @$total_bom[$row->id];
-                                $tampil_total_bom = ($tot_bom != '') ? $tot_bom : 0;
-
-                                // $stock_akhir_bulan = ($tampil_stock_awal_bulan + $tampil_total_in_per_bulan) - $tampil_total_out_per_bulan;
-                                $stock_akhir_bulan = @$s_akhir_bulan[$row->id];
-                                $ots_persiapan = 0;
-                                $free_stock    = $stock_akhir_bulan - $ots_persiapan;
-                            ?>
-                                <tr>
-                                    <td class="details-control" id="<?= $i ?>"><button class="btn-xs btn-primary">+</button><input type="hidden" id="id_<?= $i ?>" value="<?= $row->id ?>"></td>
-                                    <td align="center"><?= $i ?></td>
-                                    <td align="center"><?= $row->section_ata ?>-<?= $row->section_allure ?>-<?= $row->temper ?>-<?= $row->kode_warna ?>-<?= $row->ukuran ?></td>
-                                    <td align="center"><?= $row->warna ?></td>
-                                    <td align="center"><?= $row->satuan ?></td>
-                                    <td align="center"><?= $tampil_stock_awal_bulan ?></td>
-                                    <td align="center"><?= $row->rata_pemakaian ?></td>
-                                    <td align="center"><?= $row->min_stock ?></td>
-                                    <td align="center"><?= $tampil_total_in_per_bulan ?></td>
-                                    <td align="center"><?= $tampil_total_out_per_bulan ?></td>
-                                    <td align="center"><?= $stock_akhir_bulan ?></td>
-                                    <td align="center"><?= $free_stock ?></td>
-                                    <td align="center"><?= $tampil_total_bom ?> - <?= $tampil_total_out_per_bulan ?></td>
-                                    <td align="center">
-                                        <?= button('load_silent("wrh_h/aluminium/mutasi_stock_add/' . $row->id . '","#content")', 'mutasi', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Mutasi"'); ?>
-                                        <?= button('load_silent("wrh_h/aluminium/mutasi_stock_history/' . $row->id . '","#modal")', 'history mutasi', 'btn btn-xs btn-default', 'data-toggle="tooltip" title="History Mutasi"'); ?></td>
-                                </tr>
-
-                            <?php $i++;
-                            } ?>
-                        </tbody>
                     </table>
                 </div>
             </div>
 
+
+
+
         </div>
     </div>
 </div>
+
 <script type="text/javascript">
+    function cetakExcel() {
+        var url = "<?= site_url('wrh_h/aluminium/cetakExcelMonitoring') ?>";
+        window.open(url, "_blank");
+    }
+
     $(function() {
         var tableContainer = $(".large-table-container-3");
         var table = $(".large-table-container-3 table");
@@ -151,79 +94,67 @@
         });
     })
 
-    function cetakExcelmf() {
-        var url = "<?= site_url('wrh_h/aluminium/cetakExcelMonitoringMf') ?>";
-        window.open(url, "_blank");
-    }
-
-    function cetakExcelwarna() {
-        var url = "<?= site_url('wrh_h/aluminium/cetakExcelMonitoring') ?>";
-        window.open(url, "_blank");
-    }
-
-    function printDiv(divName) {
-        // var printContents = document.getElementById(divName).innerHTML;
-        // var originalContents = document.body.innerHTML;
-
-        // document.body.innerHTML = printContents;
-        // window.print();
-
-        // document.body.innerHTML = originalContents;
-
-        var mywindow = window.open('', 'PRINT', 'height=400,width=600');
-
-        mywindow.document.write('<html><head><title>' + document.title + '</title>');
-        mywindow.document.write('</head><body >');
-        mywindow.document.write('<h1>' + document.title + '</h1>');
-        mywindow.document.write(document.getElementById(divName).innerHTML);
-        mywindow.document.write('</body></html>');
-
-        mywindow.document.close(); // necessary for IE >= 10
-        mywindow.focus(); // necessary for IE >= 10*/
-
-        mywindow.print();
-        mywindow.close();
-
-        return true;
-    }
-
-
-    function setFilter() {
-        var store = $('#store').val();
-        if (store != '') {
-            var id_store = store;
-        } else {
-            var id_store = 'x';
-        };
-        var bulan = $('#bulan').val();
-        if (bulan != '') {
-            var id_bulan = bulan;
-        } else {
-            var id_bulan = 'x';
-        };
-        var tahun = $('#tahun').val();
-        if (tahun != '') {
-            var id_tahun = tahun;
-        } else {
-            var id_tahun = 'x';
-        };
-        var status = $('#status').val();
-        var jne = $('#jne').val();
-        load_silent("wrh_h/aluminium/filter/" + id_store + "/" + id_bulan + "/" + id_tahun + "/" + status + "/" + jne + "/", "#content");
-
-    }
-
-
-
     $(document).ready(function() {
-        $("select").select2();
-        var table = $('#tableku').DataTable({
-            "ordering": true,
-            // "scrollX": true,
+        var table = $('#memListTable').DataTable({
+            // Processing indicator
+            "processing": true,
+            // DataTables server-side processing mode
+            "serverSide": true,
+            // Initial no order.
+            "ordering": false,
+            "order": [],
+            // Load data from an Ajax source
+            "ajax": {
+                "url": "<?php echo base_url('wrh_h/aluminium/getLists/'); ?>",
+                "type": "POST"
+            },
+            //Set column definition initialisation properties
+            'columnDefs': [
+                // {
+                //     "targets": [1], // your case first column
+                //     "visible": false,
+                //     "searchable": false
+                // },
+                // {
+                //     "targets": [6],
+                //     "searchable": false
+                // },
+                // {
+                //     "targets": [0], // your case first column
+                //     "orderable": false,
+                //     "width": "4%"
+                // },
+                {
+                    "targets": [0, 13],
+                    "className": "text-center",
+                },
+                {
+                    "targets": -1,
+                    "data": null,
+                    "className": "text-center",
+                    "defaultContent": "<button class='mutasi btn btn-primary btn-xs'>Mutasi</button><button class='history_mutasi btn btn-default btn-xs'>History Mutasi</button>"
+                },
+                {
+                    "targets": 0,
+                    "data": null,
+                    "className": "text-center",
+                    "defaultContent": "<button class='detail btn btn-info btn-xs'>Detail</button>"
+                }
+            ]
+
         });
 
 
-        $('#tableku tbody').on('click', 'td.details-control', function(e) {
+        $('#memListTable tbody').on('click', 'button.mutasi', function() {
+            var data = table.row($(this).parents('tr')).data();
+            load_silent("wrh_h/aluminium/mutasi_stock_add/" + data[0] + "", "#content");
+        });
+        $('#memListTable tbody').on('click', 'button.history_mutasi', function() {
+            var data = table.row($(this).parents('tr')).data();
+            load_silent("wrh_h/aluminium/mutasi_stock_history/" + data[0] + "", "#modal");
+        });
+        $('#memListTable tbody').on('click', 'button.detail', function() {
+            var data = table.row($(this).parents('tr')).data();
             var tr = $(this).closest('tr');
             var td = $(this).closest('td');
             var row = table.row(tr);
@@ -231,97 +162,100 @@
                 row.child.hide();
                 tr.removeClass('shown');
             } else {
-                dataRow = format(td[0].id, row, tr);
+                dataRow = format(data[0], row, tr);
             }
         });
 
-        function format(id, row, tr) {
-
-            infoTable = '<table id="infoTable" class="table table-striped" border="1px" style="font-size: smaller;">' +
-                '<tr>' +
-                '<th bgcolor="#bfbfbf">No</th>' +
-                '<th bgcolor="#bfbfbf">Gudang</th>' +
-                '<th bgcolor="#bfbfbf">Keranjang/Rak</th>' +
-                '<th bgcolor="#bfbfbf">Stock Awal Bulan</th>' +
-                '<th bgcolor="#bfbfbf">Total In</th>' +
-                '<th bgcolor="#bfbfbf">Total Out</th>' +
-                '<th bgcolor="#bfbfbf">Mutasi In</th>' +
-                '<th bgcolor="#bfbfbf">Mutasi Out</th>' +
-                '<th bgcolor="#bfbfbf">Stock Akhir Bulan</th>' +
-                '<th bgcolor="#bfbfbf">Rata2 Pemakaian</th>' +
-                '<th bgcolor="#bfbfbf">Min Stock</th>' +
-                '</tr>';
-            $.ajax({
-                    url: "<?= site_url('wrh_h/aluminium/getDetailTabel') ?>",
-                    type: 'POST',
-                    dataType: 'JSON',
-                    data: {
-                        id: $('#id_' + id).val(),
-                    },
-                })
-                .done(function(data) {
-                    for (var i = 0; i < data.detail.length; i++) {
-                        var no = i + 1;
-                        var color = "white";
-                        var fontcolor = "black";
-                        if (data.detail[i].tot_out == null) {
-                            var qty_out = 0;
-                        } else {
-                            var qty_out = data.detail[i].tot_out;
-                        }
-
-                        if (data.detail[i].tot_in == null) {
-                            var stok_t_i = 0;
-                        } else {
-                            var stok_t_i = data.detail[i].tot_in;
-                        }
-
-                        if (data.detail[i].stok_awal_bulan == null) {
-                            var stok_a_b = 0;
-                        } else {
-                            var stok_a_b = data.detail[i].stok_awal_bulan;
-                        }
-
-                        if (data.detail[i].mutasi_in == null) {
-                            var mutasi_in = 0;
-                        } else {
-                            var mutasi_in = data.detail[i].mutasi_in;
-                        }
-
-                        if (data.detail[i].mutasi_out == null) {
-                            var mutasi_out = 0;
-                        } else {
-                            var mutasi_out = data.detail[i].mutasi_out;
-                        }
-
-                        infoTable += '<tr bgcolor="' + color + '">' +
-                            '<td><font color="' + fontcolor + '">' + no + '</font></td>' +
-                            '<td><font color="' + fontcolor + '">' + data.detail[i].gudang + '</font></td>' +
-                            '<td><font color="' + fontcolor + '">' + data.detail[i].keranjang + '</font></td>' +
-                            '<td><font color="' + fontcolor + '">' + stok_a_b + '</font></td>' +
-                            '<td><font color="' + fontcolor + '">' + stok_t_i + '</font></td>' +
-                            '<td><font color="' + fontcolor + '">' + qty_out + '</font></td>' +
-                            '<td><font color="' + fontcolor + '">' + mutasi_in + '</font></td>' +
-                            '<td><font color="' + fontcolor + '">' + mutasi_out + '</font></td>' +
-                            '<td><font color="' + fontcolor + '">' + data.detail[i].stok_akhir_bulan + '</font></td>' +
-                            '<td><font color="' + fontcolor + '">' + data.detail[i].rata_pemakaian + '</font></td>' +
-                            '<td><font color="' + fontcolor + '">' + data.detail[i].min_stock + '</font></td>' +
-                            '</tr>';
-
-                    };
-
-                    infoTable += '</table>';
-                    row.child(infoTable).show();
-                    tr.addClass('shown');
-                })
-                .fail(function() {
-                    console.log("error");
-                })
-                .always(function() {
-                    // console.log("complete");
-                });
-
-            return infoTable;
-        }
     });
+
+    function format(id, row, tr) {
+
+        infoTable = '<table id="infoTable" class="table table-striped" border="1px" style="font-size: smaller;">' +
+            '<tr>' +
+            '<th bgcolor="#bfbfbf">No</th>' +
+            '<th bgcolor="#bfbfbf">Divisi</th>' +
+            '<th bgcolor="#bfbfbf">Gudang</th>' +
+            '<th bgcolor="#bfbfbf">Keranjang/Rak</th>' +
+            '<th bgcolor="#bfbfbf">Stock Awal Bulan</th>' +
+            '<th bgcolor="#bfbfbf">Total In</th>' +
+            '<th bgcolor="#bfbfbf">Total Out</th>' +
+            '<th bgcolor="#bfbfbf">Mutasi In</th>' +
+            '<th bgcolor="#bfbfbf">Mutasi Out</th>' +
+            '<th bgcolor="#bfbfbf">Stock Akhir Bulan</th>' +
+            '<th bgcolor="#bfbfbf">Rata2 Pemakaian</th>' +
+            '<th bgcolor="#bfbfbf">Min Stock</th>' +
+            '</tr>';
+        $.ajax({
+                url: "<?= site_url('wrh_h/aluminium/getDetailTabel') ?>",
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    id: id,
+                },
+            })
+            .done(function(data) {
+                for (var i = 0; i < data.detail.length; i++) {
+                    var no = i + 1;
+                    var color = "white";
+                    var fontcolor = "black";
+                    if (data.detail[i].tot_out == null) {
+                        var qty_out = 0;
+                    } else {
+                        var qty_out = data.detail[i].tot_out;
+                    }
+
+                    if (data.detail[i].tot_in == null) {
+                        var stok_t_i = 0;
+                    } else {
+                        var stok_t_i = data.detail[i].tot_in;
+                    }
+
+                    if (data.detail[i].stok_awal_bulan == null) {
+                        var stok_a_b = 0;
+                    } else {
+                        var stok_a_b = data.detail[i].stok_awal_bulan;
+                    }
+
+                    if (data.detail[i].mutasi_in == null) {
+                        var mutasi_in = 0;
+                    } else {
+                        var mutasi_in = data.detail[i].mutasi_in;
+                    }
+
+                    if (data.detail[i].mutasi_out == null) {
+                        var mutasi_out = 0;
+                    } else {
+                        var mutasi_out = data.detail[i].mutasi_out;
+                    }
+
+                    infoTable += '<tr bgcolor="' + color + '">' +
+                        '<td><font color="' + fontcolor + '">' + no + '</font></td>' +
+                        '<td><font color="' + fontcolor + '">' + data.detail[i].divisi + '</font></td>' +
+                        '<td><font color="' + fontcolor + '">' + data.detail[i].gudang + '</font></td>' +
+                        '<td><font color="' + fontcolor + '">' + data.detail[i].keranjang + '</font></td>' +
+                        '<td><font color="' + fontcolor + '">' + stok_a_b + '</font></td>' +
+                        '<td><font color="' + fontcolor + '">' + stok_t_i + '</font></td>' +
+                        '<td><font color="' + fontcolor + '">' + qty_out + '</font></td>' +
+                        '<td><font color="' + fontcolor + '">' + mutasi_in + '</font></td>' +
+                        '<td><font color="' + fontcolor + '">' + mutasi_out + '</font></td>' +
+                        '<td><font color="' + fontcolor + '">' + data.detail[i].stok_akhir_bulan + '</font></td>' +
+                        '<td><font color="' + fontcolor + '">' + data.detail[i].rata_pemakaian + '</font></td>' +
+                        '<td><font color="' + fontcolor + '">' + data.detail[i].min_stock + '</font></td>' +
+                        '</tr>';
+
+                };
+
+                infoTable += '</table>';
+                row.child(infoTable).show();
+                tr.addClass('shown');
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
+                // console.log("complete");
+            });
+
+        return infoTable;
+    }
 </script>
