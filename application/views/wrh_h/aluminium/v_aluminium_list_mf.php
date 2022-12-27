@@ -9,7 +9,8 @@
                 </h3>
                 <div class="box-tools pull-right">
                     <?php $sesi = from_session('level'); ?>
-
+                    <?= button('load_silent("wrh_h/aluminium/monitoring_mf_lama","#content")', 'Monitoring Lama', 'btn btn-danger', 'data-toggle="tooltip" title="Monitoring"'); ?>
+                    
                     <a class="btn btn-primary" onclick="cetakExcel()">Cetak</a>
 
                 </div>

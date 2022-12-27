@@ -13,18 +13,18 @@ class lembaran extends CI_Controller
         $this->load->model('klg/m_fppp');
     }
 
-    // public function index()
-    // {
+    public function index_lama()
+    {
 
-    //     $data['lembaran']           = $this->m_lembaran->getData();
-    //     $data['s_awal_bulan']        = $this->m_lembaran->getStockAwalBulan();
-    //     $data['s_akhir_bulan'] = $this->m_lembaran->getStockAkhirBulan();
-    //     $data['total_bom']           = $this->m_lembaran->getTotalBOM();
-    //     $data['total_in_per_bulan']  = $this->m_lembaran->getTotalInPerBulan();
-    //     $data['total_out_per_bulan'] = $this->m_lembaran->getTotalOutPerBulan();
-    //     $data['warna']               = 'Warna';
-    //     $this->load->view('wrh/lembaran/v_lembaran_list', $data);
-    // }
+        $data['lembaran']           = $this->m_lembaran->getData();
+        $data['s_awal_bulan']        = $this->m_lembaran->getStockAwalBulan();
+        $data['s_akhir_bulan'] = $this->m_lembaran->getStockAkhirBulan();
+        $data['total_bom']           = $this->m_lembaran->getTotalBOM();
+        $data['total_in_per_bulan']  = $this->m_lembaran->getTotalInPerBulan();
+        $data['total_out_per_bulan'] = $this->m_lembaran->getTotalOutPerBulan();
+        $data['warna']               = 'Warna';
+        $this->load->view('wrh/lembaran/v_lembaran_list_lama', $data);
+    }
 
     public function index()
     {

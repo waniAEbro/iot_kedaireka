@@ -12,18 +12,18 @@ class aksesoris extends CI_Controller
         $this->load->model('klg/m_fppp');
     }
 
-    // public function index()
-    // {
-    //     $this->fungsi->check_previleges('aksesoris');
-    //     $data['aksesoris']           = $this->m_aksesoris->getData();
-    //     $data['s_awal_bulan']        = $this->m_aksesoris->getStockAwalBulan();
-    //     $data['s_akhir_bulan'] = $this->m_aksesoris->getStockAkhirBulan();
-    //     $data['total_bom']           = $this->m_aksesoris->getTotalBOM();
-    //     $data['total_in_per_bulan']  = $this->m_aksesoris->getTotalInPerBulan();
-    //     $data['total_out_per_bulan'] = $this->m_aksesoris->getTotalOutPerBulan();
-    //     $data['warna']               = 'Warna';
-    //     $this->load->view('wrh/aksesoris/v_aksesoris_list', $data);
-    // }
+    public function index_lama()
+    {
+        $this->fungsi->check_previleges('aksesoris');
+        $data['aksesoris']           = $this->m_aksesoris->getData();
+        $data['s_awal_bulan']        = $this->m_aksesoris->getStockAwalBulan();
+        $data['s_akhir_bulan'] = $this->m_aksesoris->getStockAkhirBulan();
+        $data['total_bom']           = $this->m_aksesoris->getTotalBOM();
+        $data['total_in_per_bulan']  = $this->m_aksesoris->getTotalInPerBulan();
+        $data['total_out_per_bulan'] = $this->m_aksesoris->getTotalOutPerBulan();
+        $data['warna']               = 'Warna';
+        $this->load->view('wrh/aksesoris/v_aksesoris_list_lama', $data);
+    }
 
     public function index()
     {

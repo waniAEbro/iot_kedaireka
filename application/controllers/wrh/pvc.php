@@ -13,6 +13,19 @@ class pvc extends CI_Controller
         $this->load->model('klg/m_fppp');
     }
 
+    public function index_lama()
+    {
+
+        $data['pvc']           = $this->m_pvc->getData();
+        $data['s_awal_bulan']        = $this->m_pvc->getStockAwalBulan();
+        $data['s_akhir_bulan'] = $this->m_pvc->getStockAkhirBulan();
+        $data['total_bom']           = $this->m_pvc->getTotalBOM();
+        $data['total_in_per_bulan']  = $this->m_pvc->getTotalInPerBulan();
+        $data['total_out_per_bulan'] = $this->m_pvc->getTotalOutPerBulan();
+        $data['warna']               = 'Warna';
+        $this->load->view('wrh/pvc/v_pvc_list_lama', $data);
+    }
+
     public function index()
     {
 

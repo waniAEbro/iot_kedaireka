@@ -13,18 +13,18 @@ class kaca extends CI_Controller
         $this->load->model('klg/m_fppp');
     }
 
-    // public function index()
-    // {
+    public function index_lama()
+    {
         
-    //     $data['kaca']           = $this->m_kaca->getData();
-    //     $data['s_awal_bulan']        = $this->m_kaca->getStockAwalBulan();
-    //     $data['s_akhir_bulan'] = $this->m_kaca->getStockAkhirBulan();
-    //     $data['total_bom']           = $this->m_kaca->getTotalBOM();
-    //     $data['total_in_per_bulan']  = $this->m_kaca->getTotalInPerBulan();
-    //     $data['total_out_per_bulan'] = $this->m_kaca->getTotalOutPerBulan();
-    //     $data['warna']               = 'Warna';
-    //     $this->load->view('wrh/kaca/v_kaca_list', $data);
-    // }
+        $data['kaca']           = $this->m_kaca->getData();
+        $data['s_awal_bulan']        = $this->m_kaca->getStockAwalBulan();
+        $data['s_akhir_bulan'] = $this->m_kaca->getStockAkhirBulan();
+        $data['total_bom']           = $this->m_kaca->getTotalBOM();
+        $data['total_in_per_bulan']  = $this->m_kaca->getTotalInPerBulan();
+        $data['total_out_per_bulan'] = $this->m_kaca->getTotalOutPerBulan();
+        $data['warna']               = 'Warna';
+        $this->load->view('wrh/kaca/v_kaca_list_lama', $data);
+    }
 
     public function index()
     {
