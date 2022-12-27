@@ -46,7 +46,7 @@
                 <div class="large-table-container-3">
                     <table width="100%" id="memListTable" class="table table-striped" style="width:100%">
                         <thead>
-                            <th width="5%"></th>
+                            <th width="5%">#</th>
                             <th width="5%">No</th>
                             <th>Item Code</th>
                             <th>Warna</th>
@@ -59,7 +59,7 @@
                             <th>Total In Per Bulan</th>
                             <th>Total Out Per Bulan</th>
                             <th>Stock Akhir Bulan</th>
-                            <th></th>
+                            <th>Act</th>
                         </thead>
                     </table>
                 </div>

@@ -15,29 +15,7 @@
                 </div>
             </div>
 
-            <!-- <div class="box-body">
-                <table id="memListTable" class="table table-striped" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>No</th>
-                            <th>Item Code</th>
-                            <th>Deskripsi</th>
-                            <th>Satuan</th>
-                            <th>Supplier</th>
-                            <th>Lead Time</th>
-                            <th>Stock Awal Bulan</th>
-                            <th>Rata Pemakaian</th>
-                            <th>Min Stok</th>
-                            <th>Total In Per Bulan</th>
-                            <th>Total Out Per Bulan</th>
-                            <th>Stock Akhir Bulan</th>
-                            <th>Free Stock</th>
-                            <th>act</th>
-                        </tr>
-                    </thead>
-                </table>
-            </div> -->
+            
 
             <div class="box-body" id="printableArea">
                 <style type="text/css" media="screen">
@@ -70,7 +48,7 @@
                 <div class="large-table-container-3">
                     <table width="100%" id="memListTable" class="table table-striped" style="width:100%">
                         <thead>
-                            <th width="5%"></th>
+                            <th width="5%">#</th>
                             <th width="5%">No</th>
                             <th>Item Code</th>
                             <th>Deskripsi</th>
@@ -83,7 +61,7 @@
                             <th>Total In Per Bulan</th>
                             <th>Total Out Per Bulan</th>
                             <th>Stock Akhir Bulan</th>
-                            <th></th>
+                            <th>Act</th>
                         </thead>
                     </table>
                 </div>
