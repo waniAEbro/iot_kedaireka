@@ -48,7 +48,7 @@
                             <th width="5%"></th>
                             <th width="5%">No</th>
                             <th>Item Code</th>
-                            <th>Deskripsi</th>
+                            <th>Warna</th>
                             <th>Satuan</th>
                             <th>Supplier</th>
                             <th>Lead Time</th>
