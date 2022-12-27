@@ -1,4 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
+<?php ini_set('memory_limit', '1024M'); ?>
 <div class="row">
     <div class="col-lg-12">
         <div class="box box-primary">
@@ -10,6 +11,7 @@
                     <?php $sesi = from_session('level'); ?>
 
                     <a class="btn btn-primary" onclick="cetakExcel()">Cetak</a>
+                    <a class="btn btn-primary" onclick="cetakExcelAll()">Cetak All</a>
 
                 </div>
             </div>
@@ -74,6 +76,10 @@
 <script type="text/javascript">
     function cetakExcel() {
         var url = "<?= site_url('wrh/aksesoris/cetakExcelMonitoring') ?>";
+        window.open(url, "_blank");
+    }
+    function cetakExcelAll() {
+        var url = "<?= site_url('wrh/aksesoris/cetakExcelMonitoringAll') ?>";
         window.open(url, "_blank");
     }
 

@@ -1,4 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed'); ?>
+<?php ini_set('memory_limit', '1024M'); ?>
 <div class="row">
     <div class="col-lg-12">
         <div class="box box-primary">
