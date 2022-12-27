@@ -51,7 +51,7 @@ class Aluminium extends CI_Controller
                 $row->id,
                 $i,
                 $row->item_code,
-                $row->deskripsi,
+                $row->warna,
                 $row->satuan,
                 $row->supplier,
                 $row->lead_time,
