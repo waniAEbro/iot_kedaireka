@@ -24,9 +24,7 @@ class M_kaca extends CI_Model
 	public function countAll()
 	{
         $id_jenis_item = 3;
-        $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
         $this->db->where('mi.id_jenis_item', $id_jenis_item);
-        $this->db->select('mi.*,mwa.warna');
 		$this->db->from('master_item mi');
 
 		return $this->db->count_all_results();
@@ -40,9 +38,7 @@ class M_kaca extends CI_Model
 	private function _get_datatables_query($postData)
 	{
 		$id_jenis_item = 3;
-        $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
         $this->db->where('mi.id_jenis_item', $id_jenis_item);
-        $this->db->select('mi.*,mwa.warna');
 		$this->db->from('master_item mi');
 
 		$i = 0;
@@ -73,9 +69,7 @@ class M_kaca extends CI_Model
     public function getdata()
     {
         $id_jenis_item = 3;
-        $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
         $this->db->where('mi.id_jenis_item', $id_jenis_item);
-        $this->db->select('mi.*,mwa.warna');
         return $this->db->get('master_item mi');
     }
     public function getdataItem()
