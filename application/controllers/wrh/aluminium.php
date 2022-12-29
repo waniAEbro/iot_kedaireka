@@ -212,11 +212,12 @@ class Aluminium extends CI_Controller
         $data['datainfo']       = parse_infotable($offset, $perpage, $total_rows);
         $data['search']         = true;
 
-        $data['s_awal_bulan']        = $this->m_aluminium->getStockAwalBulan();
-        $data['total_bom']           = $this->m_aluminium->getTotalBOM();
+        $data['s_awal_bulan']  = $this->m_aluminium->getStockAwalBulan();
+        $data['s_akhir_bulan'] = $this->m_aluminium->getStockAkhirBulan();
+        $data['total_bom'] = $this->m_aluminium->getTotalBOM();
         $data['total_in_per_bulan']  = $this->m_aluminium->getTotalInPerBulan();
         $data['total_out_per_bulan'] = $this->m_aluminium->getTotalOutPerBulan();
-        $data['warna']               = 'Warna';
+        $data['warna']               = 'Warna RSD';
         $this->load->view('wrh/aluminium/v_aluminium_list_paging', $data);
     }
 
@@ -259,11 +260,12 @@ class Aluminium extends CI_Controller
         $data['datainfo']       = parse_infotable($offset, $perpage, $total_rows);
         $data['search']         = true;
 
-        $data['s_awal_bulan']        = $this->m_aluminium->getStockAwalBulan();
-        $data['total_bom']           = $this->m_aluminium->getTotalBOM();
+        $data['s_awal_bulan']  = $this->m_aluminium->getStockAwalBulan();
+        $data['s_akhir_bulan'] = $this->m_aluminium->getStockAkhirBulan();
+        $data['total_bom'] = $this->m_aluminium->getTotalBOM();
         $data['total_in_per_bulan']  = $this->m_aluminium->getTotalInPerBulan();
         $data['total_out_per_bulan'] = $this->m_aluminium->getTotalOutPerBulan();
-        $data['warna']               = 'Warna';
+        $data['warna']               = 'MF RSD';
         $this->load->view('wrh/aluminium/v_aluminium_list_paging_mf', $data);
     }
 
