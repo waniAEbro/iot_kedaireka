@@ -38,6 +38,14 @@
         <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title">Monitoring aluminium <?= $warna ?></h3>
+                <?php
+                    if ($warna == 'MF') { ?>
+                        <a class="btn btn-primary" onclick="cetakExcelmf()">Cetak</a>
+                    <?php } else { ?>
+                        <a class="btn btn-primary" onclick="cetakExcelwarna()">Cetak</a>
+                    <?php }
+
+                    ?>
 
                 <div class='pull-right'>
                     <?php
@@ -141,7 +149,7 @@
                                     <td align="center"><?= $free_stock ?></td>
                                     <td align="center"><?= $tampil_total_bom ?> - <?= $tampil_total_out_per_bulan ?></td>
                                     <td align="center">
-                                        <?= button('load_silent("wrh/aluminium/mutasi_stock_add/' . $row->id . '","#content")', 'mutasi', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Mutasi"'); ?>
+                                    <?= button('load_silent("wrh/aluminium/mutasi_stock_add/' . $row->id . '","#content")', 'mutasi', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Mutasi"'); ?>
                                         <?= button('load_silent("wrh/aluminium/mutasi_stock_history/' . $row->id . '","#modal")', 'history mutasi', 'btn btn-xs btn-default', 'data-toggle="tooltip" title="History Mutasi"'); ?></td>
                                 </tr>
 

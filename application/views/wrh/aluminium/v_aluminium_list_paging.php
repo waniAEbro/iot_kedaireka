@@ -38,7 +38,14 @@
         <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title">Monitoring aluminium <?= $warna ?></h3>
+                <?php
+                    if ($warna == 'MF') { ?>
+                        <a class="btn btn-primary" onclick="cetakExcelmf()">Cetak</a>
+                    <?php } else { ?>
+                        <a class="btn btn-primary" onclick="cetakExcelwarna()">Cetak</a>
+                    <?php }
 
+                    ?>
                 <div class='pull-right'>
                     <?php
                     echo form_open('', array('name' => 'fsearch'));
@@ -141,7 +148,7 @@
                                     <td align="center"><?= $free_stock ?></td>
                                     <td align="center"><?= $tampil_total_bom ?> - <?= $tampil_total_out_per_bulan ?></td>
                                     <td align="center">
-                                        <?= button('load_silent("wrh/aluminium/mutasi_stock_add/' . $row->id . '","#content")', 'mutasi', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Mutasi"'); ?>
+                                    <?= button('load_silent("wrh/aluminium/mutasi_stock_add/' . $row->id . '","#content")', 'mutasi', 'btn btn-xs btn-primary', 'data-toggle="tooltip" title="Mutasi"'); ?>
                                         <?= button('load_silent("wrh/aluminium/mutasi_stock_history/' . $row->id . '","#modal")', 'history mutasi', 'btn btn-xs btn-default', 'data-toggle="tooltip" title="History Mutasi"'); ?></td>
                                 </tr>
 
@@ -212,30 +219,14 @@
 
     }
 
-    function cetakExcel() {
-        var left = (screen.width / 2) - (640 / 2);
-        var top = (screen.height / 2) - (480 / 2);
-        var store = $('#store').val();
-        if (store != '') {
-            var id_store = store;
-        } else {
-            var id_store = 'x';
-        };
-        var bulan = $('#bulan').val();
-        if (bulan != '') {
-            var id_bulan = bulan;
-        } else {
-            var id_bulan = 'x';
-        };
-        var tahun = $('#tahun').val();
-        if (tahun != '') {
-            var id_tahun = tahun;
-        } else {
-            var id_tahun = 'x';
-        };
-        var status = $('#status').val();
-        var url = "<?= site_url('wrh/aluminium/excel/"+id_store+"/"+id_bulan+"/"+id_tahun+"/"+status+"') ?>";
-        window.open(url, "", "width=640, height=480, scrollbars=yes, left=" + left + ", top=" + top);
+    function cetakExcelmf() {
+        var url = "<?= site_url('wrh/aluminium/cetakExcelMonitoringMf') ?>";
+        window.open(url, "_blank");
+    }
+
+    function cetakExcelwarna() {
+        var url = "<?= site_url('wrh/aluminium/cetakExcelMonitoring') ?>";
+        window.open(url, "_blank");
     }
 
     $(document).ready(function() {
