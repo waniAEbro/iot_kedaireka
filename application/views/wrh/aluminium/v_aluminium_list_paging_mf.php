@@ -23,14 +23,14 @@
                 search();
             } else {
                 if ($(this).val().length == 0) {
-                    load_silent('wrh/aluminium/list/', '#content');
+                    load_silent('wrh/aluminium/list_mf/', '#content');
                 }
             }
         });
     });
 
     function search() {
-        send_form(document.fsearch, 'wrh/aluminium/search/', '#content');
+        send_form(document.fsearch, 'wrh/aluminium/search_mf/', '#content');
     }
 </script>
 <div class="row">
