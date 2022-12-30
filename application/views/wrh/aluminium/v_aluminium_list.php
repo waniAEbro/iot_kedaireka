@@ -117,10 +117,10 @@
                 //     "visible": false,
                 //     "searchable": false
                 // },
-                // {
-                //     "targets": [6],
-                //     "searchable": false
-                // },
+                {
+                    "targets": [0,1,3,4,5,6,7,8,9,10,11,12,13],
+                    "searchable": false
+                },
                 // {
                 //     "targets": [0], // your case first column
                 //     "orderable": false,
