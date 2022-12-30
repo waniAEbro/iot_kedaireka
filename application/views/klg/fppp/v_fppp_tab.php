@@ -142,7 +142,7 @@ if ($param_tab == '1') {
             <li class="<?= $tab_2 ?>"><a onclick='<?php echo $t2; ?>' data-toggle="tab" href="javascript:void(0)">ASTRAL RSD</a></li>
             <li class="<?= $tab_3 ?>"><a onclick='<?php echo $t3; ?>' data-toggle="tab" href="javascript:void(0)">ASTRAL BRAVO</a></li>
             <li class="<?= $tab_4 ?>"><a onclick='<?php echo $t4; ?>' data-toggle="tab" href="javascript:void(0)">ASTRAL BENDING EXTRUTION</a></li>
-            <li class="<?= $tab_5 ?>"><a onclick='<?php echo $t5; ?>' data-toggle="tab" href="javascript:void(0)">VITTO</a></li>
+            <li class="<?= $tab_5 ?>"><a onclick='<?php echo $t5; ?>' data-toggle="tab" href="javascript:void(0)">SLV</a></li>
             <li class="<?= $tab_6 ?>"><a onclick='<?php echo $t6; ?>' data-toggle="tab" href="javascript:void(0)">HRB</a></li>
             <li class="<?= $tab_7 ?>"><a onclick='<?php echo $t7; ?>' data-toggle="tab" href="javascript:void(0)">ALPHAMAX</a></li>
             <li class="<?= $tab_8 ?>"><a onclick='<?php echo $t8; ?>' data-toggle="tab" href="javascript:void(0)">EXPORT</a></li>
