@@ -68,20 +68,25 @@ class Aluminium extends CI_Controller
         $i = $_POST['start'];
         foreach ($memData as $row) {
             $i++;
-            $stock_awal_bulan        = @$s_awal_bulan[$row->id];
-            $tampil_stock_awal_bulan = ($stock_awal_bulan != '') ? $stock_awal_bulan : 0;
+            // $stock_awal_bulan        = @$s_awal_bulan[$row->id];
+            // $tampil_stock_awal_bulan = ($stock_awal_bulan != '') ? $stock_awal_bulan : 0;
 
-            $tot_in_per_bulan          = @$total_in_per_bulan[$row->id];
-            $tampil_total_in_per_bulan = ($tot_in_per_bulan != '') ? $tot_in_per_bulan : 0;
+            // $tot_in_per_bulan          = @$total_in_per_bulan[$row->id];
+            // $tampil_total_in_per_bulan = ($tot_in_per_bulan != '') ? $tot_in_per_bulan : 0;
 
-            $tot_out_per_bulan          = @$total_out_per_bulan[$row->id];
-            $tampil_total_out_per_bulan = ($tot_out_per_bulan != '') ? $tot_out_per_bulan : 0;
+            // $tot_out_per_bulan          = @$total_out_per_bulan[$row->id];
+            // $tampil_total_out_per_bulan = ($tot_out_per_bulan != '') ? $tot_out_per_bulan : 0;
 
-            $tot_bom          = @$total_bom[$row->id];
-            $tampil_total_bom = ($tot_bom != '') ? $tot_bom : 0;
+            // $tot_bom          = @$total_bom[$row->id];
+            // $tampil_total_bom = ($tot_bom != '') ? $tot_bom : 0;
 
-            // $stock_akhir_bulan = ($tampil_stock_awal_bulan + $tampil_total_in_per_bulan) - $tampil_total_out_per_bulan;
-            $stock_akhir_bulan = @$s_akhir_bulan[$row->id];
+            // // $stock_akhir_bulan = ($tampil_stock_awal_bulan + $tampil_total_in_per_bulan) - $tampil_total_out_per_bulan;
+            // $stock_akhir_bulan = @$s_akhir_bulan[$row->id];
+
+            $tampil_stock_awal_bulan = 0;
+            $tampil_total_in_per_bulan = 0;
+            $tampil_total_out_per_bulan = 0;
+            $stock_akhir_bulan = 0;
 
             $data[] = array(
                 $row->id,
