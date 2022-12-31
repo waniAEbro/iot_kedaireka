@@ -68,25 +68,25 @@ class Aluminium extends CI_Controller
         $i = $_POST['start'];
         foreach ($memData as $row) {
             $i++;
-            // $stock_awal_bulan        = @$s_awal_bulan[$row->id];
-            // $tampil_stock_awal_bulan = ($stock_awal_bulan != '') ? $stock_awal_bulan : 0;
+            $stock_awal_bulan        = @$s_awal_bulan[$row->id];
+            $tampil_stock_awal_bulan = ($stock_awal_bulan != '') ? $stock_awal_bulan : 0;
 
-            // $tot_in_per_bulan          = @$total_in_per_bulan[$row->id];
-            // $tampil_total_in_per_bulan = ($tot_in_per_bulan != '') ? $tot_in_per_bulan : 0;
+            $tot_in_per_bulan          = @$total_in_per_bulan[$row->id];
+            $tampil_total_in_per_bulan = ($tot_in_per_bulan != '') ? $tot_in_per_bulan : 0;
 
-            // $tot_out_per_bulan          = @$total_out_per_bulan[$row->id];
-            // $tampil_total_out_per_bulan = ($tot_out_per_bulan != '') ? $tot_out_per_bulan : 0;
+            $tot_out_per_bulan          = @$total_out_per_bulan[$row->id];
+            $tampil_total_out_per_bulan = ($tot_out_per_bulan != '') ? $tot_out_per_bulan : 0;
 
-            // $tot_bom          = @$total_bom[$row->id];
-            // $tampil_total_bom = ($tot_bom != '') ? $tot_bom : 0;
+            $tot_bom          = @$total_bom[$row->id];
+            $tampil_total_bom = ($tot_bom != '') ? $tot_bom : 0;
 
-            // // $stock_akhir_bulan = ($tampil_stock_awal_bulan + $tampil_total_in_per_bulan) - $tampil_total_out_per_bulan;
-            // $stock_akhir_bulan = @$s_akhir_bulan[$row->id];
+            // $stock_akhir_bulan = ($tampil_stock_awal_bulan + $tampil_total_in_per_bulan) - $tampil_total_out_per_bulan;
+            $stock_akhir_bulan = @$s_akhir_bulan[$row->id];
 
-            $tampil_stock_awal_bulan = 0;
-            $tampil_total_in_per_bulan = 0;
-            $tampil_total_out_per_bulan = 0;
-            $stock_akhir_bulan = 0;
+            // $tampil_stock_awal_bulan = 0;
+            // $tampil_total_in_per_bulan = 0;
+            // $tampil_total_out_per_bulan = 0;
+            // $stock_akhir_bulan = 0;
 
             $data[] = array(
                 $row->id,
@@ -115,7 +115,7 @@ class Aluminium extends CI_Controller
         echo json_encode($output);
     }
 
-    
+
 
     public function monitoring_mf()
     {
@@ -274,7 +274,7 @@ class Aluminium extends CI_Controller
         $this->load->view('wrh/aluminium/v_aluminium_list_paging_mf', $data);
     }
 
-    public function cetakExcelMonitoring($is_update='')
+    public function cetakExcelMonitoring($is_update = '')
     {
         $data['aksesoris']          = $this->m_aluminium->getCetakMonitoring(1);
         $data['jenis_barang']       = "Aluminium";
@@ -288,7 +288,7 @@ class Aluminium extends CI_Controller
         $this->load->view('wrh/aluminium/v_aluminium_cetak_monitoring', $data);
     }
 
-    public function cetakExcelMonitoringMf($is_update='')
+    public function cetakExcelMonitoringMf($is_update = '')
     {
         $data['aksesoris']          = $this->m_aluminium->getCetakMonitoringMf(1);
         $data['s_awal_bulan']       = $this->m_aluminium->getStockAwalBulanCetak();
@@ -594,12 +594,11 @@ class Aluminium extends CI_Controller
             'keranjang'   => $getRow->keranjang,
             'qty_dihapus' => $getRow->qty_in,
         );
-        $this->penyesuain_stok($id,1);
+        $this->penyesuain_stok($id, 1);
 
         $this->fungsi->catat($data, "Menghapus Stock In List Aluminium dengan data sbb:", true);
         $this->fungsi->run_js('load_silent("wrh/aluminium/stok_in","#content")');
         $this->fungsi->message_box("Menghapus Stock In Aluminium", "success");
-        
     }
 
 
@@ -619,7 +618,7 @@ class Aluminium extends CI_Controller
             'keranjang'   => $getRow->keranjang,
             'qty_dihapus' => $getRow->qty_in,
         );
-        $this->penyesuain_stok($id,1);
+        $this->penyesuain_stok($id, 1);
 
         $this->fungsi->catat($data, "Menghapus Stock In Aluminium dengan data sbb:", true);
         $respon = ['msg' => 'Data Berhasil Dihapus'];
@@ -1242,7 +1241,7 @@ class Aluminium extends CI_Controller
         $this->db->limit(1);
         $this->db->order_by('id', 'desc');
         $data['tgl_aktual'] = $this->db->get('data_stock')->row()->aktual;
-        
+
         $data['list_sj']        = $this->m_aluminium->getListItemBonManual();
         $this->load->view('wrh/aluminium/v_aluminium_bon_add', $data);
     }
@@ -1446,7 +1445,7 @@ class Aluminium extends CI_Controller
         sleep(1);
         // $this->m_aluminium->deleteItemBonManual($id);
         $data = array('id' => $id,);
-        $this->penyesuain_stok($id,1);
+        $this->penyesuain_stok($id, 1);
         $this->fungsi->catat($data, "Menghapus BON manual Detail dengan data sbb:", true);
         $respon = ['msg' => 'Data Berhasil Dihapus'];
         echo json_encode($respon);
@@ -1480,6 +1479,34 @@ class Aluminium extends CI_Controller
         $this->m_aksesoris->deleteSJBonManual($id);
         $this->fungsi->message_box("Menghapus " . $data['no_sj_bon'] . '', "success");
         $this->fungsi->run_js('load_silent("wrh/aluminium/bon_manual","#content")');
+    }
+
+    public function mutasi_list($tgl1 = '', $tgl2 = '')
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $bulan       = date('m');
+        $tahun       = date('Y');
+
+        $data['tbl_del']   = 1;
+        if ($tgl1 == '' || $tgl2 == '') {
+            $data['tgl_awal']  = $tahun . '-' . $bulan . '-01';
+            $data['tgl_akhir'] = date("Y-m-t", strtotime($data['tgl_awal']));
+        } else {
+            $data['tgl_awal']  = $tgl1;
+            $data['tgl_akhir'] = $tgl2;
+        }
+        $data['aluminium'] = $this->m_aluminium->getDataMutasi($data['tgl_awal'], $data['tgl_akhir']);
+
+        $this->load->view('wrh/aluminium/v_aluminium_mutasi_list', $data);
+    }
+
+    public function mutasi_add()
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $data['item']     = $this->m_aluminium->getdataItem();
+        $data['gudang']   = $this->db->get_where('master_gudang', array('id_jenis_item' => 1));
+
+        $this->load->view('wrh/aluminium/v_aluminium_mutasi_add', $data);
     }
 
 
@@ -1571,6 +1598,7 @@ class Aluminium extends CI_Controller
             'created'       => date('Y-m-d H:i:s'),
             'updated'       => date('Y-m-d H:i:s'),
             'aktual'        => $tgl_aktual,
+            'id_penginput'   => from_session('id'),
         );
         $this->m_aluminium->insertstokin($datapost_out);
         $data['id']          = $this->db->insert_id();
@@ -1593,6 +1621,8 @@ class Aluminium extends CI_Controller
             'created'       => date('Y-m-d H:i:s'),
             'updated'       => date('Y-m-d H:i:s'),
             'aktual'        => $tgl_aktual,
+            'id_penginput'   => from_session('id'),
+            'id_seselan' => $data['id'],
         );
         $this->m_aluminium->insertstokin($datapost_in);
         $data['id2']          = $this->db->insert_id();
@@ -1621,6 +1651,49 @@ class Aluminium extends CI_Controller
         $data['pesan'] = "Berhasil";
         $data['is_mf'] = $this->db->get_where('master_item', array("id" => $id_item))->row()->kode_warna;
         echo json_encode($data);
+    }
+
+    public function deleteMutasiIn()
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $id            = $this->input->post('id');
+        $getRow        = $this->m_aluminium->getRowStock($id);
+        $this->deleteMutasiOut($getRow->id_seselan);
+        $cekQtyCounter = $this->m_aluminium->getDataCounter($getRow->id_item, $getRow->id_gudang, $getRow->keranjang)->row()->qty;
+        $qty_jadi      = (int)$cekQtyCounter - (int)$getRow->qty_in;
+        $this->m_aluminium->updateDataCounter($getRow->id_item, $getRow->id_gudang, $getRow->keranjang, $qty_jadi);
+        sleep(1);
+        $data = array(
+            'id'          => $id,
+            'id_item'     => $getRow->id_item,
+            'id_gudang'   => $getRow->id_gudang,
+            'keranjang'   => $getRow->keranjang,
+            'qty_dihapus' => $getRow->qty_in,
+        );
+        $this->penyesuain_stok($id, 1);
+
+        $this->fungsi->catat($data, "Menghapus Mutasi INOUT ", true);
+        $respon = ['msg' => 'Data Berhasil Dihapus'];
+        echo json_encode($respon);
+    }
+
+    public function deleteMutasiOut($id)
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $getRow        = $this->m_aluminium->getRowStock($id);
+        $cekQtyCounter = $this->m_aluminium->getDataCounter($getRow->id_item, $getRow->id_gudang, $getRow->keranjang)->row()->qty;
+        $qty_jadi      = (int)$cekQtyCounter - (int)$getRow->qty_in;
+        $this->m_aluminium->updateDataCounter($getRow->id_item, $getRow->id_gudang, $getRow->keranjang, $qty_jadi);
+        sleep(1);
+        $data = array(
+            'id'          => $id,
+            'id_item'     => $getRow->id_item,
+            'id_gudang'   => $getRow->id_gudang,
+            'keranjang'   => $getRow->keranjang,
+            'qty_dihapus' => $getRow->qty_in,
+        );
+        $this->penyesuain_stok($id, 1);
+
     }
 
     public function mutasi_stock_history($id)
