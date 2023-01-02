@@ -949,6 +949,25 @@ class M_aksesoris extends CI_Model
         }
     }
 
+    public function getDataMutasi($tgl_awal, $tgl_akhir)
+    {
+        $id_jenis_item = 2;
+        $this->db->join('master_gudang mg', 'mg.id = da.id_gudang', 'left');
+        $this->db->join('master_item mi', 'mi.id = da.id_item', 'left');
+        $this->db->join('cms_user cu', 'cu.id = da.id_penginput', 'left');
+        $this->db->where('da.awal_bulan', 0);
+        $this->db->where('da.mutasi', 1);
+        $this->db->where('mi.id_jenis_item', $id_jenis_item);
+        if (from_session('level' > 1)) {
+            $this->db->where('da.id_penginput', from_session('id'));
+        }
+        $this->db->order_by('da.id', 'desc');
+        $this->db->where('DATE(da.created) >=', $tgl_awal);
+        $this->db->where('DATE(da.created) <=', $tgl_akhir);
+        $this->db->select('cu.nama,da.*,mi.divisi,mg.gudang,mi.item_code');
+        return $this->db->get('data_stock da');
+    }
+
     public function getSuratJalan($tipe, $id_jenis_item, $tgl_awal, $tgl_akhir)
     {
         if ($tipe == 1) {

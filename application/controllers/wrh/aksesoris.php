@@ -134,7 +134,7 @@ class aksesoris extends CI_Controller
         $this->load->view('wrh/aksesoris/v_aksesoris_list', $data);
     }
 
-    public function cetakExcelMonitoring($is_update='')
+    public function cetakExcelMonitoring($is_update = '')
     {
         $data['aksesoris']    = $this->m_aksesoris->getCetakMonitoring(2);
         $data['s_awal_bulan']    = $this->m_aksesoris->getStockAwalBulanCetak();
@@ -149,7 +149,7 @@ class aksesoris extends CI_Controller
         $this->load->view('wrh/aksesoris/v_aksesoris_cetak_monitoring', $data);
     }
 
-    public function cetakExcelMonitoringAll($is_update='')
+    public function cetakExcelMonitoringAll($is_update = '')
     {
         $data['aksesoris']    = $this->m_aksesoris->getCetakMonitoring(2);
         $data['s_awal_bulan']    = $this->m_aksesoris->getStockAwalBulanCetak();
@@ -480,7 +480,7 @@ class aksesoris extends CI_Controller
             'keranjang'   => $getRow->keranjang,
             'qty_dihapus' => $getRow->qty_in,
         );
-        $this->penyesuain_stok($id,1);
+        $this->penyesuain_stok($id, 1);
 
         $this->fungsi->catat($data, "Menghapus Stock In List aksesoris dengan data sbb:", true);
         $this->fungsi->run_js('load_silent("wrh/aksesoris/stok_in","#content")');
@@ -505,7 +505,7 @@ class aksesoris extends CI_Controller
             'keranjang'   => $getRow->keranjang,
             'qty_dihapus' => $getRow->qty_in,
         );
-        $this->penyesuain_stok($id,1);
+        $this->penyesuain_stok($id, 1);
 
         $this->fungsi->catat($data, "Menghapus Stock In aksesoris dengan data sbb:", true);
         $respon = ['msg' => 'Data Berhasil Dihapus'];
@@ -1030,7 +1030,7 @@ class aksesoris extends CI_Controller
         $kode_divisi      = $this->m_aksesoris->getKodeDivisi($id_fppp);
         $no_surat_jalan   = str_pad($this->m_aksesoris->getNoSuratJalan(), 3, '0', STR_PAD_LEFT) . '/SJBON/' . $kode_divisi . '/' . date('m') . '/' . date('Y');
         $data['no_surat_jalan'] = $no_surat_jalan;
-        
+
         $this->db->where('id_penginput', from_session('id'));
         $this->db->limit(1);
         $this->db->order_by('id', 'desc');
@@ -1326,6 +1326,38 @@ class aksesoris extends CI_Controller
     //     $this->bon_manual();
     // }
 
+    public function mutasi_list($tgl1 = '', $tgl2 = '')
+    {
+        $this->fungsi->check_previleges('aksesoris');
+        $bulan       = date('m');
+        $tahun       = date('Y');
+
+        $data['tbl_del']   = 1;
+        if ($tgl1 == '' || $tgl2 == '') {
+            $data['tgl_awal']  = $tahun . '-' . $bulan . '-01';
+            $data['tgl_akhir'] = date("Y-m-t", strtotime($data['tgl_awal']));
+        } else {
+            $data['tgl_awal']  = $tgl1;
+            $data['tgl_akhir'] = $tgl2;
+        }
+        $data['aksesoris'] = $this->m_aksesoris->getDataMutasi($data['tgl_awal'], $data['tgl_akhir']);
+
+        $this->load->view('wrh/aksesoris/v_aksesoris_mutasi_list', $data);
+    }
+
+    public function mutasi_add()
+    {
+        $this->fungsi->check_previleges('aksesoris');
+        $id_jenis_item = 2;
+        $data['item']     = $this->m_aksesoris->getdataItem();
+        $data['gudang']   = $this->db->get_where('master_gudang', array('id_jenis_item' => 2));
+
+        $data['divisi']      = $this->db->get_where('master_divisi_stock', array('id_jenis_item' => $id_jenis_item));
+        $data['divisi2']     = $this->db->get_where('master_divisi_stock', array('id_jenis_item' => $id_jenis_item));
+
+        $this->load->view('wrh/aksesoris/v_aksesoris_mutasi_add', $data);
+    }
+
     public function mutasi_stock_add($id = '')
     {
         $this->fungsi->check_previleges('aksesoris');
@@ -1439,6 +1471,7 @@ class aksesoris extends CI_Controller
             'created'       => date('Y-m-d H:i:s'),
             'updated'       => date('Y-m-d H:i:s'),
             'aktual'       => $tgl_aktual,
+            'id_penginput'   => from_session('id'),
         );
         $this->m_aksesoris->insertstokin($datapost_out);
         $data['id']          = $this->db->insert_id();
@@ -1461,10 +1494,11 @@ class aksesoris extends CI_Controller
             'created'       => date('Y-m-d H:i:s'),
             'updated'       => date('Y-m-d H:i:s'),
             'aktual'       => $tgl_aktual,
+            'id_penginput'   => from_session('id'),
         );
         $this->m_aksesoris->insertstokin($datapost_in);
-        $data['id']          = $this->db->insert_id();
-        $this->penyesuain_stok($data['id']);
+        $data['id2']          = $this->db->insert_id();
+        $this->penyesuain_stok($data['id2']);
         $this->fungsi->catat($datapost_in, "Mutasi IN sbb:", true);
 
         $cekDataCounter = $this->m_aksesoris->getDataCounter($datapost_in['id_item'], $datapost_in['id_divisi'], $datapost_in['id_gudang'], $datapost_in['keranjang'])->num_rows();
@@ -1488,6 +1522,50 @@ class aksesoris extends CI_Controller
         sleep(1);
         $data['pesan'] = "Berhasil";
         echo json_encode($data);
+    }
+
+    public function deleteMutasiIn()
+    {
+        $this->fungsi->check_previleges('aksesoris');
+        $id            = $this->input->post('id');
+        $getRow        = $this->m_aksesoris->getRowStock($id);
+        $this->deleteMutasiOut($getRow->id_seselan);
+        $cekQtyCounter = $this->m_aksesoris->getDataCounter($getRow->id_item, $getRow->id_divisi, $getRow->id_gudang, $getRow->keranjang)->row()->qty;
+        $qty_jadi      = (int)$cekQtyCounter - (int)$getRow->qty_in;
+        $this->m_aksesoris->updateDataCounter($getRow->id_item, $getRow->id_divisi, $getRow->id_gudang, $getRow->keranjang, $qty_jadi);
+        sleep(1);
+        $data = array(
+            'id'          => $id,
+            'id_item'     => $getRow->id_item,
+            'id_divisi'   => $getRow->id_divisi,
+            'id_gudang'   => $getRow->id_gudang,
+            'keranjang'   => $getRow->keranjang,
+            'qty_dihapus' => $getRow->qty_in,
+        );
+        $this->penyesuain_stok($id, 1);
+
+        $this->fungsi->catat($data, "Menghapus Mutasi INOUT ", true);
+        $respon = ['msg' => 'Data Berhasil Dihapus'];
+        echo json_encode($respon);
+    }
+
+    public function deleteMutasiOut($id)
+    {
+        $this->fungsi->check_previleges('aksesoris');
+        $getRow        = $this->m_aksesoris->getRowStock($id);
+        $cekQtyCounter = $this->m_aksesoris->getDataCounter($getRow->id_item, $getRow->id_divisi, $getRow->id_gudang, $getRow->keranjang)->row()->qty;
+        $qty_jadi      = (int)$cekQtyCounter - (int)$getRow->qty_in;
+        $this->m_aksesoris->updateDataCounter($getRow->id_item, $getRow->id_divisi, $getRow->id_gudang, $getRow->keranjang, $qty_jadi);
+        sleep(1);
+        $data = array(
+            'id'          => $id,
+            'id_item'     => $getRow->id_item,
+            'id_divisi'   => $getRow->id_divisi,
+            'id_gudang'   => $getRow->id_gudang,
+            'keranjang'   => $getRow->keranjang,
+            'qty_dihapus' => $getRow->qty_in,
+        );
+        $this->penyesuain_stok($id, 1);
     }
 
     public function mutasi_stock_history($id)
