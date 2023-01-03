@@ -1353,6 +1353,37 @@ class Aluminium extends CI_Controller
         $this->fungsi->run_js('load_silent("wrh_h/aluminium/bon_manual","#content")');
     }
 
+    public function mutasi_list($tgl1 = '', $tgl2 = '')
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $bulan       = date('m');
+        $tahun       = date('Y');
+
+        $data['tbl_del']   = 1;
+        if ($tgl1 == '' || $tgl2 == '') {
+            $data['tgl_awal']  = $tahun . '-' . $bulan . '-01';
+            $data['tgl_akhir'] = date("Y-m-t", strtotime($data['tgl_awal']));
+        } else {
+            $data['tgl_awal']  = $tgl1;
+            $data['tgl_akhir'] = $tgl2;
+        }
+        $data['aluminium'] = $this->m_aluminium->getDataMutasi($data['tgl_awal'], $data['tgl_akhir']);
+
+        $this->load->view('wrh_h/aluminium/v_aluminium_mutasi_list', $data);
+    }
+
+    public function mutasi_add()
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $data['item']     = $this->m_aluminium->getdataItem();
+        $this->db->where('id_jenis_item', 1);
+        $this->db->where_in('id', ['2', '4', '58', '59', '79','81']);
+        $this->db->get('master_gudang');        
+        $data['gudang']   = $this->db->get('master_gudang');
+
+        $this->load->view('wrh_h/aluminium/v_aluminium_mutasi_add', $data);
+    }
+
 
     public function mutasi_stock_add($id = '')
     {
@@ -1443,6 +1474,7 @@ class Aluminium extends CI_Controller
             'created'       => date('Y-m-d H:i:s'),
             'updated'       => date('Y-m-d H:i:s'),
             'aktual'       => $tgl_aktual,
+            'id_penginput'   => from_session('id'),
         );
         $this->m_aluminium->insertstokin($datapost_out);
         $data['id']          = $this->db->insert_id();
@@ -1465,11 +1497,12 @@ class Aluminium extends CI_Controller
             'created'       => date('Y-m-d H:i:s'),
             'updated'       => date('Y-m-d H:i:s'),
             'aktual'       => $tgl_aktual,
+            'id_penginput'   => from_session('id'),
         );
         $this->m_aluminium->insertstokin($datapost_in);
-        $data['id']          = $this->db->insert_id();
+        $data['id2']          = $this->db->insert_id();
 
-        $this->penyesuain_stok($data['id']);
+        $this->penyesuain_stok($data['id2']);
         $this->fungsi->catat($datapost_in, "Mutasi IN sbb:", true);
 
         $cekDataCounter = $this->m_aluminium->getDataCounter($datapost_in['id_item'], $datapost_in['id_gudang'], $datapost_in['keranjang'])->num_rows();
@@ -1493,6 +1526,49 @@ class Aluminium extends CI_Controller
         $data['pesan'] = "Berhasil";
         $data['is_mf'] = $this->db->get_where('master_item', array("id" => $id_item))->row()->kode_warna;
         echo json_encode($data);
+    }
+
+    public function deleteMutasiIn()
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $id            = $this->input->post('id');
+        $getRow        = $this->m_aluminium->getRowStock($id);
+        $this->deleteMutasiOut($getRow->id_seselan);
+        $cekQtyCounter = $this->m_aluminium->getDataCounter($getRow->id_item, $getRow->id_gudang, $getRow->keranjang)->row()->qty;
+        $qty_jadi      = (int)$cekQtyCounter - (int)$getRow->qty_in;
+        $this->m_aluminium->updateDataCounter($getRow->id_item, $getRow->id_gudang, $getRow->keranjang, $qty_jadi);
+        sleep(1);
+        $data = array(
+            'id'          => $id,
+            'id_item'     => $getRow->id_item,
+            'id_gudang'   => $getRow->id_gudang,
+            'keranjang'   => $getRow->keranjang,
+            'qty_dihapus' => $getRow->qty_in,
+        );
+        $this->penyesuain_stok($id, 1);
+
+        $this->fungsi->catat($data, "Menghapus Mutasi INOUT ", true);
+        $respon = ['msg' => 'Data Berhasil Dihapus'];
+        echo json_encode($respon);
+    }
+
+    public function deleteMutasiOut($id)
+    {
+        $this->fungsi->check_previleges('aluminium');
+        $getRow        = $this->m_aluminium->getRowStock($id);
+        $cekQtyCounter = $this->m_aluminium->getDataCounter($getRow->id_item, $getRow->id_gudang, $getRow->keranjang)->row()->qty;
+        $qty_jadi      = (int)$cekQtyCounter - (int)$getRow->qty_in;
+        $this->m_aluminium->updateDataCounter($getRow->id_item, $getRow->id_gudang, $getRow->keranjang, $qty_jadi);
+        sleep(1);
+        $data = array(
+            'id'          => $id,
+            'id_item'     => $getRow->id_item,
+            'id_gudang'   => $getRow->id_gudang,
+            'keranjang'   => $getRow->keranjang,
+            'qty_dihapus' => $getRow->qty_in,
+        );
+        $this->penyesuain_stok($id, 1);
+
     }
 
     public function mutasi_stock_history($id)

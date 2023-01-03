@@ -928,6 +928,7 @@ class M_aluminium extends CI_Model
         $this->db->order_by('da.id', 'desc');
         $this->db->where('DATE(da.created) >=', $tgl_awal);
         $this->db->where('DATE(da.created) <=', $tgl_akhir);
+        $this->db->where_in('da.id_gudang', ['1','3']);
         $this->db->select('cu.nama,da.*,mi.divisi,mg.gudang,mwa.warna,mi.section_ata,mi.section_allure,mi.temper,mi.ukuran,mi.kode_warna');
         return $this->db->get('data_stock da');
     }

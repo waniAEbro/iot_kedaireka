@@ -910,6 +910,27 @@ class M_aluminium extends CI_Model
         return $this->db->get('data_counter');
     }
 
+    public function getDataMutasi($tgl_awal, $tgl_akhir)
+    {
+        $id_jenis_item = 1;
+        $this->db->join('master_gudang mg', 'mg.id = da.id_gudang', 'left');
+        $this->db->join('master_item mi', 'mi.id = da.id_item', 'left');
+        $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
+        $this->db->join('cms_user cu', 'cu.id = da.id_penginput', 'left');
+        $this->db->where('da.awal_bulan', 0);
+        $this->db->where('da.mutasi', 1);
+        $this->db->where('mi.id_jenis_item', $id_jenis_item);
+        if (from_session('level' > 1)) {
+            $this->db->where('da.id_penginput', from_session('id'));
+        }
+        $this->db->order_by('da.id', 'desc');
+        $this->db->where('DATE(da.created) >=', $tgl_awal);
+        $this->db->where('DATE(da.created) <=', $tgl_akhir);
+        $this->db->where_in('da.id_gudang', ['2', '4', '58', '59', '79','81']);
+        $this->db->select('cu.nama,da.*,mi.divisi,mg.gudang,mwa.warna,mi.section_ata,mi.section_allure,mi.temper,mi.ukuran,mi.kode_warna');
+        return $this->db->get('data_stock da');
+    }
+
     public function updateDataCounter($item, $gudang, $keranjang, $qty)
     {
         $object = array(

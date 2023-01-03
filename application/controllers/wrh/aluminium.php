@@ -1504,7 +1504,11 @@ class Aluminium extends CI_Controller
     {
         $this->fungsi->check_previleges('aluminium');
         $data['item']     = $this->m_aluminium->getdataItem();
-        $data['gudang']   = $this->db->get_where('master_gudang', array('id_jenis_item' => 1));
+
+        $this->db->where('id_jenis_item', 1);
+        $this->db->where_in('id', ['1','3']);
+        $this->db->get('master_gudang');        
+        $data['gudang']   = $this->db->get('master_gudang');
 
         $this->load->view('wrh/aluminium/v_aluminium_mutasi_add', $data);
     }
