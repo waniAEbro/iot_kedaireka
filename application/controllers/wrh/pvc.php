@@ -1327,7 +1327,7 @@ class pvc extends CI_Controller
         $this->fungsi->check_previleges('pvc');
         $id_jenis_item = 5;
         $data['item']     = $this->m_pvc->getdataItem();
-        $data['gudang']   = $this->db->get_where('master_gudang', array('id_jenis_item' => 3));
+        $data['gudang']   = $this->db->get_where('master_gudang', array('id_jenis_item' => 5));
 
         $data['divisi']      = $this->db->get_where('master_divisi_stock', array('id_jenis_item' => $id_jenis_item));
         $data['divisi2']     = $this->db->get_where('master_divisi_stock', array('id_jenis_item' => $id_jenis_item));

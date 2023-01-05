@@ -1322,7 +1322,7 @@ class lembaran extends CI_Controller
         $this->fungsi->check_previleges('lembaran');
         $id_jenis_item = 4;
         $data['item']     = $this->m_lembaran->getdataItem();
-        $data['gudang']   = $this->db->get_where('master_gudang', array('id_jenis_item' => 3));
+        $data['gudang']   = $this->db->get_where('master_gudang', array('id_jenis_item' => 4));
 
         $data['divisi']      = $this->db->get_where('master_divisi_stock', array('id_jenis_item' => $id_jenis_item));
         $data['divisi2']     = $this->db->get_where('master_divisi_stock', array('id_jenis_item' => $id_jenis_item));
