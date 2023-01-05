@@ -1382,6 +1382,38 @@ class kaca extends CI_Controller
     //     $this->bon_manual();
     // }
 
+    public function mutasi_list($tgl1 = '', $tgl2 = '')
+    {
+        $this->fungsi->check_previleges('kaca');
+        $bulan       = date('m');
+        $tahun       = date('Y');
+
+        $data['tbl_del']   = 1;
+        if ($tgl1 == '' || $tgl2 == '') {
+            $data['tgl_awal']  = $tahun . '-' . $bulan . '-01';
+            $data['tgl_akhir'] = date("Y-m-t", strtotime($data['tgl_awal']));
+        } else {
+            $data['tgl_awal']  = $tgl1;
+            $data['tgl_akhir'] = $tgl2;
+        }
+        $data['kaca'] = $this->m_kaca->getDataMutasi($data['tgl_awal'], $data['tgl_akhir']);
+
+        $this->load->view('wrh/kaca/v_kaca_mutasi_list', $data);
+    }
+
+    public function mutasi_add()
+    {
+        $this->fungsi->check_previleges('kaca');
+        $id_jenis_item = 3;
+        $data['item']     = $this->m_kaca->getdataItem();
+        $data['gudang']   = $this->db->get_where('master_gudang', array('id_jenis_item' => 3));
+
+        $data['divisi']      = $this->db->get_where('master_divisi_stock', array('id_jenis_item' => $id_jenis_item));
+        $data['divisi2']     = $this->db->get_where('master_divisi_stock', array('id_jenis_item' => $id_jenis_item));
+
+        $this->load->view('wrh/kaca/v_kaca_mutasi_add', $data);
+    }
+
     public function mutasi_stock_add($id = '')
     {
 
@@ -1495,6 +1527,7 @@ class kaca extends CI_Controller
             'created'       => date('Y-m-d H:i:s'),
             'updated'       => date('Y-m-d H:i:s'),
             'aktual'       => $tgl_aktual,
+            'id_penginput'   => from_session('id'),
         );
         $this->m_kaca->insertstokin($datapost_out);
         $data['id']          = $this->db->insert_id();
@@ -1517,6 +1550,7 @@ class kaca extends CI_Controller
             'created'       => date('Y-m-d H:i:s'),
             'updated'       => date('Y-m-d H:i:s'),
             'aktual'       => $tgl_aktual,
+            'id_penginput'   => from_session('id'),
         );
         $this->m_kaca->insertstokin($datapost_in);
         $data['id2']          = $this->db->insert_id();
@@ -1544,6 +1578,50 @@ class kaca extends CI_Controller
         sleep(1);
         $data['pesan'] = "Berhasil";
         echo json_encode($data);
+    }
+
+    public function deleteMutasiIn()
+    {
+        $this->fungsi->check_previleges('kaca');
+        $id            = $this->input->post('id');
+        $getRow        = $this->m_kaca->getRowStock($id);
+        $this->deleteMutasiOut($getRow->id_seselan);
+        $cekQtyCounter = $this->m_kaca->getDataCounter($getRow->id_item, $getRow->id_divisi, $getRow->id_gudang, $getRow->keranjang)->row()->qty;
+        $qty_jadi      = (int)$cekQtyCounter - (int)$getRow->qty_in;
+        $this->m_kaca->updateDataCounter($getRow->id_item, $getRow->id_divisi, $getRow->id_gudang, $getRow->keranjang, $qty_jadi);
+        sleep(1);
+        $data = array(
+            'id'          => $id,
+            'id_item'     => $getRow->id_item,
+            'id_divisi'   => $getRow->id_divisi,
+            'id_gudang'   => $getRow->id_gudang,
+            'keranjang'   => $getRow->keranjang,
+            'qty_dihapus' => $getRow->qty_in,
+        );
+        $this->penyesuain_stok($id, 1);
+
+        $this->fungsi->catat($data, "Menghapus Mutasi INOUT ", true);
+        $respon = ['msg' => 'Data Berhasil Dihapus'];
+        echo json_encode($respon);
+    }
+
+    public function deleteMutasiOut($id)
+    {
+        $this->fungsi->check_previleges('kaca');
+        $getRow        = $this->m_kaca->getRowStock($id);
+        $cekQtyCounter = $this->m_kaca->getDataCounter($getRow->id_item, $getRow->id_divisi, $getRow->id_gudang, $getRow->keranjang)->row()->qty;
+        $qty_jadi      = (int)$cekQtyCounter - (int)$getRow->qty_in;
+        $this->m_kaca->updateDataCounter($getRow->id_item, $getRow->id_divisi, $getRow->id_gudang, $getRow->keranjang, $qty_jadi);
+        sleep(1);
+        $data = array(
+            'id'          => $id,
+            'id_item'     => $getRow->id_item,
+            'id_divisi'   => $getRow->id_divisi,
+            'id_gudang'   => $getRow->id_gudang,
+            'keranjang'   => $getRow->keranjang,
+            'qty_dihapus' => $getRow->qty_in,
+        );
+        $this->penyesuain_stok($id, 1);
     }
 
     public function mutasi_stock_history($id)
