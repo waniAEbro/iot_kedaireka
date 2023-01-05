@@ -7,11 +7,8 @@
                 <div class="box-tools pull-right">
                     <?php
                     $sesi = from_session('level');
-                    if ($sesi <= 3) {
                         echo button('load_silent("wrh/pvc/mutasi_add/","#content")', 'Tambah Mutasi', 'btn btn-primary', 'data-toggle="tooltip" title="Tambah Mutasi"');
-                    } else {
-                        # code...
-                    }
+                    
                     ?>
                 </div>
             </div>
