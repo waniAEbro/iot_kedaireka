@@ -364,7 +364,7 @@ class Cron extends CI_Controller
                         'id_divisi' => $key->id_divisi,
                         'id_gudang' => $key->id_gudang,
                         'keranjang' => $key->keranjang,
-                        'id_jenis_item' => 1,
+                        'id_jenis_item' => $id_jenis_item,
                         'qty_in' => $qty_total,
                         'created' => date('Y-m-d H:i:s'),
                         'aktual' => date('Y-m-d')
