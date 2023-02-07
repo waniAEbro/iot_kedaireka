@@ -423,6 +423,7 @@ class Aluminium extends CI_Controller
         $this->fungsi->check_previleges('aluminium');
         $id  = $this->input->post('id');
         $obj = array(
+            'aktual'      => $this->input->post('aktual'),
             'id_gudang'      => $this->input->post('id_gudang'),
             'keranjang'      => strtoupper($this->input->post('keranjang')),
             'qty_in'         => $this->input->post('qty'),

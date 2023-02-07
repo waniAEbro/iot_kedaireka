@@ -12,6 +12,12 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
+                        <label class="control-label">Tgl Aktual:</label>
+                        <input type="text" class="form-control datepicker" data-date-format="yyyy-mm-dd" id="aktual" value="<?= $row->aktual ?>" placeholder="Tgl Aktual" autocomplete="off">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
                         <label>Item Code</label>
                         <input type="hidden" class="form-control" id="id" value="<?= $id ?>" readonly>
                         <input type="text" class="form-control" value="<?= $row->section_ata ?>-<?= $row->section_allure ?>-<?= $row->temper ?>-<?= $row->kode_warna ?>-<?= $row->ukuran ?>" readonly>
@@ -124,6 +130,7 @@
             type: "POST",
             data: {
                 "id": $("#id").val(),
+                'aktual': $('#aktual').val(),
                 'id_gudang': $("#id_gudang").val(),
                 'keranjang': $("#keranjang").val(),
                 'qty': $("#qty").val(),
