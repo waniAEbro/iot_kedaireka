@@ -275,26 +275,26 @@ class Dashboard extends CI_Controller
 		// }
 
 		//inti
-		// $cek_stock_awal_bulan = $this->m_aluminium->cekStockAwalBulan()->num_rows();
-		// $item = $this->m_aluminium->getlistStock();
+		$cek_stock_awal_bulan = $this->m_aluminium->cekStockAwalBulan()->num_rows();
+		$item = $this->m_aluminium->getlistStock();
 
-		// if ($cek_stock_awal_bulan < 1) {
-		// 	foreach ($item->result() as $key) {
-		// 		$obj = array(
-		// 			'awal_bulan' => 1,
-		// 			'inout' => 1,
-		// 			'id_item' => $key->id_item,
-		// 			'id_divisi' => $key->id_divisi,
-		// 			'id_gudang' => $key->id_gudang,
-		// 			'keranjang' => $key->keranjang,
-		// 			'id_jenis_item' => $key->id_jenis_item,
-		// 			'qty_in' => $key->qty,
-		// 			'created' => date('Y-m-d H:i:s'),
-		// 			'aktual' => date('Y-m-d')
-		// 		);
-		// 		$this->db->insert('data_stock', $obj);
-		// 	}
-		// }
+		if ($cek_stock_awal_bulan < 1) {
+			foreach ($item->result() as $key) {
+				$obj = array(
+					'awal_bulan' => 1,
+					'inout' => 1,
+					'id_item' => $key->id_item,
+					'id_divisi' => $key->id_divisi,
+					'id_gudang' => $key->id_gudang,
+					'keranjang' => $key->keranjang,
+					'id_jenis_item' => $key->id_jenis_item,
+					'qty_in' => $key->qty,
+					'created' => date('Y-m-d H:i:s'),
+					'aktual' => date('Y-m-d')
+				);
+				$this->db->insert('data_stock', $obj);
+			}
+		}
 
 		//inti
 
