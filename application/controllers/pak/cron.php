@@ -324,57 +324,57 @@ class Cron extends CI_Controller
             $dd = $this->db->get('data_stock ds')->row();
             $qty_total = $dd->total;
 
-            // $this->db->where('dc.id_item', $key->id_item);
-            // if ($key->id_divisi != '0') {
-            //     $this->db->where('dc.id_divisi', $key->id_divisi);
-            // }
-            // $this->db->where('dc.id_gudang', $key->id_gudang);
-            // $this->db->where('dc.keranjang', $key->keranjang);
-            // $object = array('qty'=>$qty_total);
-            // $this->db->update('data_counter dc', $object);
-            if ($qty_total > 0) {
-                $this->db->where('DATE_FORMAT(dss.created,"%Y")', $year_depan);
-                $this->db->where('DATE_FORMAT(dss.created,"%m")', $month_depan);
-                $this->db->where('awal_bulan', 1);
-                $this->db->where('dss.id_jenis_item', $id_jenis_item);
-                $this->db->where('dss.id_item', $key->id_item);
-                $this->db->where('dss.id_gudang', $key->id_gudang);
-                $this->db->where('dss.keranjang', $key->keranjang);
-                $cek_stock_awal_bulan = $this->db->get('data_stock dss')->num_rows();
-
-                if ($cek_stock_awal_bulan > 0) {
-                    $obj_update = array(
-                        'qty_in' => $qty_total,
-                        'created' => date('Y-m-d H:i:s'),
-                        'aktual' => date('Y-m-d')
-                    );
-                    $this->db->where('DATE_FORMAT(created,"%Y")', $year_depan);
-                    $this->db->where('DATE_FORMAT(created,"%m")', $month_depan);
-                    $this->db->where('awal_bulan', 1);
-                    $this->db->where('id_jenis_item', $id_jenis_item);
-                    $this->db->where('id_item', $key->id_item);
-                    $this->db->where('id_gudang', $key->id_gudang);
-                    $this->db->where('keranjang', $key->keranjang);
-                    $this->db->update('data_stock', $obj_update);
-                } else {
-                    $obj = array(
-                        'awal_bulan' => 1,
-                        'inout' => 1,
-                        'id_item' => $key->id_item,
-                        'id_divisi' => $key->id_divisi,
-                        'id_gudang' => $key->id_gudang,
-                        'keranjang' => $key->keranjang,
-                        'id_jenis_item' => $id_jenis_item,
-                        'qty_in' => $qty_total,
-                        'created' => date('Y-m-d H:i:s'),
-                        'aktual' => date('Y-m-d')
-                    );
-                    $this->db->insert('data_stock', $obj);
-                }
+            $this->db->where('dc.id_item', $key->id_item);
+            if ($key->id_divisi != '0') {
+                $this->db->where('dc.id_divisi', $key->id_divisi);
             }
+            $this->db->where('dc.id_gudang', $key->id_gudang);
+            $this->db->where('dc.keranjang', $key->keranjang);
+            $object = array('qty'=>$qty_total);
+            $this->db->update('data_counter dc', $object);
+            // if ($qty_total > 0) {
+            //     $this->db->where('DATE_FORMAT(dss.created,"%Y")', $year_depan);
+            //     $this->db->where('DATE_FORMAT(dss.created,"%m")', $month_depan);
+            //     $this->db->where('awal_bulan', 1);
+            //     $this->db->where('dss.id_jenis_item', $id_jenis_item);
+            //     $this->db->where('dss.id_item', $key->id_item);
+            //     $this->db->where('dss.id_gudang', $key->id_gudang);
+            //     $this->db->where('dss.keranjang', $key->keranjang);
+            //     $cek_stock_awal_bulan = $this->db->get('data_stock dss')->num_rows();
+
+            //     if ($cek_stock_awal_bulan > 0) {
+            //         $obj_update = array(
+            //             'qty_in' => $qty_total,
+            //             'created' => date('Y-m-d H:i:s'),
+            //             'aktual' => date('Y-m-d')
+            //         );
+            //         $this->db->where('DATE_FORMAT(created,"%Y")', $year_depan);
+            //         $this->db->where('DATE_FORMAT(created,"%m")', $month_depan);
+            //         $this->db->where('awal_bulan', 1);
+            //         $this->db->where('id_jenis_item', $id_jenis_item);
+            //         $this->db->where('id_item', $key->id_item);
+            //         $this->db->where('id_gudang', $key->id_gudang);
+            //         $this->db->where('keranjang', $key->keranjang);
+            //         $this->db->update('data_stock', $obj_update);
+            //     } else {
+            //         $obj = array(
+            //             'awal_bulan' => 1,
+            //             'inout' => 1,
+            //             'id_item' => $key->id_item,
+            //             'id_divisi' => $key->id_divisi,
+            //             'id_gudang' => $key->id_gudang,
+            //             'keranjang' => $key->keranjang,
+            //             'id_jenis_item' => $id_jenis_item,
+            //             'qty_in' => $qty_total,
+            //             'created' => date('Y-m-d H:i:s'),
+            //             'aktual' => date('Y-m-d')
+            //         );
+            //         $this->db->insert('data_stock', $obj);
+            //     }
+            // }
         }
 
-        echo "berhasil upadate awal_bulan " . $id_jenis_item;
+        echo "berhasil hit counter " . $id_jenis_item;
     }
 
     public function hitawalbulan($id_jenis_item, $tgl, $tgl_depan)
