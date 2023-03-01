@@ -373,8 +373,8 @@ class Cron extends CI_Controller
                 }
             }
         }
-
         echo "berhasil awal_bulan " . $id_jenis_item;
+
     }
 
     public function hitawalbulan($id_jenis_item, $tgl, $tgl_depan)
