@@ -264,12 +264,10 @@ class M_aksesoris extends CI_Model
 
     public function getTotalInPerBulanCetakLalu()
     {
-        $year  = date('Y');
-        $month = date('m');
+        $year  = date('2023');
+        $month = date('02');
         $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
         $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
-        $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
-        $this->db->where('DATE_FORMAT(aktual,"%m") !=', $month);
         $this->db->where('inout', 1);
         $this->db->where('awal_bulan', 0);
 
@@ -287,12 +285,10 @@ class M_aksesoris extends CI_Model
 
     public function getTotalOutPerBulanCetakLalu()
     {
-        $year  = date('Y');
-        $month = date('m');
+        $year  = date('2023');
+        $month = date('02');
         $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
         $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
-        $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
-        $this->db->where('DATE_FORMAT(aktual,"%m") !=', $month);
         $this->db->where('inout', 2);
         $this->db->where('awal_bulan', 0);
 
