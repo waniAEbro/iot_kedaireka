@@ -269,7 +269,7 @@ class M_aksesoris extends CI_Model
         $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
         $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
         $this->db->where('inout', 1);
-        $this->db->where('awal_bulan', 0);
+        // $this->db->where('awal_bulan', 0);
 
         $res  = $this->db->get('data_stock');
         $data = array();
@@ -290,7 +290,7 @@ class M_aksesoris extends CI_Model
         $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
         $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
         $this->db->where('inout', 2);
-        $this->db->where('awal_bulan', 0);
+        // $this->db->where('awal_bulan', 0);
 
         $res  = $this->db->get('data_stock');
         $data = array();
