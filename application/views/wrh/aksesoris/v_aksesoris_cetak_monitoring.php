@@ -28,9 +28,9 @@ if($is_update!=''){
             <th>Divisi</th>
             <th>Gudang</th>
             <th>Keranjang</th>
-            <th>Stock Awal Bulan Hitung</th>
+            <!-- <th>Stock Awal Bulan Hitung</th> -->
             <th>Stock Awal Bulan</th>
-            <th>beda SA</th>
+            <!-- <th>beda SA</th> -->
             <th>Total In</th>
             <th>Total Out</th>
             <th>Qty out proses</th>
@@ -48,11 +48,11 @@ if($is_update!=''){
         foreach ($aksesoris->result() as $row) {
             $stock_awal_bulan_now = @$s_awal_bulan[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
             $stock_awal_bulan = $stock_awal_bulan_now;
-            $total_in_lalu = @$s_total_in_lalu[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
-            $total_out_lalu = @$s_total_out_lalu[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
-            $stock_awal_bulan_hitung = $total_in_lalu-$total_out_lalu;
+            // $total_in_lalu = @$s_total_in_lalu[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
+            // $total_out_lalu = @$s_total_out_lalu[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
+            // $stock_awal_bulan_hitung = $total_in_lalu-$total_out_lalu;
 
-            $beda2 = ($stock_awal_bulan == $stock_awal_bulan_hitung) ? 0 : 1 ;
+            // $beda2 = ($stock_awal_bulan == $stock_awal_bulan_hitung) ? 0 : 1 ;
 
 
             $total_in = @$s_total_in[$row->id_item][$row->id_divisi][$row->id_gudang][$row->keranjang];
@@ -89,9 +89,7 @@ if($is_update!=''){
                     <td><?= $row->divisi ?></td>
                     <td><?= $row->gudang ?></td>
                     <td><?= $row->keranjang ?></td>
-                    <td><?= $stock_awal_bulan_hitung ?></td>
                     <td><?= $stock_awal_bulan ?></td>
-                    <td><?= $beda2 ?></td>
                     <td><?= $total_in ?></td>
                     <td><?= $total_out ?></td>
                     <td align="center"><?= $qty_out_proses ?></td>
