@@ -17,6 +17,16 @@
         </div>
     </div>
     <div class="form-group">
+        <label class="col-sm-4 control-label">Jenis Aluminium (kosongi jika bukan gudang aluminium)</label>
+        <div class="col-sm-8">
+            <select name="jenis_aluminium" class="form-control">
+                <option>Pilih</option>
+                <option value="1">RSD</option>
+                <option value="2">HRB</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
         <label class="col-sm-4 control-label">gudang</label>
         <div class="col-sm-8">
             <?php echo form_input(array('name' => 'gudang', 'class' => 'form-control')); ?>

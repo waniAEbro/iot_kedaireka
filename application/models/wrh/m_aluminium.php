@@ -250,7 +250,7 @@ class M_aluminium extends CI_Model
         $this->db->join('master_warna mw', 'mw.kode = mi.kode_warna', 'left');
 
         $this->db->where('mi.kode_warna !=', '01');
-        $this->db->where_in('dc.id_gudang', ['1', '3']);
+        $this->db->where('mg.jenis_aluminium', 1);
         $this->db->select('dc.*,mg.gudang,mi.*,mw.warna');
 
         $this->db->where('dc.id_jenis_item', $id_jenis_barang);
@@ -263,7 +263,7 @@ class M_aluminium extends CI_Model
         $this->db->join('master_item mi', 'mi.id = dc.id_item', 'left');
         $this->db->join('master_warna mw', 'mw.kode = mi.kode_warna', 'left');
         $this->db->where('mi.kode_warna', '01');
-        $this->db->where_in('dc.id_gudang', ['1', '3']);
+        $this->db->where('mg.jenis_aluminium', 1);
         $this->db->select('dc.*,mg.gudang,mi.*,mw.warna');
 
         $this->db->where('dc.id_jenis_item', $id_jenis_barang);
@@ -421,7 +421,7 @@ class M_aluminium extends CI_Model
         $this->db->join('master_item mi', 'mi.id = dc.id_item', 'left');
         $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
         $this->db->where('dc.id_jenis_item', $id_jenis_item);
-        $this->db->where_in('dc.id_gudang', ['1', '3']);
+        $this->db->where('mg.jenis_aluminium', 1);
         $this->db->select('mi.*,mwa.warna');
         $this->db->group_by('dc.id_item');
 
@@ -437,7 +437,7 @@ class M_aluminium extends CI_Model
         $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
         $this->db->where('dc.id_jenis_item', $id_jenis_item);
         $this->db->where('mi.kode_warna', '01');
-        $this->db->where_in('dc.id_gudang', ['1', '3']);
+        $this->db->where('mg.jenis_aluminium', 1);
         $this->db->select('mi.*,mwa.warna');
         $this->db->group_by('dc.id_item');
 
@@ -453,7 +453,7 @@ class M_aluminium extends CI_Model
         $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
         $this->db->where('dc.id_jenis_item', $id_jenis_item);
         $this->db->where('mi.kode_warna !=', '01');
-        $this->db->where_in('dc.id_gudang', ['1', '3']);
+        $this->db->where('mg.jenis_aluminium', 1);
         $this->db->select('mi.*,mwa.warna');
         $this->db->group_by('dc.id_item');
 
@@ -528,7 +528,7 @@ class M_aluminium extends CI_Model
         $this->db->where('DATE_FORMAT(ds.created,"%m")', $month);
         $this->db->where('ds.awal_bulan', 1);
         $this->db->where('ds.inout', 1);
-        $this->db->where_in('ds.id_gudang', ['1', '3']);
+        $this->db->where('mg.jenis_aluminium', 1);
         $res = $this->db->get('data_stock ds');
         $data = array();
 
@@ -578,7 +578,7 @@ class M_aluminium extends CI_Model
         $this->db->where('inout', 1);
         $this->db->where('awal_bulan', 0);
         // $this->db->where('mutasi', 0);
-        $this->db->where_in('id_gudang', ['1', '3']);
+        $this->db->where('mg.jenis_aluminium', 1);
 
         $res = $this->db->get('data_stock');
         $data = array();
@@ -599,7 +599,7 @@ class M_aluminium extends CI_Model
         // $this->db->where('is_bom', 1);
         $this->db->where('status_fppp', 0);
         $this->db->where('id_surat_jalan >', 0);
-        $this->db->where_in('id_gudang', ['1', '3']);
+        $this->db->where('mg.jenis_aluminium', 1);
 
         $res = $this->db->get('data_stock');
         $data = array();
@@ -621,7 +621,7 @@ class M_aluminium extends CI_Model
         $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
         // $this->db->where('mutasi', 0);
         $this->db->where('inout', 2);
-        $this->db->where_in('id_gudang', ['1', '3']);
+        $this->db->where('mg.jenis_aluminium', 1);
         // $this->db->where('id_surat_jalan >', 0);
 
         $res = $this->db->get('data_stock');
@@ -644,7 +644,7 @@ class M_aluminium extends CI_Model
         $this->db->where('DATE_FORMAT(updated,"%m")', $month);
         $this->db->where('mutasi', 1);
         $this->db->where('inout', 2);
-        $this->db->where_in('id_gudang', ['1', '3']);
+        $this->db->where('mg.jenis_aluminium', 1);
         $this->db->where('id_surat_jalan >', 0);
 
         $res = $this->db->get('data_stock');
@@ -666,7 +666,7 @@ class M_aluminium extends CI_Model
         $this->db->join('master_item mi', 'mi.id = dc.id_item', 'left');
         $this->db->join('master_gudang mg', 'mg.id = dc.id_gudang', 'left');
         $this->db->where('dc.id_item', $id_item);
-        $this->db->where_in('dc.id_gudang', ['1', '3']);
+        $this->db->where('mg.jenis_aluminium', 1);
         $this->db->select('dc.*,mi.divisi,mg.gudang');
 
         return $this->db->get('data_counter dc')->result();
@@ -901,7 +901,7 @@ class M_aluminium extends CI_Model
         $this->db->where('da.inout', 1);
         $this->db->where('da.mutasi', 0);
         $this->db->where('mi.id_jenis_item', $id_jenis_item);
-        $this->db->where_in('da.id_gudang', ['1', '3']);
+        $this->db->where('mg.jenis_aluminium', 1);
         if (from_session('level' > 1)) {
             $this->db->where('da.id_penginput', from_session('id'));
         }
@@ -928,7 +928,7 @@ class M_aluminium extends CI_Model
         $this->db->order_by('da.id', 'desc');
         $this->db->where('DATE(da.created) >=', $tgl_awal);
         $this->db->where('DATE(da.created) <=', $tgl_akhir);
-        $this->db->where_in('da.id_gudang', ['1','3']);
+        $this->db->where('mg.jenis_aluminium', 1);
         $this->db->select('cu.nama,da.*,mi.divisi,mg.gudang,mwa.warna,mi.section_ata,mi.section_allure,mi.temper,mi.ukuran,mi.kode_warna');
         return $this->db->get('data_stock da');
     }

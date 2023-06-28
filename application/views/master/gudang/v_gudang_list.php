@@ -22,17 +22,21 @@
                         <th>ID/KODE</th>
                         <th>Jenis Item</th>
                         <th>gudang</th>
+                        <th>Jenis Aluminium</th>
                         <th>Act</th>
                     </thead>
                     <tbody>
                         <?php
                         $i = 1;
-                        foreach ($gudang->result() as $row) : ?>
+                        foreach ($gudang->result() as $row) : 
+                            $jenis_alu = ($row->jenis_aluminium == 2) ? 'HRB' : 'RSD'; ?>
+                        ?>
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
                                 <td align="center"><?= $row->id ?></td>
                                 <td><?= $row->jenis_item ?></td>
                                 <td><?= $row->gudang ?></td>
+                                <td><?= $jenis_alu ?></td>
                                 <td align="center">
                                     <?php
                                     $sesi = from_session('level');

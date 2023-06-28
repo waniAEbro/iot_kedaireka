@@ -51,7 +51,7 @@ class Gudang extends CI_Controller
             $data['jenis_item'] = $this->db->get('master_jenis_item');
             $this->load->view('master/gudang/v_gudang_add', $data);
         } else {
-            $datapost = get_post_data(array('id_jenis_item', 'gudang'));
+            $datapost = get_post_data(array('id_jenis_item', 'gudang','jenis_aluminium'));
             $this->m_gudang->insertData($datapost);
             $this->fungsi->run_js('load_silent("master/gudang","#content")');
             $this->fungsi->message_box("Data Master gudang sukses disimpan...", "success");
@@ -83,7 +83,7 @@ class Gudang extends CI_Controller
             $data['edit'] = $this->db->get_where('master_gudang', array('id' => $id));
             $this->load->view('master/gudang/v_gudang_edit', $data);
         } else {
-            $datapost = get_post_data(array('id', 'id_jenis_item', 'gudang'));
+            $datapost = get_post_data(array('id', 'id_jenis_item', 'gudang','jenis_aluminium'));
 
             $this->m_gudang->updateData($datapost);
             $this->fungsi->run_js('load_silent("master/gudang","#content")');

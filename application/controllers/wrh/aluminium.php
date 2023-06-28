@@ -1507,7 +1507,7 @@ class Aluminium extends CI_Controller
         $data['item']     = $this->m_aluminium->getdataItem();
 
         $this->db->where('id_jenis_item', 1);
-        $this->db->where_in('id', ['1','3']);
+        $this->db->where('mg.jenis_aluminium', 1);
         $this->db->get('master_gudang');        
         $data['gudang']   = $this->db->get('master_gudang');
 
