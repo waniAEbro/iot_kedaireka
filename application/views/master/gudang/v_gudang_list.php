@@ -29,7 +29,7 @@
                         <?php
                         $i = 1;
                         foreach ($gudang->result() as $row) : 
-                            $jenis_alu = ($row->jenis_aluminium == 2) ? 'HRB' : 'RSD'; ?>
+                            $jenis_alu = ($row->jenis_aluminium == 2) ? 'HRB' : 'RSD';
                         ?>
                             <tr>
                                 <td align="center"><?= $i++ ?></td>
