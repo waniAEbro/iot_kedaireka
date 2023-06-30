@@ -1669,7 +1669,7 @@ class Aluminium extends CI_Controller
     {
         $this->fungsi->check_previleges('aluminium');
         $data['wo']     = $this->m_aluminium->getDropDownWo();
-        $this->db->where_in('id', ['2', '4', '58', '59', '79']);
+        $this->db->where('jenis_aluminium', 2);
         $data['gudang']   = $this->db->get('master_gudang');
         // $data['gudang']   = $this->db->get_where('master_gudang', array('id_jenis_item' => 1));
         $data['supplier'] = $this->db->get('master_supplier');
