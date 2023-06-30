@@ -13,7 +13,7 @@ class M_aluminium extends CI_Model
         $this->db->where('ds.id_jenis_item', 1);
         $this->db->where('DATE(ds.aktual) >=', $tgl_awal);
         $this->db->where('DATE(ds.aktual) <=', $tgl_akhir);
-        $this->db->where_in('ds.id_gudang', ['2', '4', '58', '59', '79','81']);
+        $this->db->where('mg.jenis_aluminium', 2);
         $this->db->join('cms_user cu', 'cu.id = ds.id_penginput', 'left');
         // $this->db->where('DATE(ds.created) >=', $tgl_awal);
         // $this->db->where('DATE(ds.created) <=', $tgl_akhir);
@@ -40,7 +40,7 @@ class M_aluminium extends CI_Model
         $this->db->where('ds.id_jenis_item', 1);
         $this->db->where('DATE(ds.aktual) >=', $tgl_awal);
         $this->db->where('DATE(ds.aktual) <=', $tgl_akhir);
-        $this->db->where_in('ds.id_gudang', ['2', '4', '58', '59', '79','81']);
+        $this->db->where('mg.jenis_aluminium', 2);
         // $this->db->where('DATE(ds.created) >=', $tgl_awal);
         // $this->db->where('DATE(ds.created) <=', $tgl_akhir);
         $this->db->where('ds.inout', 2);
