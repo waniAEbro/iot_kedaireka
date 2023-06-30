@@ -384,6 +384,7 @@ class M_aluminium extends CI_Model
         $this->db->join('master_item mi', 'mi.id = dc.id_item', 'left');
         $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
         $this->db->where('dc.id_jenis_item', $id_jenis_item);
+        $this->db->join('master_gudang mg', 'mg.id = dc.id_gudang', 'left');
         $this->db->where('mg.jenis_aluminium', 2);
         $this->db->select('mi.*,mwa.warna');
         $this->db->group_by('dc.id_item');
@@ -400,6 +401,7 @@ class M_aluminium extends CI_Model
         $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
         $this->db->where('dc.id_jenis_item', $id_jenis_item);
         $this->db->where('mi.kode_warna', '01');
+        $this->db->join('master_gudang mg', 'mg.id = dc.id_gudang', 'left');
         $this->db->where('mg.jenis_aluminium', 2);
         $this->db->select('mi.*,mwa.warna');
         $this->db->group_by('dc.id_item');
@@ -416,6 +418,7 @@ class M_aluminium extends CI_Model
         $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
         $this->db->where('dc.id_jenis_item', $id_jenis_item);
         $this->db->where('mi.kode_warna !=', '01');
+        $this->db->join('master_gudang mg', 'mg.id = dc.id_gudang', 'left');
         $this->db->where('mg.jenis_aluminium', 2);
         $this->db->select('mi.*,mwa.warna');
         $this->db->group_by('dc.id_item');
@@ -992,10 +995,11 @@ class M_aluminium extends CI_Model
 
     public function getRowStockNonParsial($id_item, $id_fppp)
     {
-        $this->db->where('id_item', $id_item);
-        $this->db->where('id_fppp', $id_fppp);
+        $this->db->where('ds.id_item', $id_item);
+        $this->db->where('ds.id_fppp', $id_fppp);
+        $this->db->join('master_gudang mg', 'mg.id = ds.id_gudang', 'left');
         $this->db->where('mg.jenis_aluminium', 2);
-        return $this->db->get('data_stock')->row();
+        return $this->db->get('data_stock ds')->row();
     }
 
     public function getRowStock($id_stock)

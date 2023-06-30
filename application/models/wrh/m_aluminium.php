@@ -420,6 +420,7 @@ class M_aluminium extends CI_Model
         $id_jenis_item = 1;
         $this->db->join('master_item mi', 'mi.id = dc.id_item', 'left');
         $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
+        $this->db->join('master_gudang mg', 'mg.id = dc.id_gudang', 'left');
         $this->db->where('dc.id_jenis_item', $id_jenis_item);
         $this->db->where('mg.jenis_aluminium', 1);
         $this->db->select('mi.*,mwa.warna');
@@ -435,6 +436,7 @@ class M_aluminium extends CI_Model
         $id_jenis_item = 1;
         $this->db->join('master_item mi', 'mi.id = dc.id_item', 'left');
         $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
+        $this->db->join('master_gudang mg', 'mg.id = dc.id_gudang', 'left');
         $this->db->where('dc.id_jenis_item', $id_jenis_item);
         $this->db->where('mi.kode_warna', '01');
         $this->db->where('mg.jenis_aluminium', 1);
@@ -451,6 +453,7 @@ class M_aluminium extends CI_Model
         $id_jenis_item = 1;
         $this->db->join('master_item mi', 'mi.id = dc.id_item', 'left');
         $this->db->join('master_warna mwa', 'mwa.kode = mi.kode_warna', 'left');
+        $this->db->join('master_gudang mg', 'mg.id = dc.id_gudang', 'left');
         $this->db->where('dc.id_jenis_item', $id_jenis_item);
         $this->db->where('mi.kode_warna !=', '01');
         $this->db->where('mg.jenis_aluminium', 1);
@@ -528,6 +531,7 @@ class M_aluminium extends CI_Model
         $this->db->where('DATE_FORMAT(ds.created,"%m")', $month);
         $this->db->where('ds.awal_bulan', 1);
         $this->db->where('ds.inout', 1);
+        $this->db->join('master_gudang mg', 'mg.id = ds.id_gudang', 'left');
         $this->db->where('mg.jenis_aluminium', 1);
         $res = $this->db->get('data_stock ds');
         $data = array();
@@ -573,14 +577,15 @@ class M_aluminium extends CI_Model
     {
         $year  = date('Y');
         $month = date('m');
-        $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
-        $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
-        $this->db->where('inout', 1);
-        $this->db->where('awal_bulan', 0);
+        $this->db->where('DATE_FORMAT(ds.aktual,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(ds.aktual,"%m")', $month);
+        $this->db->where('ds.inout', 1);
+        $this->db->where('ds.awal_bulan', 0);
         // $this->db->where('mutasi', 0);
+        $this->db->join('master_gudang mg', 'mg.id = ds.id_gudang', 'left');
         $this->db->where('mg.jenis_aluminium', 1);
 
-        $res = $this->db->get('data_stock');
+        $res = $this->db->get('data_stock ds');
         $data = array();
         foreach ($res->result() as $key) {
 
@@ -594,14 +599,15 @@ class M_aluminium extends CI_Model
 
     public function getTotalOut()
     {
-        $this->db->where('mutasi', 0);
-        $this->db->where('inout', 2);
+        $this->db->where('ds.mutasi', 0);
+        $this->db->where('ds.inout', 2);
         // $this->db->where('is_bom', 1);
-        $this->db->where('status_fppp', 0);
-        $this->db->where('id_surat_jalan >', 0);
+        $this->db->where('ds.status_fppp', 0);
+        $this->db->where('ds.id_surat_jalan >', 0);
+        $this->db->join('master_gudang mg', 'mg.id = ds.id_gudang', 'left');
         $this->db->where('mg.jenis_aluminium', 1);
 
-        $res = $this->db->get('data_stock');
+        $res = $this->db->get('data_stock ds');
         $data = array();
         foreach ($res->result() as $key) {
 
@@ -617,14 +623,15 @@ class M_aluminium extends CI_Model
     {
         $year  = date('Y');
         $month = date('m');
-        $this->db->where('DATE_FORMAT(aktual,"%Y")', $year);
-        $this->db->where('DATE_FORMAT(aktual,"%m")', $month);
+        $this->db->where('DATE_FORMAT(ds.aktual,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(ds.aktual,"%m")', $month);
         // $this->db->where('mutasi', 0);
-        $this->db->where('inout', 2);
+        $this->db->where('ds.inout', 2);
+        $this->db->join('master_gudang mg', 'mg.id = ds.id_gudang', 'left');
         $this->db->where('mg.jenis_aluminium', 1);
         // $this->db->where('id_surat_jalan >', 0);
 
-        $res = $this->db->get('data_stock');
+        $res = $this->db->get('data_stock ds');
         $data = array();
         foreach ($res->result() as $key) {
 
@@ -640,14 +647,15 @@ class M_aluminium extends CI_Model
     {
         $year  = date('Y');
         $month = date('m');
-        $this->db->where('DATE_FORMAT(updated,"%Y")', $year);
-        $this->db->where('DATE_FORMAT(updated,"%m")', $month);
-        $this->db->where('mutasi', 1);
-        $this->db->where('inout', 2);
+        $this->db->where('DATE_FORMAT(ds.updated,"%Y")', $year);
+        $this->db->where('DATE_FORMAT(ds.updated,"%m")', $month);
+        $this->db->where('ds.mutasi', 1);
+        $this->db->where('ds.inout', 2);
+        $this->db->join('master_gudang mg', 'mg.id = ds.id_gudang', 'left');
         $this->db->where('mg.jenis_aluminium', 1);
-        $this->db->where('id_surat_jalan >', 0);
+        $this->db->where('ds.id_surat_jalan >', 0);
 
-        $res = $this->db->get('data_stock');
+        $res = $this->db->get('data_stock ds');
         $data = array();
         foreach ($res->result() as $key) {
 
@@ -666,6 +674,7 @@ class M_aluminium extends CI_Model
         $this->db->join('master_item mi', 'mi.id = dc.id_item', 'left');
         $this->db->join('master_gudang mg', 'mg.id = dc.id_gudang', 'left');
         $this->db->where('dc.id_item', $id_item);
+        
         $this->db->where('mg.jenis_aluminium', 1);
         $this->db->select('dc.*,mi.divisi,mg.gudang');
 
