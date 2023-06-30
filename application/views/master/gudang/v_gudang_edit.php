@@ -25,7 +25,7 @@ $row = fetch_single_row($edit);
         <div class="col-sm-8">
             <select name="jenis_aluminium" class="form-control">
                 <?php $sel1 = ($row->jenis_aluminium == 1) ? 'selected' : ''; ?> ?>
-                <?php $sel1 = ($row->jenis_aluminium == 2) ? 'selected' : ''; ?> ?>
+                <?php $sel2 = ($row->jenis_aluminium == 2) ? 'selected' : ''; ?> ?>
                 <option>Pilih</option>
                 <option value="1" <?= $sel1 ?>>RSD</option>
                 <option value="2" <?= $sel2 ?>>HRB</option>
