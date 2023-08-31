@@ -19,7 +19,7 @@ class IOT extends CI_Controller
             // Buat respons data
             $response = array('message' => 'Data berhasil dibuat', 'data' => $post_data);
             $this->db->insert('master_item', array (
-                "rfid" => $post_data["col"]["tag"]
+                "rfid" => json_decode($post_data["m2m:sgn"]["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"])["tag"]
             ));
         }
 
