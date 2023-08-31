@@ -52,3 +52,4 @@ application/config/config.php
 application/config/database.php
 assets/captcha/
 files/
+application/logs/

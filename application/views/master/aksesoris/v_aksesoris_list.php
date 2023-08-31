@@ -34,7 +34,7 @@
                         foreach ($aksesoris->result() as $row) : ?>
                             <tr id="output_data_<?= $row->id ?>" class="output_data">
                                 <td align="center"><?= $i++ ?></td>
-                                <td><?= $row->item_code ?></td>
+                                <td><?= $row->rfid ?></td>
                                 <td><?= $row->deskripsi ?></td>
                                 <td><?= $row->satuan ?></td>                                
                                 <td><?= $row->supplier ?></td>

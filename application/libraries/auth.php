@@ -76,7 +76,7 @@ class Auth
 
         $this->CI->db->select('cs.*,ml.level as nama_level');
         $this->CI->db->where('cs.username', $username);
-        $this->CI->db->where("cs.password=password('$password')");
+        $this->CI->db->where("cs.password = SHA2('$password', 256)");
         $this->CI->db->join('master_level ml', 'ml.id = cs.level', 'left');
         $query = $this->CI->db->get('cms_user cs');
 
