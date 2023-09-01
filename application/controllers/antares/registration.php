@@ -20,7 +20,8 @@ class Registration extends CI_Controller
                     'master_item',
                     array(
                         "rfid" => $post_data["tag"],
-                        "item_code" => $post_data["tag"]
+                        "item_code" => $post_data["tag"],
+                        "cek_double" => 0
                     )
                 );
                 $id_item = $this->db->insert_id();

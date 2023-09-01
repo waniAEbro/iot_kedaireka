@@ -16,7 +16,8 @@ class Aksesoris extends CI_Controller
     public function index()
     {
         $this->fungsi->check_previleges('aksesoris');
-        $data['aksesoris'] = $this->m_aksesoris->getData();
+        $data['sudah'] = $this->m_aksesoris->getData(1);
+        $data['belum'] = $this->m_aksesoris->getData(0);
         $this->load->view('master/aksesoris/v_aksesoris_list', $data);
     }
 
@@ -61,6 +62,7 @@ class Aksesoris extends CI_Controller
                 'supplier' => $this->input->post('supplier'),
                 'lead_time' => $this->input->post('lead_time'),
                 'created'        => date('Y-m-d H:i:s'),
+                'cek_double' => 1
 
             );
             $cek = $this->m_aksesoris->cekMaster($datapost);
@@ -101,6 +103,7 @@ class Aksesoris extends CI_Controller
             $this->load->view('master/aksesoris/v_aksesoris_edit', $data);
         } else {
             $datapost = get_post_data(array('id', 'item_code', 'deskripsi', 'satuan','supplier','lead_time'));
+            $datapost['cek_double'] = 1;
             $this->m_aksesoris->updateData($datapost);
             $this->fungsi->run_js('load_silent("master/aksesoris","#content")');
             $this->fungsi->message_box("Data Master aksesoris sukses diperbarui...", "success");

@@ -4,9 +4,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class M_aksesoris extends CI_Model
 {
 
-    public function getData($value = '')
+    public function getData($value = 1)
     {
         $this->db->where('id_jenis_item', 2);
+        $this->db->where("cek_double", $value);
         $this->db->order_by('id', 'desc');
         return $this->db->get('master_item ');
     }
