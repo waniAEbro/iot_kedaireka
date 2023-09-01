@@ -11,7 +11,7 @@ class Registration extends CI_Controller
             return;
         } else {
             // $this->db->where('rfid', json_decode($post_data["m2m:sgn"]["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"])["tag"]);
-            $this->db->where('rfid',json_decode($post_data["m2m:sgn"]["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"])["tag"]);
+            $this->db->where('rfid',json_decode($post_data["m2m:sgn"]["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"], true)["tag"]);
             $cek = $this->db->get('master_item')->num_rows();
             if ($cek > 0) {
                 return;
@@ -19,13 +19,13 @@ class Registration extends CI_Controller
                 $this->db->insert(
                     'master_item',
                     array(
-                        "rfid" => json_decode($post_data["m2m:sgn"]["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"])["tag"],
-                        "item_code" => json_decode($post_data["m2m:sgn"]["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"])["tag"],
+                        "rfid" => json_decode($post_data["m2m:sgn"]["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"], true)["tag"],
+                        "item_code" => json_decode($post_data["m2m:sgn"]["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"], true)["tag"],
                         "cek_double" => 0
                     )
                 );
                 $id_item = $this->db->insert_id();
-                $code = json_decode($post_data["m2m:sgn"]["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"])["tag"];
+                $code = json_decode($post_data["m2m:sgn"]["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"], true)["tag"];
                 $this->insertbarcode($code, $id_item);
                 $ip = $_SERVER['REMOTE_ADDR'];
                 $waktu = date('Y-m-d H:i:s');

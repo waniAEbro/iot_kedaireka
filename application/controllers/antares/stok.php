@@ -22,7 +22,7 @@ class Stok extends CI_Controller {
             $this->db->insert('data_in_temp', $data_temp);
         }
 
-        $this->db->where("rfid", json_decode($post_data["m2m:sgn"]["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"])["tag"]);
+        $this->db->where("rfid", json_decode($post_data["m2m:sgn"]["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"], true)["tag"]);
         $id_item = $this->db->get("master_item")->row()->id;
 
         $this->db->insert("data_stock", array(
@@ -69,7 +69,7 @@ class Stok extends CI_Controller {
                 'keranjang'     => "",
                 'qty'           => 1,
                 'created'       => date('Y-m-d H:i:s'),
-                'itm_code'      => json_decode($post_data["m2m:sgn"]["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"])["tag"]
+                'itm_code'      => json_decode($post_data["m2m:sgn"]["m2m:nev"]["m2m:rep"]["m2m:cin"]["con"], true)["tag"]
             );
             $this->db->insert('data_counter', $simpan);
         } else {
