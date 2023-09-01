@@ -1,5 +1,5 @@
 <?php
-
+//Controller untuk Registrasi Item
 class Registration extends CI_Controller
 {
     public function register_rfid()
