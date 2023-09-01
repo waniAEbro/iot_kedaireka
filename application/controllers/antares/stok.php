@@ -41,7 +41,8 @@ class Stok extends CI_Controller {
             'created'        => date('Y-m-d H:i:s'),
             'updated'        => date('Y-m-d H:i:s'),
             'aktual'         => date('Y-m-d H:i:s'),
-            'in_temp'        => 1,
+            'in_temp'        => 0,
+            "id_seselan"     => 0
         ));
         
         $id = $this->db->insert_id();
