@@ -231,7 +231,7 @@ class aksesoris extends CI_Controller
         $data['tgl_akhir'] = date("Y-m-t", strtotime($data['tgl_awal']));
         $data['sudah'] = $this->m_aksesoris->getDataStock($data['tgl_awal'], $data['tgl_akhir'], 1);
         $data['belum'] = $this->m_aksesoris->getDataStock($data['tgl_awal'], $data['tgl_akhir'], 0);
-        
+
 
         $this->load->view('wrh/aksesoris/v_aksesoris_in_list', $data);
     }
@@ -290,6 +290,7 @@ class aksesoris extends CI_Controller
             'no_surat_jalan' => $this->input->post('no_surat_jalan'),
             'no_pr'          => $this->input->post('no_pr'),
             'keterangan'     => $this->input->post('keterangan'),
+            "id_seselan"     => 1
         );
         $this->m_aksesoris->updatestokin($obj, $id);
         $this->penyesuain_stok($id);
