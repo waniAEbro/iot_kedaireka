@@ -4,12 +4,12 @@
         <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title">Stok IN Aksesoris</h3>
-                <div class="box-tools pull-right">
+                <!-- <div class="box-tools pull-right">
                     <?php
                     
                     echo button('load_silent("wrh/aksesoris/stok_in_add/","#content")', 'Tambah Stock', 'btn btn-primary', 'data-toggle="tooltip" title="Tambah Stock"');
                     ?>
-                </div>
+                </div> -->
             </div>
             <div class="box-body">
                 <div class="row">
